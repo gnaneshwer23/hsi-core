@@ -1,6 +1,7 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import {readFile} from 'node:fs/promises';
+const domainBundle=JSON.parse(await readFile(new URL('../public/research/domain-graph/graph.v1.json',import.meta.url),'utf8'));
 const cand=(o:any)=>({id:'c1',relationId:'il21-tfh',subject:'IL-21',object:'T follicular helper cells',contexts:['ssc'],species:'human',sourceId:'s1',sourceUrl:'https://europepmc.org/article/MED/1',sentence:'IL-21 was increased and Tfh cells expanded in patients with systemic sclerosis.',state:'extracted_candidate',lexicalPolarity:'supporting',polarityBasis:'not_assessed',direction:'not_assessed',polarity:'uncertain',priority:{score:7,reasons:['States an effect or direction']},verification:'not_run',verdicts:[],retraction:'not_flagged_by_provider',...o});
 const emptyComparison={schemaVersion:'hsi-live-structured-comparison-1',method:'hsi.structured_evidence_comparison.v1',version:'0.3.0',pairCount:0,summary:{consistent:0,potentialContradiction:0,contextDependent:0,methodologicalDifference:0,insufficientComparability:0,insufficientEvidence:0},items:[],honesty:{metadataOrDeclaredContextOnly:true,associationScoreIsNotCausation:true,potentialContradictionIsNotProvenContradiction:true,verificationBoundBeforeContradictionLanguage:true,scientificApproval:false,graphPromotable:false,claimSupport:'not_assessed',gateCAutoApprove:false,cdsPhi:false,neonContradictionLedger:false}};
 const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il21-autoimmune',question:'Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?',version:1,briefHash:'a'.repeat(64),
@@ -19,14 +20,37 @@ const checkedComparison={...emptyComparison,pairCount:1,summary:{...emptyCompari
 const checked={...base,structuredComparison:checkedComparison,hypotheses:{status:'generated',reason:null,dropped:0,basis:{findings:2},items:[{id:'h1',statement:'Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.',rationale:'The cited finding links IL-21 to Tfh expansion.',citedClaimIds:['c1'],prediction:'Fewer Tfh cells with blockade.',experiment:'Culture cells with an IL-21 blocking antibody.',falsifier:'No change in Tfh numbers.',limits:'Human systemic sclerosis, association only.',state:'unvalidated_hypothesis',generatedBy:{verifier:'openai-a',model:'m1'},challenge:{verifier:'openai-b',model:'m2',verdict:'overreach',reason:'Blockade is not in the findings.'},challengeNote:null}]},verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
  byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c1'],opposing:[],uncertain:[]}},
  candidates:[cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),cand({id:'c2',object:'B-cell responses',relationId:'il21-bcell',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']}),cand({id:'c2b',relationId:'il21-tfh',contexts:['ra'],species:'mouse',sourceId:'s2',sourceUrl:'https://europepmc.org/article/MED/2',sentence:'In murine arthritis IL-21 signalling reduced Tfh expansion.',direction:'negative',polarity:'opposing',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[]})]};
-const mock=(page:any,body:unknown,status=200)=>page.route('**/api/research/live-investigation',(r:any)=>r.fulfill({status,json:body}));
+const mockGraph=(page:any)=>page.route('**/api/research/graph-snapshot?*',(r:any)=>r.fulfill({json:domainBundle}));
+const mock=(page:any,body:unknown,status=200)=>{mockGraph(page);return page.route('**/api/research/live-investigation',(r:any)=>r.fulfill({status,json:body}))};
 
 test('workspace before a run states that nothing has started and shows no figures',async({page})=>{
+ await mockGraph(page);
  await page.goto('/research/workspace');
  await expect(page.getByRole('heading',{level:1})).toContainText('IL-21');
  await expect(page.getByText('Nothing starts until you press Run')).toBeVisible();
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Not run');
  await expect(page.getByLabel('Run totals')).toContainText('—');
+ const journey=page.getByRole('navigation',{name:/Scientific investigation journey/i});
+ await expect(journey).toContainText('journey complete claimed: false');
+ await expect(journey).toContainText('scientific approval: false');
+ await expect(journey).toContainText('production writes: false');
+ const stage2Exit=page.locator('#ws-stage2-exit');
+ await expect(stage2Exit.locator('> summary')).toContainText('journey complete claimed: false');
+ await expect(stage2Exit.locator('> summary')).toContainText('org sharing: false');
+ expect(await stage2Exit.getAttribute('open')).toBeNull();
+ await stage2Exit.locator('> summary').click();
+ await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
+ // Scope through the fold so panels outside #ws-stage2-exit would fail.
+ const stage2=stage2Exit.getByRole('region',{name:/Stage 2 investigation progress/i});
+ await expect(stage2).toContainText('journey complete claimed: false');
+ await expect(stage2).toContainText('local progress only: true');
+ await expect(stage2).toContainText('pilot accepted: false');
+ await expect(stage2).toContainText('Progress: 0/');
+ await expect(stage2Exit.getByRole('region',{name:/Steps 12–13 \(blocked\)/i})).toContainText('org sharing: false');
+ await expect(page.getByRole('region',{name:/Researcher usefulness \(this device\)/i})).toContainText('Run a live investigation');
+ await page.getByText('USP focus trails (A · B · C)').click();
+ await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
+ await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
 });
 
 test('an unchecked run keeps direction unassessed, shows the failed search and labels claims as candidates',async({page})=>{
@@ -52,7 +76,7 @@ test('after a run, passport empty-state prompts claim selection before inventing
  await mock(page,unchecked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:'Run live investigation'}).click();
- await expect(page.getByText('Select a claim to open its Evidence Context Passport')).toBeVisible();
+ await expect(page.locator('.ws-passport-empty')).toContainText('Select a claim to open its Evidence Context Passport');
  await expect(page.getByRole('heading',{name:'Evidence context passport'})).toHaveCount(0);
 });
 
@@ -73,10 +97,24 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells.*IL-21 was increased/}).click();
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('openai-a');await expect(insp).toContainText('Quoted: “IL-21 was increased”');
- await expect(page.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
- await expect(page.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
- await expect(page.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
- await page.getByRole('button',{name:'Open research brief'}).click();
+ // Live passport table lives under Scientific verification; brief panel has a second copy.
+ const vf=page.getByRole('region',{name:'Scientific verification'});
+ await expect(vf.getByRole('heading',{name:'Evidence table for this live brief'})).toBeVisible();
+ await expect(vf.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ await expect(vf.getByRole('region',{name:'Passport evidence table'})).toContainText('Not stated');
+ // Decision brief: limitations + passport columns always visible; markdown is optional preview.
+ const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
+ await expect(briefPanel).toContainText('briefAccepted: false');
+ await expect(briefPanel).toContainText('Scientific approval: false');
+ await expect(briefPanel.getByRole('heading',{name:/Limitations \(always visible\)/i})).toBeVisible();
+ await expect(briefPanel).toContainText('Candidate-only live brief');
+ await expect(briefPanel.getByRole('heading',{name:/Passport columns for this brief/i})).toBeVisible();
+ await expect(briefPanel.getByText('EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ const briefToggle=page.getByRole('button',{name:/markdown preview/i});
+ await expect(briefToggle).toBeVisible();
+ if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
+  await page.getByRole('button',{name:'Open markdown preview'}).click();
+ }
  const brief=page.getByLabel('Research brief text');
  await expect(brief).toContainText('Supporting (both checks agree) (1)');
  await expect(brief).toContainText('Claim verification status');
@@ -84,12 +122,145 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(brief).toContainText('Structured evidence comparison (candidate)');
  await expect(brief).toContainText('potential_contradiction is not a proven contradiction');
  await expect(brief).toContainText('Scientific approval: false');
- const vf=page.getByRole('region',{name:'Scientific verification'});
  await expect(vf.getByText('Opposing / disputed checks')).toBeVisible();
- // Prefer the comparison <summary>; the opened brief also mentions structured comparison.
- await expect(vf.locator('summary').filter({hasText:/Structured comparison/})).toBeVisible();
- await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Context-dependent difference');
- await expect(vf.locator('details').filter({has:page.locator('summary',{hasText:/Structured comparison/})})).toContainText('Potential contradiction is not proven contradiction');
+ const journey=page.getByRole('navigation',{name:/Scientific investigation journey/i});
+ await expect(journey).toContainText('journey complete claimed: false');
+ await expect(journey).toContainText('Ask');
+ await expect(journey).toContainText('Why differ');
+ await expect(journey).toContainText('Save');
+ await page.getByText('USP focus trails (A · B · C)').click();
+ await expect(page.getByRole('navigation',{name:/USP A disagreement journey/i})).toBeVisible();
+ const uspPanels=page.locator('#ws-usp-panels');
+ await expect(uspPanels.locator('> summary')).toContainText('USP focus panels');
+ await expect(uspPanels.locator('> summary')).toContainText('not journey complete');
+ // HTMLDetailsElement: closed ⇔ open attribute absent (null). Empty string "" means open.
+ expect(await uspPanels.getAttribute('open')).toBeNull();
+ // Trail select must open the fold — do not click summary (would hide a broken handler).
+ await page.getByRole('navigation',{name:/Scientific investigation journey/i}).getByRole('button',{name:/Why differ/i}).click();
+ await expect.poll(async()=>uspPanels.getAttribute('open')).not.toBeNull();
+ const disagree=page.getByRole('region',{name:/Why findings may differ/i});
+ await expect(disagree).toContainText('Context-dependent difference');
+ await expect(disagree).toContainText('Potential contradiction is not');
+ await disagree.getByRole('button',{name:/Context-dependent difference/}).click();
+ await expect(page.getByRole('heading',{name:/Left claim · Evidence Context Passport/})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/Right claim · Evidence Context Passport/})).toBeVisible();
+ const curated=page.getByRole('region',{name:/Curated disagreement demonstrations/i});
+ await expect(curated).toContainText('Demonstration only');
+ await expect(curated).toContainText('Scientific approval: false');
+ await expect(curated).toContainText('Confirmed contradiction: false');
+ await curated.getByRole('button',{name:/Microbial metabolites \(mouse\) vs childhood microbiome/i}).click();
+ await expect(curated.getByRole('heading',{name:/Left · DIAB-003/})).toBeVisible();
+ await expect(curated.getByRole('heading',{name:/Right · DIAB-015/})).toBeVisible();
+ await expect(page.getByRole('navigation',{name:/USP B cross-domain journey/i})).toBeVisible();
+ const cross=page.getByRole('region',{name:/Cross-domain mechanisms/i});
+ await expect(cross).toContainText('Causal conclusion allowed: false');
+ await expect(cross).toContainText('Scientific approval: false');
+ await expect(cross).toContainText('IL-21');
+ await expect(cross.getByRole('list',{name:/Department coverage/i})).toContainText('No graph coverage yet');
+ await expect(cross).toContainText(/No path of four hops|Target department has no concept|candidate path/i);
+ await expect(cross).toContainText('Unvalidated AI hypotheses (demoted)');
+ await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();
+ const connected=page.getByRole('region',{name:/Connected research \(personal\)/i});
+ await expect(connected).toContainText('Production writes: false');
+ await expect(connected).toContainText('Org sharing');
+ await expect(connected).toContainText('blocked');
+ await expect(connected).toContainText('Alert preference only: true');
+ await expect(connected).toContainText('Live alert delivery: false');
+ await expect(connected).toContainText('Email delivery claimed: false');
+ await expect(connected).toContainText('Invents open rates: false');
+ await connected.getByRole('button',{name:'Save to browser library',exact:true}).click();
+ await expect(connected).toContainText(/Saved to browser library|Saved in this browser library/i);
+ await expect(connected.getByRole('button',{name:'Reopen'}).first()).toBeVisible();
+ await connected.getByRole('button',{name:'Reopen'}).first().click();
+ await expect(connected).toContainText(/Reopened the same version|Reopened/i);
+ await page.goto('/research/home');
+ const metrics=page.locator('#rh-metrics');
+ if((await metrics.getAttribute('open'))===null)await metrics.locator('> summary').click();
+ await expect.poll(async()=>metrics.getAttribute('open')).not.toBeNull();
+ await expect(metrics.locator('> summary')).toContainText('not conversion');
+ const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
+ await expect(activation).toContainText('invents activation funnel: false');
+ await expect(activation).toContainText('First live investigation recorded on this device');
+ await expect(activation).toContainText('not an activation funnel');
+ const repeat=page.getByRole('region',{name:/Repeat usage \(this device\)/i});
+ await expect(repeat).toContainText('invents retention metrics: false');
+ await expect(repeat).toContainText('invents aggregate conversion: false');
+ await expect(repeat).toContainText('First reopen recorded on this device');
+ await expect(repeat).toContainText('not a retention rate');
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ const connectedAfter=page.getByRole('region',{name:/Connected research \(personal\)/i});
+ await expect(connectedAfter).toContainText('Alert preference only: true');
+ const useful=page.getByRole('region',{name:/Researcher usefulness \(this device\)/i});
+ await expect(useful).toContainText('journey complete claimed: false');
+ await expect(useful).toContainText('invents aggregate conversion: false');
+ await expect(useful).toContainText('pilot conversion claimed: false');
+ await expect(useful).toContainText('production writes: false');
+ await useful.getByRole('button',{name:'Useful',exact:true}).click();
+ await useful.getByRole('button',{name:'Maybe',exact:true}).click();
+ await useful.getByRole('button',{name:'Save rating in this browser'}).click();
+ await expect(useful).toContainText(/Saved locally for briefHash/i);
+ await expect(useful).toContainText('Useful');
+ await expect(useful).toContainText('willingness Maybe');
+ await page.goto('/research/home');
+ const metricsAfter=page.locator('#rh-metrics');
+ if((await metricsAfter.getAttribute('open'))===null)await metricsAfter.locator('> summary').click();
+ await expect.poll(async()=>metricsAfter.getAttribute('open')).not.toBeNull();
+ const firstUseful=page.getByRole('region',{name:/First useful investigation/i});
+ await expect(firstUseful).toContainText('invents aggregate conversion: false');
+ await expect(firstUseful).toContainText('pilot conversion claimed: false');
+ await expect(firstUseful).toContainText('First useful investigation recorded on this device');
+ await expect(firstUseful).toContainText('not a conversion rate');
+ const wtp=page.getByRole('region',{name:/Willingness to pay \(this device\)/i});
+ await expect(wtp).toContainText('invents revenue: false');
+ await expect(wtp).toContainText('checkout enabled: false');
+ await expect(wtp).toContainText('pilot conversion claimed: false');
+ await expect(wtp).toContainText('First willingness-to-pay signal recorded on this device');
+ await expect(wtp).toContainText('Answered Maybe');
+ const pilot=page.getByRole('region',{name:/Pilot readiness \(honesty\)/i});
+ await expect(pilot).toContainText('invents pilot ready: false');
+ await expect(pilot).toContainText('pilot ready claimed: false');
+ await expect(pilot).toContainText('Local signals 4 done · 4 readable of 4');
+ await expect(pilot).toContainText('pilot ready claimed: false');
+ await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Staging researcher grants');
+ await page.goto('/research/workspace');
+ await page.getByRole('button',{name:'Run live investigation'}).click();
+ const stage2Exit=page.locator('#ws-stage2-exit');
+ expect(await stage2Exit.getAttribute('open')).toBeNull();
+ await stage2Exit.locator('> summary').click();
+ await expect.poll(async()=>stage2Exit.getAttribute('open')).not.toBeNull();
+ const stage2=stage2Exit.getByRole('region',{name:/Stage 2 investigation progress/i});
+ await expect(stage2).toContainText('journey complete claimed: false');
+ await expect(stage2).toContainText('pilot accepted: false');
+ await expect(stage2).toContainText('Local usefulness rating saved for this briefHash');
+ await expect(stage2).toContainText('journey complete claimed: false');
+ const gapsTestable=page.locator('#ws-gaps-testable');
+ await expect(gapsTestable.locator('> summary')).toContainText('Gaps & testable questions');
+ await expect(gapsTestable.locator('> summary')).toContainText('invents experiments: false');
+ // Closed ⇔ open attribute null; trail “Gaps” must open the fold without summary click.
+ expect(await gapsTestable.getAttribute('open')).toBeNull();
+ await page.getByRole('navigation',{name:/Scientific investigation journey/i}).getByRole('button',{name:/Gaps/i}).click();
+ await expect.poll(async()=>gapsTestable.getAttribute('open')).not.toBeNull();
+ const testable=page.getByRole('region',{name:/Testable next questions/i});
+ await expect(testable).toContainText('invents experiments: false');
+ await expect(testable).toContainText('recommends action: false');
+ await expect(testable).toContainText('scientific approval: false');
+ await expect(testable).toContainText('journey complete claimed: false');
+ await expect(testable).toContainText('Unvalidated AI hypothesis (demoted)');
+ await expect(testable).toContainText('Blocking IL-21 reduces Tfh expansion');
+ await expect(testable).toContainText('Would be falsified by');
+ await expect(testable).toContainText('No change in Tfh numbers');
+ const blocked=stage2Exit.getByRole('region',{name:/Steps 12–13 \(blocked\)/i});
+ await expect(blocked).toContainText('org sharing: false');
+ await expect(blocked).toContainText('collaborator links: false');
+ await expect(blocked).toContainText('live source refresh accepted: false');
+ await expect(blocked).toContainText('prior approvals transfer: false');
+ await expect(blocked).toContainText('invents sharing authority: false');
+ await expect(blocked).toContainText('journey complete claimed: false');
+ await expect(blocked).toContainText('Share with a collaborator');
+ await expect(blocked).toContainText('Versioned re-evaluation');
+ await expect(blocked).toContainText('does not create a share link');
+ await expect(blocked).toContainText('same briefHash');
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21aa','wcag22aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
 });
@@ -131,7 +302,9 @@ test('hypotheses are labelled unvalidated, cite findings, show the second model 
  await expect(page.getByLabel('Selected claim')).toContainText('openai-a');
  await vf.getByText('Rationale, prediction, experiment, falsifier').click();
  await expect(vf).toContainText('Would be falsified by');
- await page.getByRole('button',{name:'Open research brief'}).click();
+ if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
+  await page.getByRole('button',{name:'Open markdown preview'}).click();
+ }
  await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (unvalidated model proposals) (1)');
 });
 
@@ -156,11 +329,11 @@ test('Home to workspace to saved run: a matching question needs a click to run, 
  expect(calls).toBe(0);
  await page.getByRole('button',{name:'Run live investigation'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
- await page.getByRole('button',{name:'Save in this browser'}).click();
+ await page.getByRole('region',{name:/Connected research \(personal\)/i}).getByRole('button',{name:'Save to browser library',exact:true}).click();
  await page.goto('/research/home');
  await page.locator('#rh-more > summary').click();
  const cont=page.getByRole('region',{name:'Continue researching'});
- await expect(cont).toContainText('Live investigation · saved in this browser');
+ await expect(cont).toContainText(/Live investigation · (browser library \(not a server store\)|saved in this browser)/);
  await expect(cont).toContainText('1 supporting');
  await cont.getByRole('link',{name:'Reopen'}).click();
  await expect(page.getByLabel('Run totals')).toContainText('Key findings');
@@ -207,6 +380,9 @@ test('gaps in a run: search limits and unrun checks are kept apart from scientif
  await mock(page,unchecked);
  await page.goto('/research/workspace');
  await page.getByRole('button',{name:/Run/}).first().click();
+ const gapsFold=page.locator('#ws-gaps-testable');
+ if((await gapsFold.getAttribute('open'))===null)await gapsFold.locator('> summary').click();
+ await expect.poll(async()=>gapsFold.getAttribute('open')).not.toBeNull();
  const gaps=page.getByRole('region',{name:/Gaps in this run|Gaps in this run/}).or(page.locator('.ws-gaps'));
  await expect(gaps.getByRole('region',{name:'Limits of this search'})).toContainText('Search failed: openalex');
  await expect(gaps.getByRole('region',{name:'Checks that did not run'})).toContainText('not assessed');
@@ -217,6 +393,9 @@ test('gaps in a run: search limits and unrun checks are kept apart from scientif
  await page.reload();
  await mock(page,unchecked);
  await page.getByRole('button',{name:/Run/}).first().click();
+ const gapsFoldAfter=page.locator('#ws-gaps-testable');
+ if((await gapsFoldAfter.getAttribute('open'))===null)await gapsFoldAfter.locator('> summary').click();
+ await expect.poll(async()=>gapsFoldAfter.getAttribute('open')).not.toBeNull();
  await expect(page.getByRole('group',{name:/Status for: Search failed/}).getByRole('button',{name:'Investigating'})).toHaveAttribute('aria-pressed','true');
  const r=await new AxeBuilder({page}).analyze();
  expect(r.violations.filter(v=>['serious','critical'].includes(v.impact??''))).toEqual([]);

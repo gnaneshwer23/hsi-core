@@ -57,6 +57,29 @@ test('the example profile fills the required answers and reaches Home with a pro
  await page.getByRole('button',{name:'Finish and open my home'}).click();
  await expect(page).toHaveURL(/\/research\/home/);
  await expect(page.locator('section.pr').getByText(/Built from \d anchor/)).toBeVisible();
+ const handoff=page.getByRole('region',{name:/Continue to live investigation/i});
+ await expect(handoff).toContainText('Durable server profile: false');
+ await expect(handoff).toContainText('Production writes: false');
+ await expect(handoff).toContainText(/IL-21|Systemic sclerosis|autoimmune/i);
+ await handoff.getByRole('link',{name:/Open (live investigation|workspace with this profile)/i}).click();
+ await expect(page).toHaveURL(/\/research\/workspace\?from=profile/);
+ await expect(page.locator('#ws-ask-strip')).toContainText('Profile handoff');
+ await expect(page.locator('#ws-ask-strip')).toContainText('durable server profile claimed: false');
+ await expect(page.locator('#ws-ask-strip')).toContainText('production writes: false');
+});
+
+test('welcome finish can open the live workspace directly without auto-run',async({page})=>{
+ await noApi(page);
+ await page.route('**/api/research/live-investigation',r=>r.fulfill({status:500,json:{error:'should not auto-run'}}));
+ await page.goto('/welcome');
+ await page.getByRole('button',{name:'Fill in an example'}).click();
+ await page.getByRole('button',{name:'Next'}).click();
+ await page.getByRole('button',{name:'Next'}).click();
+ await page.getByRole('button',{name:'Next'}).click();
+ await page.getByRole('button',{name:'Finish and open live investigation'}).click();
+ await expect(page).toHaveURL(/\/research\/workspace\?from=profile/);
+ await expect(page.getByRole('button',{name:'Run live investigation'})).toBeVisible();
+ await expect(page.locator('#ws-ask-strip')).toContainText('Nothing starts until you press Run');
 });
 
 test('appearance menu switches mode and accent and survives reload; light and dark pass axe',async({page})=>{

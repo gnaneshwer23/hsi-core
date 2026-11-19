@@ -2,6 +2,11 @@ import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 const item={id:'hsi-interrogative-abcdef123456',question:'Which cytokines recur across autoimmune conditions?',createdAt:'2026-11-10T10:00:00.000Z',state:'awaiting_scientific_review'};
 const saved=(page:any,status:number,body:unknown)=>page.route('**/api/research/investigations',(r:any)=>r.fulfill({status,json:body}));
+const openLocalMetrics=async(page:any)=>{
+ const fold=page.locator('#rh-metrics');
+ if(!(await fold.getAttribute('open')))await fold.locator('> summary').click();
+ await expect(fold).toHaveAttribute('open','');
+};
 
 test('first-time researcher: onboarding, interests persist, grounded recommendations, no sign-in needed',async({page})=>{
  await saved(page,401,{code:'BACKEND_PROVIDER_SESSION_REQUIRED'});
@@ -41,6 +46,126 @@ test('onboarding can be skipped and the page stays usable',async({page})=>{
  await expect(page.locator('#rh-q')).toBeVisible();
 });
 
+test('alert preference card keeps live delivery off and records local cadence changes',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const alerts=page.getByRole('region',{name:/Research update preference/i});
+ await expect(alerts).toContainText('preference only: true');
+ await expect(alerts).toContainText('live delivery: false');
+ await expect(alerts).toContainText('email claimed: false');
+ await expect(alerts).toContainText('invents open rates: false');
+ await expect(alerts).toContainText('production writes: false');
+ await alerts.getByRole('button',{name:'Weekly',exact:true}).click();
+ await expect(alerts).toContainText('Cadence preference: weekly');
+ await expect(alerts).toContainText('Preference engagement (this browser): 1 change');
+ await expect(alerts).toContainText('Not an email open-rate metric');
+});
+
+test('first useful investigation card stays unreached without inventing conversion',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const first=page.getByRole('region',{name:/First useful investigation/i});
+ await expect(first).toContainText('invents aggregate conversion: false');
+ await expect(first).toContainText('invents activation funnel: false');
+ await expect(first).toContainText('journey complete claimed: false');
+ await expect(first).toContainText('pilot conversion claimed: false');
+ await expect(first).toContainText('Rate an investigation as Useful');
+});
+
+test('repeat usage card stays unreached without inventing retention metrics',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const repeat=page.getByRole('region',{name:/Repeat usage \(this device\)/i});
+ await expect(repeat).toContainText('invents retention metrics: false');
+ await expect(repeat).toContainText('invents aggregate conversion: false');
+ await expect(repeat).toContainText('journey complete claimed: false');
+ await expect(repeat).toContainText('pilot conversion claimed: false');
+ await expect(repeat).toContainText('Reopen a browser-saved investigation');
+});
+
+test('willingness to pay card stays unreached without inventing revenue or checkout',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const wtp=page.getByRole('region',{name:/Willingness to pay \(this device\)/i});
+ await expect(wtp).toContainText('invents aggregate conversion: false');
+ await expect(wtp).toContainText('invents revenue: false');
+ await expect(wtp).toContainText('checkout enabled: false');
+ await expect(wtp).toContainText('journey complete claimed: false');
+ await expect(wtp).toContainText('pilot conversion claimed: false');
+ await expect(wtp).toContainText('State Yes / No / Maybe');
+});
+
+test('activation card stays unreached without inventing an activation funnel',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
+ await expect(activation).toContainText('invents activation funnel: false');
+ await expect(activation).toContainText('invents aggregate conversion: false');
+ await expect(activation).toContainText('journey complete claimed: false');
+ await expect(activation).toContainText('pilot conversion claimed: false');
+ await expect(activation).toContainText('Run a live investigation to mark the first activation');
+});
+
+test('local journey metrics fold keeps conversion claims off by default',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ const fold=page.locator('#rh-metrics');
+ await expect(fold.locator('> summary')).toContainText('Local journey metrics');
+ await expect(fold.locator('> summary')).toContainText('not conversion');
+ await expect(fold).not.toHaveAttribute('open','');
+ await openLocalMetrics(page);
+ await expect(page.getByRole('region',{name:/Activation \(this device\)/i})).toBeVisible();
+});
+
+test('pilot readiness honesty stays unready and lists blocked owner gates',async({page})=>{
+ await saved(page,401,{});
+ await page.addInitScript(()=>localStorage.setItem('hsi-research-profile-v1',JSON.stringify({
+  v:1,role:'Research scientist',stage:null,background:'x',question:'Why does IL-21 differ?',
+  orcid:null,papers:[],cadence:'off',goals:[],interests:['Immunology'],followed:[],dismissed:[],onboarded:true,
+ })));
+ await page.goto('/research/home');
+ await openLocalMetrics(page);
+ const pilot=page.getByRole('region',{name:/Pilot readiness \(honesty\)/i});
+ await expect(pilot).toContainText('invents pilot ready: false');
+ await expect(pilot).toContainText('invents pilot conversion: false');
+ await expect(pilot).toContainText('journey complete claimed: false');
+ await expect(pilot).toContainText('pilot ready claimed: false');
+ await expect(pilot).toContainText('storage available: true');
+ await expect(pilot).toContainText('Local signals 0 done · 4 readable of 4');
+ await expect(pilot.getByRole('list',{name:/Local pilot-prep signals/i})).toContainText('Activation');
+ await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Staging researcher grants');
+ await expect(pilot.getByRole('list',{name:/Blocked pilot gates/i})).toContainText('Production writes');
+});
+
 test('cross-domain search returns typed graph concepts, follows, previews and opens the graph',async({page})=>{
  await saved(page,401,{});
  await page.goto('/research/home');
@@ -63,7 +188,7 @@ test('a complex question offers live investigation as primary and save-for-revie
  await page.getByRole('button',{name:'Skip for now'}).click();
  await page.locator('#rh-q').fill('How do microbial metabolites influence immune signalling and brain inflammation?');
  await expect(page.getByText('This reads as a research question')).toBeVisible();
- await expect(page.getByRole('link',{name:/Open live investigation|Deep Investigate: run live/})).toHaveAttribute('href','/research/workspace');
+ await expect(page.getByRole('link',{name:/Deep Investigate: run live|Open live investigation/}).first()).toHaveAttribute('href','/research/workspace');
  await page.getByRole('link',{name:'Save question for review'}).click();
  await expect(page).toHaveURL(/\/research\/dashboard\?q=/);
  await expect(page.locator('#research-question')).toHaveValue(/microbial metabolites/);

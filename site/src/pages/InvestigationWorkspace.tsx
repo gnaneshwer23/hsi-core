@@ -1,7 +1,5 @@
 import {useEffect,useMemo,useRef,useState} from "react";
 import {Link,useLocation} from "react-router-dom";
-import {renderLiveBriefMarkdown} from "../../../src/investigation/liveBrief";
-import {exportLiveBriefV2,renderLiveBriefV2Markdown} from "../../../src/investigation/liveBriefV2";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import {deriveRunGaps} from "../../../src/investigation/runGaps";
@@ -16,13 +14,68 @@ import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
 import {liveClaimToPassportEdge} from "../../../src/investigation/liveClaimPassportEdge";
 import {liveInvestigationPassportEdges,liveInvestigationPassportSources} from "../../../src/investigation/liveBriefPassport";
 import {COMPARISON_OUTCOME_LABEL} from "../../../src/investigation/liveBriefComparison";
+import {buildLiveBriefPreview} from "../../../src/investigation/liveBriefPreview";
+import {
+  buildUspADisagreementTrail,
+  comparisonPairKey,
+  type UspATrailStepId,
+} from "../../../src/investigation/uspADisagreementTrail";
+import {
+  buildUspBCrossDomainTrail,
+  buildUspBPathViews,
+  defaultTargetDepartment,
+  matchRunLabelsToGraphNodes,
+  suggestCrossDomainStarts,
+  summarizeDepartments,
+  type UspBTrailStepId,
+} from "../../../src/investigation/uspBCrossDomainTrail";
+import {
+  buildUspCConnectedTrail,
+  type UspCTrailStepId,
+} from "../../../src/investigation/uspCConnectedTrail";
+import {
+  buildUnifiedJourneyTrail,
+  type UnifiedJourneyStepId,
+} from "../../../src/investigation/unifiedJourneyTrail";
+import {
+  buildCuratedDisagreementPack,
+  type CuratedDisagreementCaseId,
+} from "../../../src/investigation/curatedDisagreementPack";
+import {
+  buildProfileWorkspaceHandoff,
+  markHandoffOnWorkspace,
+} from "../../../src/investigation/profileWorkspaceHandoff";
+import {buildTestableNextQuestions} from "../../../src/investigation/testableNextQuestions";
+import {buildStage2CompletionChecklist} from "../../../src/investigation/stage2CompletionChecklist";
+import {buildBlockedJourneySteps} from "../../../src/investigation/blockedJourneyStepsHonesty";
+import {
+  getUsefulnessForBrief,
+  loadResearcherUsefulnessStore,
+} from "../../../src/investigation/researcherUsefulnessFeedback";
+import {matchScenario} from "../../../src/investigation/scenarios";
+import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
+import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
+import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
+import {UspADisagreementPanel} from "../components/workspace/UspADisagreementPanel";
+import {CuratedDisagreementPackPanel} from "../components/workspace/CuratedDisagreementPackPanel";
+import {UspBCrossDomainTrail} from "../components/workspace/UspBCrossDomainTrail";
+import {UspBCrossDomainPanel} from "../components/workspace/UspBCrossDomainPanel";
+import {UspCConnectedTrail} from "../components/workspace/UspCConnectedTrail";
+import {UspCConnectedPanel} from "../components/workspace/UspCConnectedPanel";
+import {UnifiedJourneyTrail} from "../components/workspace/UnifiedJourneyTrail";
+import {LiveBriefDecisionPanel} from "../components/workspace/LiveBriefDecisionPanel";
+import {ResearcherUsefulnessPanel} from "../components/workspace/ResearcherUsefulnessPanel";
+import {TestableNextQuestionsPanel} from "../components/workspace/TestableNextQuestionsPanel";
+import {Stage2CompletionChecklistPanel} from "../components/workspace/Stage2CompletionChecklistPanel";
+import {BlockedJourneyStepsPanel} from "../components/workspace/BlockedJourneyStepsPanel";
+import {loadDomainGraph} from "../lib/claimGraphClient";
+import {EMPTY_PROFILE,loadProfile,type Profile} from "../lib/researchHome";
 import {BUCKET_LABEL,bucketOf,buildGraph,counts,filterCandidates,headline,stageRail,yearOf,type Bucket,type Cand,type EdgeState,type Run} from "../lib/workspaceView";
 import "../styles/investigation-workspace-app.css";
 
 const QUESTION="Why might IL-21 signalling have different biological consequences across autoimmune disease contexts?";
 const DIR:Record<string,string>={positive:"Positive",negative:"Negative",none:"No relationship",association_only:"Linked, direction not stated",unresolved:"Unresolved",not_assessed:"Not assessed"};
 const EDGE:Record<EdgeState,string>={supporting:"Supporting",opposing:"Opposing",disputed:"Disputed",unassessed:"Not assessed"};
-function download(name:string,text:string,type:string){const u=URL.createObjectURL(new Blob([text],{type}));const a=document.createElement("a");a.href=u;a.download=name;a.click();URL.revokeObjectURL(u)}
 
 function Rail({run,running}:{run:Run|null;running:boolean}){
  return <ol className="ws-rail" aria-label="Investigation stages, as recorded by the run">{stageRail(run,running).map((s,i)=>(
@@ -57,8 +110,35 @@ function GraphView({run,pair,onPair}:{run:Run;pair:string|null;onPair:(p:string|
 export function InvestigationWorkspacePage(){
  const lr=useLiveRun(),{run,state}=lr,loc=useLocation();
  const [bucket,setBucket]=useState<Bucket|"all">("all"),[pair,setPair]=useState<string|null>(null),[sel,setSel]=useState<string|null>(null),[brief,setBrief]=useState(false),[sources,setSources]=useState(false),[saved,setSaved]=useState(false);
+ const [usefulnessTick,setUsefulnessTick]=useState(0);
+ const [cmpKey,setCmpKey]=useState<string|null>(null);
+ const [bundle,setBundle]=useState<DomainBundle|null>(null);
+ const [graphError,setGraphError]=useState<string|null>(null);
+ const [crossStart,setCrossStart]=useState<string|null>(null);
+ const [crossTarget,setCrossTarget]=useState<DepartmentSlug>("neuroscience");
+ const [crossPathIndex,setCrossPathIndex]=useState<number|null>(null);
+ const [curatedCaseId,setCuratedCaseId]=useState<CuratedDisagreementCaseId|null>(null);
+ const [profile,setProfile]=useState<Profile>(EMPTY_PROFILE);
  const first=useRef(true);
- useEffect(()=>{setSaved(lr.hasSaved());if(first.current){first.current=false;if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen()}},[]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{
+  setSaved(lr.hasSaved());
+  lr.refreshLibrary();
+  setProfile(loadProfile());
+  if(first.current){
+   first.current=false;
+   if(new URLSearchParams(loc.search).get("reopen")==="1")lr.reopen();
+  }
+ },[]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{if(run&&(run.structuredComparison?.pairCount??0)>0)setBrief(true)},[run?.briefHash]); // eslint-disable-line react-hooks/exhaustive-deps
+ useEffect(()=>{
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),12000);
+  setGraphError(null);
+  loadDomainGraph(null,c.signal)
+   .then((g)=>{setBundle(g);setGraphError(null)})
+   .catch(()=>{if(!c.signal.aborted){setBundle(null);setGraphError("The cross-domain snapshot could not be verified.")}})
+   .finally(()=>clearTimeout(t));
+  return()=>{c.abort();clearTimeout(t)};
+ },[]);
  const c=run?counts(run):null,h=run?headline(run):null;
  const runGaps=useMemo(()=>run?deriveRunGaps(run):[],[run]),gapTrack=useRunGapTracking(run?.briefHash??""),ledger=useLedger(),[ledgerMsg,setLedgerMsg]=useState("");
  const list=useMemo(()=>run?filterCandidates(run.candidates,{bucket,pair}):[],[run,bucket,pair]);
@@ -75,13 +155,208 @@ export function InvestigationWorkspacePage(){
   :null;
  const passportEdges=useMemo(()=>run?liveInvestigationPassportEdges(run):[],[run]);
  const passportSources=useMemo(()=>run?liveInvestigationPassportSources(run):[],[run]);
+ const curatedPack=useMemo(()=>bundle?buildCuratedDisagreementPack(bundle):null,[bundle]);
+ const fromProfile=new URLSearchParams(loc.search).get("from")==="profile";
+ const profileHandoff=useMemo(()=>{
+  const base=buildProfileWorkspaceHandoff({
+   onboarded:profile.onboarded,
+   question:profile.question,
+   interests:profile.interests,
+   role:profile.role,
+   cadence:profile.cadence,
+   matchedScenarioId:profile.question.trim()?matchScenario(profile.question):null,
+  });
+  return fromProfile||base.ready?markHandoffOnWorkspace(base):base;
+ },[profile,fromProfile]);
+ const briefPreview=useMemo(()=>run?buildLiveBriefPreview(run,passportEdges.length):null,[run,passportEdges.length]);
+ const uspTrail=useMemo(()=>buildUspADisagreementTrail({
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  selectedClaimId:sel,
+  selectedComparisonKey:cmpKey,
+  comparison:comparison??null,
+  briefOpen:brief,
+ }),[run,sel,cmpKey,comparison,brief]);
+ const runLabels=useMemo(()=>{
+  if(!run)return [] as string[];
+  const labels=new Set<string>();
+  for(const cand of run.candidates){labels.add(cand.subject);labels.add(cand.object)}
+  return [...labels];
+ },[run]);
+ const crossMatches=useMemo(()=>{
+  if(!bundle)return [];
+  return suggestCrossDomainStarts(matchRunLabelsToGraphNodes(bundle,runLabels));
+ },[bundle,runLabels]);
+ useEffect(()=>{
+  if(!crossMatches.length){setCrossStart(null);setCrossPathIndex(null);return}
+  const preferred=crossMatches.find(m=>m.departments.length>1)??crossMatches[0]!;
+  setCrossStart(preferred.nodeId);
+  setCrossTarget(defaultTargetDepartment(preferred));
+  setCrossPathIndex(null);
+ },[crossMatches.map(m=>m.nodeId).join("|")]); // eslint-disable-line react-hooks/exhaustive-deps
+ const crossCoverage=useMemo(()=>bundle?summarizeDepartments(bundle).departments:[],[bundle]);
+ const crossPaths=useMemo(()=>{
+  if(!bundle||!crossStart)return {result:null,paths:[] as ReturnType<typeof buildUspBPathViews>["paths"]};
+  return buildUspBPathViews(bundle,crossStart,crossTarget);
+ },[bundle,crossStart,crossTarget]);
+ useEffect(()=>{setCrossPathIndex(null)},[crossStart,crossTarget]);
+ const uspBTrail=useMemo(()=>buildUspBCrossDomainTrail({
+  hasRun:Boolean(run),
+  graphLoaded:Boolean(bundle),
+  matchedNodeCount:crossMatches.length,
+  selectedStartId:crossStart,
+  selectedTargetDepartment:crossTarget,
+  pathCount:crossPaths.paths.length,
+  selectedPathIndex:crossPathIndex,
+  gapCount:runGaps.length,
+  hypothesisCount:run?.hypotheses.items.length??0,
+  briefOpen:brief,
+ }),[run,bundle,crossMatches.length,crossStart,crossTarget,crossPaths.paths.length,crossPathIndex,runGaps.length,brief]);
+ const uspCTrail=useMemo(()=>buildUspCConnectedTrail({
+  profileOnboarded:profile.onboarded,
+  hasResearchQuestion:Boolean(profile.question.trim()),
+  interestCount:profile.interests.length,
+  alertCadence:profile.cadence,
+  hasRun:Boolean(run),
+  libraryCount:lr.library.entries.length,
+  savedThisSession:lr.savedThisSession,
+  reopenedThisSession:lr.reopenedThisSession,
+  briefOpen:brief,
+ }),[profile,run,lr.library.entries.length,lr.savedThisSession,lr.reopenedThisSession,brief]);
+ const unifiedTrail=useMemo(()=>buildUnifiedJourneyTrail({
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  selectedClaimId:sel,
+  selectedComparisonKey:cmpKey,
+  comparisonPairCount:comparison?.pairCount??0,
+  crossDomainPathCount:crossPaths.paths.length,
+  graphLoaded:Boolean(bundle),
+  gapCount:runGaps.length,
+  briefOpen:brief,
+  libraryCount:lr.library.entries.length,
+  savedThisSession:lr.savedThisSession,
+ }),[run,sel,cmpKey,comparison,crossPaths.paths.length,bundle,runGaps.length,brief,lr.library.entries.length,lr.savedThisSession]);
+ const testableQuestions=useMemo(()=>buildTestableNextQuestions({
+  gaps:runGaps,
+  hypotheses:run?.hypotheses.items??[],
+  hypothesesStatus:run?.hypotheses.status??"not_configured",
+ }),[runGaps,run]);
+ const usefulnessRated=useMemo(()=>{
+  if(!run?.briefHash)return false;
+  const store=loadResearcherUsefulnessStore(typeof localStorage!=="undefined"?localStorage:null);
+  return Boolean(getUsefulnessForBrief(store,run.briefHash));
+ },[run?.briefHash,usefulnessTick]);
+ const stage2Checklist=useMemo(()=>buildStage2CompletionChecklist({
+  briefHash:run?.briefHash??null,
+  hasRun:Boolean(run),
+  candidateCount:run?.candidates.length??0,
+  hasPassportOrDisagreement:Boolean(sel)||Boolean(cmpKey),
+  hasGapsOrTestable:runGaps.length>0||testableQuestions.items.length>0,
+  briefAvailable:Boolean(briefPreview),
+  savedOrReopened:lr.savedThisSession||lr.reopenedThisSession||lr.library.entries.length>0,
+  usefulnessRated,
+ }),[run,sel,cmpKey,runGaps.length,testableQuestions.items.length,briefPreview,lr.savedThisSession,lr.reopenedThisSession,lr.library.entries.length,usefulnessRated]);
+ const blockedJourneySteps=useMemo(()=>buildBlockedJourneySteps({
+  briefHash:run?.briefHash??null,
+  libraryCount:lr.library.entries.length,
+  reopenedThisSession:lr.reopenedThisSession,
+ }),[run?.briefHash,lr.library.entries.length,lr.reopenedThisSession]);
+ const openUspPanelsFold=()=>{
+  const el=document.getElementById("ws-usp-panels") as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
+ const openGapsTestableFold=()=>{
+  const el=document.getElementById("ws-gaps-testable") as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
+ const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
+  if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"||id==="passport_or_disagreement"){
+   if(id==="passport_or_disagreement"&&cmpKey){
+    openUspPanelsFold();
+    document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+    return;
+   }
+   document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="gaps_or_testable"){
+   openGapsTestableFold();
+   document.getElementById("ws-tq-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="save_or_reopen"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="usefulness"){document.getElementById("ws-useful-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
+ const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="disagreement"){
+   openUspPanelsFold();
+   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="crossDomain"){
+   openUspPanelsFold();
+   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="gaps"){
+   openGapsTestableFold();
+   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
+ const onTrailSelect=(id:UspATrailStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="evidence"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="passport"){document.getElementById("ws-vf-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="disagreement"){
+   openUspPanelsFold();
+   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   if(!cmpKey&&comparison&&comparison.items[0])setCmpKey(comparisonPairKey(comparison.items[0]));
+   return;
+  }
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
+ const onUspBTrailSelect=(id:UspBTrailStepId)=>{
+  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  if(id==="domains"||id==="pathways"){
+   openUspPanelsFold();
+   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   if(id==="pathways"&&crossPathIndex===null&&crossPaths.paths[0])setCrossPathIndex(0);
+   return;
+  }
+  if(id==="gaps"){
+   openGapsTestableFold();
+   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
+ const onUspCTrailSelect=(id:UspCTrailStepId)=>{
+  if(id==="profile"||id==="save"||id==="reopen"){
+   document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+   return;
+  }
+  if(id==="workspace"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
+  setBrief(true);
+  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
+ };
  return (
   <ResearchAppShell where="Investigation workspace" whereIcon="flask" active="investigations">
    <main className="ws" id="rh-main" tabIndex={-1}>
     <nav className="ws-crumb" aria-label="Breadcrumb"><Link to="/research/home">Research Home</Link><span aria-hidden="true">/</span><span>Live investigation</span></nav>
     <header className="ws-head">
      <div className="ws-title">
-      <span className="ws-tag">Research investigation · live sources</span>
+      <span className="ws-tag">USP A · USP B · USP C · Research investigation · live sources</span>
       <h1>{run?.question??QUESTION}</h1>
       <div className="ws-chips" aria-label="Disease contexts">{run?Object.values(run.byContext).map(b=><span key={b.label}>{b.label}</span>):<span>Rheumatoid arthritis</span>}{!run&&<><span>Systemic lupus erythematosus</span><span>Systemic sclerosis</span></>}</div>
      </div>
@@ -92,8 +367,8 @@ export function InvestigationWorkspacePage(){
        {state==="idle"&&run&&<><b>Run complete</b><p>{run.verification.status==="not_configured"?"The model check did not run: "+(run.verification.reason??""):`${h!.checked} of ${h!.candidates} candidates checked by two models. Candidate-only, unreviewed.`}</p></>}
        {state==="error"&&<p className="ws-err" role="alert">{lr.error} No findings were generated.</p>}
       </div>
-      <div className="ws-actions">
-       <button type="button" className="ws-run" onClick={()=>{setSel(null);setPair(null);setBucket("all");void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
+       <div className="ws-actions">
+       <button type="button" className="ws-run" onClick={()=>{setSel(null);setPair(null);setCmpKey(null);setBucket("all");void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
        {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen saved run</button>}
       </div>
      </section>
@@ -101,6 +376,54 @@ export function InvestigationWorkspacePage(){
       <div><dt>Sources</dt><dd>{h?h.sources:"—"}</dd></div><div><dt>Candidates</dt><dd>{h?h.candidates:"—"}</dd></div><div><dt>Key findings</dt><dd>{h?h.findings:"—"}</dd></div>
      </dl>
     </header>
+    <section className="ws-ask-strip" id="ws-ask-strip" aria-labelledby="ws-ask-h">
+     <h2 id="ws-ask-h">Ask</h2>
+     <p className="ws-muted">
+      Start from Research Home Ask, or run the default IL-21 cross-context question here.
+      Disease chips below are demonstration scenarios — HSI is disease-agnostic.
+     </p>
+     {profileHandoff.ready?(
+      <div className="ws-ask-handoff" role="status">
+       <p className="ws-muted">
+        Profile handoff · device-local · durable server profile claimed:{" "}
+        {String(profileHandoff.honesty.serverProfileDurableClaimed)} · production writes:{" "}
+        {String(profileHandoff.honesty.productionWritesEnabled)}
+       </p>
+       {profileHandoff.question?<p><b>{profileHandoff.question}</b></p>:null}
+       {profileHandoff.interestLabels.length>0?(
+        <p className="ws-muted">Focus: {profileHandoff.interestLabels.join(", ")}</p>
+       ):null}
+       <p className="ws-muted">{profileHandoff.note}</p>
+      </div>
+     ):(
+      <p className="ws-muted">
+       No onboarded profile yet. <Link to="/welcome">Tell us what you work on</Link> so interests
+       hand off into this workspace.
+      </p>
+     )}
+     <div className="ws-actions">
+      <Link className="ws-btn" to="/research/home">Open Ask on Research Home</Link>
+      <Link className="ws-btn" to="/welcome">Edit profile setup</Link>
+      {saved&&<button type="button" className="ws-btn" onClick={()=>lr.reopen()}>Reopen browser-saved run</button>}
+     </div>
+    </section>
+    <UnifiedJourneyTrail steps={unifiedTrail.steps} onSelect={onUnifiedTrailSelect}/>
+    <details className="ws-usp-focus" id="ws-stage2-exit">
+     <summary>
+      Stage 2 exit · checklist &amp; blocked 12–13 — journey complete claimed: false · org sharing: false · not scientific approval
+     </summary>
+     <Stage2CompletionChecklistPanel checklist={stage2Checklist} onSelectItem={onStage2ChecklistSelect}/>
+     <BlockedJourneyStepsPanel
+      pack={blockedJourneySteps}
+      onOpenLibrary={()=>document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"})}
+     />
+    </details>
+    <details className="ws-usp-focus">
+     <summary>USP focus trails (A · B · C)</summary>
+     <UspADisagreementTrail steps={uspTrail.steps} onSelect={onTrailSelect}/>
+     <UspBCrossDomainTrail steps={uspBTrail.steps} onSelect={onUspBTrailSelect}/>
+     <UspCConnectedTrail steps={uspCTrail.steps} onSelect={onUspCTrailSelect}/>
+    </details>
     <Rail run={state==="running"?null:run} running={state==="running"}/>
     <HowProducedPanel
      className="rh-trace ws-produced"
@@ -154,23 +477,18 @@ export function InvestigationWorkspacePage(){
        )}
        <details className="ws-acc" open><summary><Icon name="check" size={16}/>Evidence <b>{supporting.length}</b></summary><p>Claims both checks agreed on as positive. {supporting.length===0&&"None in this run."}</p><ul>{supporting.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
        <details className="ws-acc"><summary><Icon name="x" size={16}/>Opposing / disputed checks <b>{opposing.length}</b></summary><p>{run.verification.status==="not_configured"?"Not assessed: the model check did not run.":opposing.length===0?"None found in these sources. This does not establish consensus.":"Opposing polarity or disputed model checks — not structured contradiction classes."}</p><ul>{opposing.map(x=><li key={x.id}><button type="button" onClick={()=>setSel(x.id)}>{x.subject} ~ {x.object}</button></li>)}</ul></details>
-       <details className="ws-acc" open={(comparison?.pairCount??0)>0}><summary><Icon name="layers" size={16}/>Structured comparison <b>{comparison?.pairCount??0}</b></summary>
-        <p>Pairwise comparison of claims that share a subject–object relation. Verification is bound before contradiction language. Potential contradiction is not proven contradiction.</p>
-        {!comparison||comparison.pairCount===0?<p className="ws-muted">No comparable pairs in this run (need at least two candidates on the same relation).</p>:<>
-         <p className="ws-muted">Consistent {comparison.summary.consistent} · Context-dependent {comparison.summary.contextDependent} · Method difference {comparison.summary.methodologicalDifference} · Insufficient comparability {comparison.summary.insufficientComparability} · Insufficient evidence {comparison.summary.insufficientEvidence} · Potential contradiction (candidate) {comparison.summary.potentialContradiction}</p>
-         <ul>{comparison.items.map(item=>(
-          <li key={`${item.leftId}:${item.rightId}`}>
-           <b>{COMPARISON_OUTCOME_LABEL[item.outcome]}</b>
-           <span className="ws-muted"> — {item.leftLabel} vs {item.rightLabel}</span>
-           <div className="ws-row-actions">
-            <button type="button" onClick={()=>setSel(item.leftId)}>Open left claim</button>
-            <button type="button" onClick={()=>setSel(item.rightId)}>Open right claim</button>
-           </div>
-           {item.verificationBindNote&&<p className="ws-warn">{item.verificationBindNote}</p>}
-          </li>
-         ))}</ul>
-        </>}
-       </details>
+       <div className="ws-acc ws-acc-static" role="note">
+        <p><Icon name="layers" size={16}/> Structured comparison <b>{comparison?.pairCount??0}</b></p>
+        <p className="ws-muted">Pairwise outcomes live in the USP A panel below. Verification is bound before contradiction language.</p>
+        {(comparison?.pairCount??0)>0&&(
+         <button type="button" className="ws-btn" onClick={()=>onTrailSelect("disagreement")}>
+          Open why-findings-differ
+         </button>
+        )}
+        {comparison&&comparison.items[0]&&(
+         <p className="ws-muted">Example: {COMPARISON_OUTCOME_LABEL[comparison.items[0].outcome]} — {comparison.items[0].leftLabel} vs {comparison.items[0].rightLabel}</p>
+        )}
+       </div>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
          <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
@@ -192,28 +510,115 @@ export function InvestigationWorkspacePage(){
          setSel(id);
         }}
        />
-       <details className="ws-acc"><summary><Icon name="book" size={16}/>Research brief</summary><p>An evidence-linked record of this run with passport columns, verification status and limits. Abstracts are not included.</p></details>
-       <button type="button" className="ws-run ws-wide" onClick={()=>setBrief(b=>!b)} aria-expanded={brief}>{brief?"Hide research brief":"Open research brief"} <Icon name="arrow" size={16}/></button>
-       {brief&&<pre className="ws-brief" tabIndex={0} aria-label="Research brief text">{renderLiveBriefMarkdown(run)}</pre>}
-       <div className="ws-export">
-        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-brief.md",renderLiveBriefMarkdown(run),"text/markdown")}>Export brief (Markdown)</button>
-        <button type="button" className="ws-btn" onClick={()=>download("hsi-live-investigation.json",JSON.stringify(run,null,2),"application/json")}>Export JSON</button>
-        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.json",JSON.stringify(brief,null,2),"application/json")}}>Export Brief v2 (JSON)</button>
-        <button type="button" className="ws-btn" onClick={()=>{const brief=exportLiveBriefV2(run);download("hsi-live-brief-v2.md",renderLiveBriefV2Markdown(brief),"text/markdown")}}>Export Brief v2 (Markdown)</button>
-        <button type="button" className="ws-btn" onClick={()=>{lr.save();setSaved(true)}}>Save in this browser</button>
-       </div>
        {lr.note&&<p className="ws-muted" role="status">{lr.note}</p>}
        <p className="ws-muted">Model agreement is not scientific proof. {run.verification.independence==="independent_execution_only"?"Both checks ran on one provider (independent execution only).":""}</p>
       </>}
      </section>
     </div>
-    <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
-     <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
-     {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>
-      <RunGapList gaps={runGaps} track={gapTrack.track} onSet={(id,s,n)=>gapTrack.set(id,s,n,runGaps.find(g=>g.id===id)?.candidateIds.length??0)}/>
-      {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
-      <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
-    </section>
+
+    <details className="ws-usp-focus" id="ws-usp-panels">
+     <summary>USP focus panels (A · B · curated) — not journey complete · not scientific approval</summary>
+     {run&&comparison?(
+      <UspADisagreementPanel
+       run={run}
+       comparison={comparison}
+       selectedKey={cmpKey}
+       onSelectPair={(key)=>{setCmpKey(key);if(key){const item=comparison.items.find(i=>comparisonPairKey(i)===key);if(item)setSel(item.leftId)}}}
+       onSelectClaim={setSel}
+       ctxLabel={ctxLabel}
+      />
+     ):run?(
+      <section className="ws-card ws-disagree" aria-labelledby="ws-disagree-h">
+       <header><h2 id="ws-disagree-h">Why findings may differ</h2></header>
+       <p className="ws-muted">Structured comparison will appear when this run has at least two candidates on the same relation.</p>
+      </section>
+     ):null}
+
+     <CuratedDisagreementPackPanel
+      pack={curatedPack}
+      selectedId={curatedCaseId}
+      onSelect={setCuratedCaseId}
+      graphError={graphError}
+     />
+
+     <UspBCrossDomainPanel
+      bundle={bundle}
+      coverage={crossCoverage}
+      matches={crossMatches}
+      startId={crossStart}
+      targetDepartment={crossTarget}
+      pathStatus={crossPaths.result?.status??null}
+      paths={crossPaths.paths}
+      selectedPathIndex={crossPathIndex}
+      gapCount={runGaps.length}
+      hypothesisCount={run?.hypotheses.items.length??0}
+      graphError={graphError}
+      onSelectStart={(id)=>{setCrossStart(id);setCrossPathIndex(null)}}
+      onSelectTarget={(slug)=>{setCrossTarget(slug);setCrossPathIndex(null)}}
+      onSelectPath={setCrossPathIndex}
+      onOpenGaps={()=>{
+       openGapsTestableFold();
+       document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+      }}
+      onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
+     />
+    </details>
+
+    <UspCConnectedPanel
+     profile={profile}
+     library={lr.library.entries}
+     savedThisSession={lr.savedThisSession}
+     reopenedThisSession={lr.reopenedThisSession}
+     hasRun={Boolean(run)}
+     onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
+     onReopen={(id)=>{lr.reopenFromLibrary(id);setSaved(lr.hasSaved())}}
+     onOpenBrief={()=>{setBrief(true);document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"})}}
+    />
+
+    {run&&briefPreview?(
+     <LiveBriefDecisionPanel
+      run={run}
+      preview={briefPreview}
+      passportEdges={passportEdges}
+      passportSources={passportSources}
+      markdownOpen={brief}
+      onToggleMarkdown={()=>setBrief(b=>!b)}
+      onInspectEdge={(edgeId)=>{
+       const id=edgeId.startsWith("live-claim:")?edgeId.slice("live-claim:".length):edgeId;
+       setSel(id);
+      }}
+      onSave={()=>{lr.save();setSaved(lr.hasSaved())}}
+     />
+    ):null}
+
+    <ResearcherUsefulnessPanel
+     briefHash={run?.briefHash??null}
+     question={run?.question??QUESTION}
+     onRated={()=>setUsefulnessTick((n)=>n+1)}
+    />
+
+    <details className="ws-usp-focus" id="ws-gaps-testable">
+     <summary>
+      Gaps & testable questions — invents experiments: false · recommends action: false · not
+      scientific approval
+     </summary>
+     <section className="ws-card ws-gaps" aria-labelledby="ws-gp-h">
+      <header><h2 id="ws-gp-h"><Icon name="layers" size={18}/>Gaps in this run <small>({run?runGaps.length:"none yet"})</small></h2></header>
+      {!run?<p className="ws-muted">Gaps appear after a run. They are derived from the run itself, not generated, and a limit of the search is shown apart from a gap in the science.</p>:<>
+       <RunGapList gaps={runGaps} track={gapTrack.track} onSet={(id,s,n)=>gapTrack.set(id,s,n,runGaps.find(g=>g.id===id)?.candidateIds.length??0)}/>
+       {gapTrack.blocked&&<p className="ws-err" role="status">This browser blocked local storage, so your status was not kept.</p>}
+       <p className="ws-muted">Status is kept in this browser only. <a href="/research/gaps">Open the Gap Register</a></p></>}
+     </section>
+
+     <TestableNextQuestionsPanel
+      pack={testableQuestions}
+      onInspectClaim={(id)=>setSel(id)}
+      onOpenGaps={()=>{
+       openGapsTestableFold();
+       document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
+      }}
+     />
+    </details>
    </main>
   </ResearchAppShell>
  );
