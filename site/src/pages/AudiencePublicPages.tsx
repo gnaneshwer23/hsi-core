@@ -402,7 +402,7 @@ export function ValidationPublicPage() {
       <LandingHero
         eyebrow="Scientific Validation"
         title="How evidence quality is separated from approval."
-        description="Validation here means methodology and governance: how HSI keeps observation, interpretation, verification and publication apart. It is not a claim that HSI outperforms peers or that gold standards are complete."
+        description="Validation here means methodology and governance: how HSI keeps observation, interpretation, verification and publication apart. It is not a claim of superiority over peers or that gold standards are complete."
       >
         <LandingPrimaryCta to="/validation#methodology">View methodology</LandingPrimaryCta>
         <LandingSecondaryCta to="/trust">Full trust and governance</LandingSecondaryCta>

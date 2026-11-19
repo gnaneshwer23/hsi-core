@@ -41,8 +41,8 @@ test("Stage 2 audience menu lists the six indexed destinations", async ({ page }
     ["/laboratories", "Laboratories"],
     ["/research-community", "Research Community"],
   ] as const) {
-    // Links include a <small> note, so accessible name is not exact label-only.
-    await expect(menu.getByRole("link", { name: new RegExp(`^${name}`) })).toHaveAttribute(
+    // NavLink uses role="menuitem"; accessible name includes the <small> note.
+    await expect(menu.getByRole("menuitem", { name: new RegExp(`^${name}`) })).toHaveAttribute(
       "href",
       href,
     );
