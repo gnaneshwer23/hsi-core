@@ -28,7 +28,7 @@ Visitors read primary literature and weigh methods, species, tissue, cell state 
 - Undecided: whether a public pilot, pricing or case-study content will ever exist. None exists now.
 
 ## Brand Commitments
-Name: Human Super Intelligence (HSI). Typeface: Host Grotesk Variable only. Public visual world (canon, Causaly + Benchling craft bar, 20 November 2026): cool near-white ground (`#F4F5F8`), navy ink (`#101F33`), one electric indigo accent (`#3C1FFA`), light typography-led heroes, product UI as proof — not pastel marketing tiles, not burgundy Stage-2 heroes, not dark-purple inset hero cards. Honesty labels are part of the brand: "Research preview", "candidate-only", "unreviewed", "illustrative", "no clinical advice".
+Name: Human Super Intelligence (HSI). Typeface: Host Grotesk Variable only. Public visual world (canon, Causaly + Benchling + Alta craft bar, 20 November 2026): cool near-white ground (`#F4F5F8`), navy ink (`#101F33`), one electric indigo accent (`#3C1FFA`), light typography-led heroes with dense chrome-framed product proof — not pastel marketing tiles, not burgundy Stage-2 heroes, not dark-purple inset hero cards. Honesty labels are part of the brand: "Research preview", "candidate-only", "unreviewed", "illustrative", "no clinical advice".
 
 ## Evidence on Hand
 - A published, digest-verified graph snapshot (currently 153 concepts, 95 source-candidate relationships, 9 gaps, 75 sources, 0 reviewed), read at runtime.

@@ -9,6 +9,7 @@ import {
   LandingHero,
   LandingPage,
   LandingPrimaryCta,
+  LandingProofChrome,
   LandingSecondaryCta,
   LandingSection,
 } from "../components/landing/LandingPrimitives";
@@ -53,6 +54,43 @@ export function ResearchersPublicPage() {
       <LandingHero
         title="Researchers: personal scientific intelligence with context, not just citations."
         description="HSI connects published evidence to experimental context and uncertainty so you can see what is known, what conflicts, and what to investigate next — without treating a model answer as approved biology."
+        proof={
+          <LandingProofChrome
+            title="Investigation path"
+            badge="Research preview · candidate-only"
+          >
+            <ol className="s2-proof-steps" aria-label="Investigation path preview">
+              <li>
+                <span>01</span>
+                <div>
+                  <strong>Frame the question</strong>
+                  <p>Match concepts on the published graph.</p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <strong>Retrieve evidence</strong>
+                  <p>Query permitted public sources with a run trace.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <strong>Compare context</strong>
+                  <p>Abstain when model, tissue or dose differ.</p>
+                </div>
+              </li>
+              <li>
+                <span>04</span>
+                <div>
+                  <strong>Leave a brief</strong>
+                  <p>State support, gaps and what a human must decide.</p>
+                </div>
+              </li>
+            </ol>
+          </LandingProofChrome>
+        }
       >
         <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
         <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>

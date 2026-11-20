@@ -31,6 +31,7 @@ export function LandingHero({
   title,
   description,
   children,
+  proof,
   id = "page-title",
 }: {
   /** @deprecated Eyebrows are banned on public landings; ignored if passed. */
@@ -38,16 +39,47 @@ export function LandingHero({
   title: string;
   description: string;
   children?: ReactNode;
+  /** Optional product-proof chrome for denser first viewports. */
+  proof?: ReactNode;
   id?: string;
 }) {
   return (
-    <header className="s2-hero">
+    <header className={`s2-hero${proof ? " s2-hero-proof" : ""}`}>
       <div className="s2-wrap">
-        <h1 id={id}>{title}</h1>
-        <p className="s2-lead">{description}</p>
-        {children ? <div className="s2-cta-row">{children}</div> : null}
+        <div className="s2-hero-copy">
+          <h1 id={id}>{title}</h1>
+          <p className="s2-lead">{description}</p>
+          {children ? <div className="s2-cta-row">{children}</div> : null}
+        </div>
+        {proof ? <div className="s2-hero-proof-slot">{proof}</div> : null}
       </div>
     </header>
+  );
+}
+
+/** Compact product-chrome frame for audience heroes (Alta craft: committed UI proof). */
+export function LandingProofChrome({
+  title,
+  badge,
+  children,
+}: {
+  title: string;
+  badge: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="s2-proof">
+      <div className="s2-proof-chrome">
+        <span className="s2-proof-dots" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+        </span>
+        <span className="s2-proof-title">{title}</span>
+        <span className="s2-proof-badge">{badge}</span>
+      </div>
+      <div className="s2-proof-body">{children}</div>
+    </div>
   );
 }
 

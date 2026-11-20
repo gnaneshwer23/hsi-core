@@ -570,3 +570,91 @@
   color:var(--muted)!important;
   background-image:none!important;
 }
+
+/* ── Alta craft densify (raise existing Causaly/Benchling system) ─────────── */
+.pg-page .pg-hero.pg-hero-platform,
+.pg-page .pg-hero.pg-hero-dark,
+.pg-page .pg-hero.pg-hero-dark.pg-hero-console,
+.pg-page .pg-hero.pg-hero-platform.pg-hero-console{
+  padding:clamp(3.25rem,5.5vw,5rem) 0 clamp(1.75rem,3vw,2.5rem);
+  gap:clamp(24px,3vw,40px);
+  background:
+    radial-gradient(980px 460px at 92% -8%,#eeebff 0%,transparent 58%),
+    linear-gradient(180deg,#fafaff 0%,transparent 42%);
+}
+.pg-hero-dark h1 .pg-brand,
+.pg-hero-platform h1 .pg-brand{
+  font-weight:550;font-size:.4em;letter-spacing:-.015em;color:var(--ink);
+  margin:0 0 .45em;
+}
+.pg-hero-dark h1,
+.pg-hero-platform h1{font-weight:650;letter-spacing:-.038em;line-height:1.02}
+.pg-hero-console .pg-lead{font-size:17px;line-height:1.55;max-width:46ch}
+.pg-hero-console .pg-cta{margin-top:18px;gap:12px 18px}
+.pg-hero-console .pg-micro{margin-top:12px;font-size:13px;line-height:1.5;max-width:48ch}
+.pg-btn{
+  border-radius:8px;min-height:48px;padding:0 26px;font-size:15px;
+  box-shadow:0 8px 20px rgba(60,31,250,.22);
+}
+.pg-btn:hover{box-shadow:0 10px 24px rgba(42,20,201,.28)}
+.pg-btn-light{box-shadow:0 8px 20px rgba(60,31,250,.22)}
+.pg-link{min-height:48px;padding:0 4px}
+.pg-strip{padding:4px 0 40px}
+.pg-status{padding:12px 18px;border-radius:10px;font-size:14.5px;gap:4px 12px}
+.pg-status b{font-size:16px}
+
+/* Committed product chrome */
+.pg-hero-platform .lg,
+.pg-hero-dark .lg{
+  padding:0;border-radius:14px;overflow:hidden;
+  border:1px solid var(--line);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.7) inset,
+    0 2px 4px rgba(16,31,51,.04),
+    0 22px 50px rgba(16,31,51,.12);
+  background:#fff;
+}
+.lg-chrome{
+  display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;
+  padding:10px 14px;border-bottom:1px solid var(--line);background:#fafbfd;
+}
+.lg-chrome-dots{display:inline-flex;gap:6px}
+.lg-chrome-dots i{
+  width:9px;height:9px;border-radius:50%;background:#d4dfe4;display:block;
+}
+.lg-chrome-dots i:nth-child(1){background:#f0b4b4}
+.lg-chrome-dots i:nth-child(2){background:#e6d39a}
+.lg-chrome-dots i:nth-child(3){background:#b7d4b8}
+.lg-chrome-title{font-size:13px;font-weight:650;color:var(--ink);letter-spacing:-.01em}
+.lg-chrome-badge{
+  margin-left:auto;font-size:12px;font-weight:550;color:var(--muted);
+  padding:4px 10px;border-radius:8px;background:#fff;border:1px solid var(--line);
+}
+.pg-hero-platform .lg .og,
+.pg-hero-dark .lg .og{border-radius:0;height:clamp(300px,42vh,480px)}
+.pg-hero-platform .lg-filters,
+.pg-hero-dark .lg-filters{padding:12px 14px 0}
+.pg-hero-platform .lg-panel,
+.pg-hero-dark .lg-panel{margin:12px 14px 14px;border-radius:10px}
+.pg-hero-platform .lg-wait,
+.pg-hero-dark .lg-wait,
+.pg-hero-platform .lg>.lg-wait,
+.pg-hero-platform .lg-load{
+  margin:0;border-radius:0;border:0;border-top:1px dashed var(--line);
+  min-height:clamp(280px,38vh,440px);
+}
+@media(min-width:1100px){
+  .pg-page .pg-hero.pg-hero-platform.pg-hero-console,
+  .pg-page .pg-hero.pg-hero-dark.pg-hero-console{gap:28px}
+  .pg-hero-console .pg-hero-copy{gap:8px 40px;align-items:end}
+  .pg-hero-console h1{font-size:clamp(2.15rem,3.4vw,3.15rem);max-width:14ch}
+  .pg-hero-console .lg{
+    grid-template-columns:200px minmax(0,1fr) 240px;gap:12px;
+    padding-bottom:12px;
+  }
+  .pg-hero-console .lg-chrome{grid-column:1/-1;grid-area:auto;margin:0}
+  .pg-hero-console .lg{grid-template-areas:"chrome chrome chrome" "f c p";grid-template-rows:auto minmax(0,1fr)}
+  .pg-hero-console .lg-chrome{grid-area:chrome}
+  .pg-hero-console .lg .og{height:clamp(360px,48vh,520px)}
+}
+@media(prefers-reduced-motion:reduce){.pg-btn{transition:none;box-shadow:none}}

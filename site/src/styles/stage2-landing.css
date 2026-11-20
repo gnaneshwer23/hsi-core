@@ -69,7 +69,7 @@
     radial-gradient(920px 420px at 88% -10%, #eeebff 0%, transparent 62%),
     linear-gradient(180deg, #fafaff 0%, var(--s2-offwhite) 100%);
   color: var(--s2-ink);
-  padding: clamp(4.5rem, 9vw, 7.5rem) 0 clamp(3rem, 5vw, 4.5rem);
+  padding: clamp(3.25rem, 6vw, 5.25rem) 0 clamp(2.25rem, 4vw, 3.5rem);
   border-bottom: 1px solid var(--s2-line);
 }
 
@@ -107,26 +107,29 @@
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 0 1.35rem;
-  border-radius: 10px;
+  padding: 0 1.55rem;
+  border-radius: 8px;
   border: 1px solid var(--s2-indigo);
   background: var(--s2-indigo);
   color: #fff;
   text-decoration: none;
   font: 650 0.95rem/1.2 var(--s2-font);
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 8px 20px rgba(60, 31, 250, 0.22);
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease;
 }
 
 .s2-btn:hover {
   background: var(--s2-indigo-ink);
   border-color: var(--s2-indigo-ink);
   transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(42, 20, 201, 0.28);
 }
 
 .s2-btn-secondary {
-  background: transparent;
+  background: #fff;
   color: var(--s2-ink);
   border-color: #9aabbc;
+  box-shadow: none;
 }
 
 .s2-btn-secondary:hover {
@@ -260,8 +263,9 @@
 .hsi-nav .hsi-header-cta {
   background: #3c1ffa !important;
   border-color: #3c1ffa !important;
-  border-radius: 10px !important;
+  border-radius: 8px !important;
   color: #fff !important;
+  box-shadow: 0 6px 16px rgba(60, 31, 250, 0.2);
 }
 
 .hsi-nav .hsi-header-cta:hover {
@@ -397,12 +401,142 @@
 }
 
 .s2-hero h1 {
-  margin: 0 0 1.15rem;
-  font-size: clamp(2.35rem, 5vw, 3.6rem);
+  margin: 0 0 0.9rem;
+  font-size: clamp(2.2rem, 4.6vw, 3.25rem);
   line-height: 1.04;
-  letter-spacing: -0.035em;
-  max-width: 16ch;
+  letter-spacing: -0.038em;
+  max-width: 18ch;
   color: var(--s2-ink);
+}
+
+.s2-hero .s2-lead {
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.s2-hero .s2-cta-row {
+  margin-top: 1.35rem;
+}
+
+.s2-hero-proof .s2-wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(1.5rem, 3vw, 2.75rem);
+  align-items: end;
+}
+
+.s2-hero-copy {
+  display: grid;
+  gap: 0;
+}
+
+.s2-proof {
+  border: 1px solid var(--s2-line);
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.7) inset,
+    0 2px 4px rgba(16, 31, 51, 0.04),
+    0 22px 50px rgba(16, 31, 51, 0.12);
+}
+
+.s2-proof-chrome {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--s2-line);
+  background: #fafbfd;
+}
+
+.s2-proof-dots {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.s2-proof-dots i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #d4dfe4;
+  display: block;
+}
+
+.s2-proof-dots i:nth-child(1) {
+  background: #f0b4b4;
+}
+
+.s2-proof-dots i:nth-child(2) {
+  background: #e6d39a;
+}
+
+.s2-proof-dots i:nth-child(3) {
+  background: #b7d4b8;
+}
+
+.s2-proof-title {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--s2-ink);
+  letter-spacing: -0.01em;
+}
+
+.s2-proof-badge {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--s2-muted);
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid var(--s2-line);
+}
+
+.s2-proof-body {
+  padding: 6px 4px 8px;
+}
+
+.s2-proof-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+}
+
+.s2-proof-steps li {
+  display: grid;
+  grid-template-columns: 2.4rem minmax(0, 1fr);
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--s2-line);
+}
+
+.s2-proof-steps li:first-child {
+  border-top: 0;
+}
+
+.s2-proof-steps li > span {
+  font: 300 1.15rem/1 var(--s2-display);
+  letter-spacing: -0.04em;
+  color: var(--s2-indigo);
+  font-variant-numeric: tabular-nums;
+}
+
+.s2-proof-steps strong {
+  display: block;
+  font-size: 0.95rem;
+  letter-spacing: -0.015em;
+  color: var(--s2-ink);
+  margin-bottom: 0.2rem;
+}
+
+.s2-proof-steps p {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.45;
+  color: var(--s2-body);
 }
 
 .s2-landing .s2-section h2 {
@@ -431,11 +565,17 @@
   .s2-flow-list {
     grid-template-columns: 1fr;
   }
+
+  .s2-hero-proof .s2-wrap {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .s2-btn {
     transition: none;
+    box-shadow: none;
   }
   .s2-landing *,
   .hsi-audience-menu * {

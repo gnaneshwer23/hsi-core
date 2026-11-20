@@ -38,36 +38,44 @@ export function LiveGraphHero(){
  const node=sel&&b?b.nodes.find(n=>n.id===sel):null;
  const rels=node&&all?all.cand.filter(e=>e.subjectId===node.id||e.objectId===node.id):[];
  const filtered=dept.length>0||humanOnly||!neg;
- if(failed)return <figure className="lg"><div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div></figure>;
- if(!all||!view)return <figure className="lg"><div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div></figure>;
- return (
-  <figure className="lg">
-   {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
-   <Suspense fallback={<div className="lg-wait lg-load" role="status">Loading the graph…</div>}>
-    <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, use the zoom buttons or Ctrl or ⌘ with scroll, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
-   </Suspense>}
-   <div className="lg-filters">
-    <div className="lg-search">
-     <label htmlFor={qid}>Find a concept</label>
-     <input id={qid} type="search" value={q} maxLength={60} placeholder="e.g. IL-21, butyrate, B cell" onChange={e=>setQ(e.target.value)}/>
-     {hits.length>0&&<ul className="lg-hits" aria-label="Matching concepts">{hits.map(h=><li key={h.id}><button type="button" onClick={()=>{setSel(h.id);setQ("");setDept([]);setHumanOnly(false);setNeg(true)}}>{h.name}</button></li>)}</ul>}
-    </div>
-    <ul className="lg-chips" aria-label="Filter by department">
-     {all.groups.map(([g,n])=><li key={g}><button type="button" aria-pressed={dept.includes(g)} onClick={()=>setDept(d=>d.includes(g)?d.filter(x=>x!==g):[...d,g])}><i style={{background:all.colors[g]}} aria-hidden="true"/>{pretty(g)} <span>{n}</span></button></li>)}
-     <li><button type="button" aria-pressed={humanOnly} onClick={()=>setHumanOnly(v=>!v)}>Human evidence only</button></li>
-     <li><button type="button" aria-pressed={!neg} onClick={()=>setNeg(v=>!v)}>Hide findings that did not hold</button></li>
-     {(filtered||sel)&&<li><button type="button" className="lg-reset" onClick={()=>{setDept([]);setHumanOnly(false);setNeg(true);setSel(null);setQ("")}}>Reset</button></li>}
-    </ul>
+  const chrome=(
+   <div className="lg-chrome">
+    <span className="lg-chrome-dots" aria-hidden="true"><i/><i/><i/></span>
+    <span className="lg-chrome-title">Published knowledge graph</span>
+    <span className="lg-chrome-badge">Live snapshot · candidate-only · unreviewed</span>
    </div>
-   <aside className="lg-panel" aria-label="Selected concept" aria-live="polite">
-    {node?<>
-     <h3>{node.name}</h3>
-     <p className="lg-meta">{pretty(node.kind)} · {node.domains.map(pretty).join(", ")||"no department"} · {rels.length} recorded relationship{rels.length===1?"":"s"}</p>
-     <ul>{rels.slice(0,5).map(e=><li key={e.id}><span>{all.name.get(e.subjectId)} {e.negated?"did not ":""}{pretty(e.predicate)} {all.name.get(e.objectId)}</span><small>{pretty(e.model)} · {e.sourceId??"no source"} · unreviewed</small></li>)}</ul>
-     {rels.length>5&&<p className="lg-meta">And {rels.length-5} more in the explorer.</p>}
-     <Link to={"/research/knowledge-graph?netScope=global&node="+encodeURIComponent(node.id)}>Open in the explorer</Link>
-    </>:<p className="lg-meta">Select a concept to see its relationships, evidence models and sources. Use the filters to narrow the graph.</p>}
-   </aside>
-  </figure>
- );
+  );
+  if(failed)return <figure className="lg">{chrome}<div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div></figure>;
+  if(!all||!view)return <figure className="lg">{chrome}<div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div></figure>;
+  return (
+   <figure className="lg">
+    {chrome}
+    {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
+    <Suspense fallback={<div className="lg-wait lg-load" role="status">Loading the graph…</div>}>
+     <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, use the zoom buttons or Ctrl or ⌘ with scroll, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
+    </Suspense>}
+    <div className="lg-filters">
+     <div className="lg-search">
+      <label htmlFor={qid}>Find a concept</label>
+      <input id={qid} type="search" value={q} maxLength={60} placeholder="e.g. IL-21, butyrate, B cell" onChange={e=>setQ(e.target.value)}/>
+      {hits.length>0&&<ul className="lg-hits" aria-label="Matching concepts">{hits.map(h=><li key={h.id}><button type="button" onClick={()=>{setSel(h.id);setQ("");setDept([]);setHumanOnly(false);setNeg(true)}}>{h.name}</button></li>)}</ul>}
+     </div>
+     <ul className="lg-chips" aria-label="Filter by department">
+      {all.groups.map(([g,n])=><li key={g}><button type="button" aria-pressed={dept.includes(g)} onClick={()=>setDept(d=>d.includes(g)?d.filter(x=>x!==g):[...d,g])}><i style={{background:all.colors[g]}} aria-hidden="true"/>{pretty(g)} <span>{n}</span></button></li>)}
+      <li><button type="button" aria-pressed={humanOnly} onClick={()=>setHumanOnly(v=>!v)}>Human evidence only</button></li>
+      <li><button type="button" aria-pressed={!neg} onClick={()=>setNeg(v=>!v)}>Hide findings that did not hold</button></li>
+      {(filtered||sel)&&<li><button type="button" className="lg-reset" onClick={()=>{setDept([]);setHumanOnly(false);setNeg(true);setSel(null);setQ("")}}>Reset</button></li>}
+     </ul>
+    </div>
+    <aside className="lg-panel" aria-label="Selected concept" aria-live="polite">
+     {node?<>
+      <h3>{node.name}</h3>
+      <p className="lg-meta">{pretty(node.kind)} · {node.domains.map(pretty).join(", ")||"no department"} · {rels.length} recorded relationship{rels.length===1?"":"s"}</p>
+      <ul>{rels.slice(0,5).map(e=><li key={e.id}><span>{all.name.get(e.subjectId)} {e.negated?"did not ":""}{pretty(e.predicate)} {all.name.get(e.objectId)}</span><small>{pretty(e.model)} · {e.sourceId??"no source"} · unreviewed</small></li>)}</ul>
+      {rels.length>5&&<p className="lg-meta">And {rels.length-5} more in the explorer.</p>}
+      <Link to={"/research/knowledge-graph?netScope=global&node="+encodeURIComponent(node.id)}>Open in the explorer</Link>
+     </>:<p className="lg-meta">Select a concept to see its relationships, evidence models and sources. Use the filters to narrow the graph.</p>}
+    </aside>
+   </figure>
+  );
 }
