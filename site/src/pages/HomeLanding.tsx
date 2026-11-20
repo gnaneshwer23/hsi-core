@@ -74,7 +74,7 @@ export function HomeLanding(){
  return (
   <div className="pg-page">
    <GraphSnapshotProvider>
-    <section className="pg-hero pg-hero-platform pg-hero-console" aria-labelledby="home-title">
+    <section className="pg-hero pg-hero-platform pg-hero-spine" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">
        <span className="pg-brand">Human Super Intelligence </span>
@@ -92,25 +92,31 @@ export function HomeLanding(){
        </Link>
       </div>
       <p className="pg-micro">
-       Research preview. Candidate-only: nothing here is scientifically approved. Domain coverage is unequal today; systemic sclerosis is the validation case, not a claim of uniform depth. No clinical advice; patient data on this site is synthetic.
+       Research preview · candidate-only · unreviewed · no clinical advice · synthetic patients only
       </p>
      </div>
-     <LiveGraphHero/>
+
+     <div className="pg-hero-figure" role="region" aria-labelledby="pg-flow-h">
+      <h2 id="pg-flow-h">The investigation flow.</h2>
+      <p className="pg-flow-lead">
+       One path from question to brief. The live graph below is the mechanism node.
+      </p>
+      <InvestigationFlowDiagram emphasizeId="graph"/>
+      <p className="pg-flow-note">
+       Candidate-only and unreviewed. Agents propose in the background and are not named here.
+      </p>
+     </div>
     </section>
 
-    <div className="pg-strip">
-     <Status/>
-    </div>
-
-    <section className="pg-flow" aria-labelledby="pg-flow-h">
-     <h2 id="pg-flow-h">The investigation flow.</h2>
-     <p className="pg-flow-lead">
-      One path from question to brief. The live graph above is the mechanism node.
-     </p>
-     <InvestigationFlowDiagram emphasizeId="graph"/>
-     <p className="pg-flow-note">
-      Candidate-only and unreviewed. Agents propose in the background and are not named here.
-     </p>
+    <section className="pg-proof" aria-labelledby="pg-proof-h">
+     <div className="pg-proof-head">
+      <h2 id="pg-proof-h">Published knowledge graph</h2>
+      <p>Live from the digest-verified snapshot. Every relationship is a candidate.</p>
+     </div>
+     <LiveGraphHero/>
+     <div className="pg-strip pg-strip-inline">
+      <Status/>
+     </div>
     </section>
 
     <section className="pg-links" aria-labelledby="pg-diff-h">
@@ -137,8 +143,8 @@ export function HomeLanding(){
 
     <HomepageWorkedConflict/>
 
-    <section className="pg-links" aria-labelledby="pg-domains-h">
-     <div className="pg-links-row">
+    <div className="pg-links pg-links-split">
+     <div className="pg-links-row" role="region" aria-labelledby="pg-domains-h">
       <h2 id="pg-domains-h">Domains</h2>
       <p>Coverage is unequal today. Systemic sclerosis is a validation case, not uniform depth.</p>
       <ul className="pg-domain-list" aria-label="Scientific domains in scope">
@@ -149,10 +155,7 @@ export function HomeLanding(){
        ))}
       </ul>
      </div>
-    </section>
-
-    <section className="pg-links" aria-labelledby="pg-audiences-h">
-     <div className="pg-links-row">
+     <div className="pg-links-row" role="region" aria-labelledby="pg-audiences-h">
       <h2 id="pg-audiences-h">Audiences</h2>
       <p>Enterprise shells are demonstration previews until organisation features are accepted.</p>
       <ul className="pg-audience-list">
@@ -163,7 +166,7 @@ export function HomeLanding(){
        ))}
       </ul>
      </div>
-    </section>
+    </div>
 
     <section className="pg-open" aria-labelledby="pg-open-h">
      <div className="pg-open-head">

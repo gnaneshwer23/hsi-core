@@ -420,9 +420,37 @@
 
 .s2-hero-proof .s2-wrap {
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-  gap: clamp(1.5rem, 3vw, 2.75rem);
-  align-items: end;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  align-items: start;
+}
+.s2-hero-proof .s2-hero-copy {
+  max-width: 42rem;
+}
+.s2-hero-proof-slot {
+  min-width: 0;
+  padding-top: 0.35rem;
+  border-top: 1px solid var(--s2-line);
+}
+.s2-hero-proof-slot .ld-audience-flow {
+  margin-top: 1rem;
+}
+.s2-hero-proof-slot .ld-flow {
+  --ld-ground: #f4f5f8;
+}
+/* Flat diagram proof — never wrap the spine in product-chrome cards */
+.s2-hero-proof-slot .s2-proof {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+.s2-hero-proof-slot .s2-proof-chrome {
+  display: none;
+}
+.s2-hero-proof-slot .s2-proof-body {
+  padding: 0;
 }
 
 .s2-hero-copy {

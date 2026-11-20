@@ -31,16 +31,13 @@ const GATES = [
 ];
 
 /**
- * Hero compositions via data-hero-style:
- *   a (default) — Infographic-first: short intro, process spine dominates the viewport
- *   b — Full-bleed figure band: quiet strip then edge-to-edge spine
- *   c — Editorial stack: monumental centered type, figure as the only visual
- * Toggle in DevTools or Playwright: document.querySelector('.pg-phero').dataset.heroStyle = 'b'
+ * Hero: full-bleed process spine (diagram-first).
+ * Toggle in DevTools: document.querySelector('.pg-phero').dataset.heroStyle = 'a'|'c'
  */
 export function HowItWorksPage() {
   return (
     <div className="pg-page pg-sub">
-      <header className="pg-phero pg-phero-spine" data-hero-style="a" aria-labelledby="hw-title">
+      <header className="pg-phero pg-phero-spine" data-hero-style="b" aria-labelledby="hw-title">
         <div className="pg-phero-intro">
           <h1 id="hw-title">From research question to evidence-grounded decision.</h1>
           <p className="pg-lead">

@@ -27,6 +27,7 @@ test('home leads with investigation flow, compact domains and honest limits; nam
  await expect(flow.getByRole('list',{name:'Investigation flow: question to brief',exact:true}).locator(':scope > li')).toHaveCount(6);
  await expect(flow).toContainText('Graph');
  await expect(flow).toContainText('mechanism node');
+ await expect(page.getByRole('region',{name:/Published knowledge graph/})).toBeVisible();
  const diff=page.getByRole('region',{name:/What makes it different/});
  await expect(diff.getByRole('list',{name:'Product differentiators'}).getByRole('listitem')).toHaveCount(3);
  await expect(diff).toContainText('Context-aware disagreement');

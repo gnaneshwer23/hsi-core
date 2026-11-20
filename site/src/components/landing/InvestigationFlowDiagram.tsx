@@ -1,3 +1,4 @@
+import type {CSSProperties} from "react";
 import type {FlowStep} from "./flowSteps";
 import {INVESTIGATION_FLOW} from "./flowSteps";
 
@@ -49,10 +50,10 @@ export function InvestigationFlowDiagram({
         >
           <path
             className="ld-flow-path"
-            d="M12 12 H988"
+            d="M40 12 H960"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
           />
         </svg>
@@ -65,10 +66,10 @@ export function InvestigationFlowDiagram({
         >
           <path
             className="ld-flow-path"
-            d="M12 12 V988"
+            d="M12 28 V972"
             fill="none"
             stroke="currentColor"
-            strokeWidth="2"
+            strokeWidth="1.75"
             strokeLinecap="round"
           />
         </svg>
@@ -82,6 +83,7 @@ export function InvestigationFlowDiagram({
                 key={step.id}
                 className={`ld-flow-node${on ? " is-emphasis" : ""}`}
                 data-step={step.id}
+                style={{"--ld-i": i} as CSSProperties}
               >
                 <span className="ld-flow-n" aria-hidden="true">
                   {n}
@@ -90,7 +92,7 @@ export function InvestigationFlowDiagram({
                 <span className="ld-flow-line">{step.line}</span>
                 {i < steps.length - 1 ? (
                   <span className="ld-flow-arrow" aria-hidden="true">
-                    <svg viewBox="0 0 24 12" width="20" height="10" focusable="false">
+                    <svg viewBox="0 0 24 12" width="22" height="11" focusable="false">
                       <path
                         d="M0 6h16M12 1l8 5-8 5"
                         fill="none"
