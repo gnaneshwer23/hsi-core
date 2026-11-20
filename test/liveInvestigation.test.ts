@@ -326,7 +326,7 @@ describe("hypothesis step",()=>{
   expect(r.hypotheses.items[0]!.citedClaimIds.every(id=>r.candidates.some(c=>c.id===id&&c.verification==="agree_directional"))).toBe(true);
   expect(r.events.find(e=>e.stage==="hypothesised")!.status).toBe("ok");
   expect(calls.filter(c=>c==="gen").length).toBe(1);expect(calls.filter(c=>c==="critic").length).toBe(r.hypotheses.items.length);
-  const md=renderLiveBriefMarkdown(r);expect(md).toContain("## Hypotheses (unvalidated model proposals) (1)");expect(md).toContain("not recommendations");expect(md).toContain("Would be falsified by");expect(md).toContain("follows");
+  const md=renderLiveBriefMarkdown(r);expect(md).toContain("## Hypotheses (provisional, unvalidated model proposals) (1)");expect(md).toContain("Experiment (provisional, unvalidated)");expect(md).toContain("not recommendations");expect(md).toContain("Would be falsified by");expect(md).toContain("follows");
   expect(r.gaps.some(g=>g.includes("unvalidated and unreviewed"))).toBe(true);
  });
  test("no models, or no time left, skips hypotheses and says why",async()=>{

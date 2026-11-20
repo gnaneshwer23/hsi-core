@@ -6,6 +6,7 @@
 import type {LiveInvestigation} from "./liveRun";
 import {renderLiveBriefMarkdown} from "./liveBrief";
 import {liveSourceReliabilityLimitations} from "./liveSourceReliabilityHonesty";
+import {PROVISIONAL_HYPOTHESIS_HONESTY_LINE} from "./provisionalHypothesisHonesty";
 
 export const LIVE_BRIEF_V2_SCHEMA = "hsi-live-research-brief-2" as const;
 
@@ -59,6 +60,7 @@ export type LiveBriefV2 = {
 const BASE_LIMITS = Object.freeze([
   "Candidate-only live brief; nothing here is independently reviewed.",
   "Model agreement is not scientific proof.",
+  PROVISIONAL_HYPOTHESIS_HONESTY_LINE,
   ...liveSourceReliabilityLimitations(),
   "No published graph release id is attached to a live investigation brief.",
 ]);

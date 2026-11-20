@@ -60,6 +60,11 @@ import {
 } from "../../../src/investigation/researcherUsefulnessFeedback";
 import {matchScenario} from "../../../src/investigation/scenarios";
 import {formatLiveSourceReliabilityMeta} from "../../../src/investigation/liveSourceReliabilityHonesty";
+import {
+  PROVISIONAL_EXPERIMENT_LABEL,
+  PROVISIONAL_HYPOTHESIS_HONESTY_LINE,
+  PROVISIONAL_HYPOTHESIS_TAGLINE,
+} from "../../../src/investigation/provisionalHypothesisHonesty";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
@@ -535,15 +540,15 @@ export function InvestigationWorkspacePage(){
        </div>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
-         <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
+         <p className="ws-warn" data-testid="ws-provisional-hyp-honesty">{PROVISIONAL_HYPOTHESIS_HONESTY_LINE} From {run.hypotheses.basis.findings} agreed findings. Not reviewed.</p>
          <p className="ws-muted" role="status">{ledgerMsg} <a href="/research/ledger">Open the ledger</a></p>
          <ul className="ws-hyps">{run.hypotheses.items.map(hy=>(
-          <li key={hy.id}><span className="ws-tagline">Unvalidated hypothesis</span><b>{hy.statement}</b>
+          <li key={hy.id}><span className="ws-tagline">{PROVISIONAL_HYPOTHESIS_TAGLINE}</span><b>{hy.statement}</b>
            <div className="ws-cites" role="group" aria-label={`Findings behind ${hy.id}`}>{hy.citedClaimIds.map(id=>{const cc=run.candidates.find(x=>x.id===id);return cc?<button key={id} type="button" onClick={()=>setSel(id)}>{cc.subject} ~ {cc.object}</button>:null})}</div>
            <p className="ws-chal" data-v={hy.challenge?.verdict??"none"}>{hy.challenge?`Second model: ${hy.challenge.verdict}. ${hy.challenge.reason}`:hy.challengeNote??"Not challenged."}</p>
            <div className="ws-row-actions"><button type="button" className="ws-btn" onClick={()=>{const r=fromRunHypothesis(run,hy,new Date().toISOString(),runGaps.filter(g=>g.scope==="scientific").map(g=>g.id));if(!r.ok){setLedgerMsg(r.error);return}const a=ledger.add(r.entry);setLedgerMsg(a.added?"Added to your Hypothesis Ledger.":a.error??"Already in your Hypothesis Ledger.")}}>Add to Hypothesis Ledger</button></div>
            <details><summary>Rationale, prediction, experiment, falsifier</summary>
-            <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>Experiment</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
+            <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>{PROVISIONAL_EXPERIMENT_LABEL}</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
        </details>
        <PassportEvidenceTable
         edges={passportEdges}
