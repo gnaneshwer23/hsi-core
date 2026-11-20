@@ -15,7 +15,7 @@ test('knowledge graph landing states its limits and links only to real surfaces'
 });
 test('the header and footer reach the knowledge graph and the graph entry scrolls to the explorer',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
- await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Knowledge graph',exact:true}).click();
+ await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Resources',exact:true}).click();
  await expect(page).toHaveURL(/knowledge-graph$/);
  await page.getByRole('link',{name:/^Explore the graph/}).first().click();
  await expect(page).toHaveURL(/#home-knowledge-graph$/);

@@ -77,17 +77,18 @@ Preserve product architecture; organise the **public** site around researcher va
 | `/` | Vision + product value | Join Research Beta → `/welcome` | Live (`HomeLanding`) |
 | `/platform` | Connected investigation workflow | Explore Platform | **Retired** → `/how-it-works` until a new page is approved |
 | `/science` | Six biological domains | Explore Domains | Top-level retired → `/knowledge-graph`. Department URLs (e.g. `/departments/immunology`) **redirect** to `/research/knowledge-graph?department=…` filtered views — not standalone public department sites. Stage 1 comps may prototype domain cards; production standalone department pages are **out of scope** until approved |
-| `/researchers` | Research use cases | Apply for Beta | **Missing** — Stage 1 prototype only until routed |
-| `/biotech` | R&D evidence assessment | Discuss a Pilot | **Missing** — Stage 1 prototype only |
-| `/validation` | Evidence quality / evaluation | View Methodology | **No production `/validation` route.** Interim destination for methodology/governance: live **`/trust`**. Do **not** use `/research/validation` (synthetic lab). Stage 1 may prototype `/validation` comps that map content from `/trust` |
+| `/researchers` | Research use cases | Apply for Beta | **Live** thin audience page — Stage 2 deepens in PR3 |
+| `/biotech` | R&D evidence assessment | Discuss a Pilot | **Live** thin audience page — Stage 2 deepens in PR4 |
+| `/validation` | Evidence quality / evaluation | View Methodology | **Live** public methodology page. Do **not** confuse with `/research/validation` (synthetic lab). `/trust` remains governance. Stage 2 deepens validation copy in PR5 |
 | `/about` | Mission, principles, verified team | Contact | Live |
-| `/contact` | Genuine enquiries | Submit Enquiry | Live public route (honesty: no invent undelivered mail) — **not** in primary header nav |
+| `/contact` | Genuine enquiries / access | Get Access | Live public route (honesty: no invent undelivered mail). Stage 2 header CTA + Pricing & Access label map here; `/pricing` still redirects here |
 
 **Homepage pattern:** dark scientific hero → light editorial sections.  
 **Authenticated workbench:** lighter, denser canvas; dark sidebar; clear scientific status indicators.
 
-**Live primary header nav** ([`PRIMARY_NAV_LINKS`](../../site/src/lib/primaryNav.ts)): `/`, `/how-it-works`, `/knowledge-graph`, `/trust`, `/about`.  
-**Also indexed public routes** ([`PUBLIC_MARKETING_PATHS`](../../site/src/lib/primaryNav.ts)): the above **plus** `/contact` (footer / CTA destinations, not a primary-nav item).
+**Live primary header nav** ([`PRIMARY_NAV_LINKS`](../../site/src/lib/primaryNav.ts)): `/`, `/how-it-works` (Platform), Audiences menu (`AUDIENCE_NAV_LINKS`), `/validation`, `/knowledge-graph` (Resources), `/trust`, `/about`, `/contact` (Pricing & Access). CTA: **Get Access** → `/contact`.  
+**Also indexed public routes** ([`PUBLIC_MARKETING_PATHS`](../../site/src/lib/primaryNav.ts)): the above marketing set including `/researchers`, `/biotech`, `/validation`, `/contact`.  
+**Stage 2 inventory:** [`HSI_STAGE2_PUBLIC_LANDING_INVENTORY_2026-11-19.md`](./HSI_STAGE2_PUBLIC_LANDING_INVENTORY_2026-11-19.md).
 
 ---
 
