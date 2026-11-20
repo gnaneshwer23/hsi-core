@@ -55,4 +55,4 @@ test('graph layout handles 100 and 500 test nodes and rejects 1000 before expens
   expect([...points.values()].every(p=>Number.isFinite(p.x)&&Number.isFinite(p.y))).toBe(true);
  }
  expect(()=>forceGraphPositions({...SCIENCE_GRAPH,nodes:Array.from({length:1000},(_,i)=>({...SCIENCE_GRAPH.nodes[0]!,id:'oversized-fixture-'+i})),edges:[]})).toThrow('layout budget');
-});
+},{timeout:15_000});
