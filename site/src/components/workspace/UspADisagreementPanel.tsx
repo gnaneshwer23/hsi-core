@@ -1,6 +1,7 @@
 import { EvidenceContextPassportView } from "../EvidenceContextPassport";
 import { liveClaimToPassportEdge } from "@hsi/investigation/liveClaimPassportEdge";
 import {
+  COMPARABILITY_HONESTY_LINE,
   COMPARISON_OUTCOME_LABEL,
   type LiveComparisonItem,
   type LiveStructuredComparison,
@@ -45,6 +46,9 @@ export function UspADisagreementPanel({
         relation. Verification is bound before contradiction language. Potential
         contradiction is <strong>not</strong> proven contradiction. Association is not
         causation. Missing context stays explicit.
+      </p>
+      <p className="ws-warn" role="status" data-testid="ws-comparability-honesty">
+        {COMPARABILITY_HONESTY_LINE}
       </p>
       <p className="ws-muted" role="status">
         Consistent {comparison.summary.consistent} · Context-dependent{" "}

@@ -73,6 +73,10 @@ export const COMPARISON_OUTCOME_LABEL: Record<LiveComparisonOutcome, string> = {
   insufficient_evidence: "Insufficient evidence",
 };
 
+/** Fail-closed class distinction for USP A / brief — not scientific approval. */
+export const COMPARABILITY_HONESTY_LINE =
+  "Insufficient comparability is not Potential contradiction and is not proven conflict. Potential contradiction (candidate) is not proven contradiction.";
+
 const safe = (s: string) =>
   s.replace(/[<>&`*_\[\]#|]/g, (c) => "&#" + c.charCodeAt(0) + ";").replace(/[\r\n]+/g, " ");
 
@@ -121,6 +125,7 @@ export function renderLiveBriefComparisonSections(
     `- Consistent: ${s.consistent} · Context-dependent: ${s.contextDependent} · Method difference: ${s.methodologicalDifference} · Insufficient comparability: ${s.insufficientComparability} · Insufficient evidence: ${s.insufficientEvidence} · Potential contradiction (candidate): ${s.potentialContradiction}`,
     "- Verification is bound before contradiction language: incomplete or disputed checks abstain from potential_contradiction.",
     "- potential_contradiction is not a proven contradiction. Human review required.",
+    `- ${COMPARABILITY_HONESTY_LINE}`,
   ];
   if (!pack.items.length) {
     lines.push("- No comparable claim pairs in this run (need at least two candidates on the same relation).");

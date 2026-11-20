@@ -8,6 +8,12 @@ import {useRunGapTracking} from "../lib/useRunGapTracking";
 import {useLedger} from "../lib/useLedger";
 import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
+import {
+  LIVE_SCENARIO_QUERY_KEY,
+  resolveCuratedScenarioId,
+} from "../lib/workbenchPrimary";
+import {workspaceTrailNavActions} from "../../../src/investigation/workspaceTrailNavigation";
+import {LIVE_SCENARIOS} from "../../../src/investigation/scenarios";
 import {HowProducedPanel} from "../components/HowProducedPanel";
 import {EvidenceContextPassportView} from "../components/EvidenceContextPassport";
 import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
@@ -53,6 +59,12 @@ import {
   loadResearcherUsefulnessStore,
 } from "../../../src/investigation/researcherUsefulnessFeedback";
 import {matchScenario} from "../../../src/investigation/scenarios";
+import {formatLiveSourceReliabilityMeta} from "../../../src/investigation/liveSourceReliabilityHonesty";
+import {
+  PROVISIONAL_EXPERIMENT_LABEL,
+  PROVISIONAL_HYPOTHESIS_HONESTY_LINE,
+  PROVISIONAL_HYPOTHESIS_TAGLINE,
+} from "../../../src/investigation/provisionalHypothesisHonesty";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
@@ -276,6 +288,28 @@ export function InvestigationWorkspacePage(){
   const el=document.getElementById("ws-gaps-testable") as HTMLDetailsElement|null;
   if(el&&!el.open)el.open=true;
  };
+ const openDetailsById=(elementId:string)=>{
+  const el=document.getElementById(elementId) as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
+ const selectFirstClaimIfNeeded=()=>{
+  if(sel||!run?.candidates.length)return;
+  const supporting=run.candidates.find((c)=>c.polarity==="supporting"||c.verification==="agree_directional");
+  setSel((supporting??run.candidates[0]).id);
+ };
+ const selectFirstComparisonIfNeeded=()=>{
+  if(cmpKey||!comparison?.items[0])return;
+  const item=comparison.items[0];
+  setCmpKey(comparisonPairKey(item));
+  setSel(item.leftId);
+ };
+ const searchParams=new URLSearchParams(loc.search);
+ const urlScenarioId=resolveCuratedScenarioId(searchParams.get(LIVE_SCENARIO_QUERY_KEY));
+ const handoffScenarioId=urlScenarioId
+  ??(profileHandoff.matchedScenarioId&&LIVE_SCENARIOS[profileHandoff.matchedScenarioId]
+   ?profileHandoff.matchedScenarioId
+   :null);
+ const runScenarioId=handoffScenarioId??lr.activeScenarioId;
  const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
   if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport_or_disagreement"){
@@ -298,26 +332,29 @@ export function InvestigationWorkspacePage(){
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
-  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="disagreement"){
-   openUspPanelsFold();
-   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
+  for(const action of workspaceTrailNavActions(id)){
+   switch(action.kind){
+    case "scroll":
+     document.getElementById(action.elementId)?.scrollIntoView({behavior:"smooth",block:"start"});
+     break;
+    case "openDetails":
+     openDetailsById(action.elementId);
+     break;
+    case "selectFirstClaim":
+     selectFirstClaimIfNeeded();
+     break;
+    case "selectFirstComparison":
+     selectFirstComparisonIfNeeded();
+     break;
+    case "openBrief":
+     setBrief(true);
+     break;
+    default:{
+     const _exhaustive:never=action;
+     void _exhaustive;
+    }
+   }
   }
-  if(id==="crossDomain"){
-   openUspPanelsFold();
-   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
-  }
-  if(id==="gaps"){
-   openGapsTestableFold();
-   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
-  }
-  if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  setBrief(true);
-  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
  const onTrailSelect=(id:UspATrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -375,7 +412,7 @@ export function InvestigationWorkspacePage(){
        {state==="error"&&<p className="ws-err" role="alert">{lr.error} No findings were generated.</p>}
       </div>
        <div className="ws-actions">
-       <button type="button" className="ws-run" onClick={()=>{clearRunSelections();void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
+       <button type="button" className="ws-run" onClick={()=>{clearRunSelections();void lr.start(runScenarioId)}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
        {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>{clearRunSelections();lr.reopen()}}>Reopen saved run</button>}
       </div>
      </section>
@@ -386,8 +423,13 @@ export function InvestigationWorkspacePage(){
     <section className="ws-ask-strip" id="ws-ask-strip" aria-labelledby="ws-ask-h">
      <h2 id="ws-ask-h">Ask</h2>
      <p className="ws-muted">
-      Start from Research Home Ask, or run the default IL-21 cross-context question here.
+      Start from Research Home Ask, or run a curated scenario here (scenarioId only — no free-text model spend).
       Disease chips below are demonstration scenarios — HSI is disease-agnostic.
+     </p>
+     <p className="ws-muted" role="status" data-testid="ws-scenario-handoff">
+      Curated scenario for Run: <b>{runScenarioId}</b>
+      {urlScenarioId?" · from Home/URL handoff":handoffScenarioId?" · from profile match":" · default"}
+      {" · production writes: false"}
      </p>
      {profileHandoff.ready?(
       <div className="ws-ask-handoff" role="status">
@@ -452,7 +494,7 @@ export function InvestigationWorkspacePage(){
          <span className="ws-meta"><em>{BUCKET_LABEL[b]}{x.direction!=="not_assessed"?` · ${DIR[x.direction]??x.direction}`:""}</em>{x.contexts.map(ctxLabel).join(", ")||"context not stated"} · {yearOf(r?.publicationDate)}</span></button></li>})}
         {list.length===0&&<li className="ws-muted">No claims match this filter.</li>}</ul>
        <button type="button" className="ws-link" aria-expanded={sources} onClick={()=>setSources(s=>!s)}>{sources?"Hide":"View"} all sources ({run.records.length})</button>
-       {sources&&<ul className="ws-sources">{run.records.map(r=><li key={r.sourceId}><a href={r.sourceUrl} target="_blank" rel="noreferrer noopener">{r.title}</a><span>{r.provider} · {yearOf(r.publicationDate)}{r.doi?` · DOI ${r.doi}`:""}{r.retraction==="flagged"?" · flagged retracted":""}</span></li>)}</ul>}
+       {sources&&<ul className="ws-sources">{run.records.map(r=><li key={r.sourceId}><a href={r.sourceUrl} target="_blank" rel="noreferrer noopener">{r.title}</a><span>{yearOf(r.publicationDate)} · {formatLiveSourceReliabilityMeta(r)}{r.retraction==="flagged"?" · flagged retracted":""}</span></li>)}</ul>}
       </>}
      </section>
 
@@ -470,9 +512,9 @@ export function InvestigationWorkspacePage(){
          <p className="ws-q">“{picked.sentence}”</p>
          <dl><dt>Direction</dt><dd>{DIR[picked.direction]??picked.direction}{picked.verification==="not_run"?" (not checked: ranked lower)":""}</dd>
           <dt>Why it was ranked</dt><dd>{picked.priority.reasons.join("; ")||"Not ranked"}</dd>
-          <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a>{rec&&<><br/>{rec.provider} · {rec.doi?`DOI ${rec.doi} · `:""}{rec.pmid?`PMID ${rec.pmid} · `:""}retrieved {rec.retrievedAt} · retraction: {rec.retraction.replaceAll("_"," ")} · licence not assessed</>}</dd></dl>
+          <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a><br/>{formatLiveSourceReliabilityMeta(rec??{sourceUrl:picked.sourceUrl,title:picked.sourceId})}</dd></dl>
          {picked.verdicts.map(v=><p key={v.verifier} className="ws-verdict"><b>{v.verifier}</b> ({v.model}): {v.direction.replaceAll("_"," ")}. {v.reason}{v.evidenceSpan&&<><br/>Quoted: “{v.evidenceSpan}”</>}</p>)}
-         <p className="ws-state">Candidate · unreviewed · not promotable to the graph</p>
+         <p className="ws-state">Candidate · unreviewed · not promotable to the graph · sourceClearanceVerified: false</p>
          {passportEdge&&<EvidenceContextPassportView edge={passportEdge} heading="Evidence context passport" headingLevel={3}/>}
         </>}
        </div>
@@ -498,15 +540,15 @@ export function InvestigationWorkspacePage(){
        </div>
        <details className="ws-acc" open={run.hypotheses.items.length>0}><summary><Icon name="flask" size={16}/>Hypotheses <b>{run.hypotheses.items.length}</b></summary>
         {run.hypotheses.items.length===0?<p>{run.hypotheses.reason??"None proposed."}</p>:<>
-         <p className="ws-warn">Unvalidated model proposals from {run.hypotheses.basis.findings} agreed findings. Not findings, not recommendations, not reviewed.</p>
+         <p className="ws-warn" data-testid="ws-provisional-hyp-honesty">{PROVISIONAL_HYPOTHESIS_HONESTY_LINE} From {run.hypotheses.basis.findings} agreed findings. Not reviewed.</p>
          <p className="ws-muted" role="status">{ledgerMsg} <a href="/research/ledger">Open the ledger</a></p>
          <ul className="ws-hyps">{run.hypotheses.items.map(hy=>(
-          <li key={hy.id}><span className="ws-tagline">Unvalidated hypothesis</span><b>{hy.statement}</b>
+          <li key={hy.id}><span className="ws-tagline">{PROVISIONAL_HYPOTHESIS_TAGLINE}</span><b>{hy.statement}</b>
            <div className="ws-cites" role="group" aria-label={`Findings behind ${hy.id}`}>{hy.citedClaimIds.map(id=>{const cc=run.candidates.find(x=>x.id===id);return cc?<button key={id} type="button" onClick={()=>setSel(id)}>{cc.subject} ~ {cc.object}</button>:null})}</div>
            <p className="ws-chal" data-v={hy.challenge?.verdict??"none"}>{hy.challenge?`Second model: ${hy.challenge.verdict}. ${hy.challenge.reason}`:hy.challengeNote??"Not challenged."}</p>
            <div className="ws-row-actions"><button type="button" className="ws-btn" onClick={()=>{const r=fromRunHypothesis(run,hy,new Date().toISOString(),runGaps.filter(g=>g.scope==="scientific").map(g=>g.id));if(!r.ok){setLedgerMsg(r.error);return}const a=ledger.add(r.entry);setLedgerMsg(a.added?"Added to your Hypothesis Ledger.":a.error??"Already in your Hypothesis Ledger.")}}>Add to Hypothesis Ledger</button></div>
            <details><summary>Rationale, prediction, experiment, falsifier</summary>
-            <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>Experiment</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
+            <dl><dt>Why</dt><dd>{hy.rationale}</dd><dt>Prediction if true</dt><dd>{hy.prediction}</dd><dt>{PROVISIONAL_EXPERIMENT_LABEL}</dt><dd>{hy.experiment}</dd><dt>Would be falsified by</dt><dd>{hy.falsifier}</dd><dt>Limits</dt><dd>{hy.limits}</dd><dt>Proposed by</dt><dd>{hy.generatedBy.verifier} ({hy.generatedBy.model})</dd></dl></details></li>))}</ul></>}
        </details>
        <PassportEvidenceTable
         edges={passportEdges}
