@@ -53,7 +53,7 @@ export function TestableNextQuestionsPanel({
                   ) : null}
                   {item.experiment ? (
                     <>
-                      <dt>Proposed experiment (unvalidated)</dt>
+                      <dt>Proposed experiment (provisional, unvalidated)</dt>
                       <dd>{item.experiment}</dd>
                     </>
                   ) : null}

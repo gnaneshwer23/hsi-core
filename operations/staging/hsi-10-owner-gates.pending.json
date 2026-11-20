@@ -1,0 +1,73 @@
+{
+  "schemaVersion": "hsi-1-0-owner-gates-pending-1",
+  "purpose": "hsi_1_0_owner_gates_worksheet",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "pilotReadinessClaimed": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "gateCAutoApprove": false,
+  "inventedSigner": false,
+  "inventedStagingUrl": false,
+  "inventedSmeGold": false,
+  "inventedPilotInvite": false,
+  "honesty": {
+    "catalogsExistAcceptanceBlocked": true,
+    "noInventedSigner": true,
+    "noInventedStagingUrl": true,
+    "noInventedSmeGold": true,
+    "noInventedPilotInvite": true,
+    "noProductionWrites": true,
+    "noGateCAutoApprove": true,
+    "fixtureIsNotOwnerAcceptance": true,
+    "pilotRequiresHuman8NextF": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10OwnerGatesWorksheet.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e05StagingSaveResume.test.ts test/nextBIsolationSoftLand.test.ts test/e2e10SmeGoldVault.test.ts test/nextFSoakPilotReleaseSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "human_5_staging_write_packet_ref": "NOT_STARTED",
+    "human_3_isolation_signer_ref": "UNASSIGNED",
+    "human_4_sme_gold_vault_ref": "NOT_STARTED",
+    "human_8_next_f_ops_acceptance_ref": "NOT_STARTED",
+    "checklist_8_pilot_invite_ref": "BLOCKED_UNTIL_HUMAN_8"
+  },
+  "gates": {
+    "acceptance_5_staging_save_reopen": {
+      "checklistItem": 5,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "e2e-05-staging-save-resume"
+    },
+    "acceptance_6_two_user_isolation": {
+      "checklistItem": 6,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "next-b-isolation + e2e-02"
+    },
+    "acceptance_7_expert_benchmark": {
+      "checklistItem": 7,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "e2e-10-sme-gold-vault + next-d"
+    },
+    "acceptance_8_decision_brief_pilot": {
+      "checklistItem": 8,
+      "status": "BLOCKED_UNTIL_HUMAN_8_NEXT_F",
+      "accepted": false,
+      "reuse": "next-f-soak-pilot-release"
+    }
+  },
+  "notes": "Map only. Fill private refs after real humans and approved staging evidence exist. Soft-land never invents acceptance, SME gold, or pilot invites."
+}
