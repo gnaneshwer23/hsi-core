@@ -309,8 +309,9 @@ test('hypotheses are labelled unvalidated, cite findings, show the second model 
  await page.getByRole('button',{name:'Run live investigation'}).click();
  const vf=page.getByRole('region',{name:'Scientific verification'});
  await expect(page.getByRole('list',{name:/Investigation stages/})).toContainText('Hypothesise');
- await expect(vf).toContainText('Unvalidated model proposals from 2 agreed findings');
- await expect(vf).toContainText('Unvalidated hypothesis');
+ await expect(vf.getByTestId('ws-provisional-hyp-honesty')).toContainText('provisional and unvalidated');
+ await expect(vf.getByTestId('ws-provisional-hyp-honesty')).toContainText('From 2 agreed findings');
+ await expect(vf).toContainText('Provisional · unvalidated hypothesis');
  await expect(vf).toContainText('Second model: overreach. Blockade is not in the findings.');
  await vf.getByRole('group',{name:'Findings behind h1'}).getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
  await expect(page.getByLabel('Selected claim')).toContainText('openai-a');
@@ -319,7 +320,8 @@ test('hypotheses are labelled unvalidated, cite findings, show the second model 
  if(await page.getByRole('button',{name:'Open markdown preview'}).count()){
   await page.getByRole('button',{name:'Open markdown preview'}).click();
  }
- await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (unvalidated model proposals) (1)');
+ await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (provisional, unvalidated model proposals) (1)');
+ await expect(page.getByLabel('Research brief text')).toContainText('Experiment (provisional, unvalidated)');
 });
 
 test('a failed run says no findings were generated',async({page})=>{

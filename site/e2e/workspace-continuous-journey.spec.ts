@@ -84,17 +84,30 @@ test('continuous unified journey: Ask → … → Save without gaps/ledger hops'
 
  const gapsFold=page.locator('#ws-gaps-testable');
  expect(await gapsFold.getAttribute('open')).toBeNull();
+ const vf=page.getByRole('region',{name:'Scientific verification'});
+ await expect(vf.getByTestId('ws-provisional-hyp-honesty')).toContainText('provisional and unvalidated');
+ await expect(vf).toContainText('Provisional · unvalidated hypothesis');
+ await vf.getByText('Rationale, prediction, experiment, falsifier').click();
+ await expect(vf.getByText('Experiment (provisional, unvalidated)',{exact:true})).toBeVisible();
+
  await step(/^Gaps\b/).click();
  await expect.poll(async()=>gapsFold.getAttribute('open')).not.toBeNull();
  await expect(page.locator('#ws-gp-h')).toBeVisible();
+ await expect(gapsFold.getByText('Proposed experiment (provisional, unvalidated)').first()).toBeVisible();
 
  await step(/^Brief\b/).click();
  const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
  await expect(briefPanel).toContainText('briefAccepted: false');
  await expect(briefPanel.getByRole('heading',{name:/Limitations \(always visible\)/i})).toBeVisible();
+ await expect(briefPanel).toContainText('Hypotheses and experiment proposals are provisional and unvalidated');
  await expect(briefPanel).toContainText('sourceClearanceVerified: false');
  await expect(briefPanel.getByRole('region',{name:'Passport evidence table'})).toContainText('rights: unverified');
  await expect(briefPanel.getByRole('region',{name:'Passport evidence table'})).toContainText('sourceClearanceVerified: false');
+ if(await briefPanel.getByRole('button',{name:'Open markdown preview'}).count()){
+  await briefPanel.getByRole('button',{name:'Open markdown preview'}).click();
+ }
+ await expect(page.getByLabel('Research brief text')).toContainText('Hypotheses (provisional, unvalidated model proposals)');
+ await expect(page.getByLabel('Research brief text')).toContainText('Experiment (provisional, unvalidated)');
 
  await step(/^Save\b/).click();
  const connected=page.getByRole('region',{name:/Connected research \(personal\)/i});
