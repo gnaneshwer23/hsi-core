@@ -8,7 +8,8 @@ const groups = [
     links: [
       { to: "/welcome", label: "Set up your research home" },
       { to: "/research/home", label: "Research app" },
-      { to: "/how-it-works", label: "Platform" },
+      { to: "/demo/universe", label: "Demonstration workspace" },
+      { to: "/how-it-works", label: "How it works" },
       { to: "/knowledge-graph", label: "Knowledge graph" },
       { to: "/validation", label: "Scientific Validation" },
       { to: "/contact", label: "Pricing & Access" },
@@ -59,7 +60,7 @@ export function Footer() {
           <Link className="hsi-wordmark" to="/">
             <HsiIdentity />
           </Link>
-          <p>Connecting human biology through evidence, context and independent scientific judgement.</p>
+          <p>Biological relationships. Evidence. Experimental context.</p>
           <Link className="hsi-text-link" to="/contact">
             Request research access
           </Link>

@@ -10,7 +10,7 @@ export type FlowStep = {
 /** Six-step spine used on Home and audience landings. */
 export const INVESTIGATION_FLOW: readonly FlowStep[] = [
   {id: "question", label: "Question", line: "Frame scope and the decision to inform."},
-  {id: "evidence", label: "Evidence", line: "Retrieve permitted sources with provenance."},
+  {id: "evidence", label: "Evidence", line: "Retrieve public sources with provenance."},
   {id: "context", label: "Context", line: "Compare model, tissue, dose and endpoint."},
   {id: "graph", label: "Graph", line: "Inspect candidates with source and status."},
   {id: "gaps", label: "Gaps", line: "Surface what is not yet connected."},
@@ -20,7 +20,7 @@ export const INVESTIGATION_FLOW: readonly FlowStep[] = [
 /** Eight-step platform path on How it works. */
 export const PLATFORM_PATH: readonly FlowStep[] = [
   {id: "question", label: "Research question", line: "Define scope and decision."},
-  {id: "evidence", label: "Permitted evidence", line: "Query public sources; failures stay visible."},
+  {id: "evidence", label: "Source evidence", line: "Query public sources; retain failures."},
   {id: "context", label: "Experimental context", line: "Model, tissue, dose, endpoint — including Not stated."},
   {id: "conflict", label: "Conflicting findings", line: "Compare before contradiction; abstain when contexts differ."},
   {id: "graph", label: "Mechanism graph", line: "Candidate relationships on the published snapshot."},

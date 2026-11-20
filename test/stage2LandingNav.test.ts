@@ -29,11 +29,8 @@ describe("Stage 2 landing design system + nav", () => {
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
-    expect(PRIMARY_NAV_LINKS.some((l) => l.label === "Platform" && l.to === "/how-it-works")).toBe(true);
-    expect(PRIMARY_NAV_LINKS.some((l) => l.label === "Scientific Validation" && l.to === "/validation")).toBe(
-      true,
-    );
-    expect(PRIMARY_NAV_CTA).toEqual({ to: "/contact", label: "Get Access" });
+    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How it works", "Knowledge graph"]);
+    expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
       "/researchers",
       "/enterprise",
@@ -54,10 +51,9 @@ describe("Stage 2 landing design system + nav", () => {
 
   it("wires Nav/Footer/LandingPrimitives for shared Stage 2 chrome", () => {
     const nav = root("site/src/components/Nav.tsx");
-    expect(nav).toContain("AUDIENCE_NAV_LINKS");
-    expect(nav).toContain("Audiences");
+    expect(nav).not.toContain("AUDIENCE_NAV_LINKS");
     expect(nav).toContain("aria-expanded");
-    expect(nav).toContain("audience-pages");
+    expect(nav).not.toContain("audience-pages");
     const footer = root("site/src/components/Footer.tsx");
     expect(footer).toContain("/researchers");
     expect(footer).toContain("/validation");

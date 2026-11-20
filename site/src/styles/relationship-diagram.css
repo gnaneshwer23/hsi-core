@@ -1,0 +1,19 @@
+.relationship-diagram{margin:0;color:#101f33;border-top:1px solid #cbd2df;border-bottom:1px solid #cbd2df;padding:24px 0}
+.relationship-diagram>figcaption{font-size:14px;color:#475569}
+.relationship-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:5%;align-items:center}
+.relationship-drawing svg{display:block;width:100%;height:auto;overflow:visible}
+.relationship-drawing svg text{fill:#101f33;stroke:none;font-family:inherit;font-size:15px}
+.relationship-entity{fill:#f4f5f8;stroke:#3c1ffa;stroke-width:2}
+.relationship-junction,.relationship-branch circle{fill:#3c1ffa}
+.relationship-branch circle{fill:#64748b}.relationship-branch.is-selected circle{fill:#3c1ffa}
+.relationship-branch.is-selected circle{stroke:#3c1ffa;stroke-width:12;stroke-opacity:.12}
+.relationship-drawing>p{font-size:12px;color:#475569;margin:0}
+.relationship-lenses{display:flex;gap:22px;border-bottom:1px solid #cbd2df;margin-bottom:28px}
+.relationship-lenses button{font:inherit;background:none;border:0;border-bottom:2px solid transparent;padding:12px 0;color:#475569;cursor:pointer;min-height:44px}
+.relationship-lenses button[aria-pressed=true]{border-bottom-color:#3c1ffa;color:#3c1ffa}
+.relationship-lenses button:focus-visible{outline:2px solid #3c1ffa;outline-offset:4px}
+.relationship-inspector h3{font-size:24px;line-height:1.25;font-weight:500;margin:0 0 24px}
+.relationship-inspector ul{padding:0;list-style:none;margin:0 0 20px}
+.relationship-inspector li{padding:9px 0;border-bottom:1px solid #e0e4ec;font-size:15px}
+.relationship-inspector p{font-size:14px;line-height:1.6;color:#475569;max-width:44ch;min-height:5em}
+@media(max-width:700px){.relationship-layout{grid-template-columns:1fr;gap:28px}.relationship-inspector h3{font-size:22px}.relationship-drawing svg text{font-size:17px}}

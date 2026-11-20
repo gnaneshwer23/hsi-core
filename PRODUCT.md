@@ -23,7 +23,7 @@ Visitors read primary literature and weigh methods, species, tissue, cell state 
 - Public positioning is one HSI technology. It is not marketed as a portfolio, a four-product ecosystem or named product modules (explicit direction, 13 November 2026).
 - All graph content is candidate-only and unreviewed; scientific approval is none. No clinical advice, no clinical decision support, no patient data on this site.
 - Agents work in the background and are not named on the landing pages or in the dashboard. They propose candidates and never approve anything. Model checks are off in the prototype.
-- The public site is six pages: Home, How it works, Knowledge graph, Trust, About, Contact. Everything else is the research app or backend, and retired marketing URLs redirect. Primary action: set up your research home (a two-minute, optional onboarding). Secondary: see how it works, explore the graph. "Request research access" must stay honest about being a browser draft.
+- Primary header: Home, How it works and Knowledge graph, with Sign in and Create account. Audience, validation, trust, about and contact pages remain indexed and accessible in the footer. Creating an account does not grant research or reviewer permissions. "Request research access" must stay honest about being a browser draft.
 - Existing stack: React 19, Vite, TypeScript, React Router, Host Grotesk Variable; prerendered public pages, Vercel rewrites, Playwright and axe checks, bundle budgets.
 - Undecided: whether a public pilot, pricing or case-study content will ever exist. None exists now.
 
@@ -31,7 +31,7 @@ Visitors read primary literature and weigh methods, species, tissue, cell state 
 Name: Human Super Intelligence (HSI). Typeface: Host Grotesk Variable only. Public visual world (canon, Causaly + Benchling + Alta craft bar, 20 November 2026): cool near-white ground (`#F4F5F8`), navy ink (`#101F33`), one electric indigo accent (`#3C1FFA`), light typography-led heroes with dense chrome-framed product proof — not pastel marketing tiles, not burgundy Stage-2 heroes, not dark-purple inset hero cards. Honesty labels are part of the brand: "Research preview", "candidate-only", "unreviewed", "illustrative", "no clinical advice".
 
 ## Evidence on Hand
-- A published, digest-verified graph snapshot (currently 153 concepts, 95 source-candidate relationships, 9 gaps, 75 sources, 0 reviewed), read at runtime.
+- A published, digest-verified graph snapshot, with counts read at runtime and review status shown explicitly.
 - Capability maturity records for 13 agents (`site/src/lib/intelligenceCollective.ts`).
 - Selected primary publications cited on the Evidence page.
 - Absent, and not to be invented: customers, testimonials, benchmarks or accuracy figures, partnerships or MoUs, pricing, certifications, regulatory clearance, case studies.
