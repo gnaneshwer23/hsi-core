@@ -2,19 +2,16 @@ import type {FlowStep} from "./flowSteps";
 import {INVESTIGATION_FLOW} from "./flowSteps";
 
 type Props = {
-  /** Steps to render; defaults to the six-step investigation spine. */
   steps?: readonly FlowStep[];
-  /** Accessible name for the diagram region. */
   ariaLabel?: string;
-  /** Optional step id to emphasise (e.g. graph as mechanism node). */
   emphasizeId?: string;
-  /** Visual density for audience heroes vs homepage. */
   size?: "lg" | "sm";
   className?: string;
 };
 
 /**
- * Authored SVG/CSS flow diagram of the HSI investigation path.
+ * Process infographic: numbered steps on a single connector spine.
+ * Flat on page ground — no cards, tiles, or layered chrome.
  * Horizontal on desktop, vertical on narrow viewports. Reduced-motion safe.
  */
 export function InvestigationFlowDiagram({
@@ -41,50 +38,75 @@ export function InvestigationFlowDiagram({
       <p id={descId} className="ld-flow-sr">
         {summary}
       </p>
-      <ol className="ld-flow-track" aria-label={ariaLabel}>
-        {steps.map((step, i) => {
-          const n = String(i + 1).padStart(2, "0");
-          const on = emphasizeId === step.id;
-          return (
-            <li
-              key={step.id}
-              className={`ld-flow-node${on ? " is-emphasis" : ""}`}
-              data-step={step.id}
-            >
-              <span className="ld-flow-n" aria-hidden="true">
-                {n}
-              </span>
-              <span className="ld-flow-label">{step.label}</span>
-              {i < steps.length - 1 ? (
-                <span className="ld-flow-arrow" aria-hidden="true">
-                  <svg viewBox="0 0 24 12" width="24" height="12" focusable="false">
-                    <path
-                      d="M0 6h18M14 1l8 5-8 5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+
+      <div className="ld-flow-figure">
+        <svg
+          className="ld-flow-spine ld-flow-spine-h"
+          viewBox="0 0 1000 24"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            className="ld-flow-path"
+            d="M12 12 H988"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+        <svg
+          className="ld-flow-spine ld-flow-spine-v"
+          viewBox="0 0 24 1000"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+          focusable="false"
+        >
+          <path
+            className="ld-flow-path"
+            d="M12 12 V988"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          />
+        </svg>
+
+        <ol className="ld-flow-track" aria-label={ariaLabel}>
+          {steps.map((step, i) => {
+            const n = String(i + 1).padStart(2, "0");
+            const on = emphasizeId === step.id;
+            return (
+              <li
+                key={step.id}
+                className={`ld-flow-node${on ? " is-emphasis" : ""}`}
+                data-step={step.id}
+              >
+                <span className="ld-flow-n" aria-hidden="true">
+                  {n}
                 </span>
-              ) : null}
-            </li>
-          );
-        })}
-      </ol>
-      <ol className="ld-flow-explain" aria-label={`${ariaLabel} — explained`}>
-        {steps.map((step, i) => (
-          <li key={step.id}>
-            <span className="ld-flow-explain-n" aria-hidden="true">
-              {String(i + 1).padStart(2, "0")}
-            </span>
-            <span>
-              <strong>{step.label}.</strong> {step.line}
-            </span>
-          </li>
-        ))}
-      </ol>
+                <span className="ld-flow-label">{step.label}</span>
+                <span className="ld-flow-line">{step.line}</span>
+                {i < steps.length - 1 ? (
+                  <span className="ld-flow-arrow" aria-hidden="true">
+                    <svg viewBox="0 0 24 12" width="20" height="10" focusable="false">
+                      <path
+                        d="M0 6h16M12 1l8 5-8 5"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                ) : null}
+              </li>
+            );
+          })}
+        </ol>
+      </div>
     </figure>
   );
 }

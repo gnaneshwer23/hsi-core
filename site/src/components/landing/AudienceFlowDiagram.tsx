@@ -9,12 +9,12 @@ type Cap = {
 
 type Props = {
   variant: AudienceFlowVariant;
-  /** Compact maturity chips — titles only, no essay bodies. */
+  /** Compact maturity footnote — inline text, not chip cards. */
   capabilities?: readonly Cap[];
   ariaLabel?: string;
 };
 
-/** Role-specific flow diagram plus optional maturity chip row. */
+/** Role-specific process infographic plus optional maturity footnote strip. */
 export function AudienceFlowDiagram({variant, capabilities, ariaLabel}: Props) {
   const steps = AUDIENCE_FLOWS[variant];
   return (
@@ -25,14 +25,15 @@ export function AudienceFlowDiagram({variant, capabilities, ariaLabel}: Props) {
         ariaLabel={ariaLabel ?? `${variant} investigation flow`}
       />
       {capabilities && capabilities.length > 0 ? (
-        <ul className="ld-maturity-chips" aria-label="Capability maturity">
-          {capabilities.map((c) => (
-            <li key={c.title}>
+        <p className="ld-maturity-note" role="note" aria-label="Capability maturity">
+          {capabilities.map((c, i) => (
+            <span key={c.title} className="ld-maturity-item">
+              {i > 0 ? <span className="ld-maturity-sep" aria-hidden="true"> · </span> : null}
               <LandingMaturityLabel level={c.maturity} />
-              <span>{c.title}</span>
-            </li>
+              <span className="ld-maturity-title">{c.title}</span>
+            </span>
           ))}
-        </ul>
+        </p>
       ) : null}
     </div>
   );
