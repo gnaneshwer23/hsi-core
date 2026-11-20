@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-const PUBLIC=['/','/how-it-works','/knowledge-graph','/researchers','/enterprise','/biotech','/clinical','/laboratories','/validation','/trust','/about','/contact'];
+const PUBLIC=['/','/how-it-works','/knowledge-graph','/researchers','/biotech','/validation','/trust','/about','/contact'];
 
 test('the footer leads to the research app, which opens the app shell',async({page})=>{
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
@@ -13,17 +13,20 @@ test('the footer leads to the research app, which opens the app shell',async({pa
  await expect(page.locator('.rh-app')).toBeVisible();
 });
 
-test('home states the vision, USPs, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
+test('home states the vision, the connected journey, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
  const hero=page.locator('.pg-hero');
- await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Connect the Science. Challenge the Evidence. Advance Discovery.');
+ await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Biology is connected. Scientific intelligence should be too.');
  await expect(hero.locator('.pg-brand')).toHaveText('Human Super Intelligence');
- await expect(hero.getByRole('link',{name:/Explore Platform/})).toHaveAttribute('href','/how-it-works');
- await expect(hero.getByRole('link',{name:/Join research preview/})).toHaveAttribute('href','/welcome');
- await expect(page.getByRole('link',{name:/Walk through the platform workflow/})).toHaveAttribute('href','/how-it-works');
- const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
- await expect(loop).toHaveCount(6);
- await expect(loop.nth(1)).toContainText('Live public sources');await expect(loop.nth(4)).toContainText('Kept on your device');
+ await expect(hero.getByRole('link',{name:/Explore the platform/})).toHaveAttribute('href','/how-it-works');
+ await expect(hero.getByRole('link',{name:/Scientific workbench/})).toHaveAttribute('href','/research/workspace');
+ await expect(page.getByRole('region',{name:/Biomedical knowledge is growing/})).toBeVisible();
+ await expect(page.getByRole('region',{name:/One connected scientific intelligence journey/})).toBeVisible();
+ const journey=page.getByRole('list',{name:'Scientific intelligence journey'}).locator(':scope > li');
+ await expect(journey).toHaveCount(5);
+ await expect(journey.nth(0)).toContainText('Biomedical evidence');
+ await expect(journey.nth(3)).toContainText('AI-powered scientific investigation');
+ await expect(page.getByRole('region',{name:/Explore scientific domains/})).toContainText('unequal');
  await expect(page.getByRole('region',{name:/What makes it different/}).getByRole('listitem')).toHaveCount(3);
  await expect(page.getByRole('region',{name:/What makes it different/})).toContainText('Context-aware disagreement analysis');
  await expect(page.getByRole('region',{name:/What makes it different/})).toContainText('Cross-domain mechanism investigation');
