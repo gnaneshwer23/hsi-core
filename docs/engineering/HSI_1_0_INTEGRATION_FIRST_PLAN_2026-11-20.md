@@ -17,7 +17,7 @@ Most of the **Next-5 journey productization** from the 19 November audit is alre
 What remains for HSI 1.0 “one complete scientific investigation” is **not another module stack**:
 
 1. **Owner reconcile** of two green stacked PR sequences (website redesign + Demo Research Universe).  
-2. **One thin workspace integration PR** that makes the existing trail a continuous default path (progressive disclosure, scroll/open contracts, one Playwright continuous journey) without inventing science or enabling writes.  
+2. **One thin workspace integration PR** that makes the existing trail a continuous default path (Ask→scenario bridge, fold/open contracts including `cmpKey` on Why-differ, one Playwright continuous journey) without inventing science, free-text model spend, or production writes.  
 3. **Owner-gated** evidence reliability, staging persistence, and researcher pilot — cannot be closed by agents alone.
 
 ---
@@ -67,13 +67,15 @@ Founder 7-step target mapped onto the **already-shipped** 8-step unified trail (
 
 | # | Founder step | Trail id | Primary modules (reuse) | Workspace surface today | Wired? |
 | --- | --- | --- | --- | --- | --- |
-| 1 | Research question | `ask` | `liveRun.ts`, Ask strip in `InvestigationWorkspace.tsx` | `#ws-ask-strip` | **Yes** |
-| 2 | Permitted scientific evidence | `evidence` | `liveRun.ts` candidates/records; evidence list UI | `#ws-ev-h` card | **Yes** (live/mocked mix; rights incomplete) |
-| 3 | Evidence Context Passport | `passport` | `evidenceContextPassport.ts`, `EvidenceContextPassportView`, `liveClaimPassportEdge.ts`, `PassportEvidenceTable` | Claim inspect + empty passport status | **Yes** (requires claim select) |
-| 4 | Mechanism graph + comparisons | `disagreement` (+ relationships card) | `GraphView` in workspace; `liveRunComparison.ts`; `UspADisagreementPanel` | Relationships card open; comparison under `#ws-usp-panels` **`<details>`** | **Partial** — comparison not default-open |
-| 5 | Contradictions, gaps, hypotheses | `gaps` (+ hyp block) | `runGaps.ts`, `testableNextQuestions.ts`, run hypotheses UI, `CuratedDisagreementPackPanel` | `#ws-gaps-testable` **folded**; hyps in verification card | **Partial** — folded / secondary |
+| 1 | Research question | `ask` | `scenarios.ts`, `profileWorkspaceHandoff.ts`, Ask strip in `InvestigationWorkspace.tsx`; Home Ask via `AskCard` / `SearchHero` | `#ws-ask-strip` | **Partial** — display + handoff; live POST is curated `scenarioId` only (`il21-autoimmune` in `useLiveRun.ts`); Home question not bound to Run |
+| 2 | Permitted scientific evidence | `evidence` | `liveRun.ts` candidates/records; `workspaceView.ts`; evidence list UI | `#ws-ev-h` card | **Yes** (live retrieval; clearance `sourceClearanceVerified: false`) |
+| 3 | Evidence Context Passport | `passport` | `evidenceContextPassport.ts`, `EvidenceContextPassportView`, `liveClaimPassportEdge.ts`, `PassportEvidenceTable` | Verification column after claim select | **Yes** (manual `setSel`; trail only scrolls `#ws-ev-h`) |
+| 4 | Mechanism graph + comparisons | `disagreement` (+ relationships) | `GraphView`; `liveRunComparison.ts`; `UspADisagreementPanel`; USP B cross-domain | Relationships open; full Why-differ under `#ws-usp-panels` **closed** | **Partial** — unified trail does **not** auto-set `cmpKey` (USP A trail does) |
+| 5 | Contradictions, gaps, hypotheses | `gaps` (+ hyp block) | `runGaps.ts`, `testableNextQuestions.ts`, hyp list, `CuratedDisagreementPackPanel` | `#ws-gaps-testable` **folded**; ledger CTA → `/research/ledger` | **Partial** — folded; hyp register is a tab hop |
 | 6 | Testable experiment + decision brief | `brief` | `liveBriefPreview.ts` / v2, `LiveBriefDecisionPanel`, `liveBriefPassport.ts` | `#ws-brief-panel` when run exists | **Yes** (limitations honesty present) |
-| 7 | Save, reopen and reassess | `save` | `liveRunLibrary.ts` / browser store, `UspCConnectedPanel`, usefulness panel | USP C panel + reopen buttons | **Yes** device-local; server fail-closed |
+| 7 | Save, reopen and reassess | `save` | `liveRunLibrary.ts`, `UspCConnectedPanel`, usefulness panel | `#ws-conn-h` + reopen | **Yes** device-local; server fail-closed; steps 12–13 blocked |
+
+**Parallel surfaces — do not remount into the continuous PR:** `/research/investigate` (`ScientificInvestigation.tsx`), `/research/journey`, `/research/mechanism-workflow`, account `site/src/components/InvestigationWorkspace.tsx` (server save), enterprise dashboards (deep-link only), Demo Universe (`src/demoUniverse/**`).
 
 ### Orchestration already on `/research/workspace`
 
@@ -115,15 +117,17 @@ Do **not** route live Ask through Demo Universe bundles.
 
 ## 3. Missing connections (product gaps, not missing libraries)
 
-These are the **integration** holes after inventory:
+These are the **integration** holes after inventory ([Find workspace integration gaps](bc-3d3769cd-db9d-5baa-b9ab-16e643071848), [Map researcher journey files](bc-fa069b89-80dc-53e7-8360-c78dc15c9b6f)):
 
-1. **Progressive default path** — USP A comparison and gaps/testable sit inside closed `<details>`. Trail `onSelect` scrolls/opens some targets, but a first continuous pass still feels like a dashboard of folds.  
-2. **Single continuous e2e** — `site/e2e/live-investigation.spec.ts` asserts honesty and pieces; it does not yet prove one scripted Ask→…→Save sequence that forces passport, comparison pair, gaps fold, brief limitations, and library entry without tab-hopping.  
-3. **Post-merge homepage reconciliation** — Stack A + Stack B both touch public landing; needs one composition after owner merge.  
-4. **Live evidence reliability** — engineering present; acceptance blocked on clearance / dual-provider / SME (owner).  
-5. **Staging persistence** — device-local save works; Neon durable path held (owner).
+1. **Ask → run bridge** — Workspace always POSTs `{ scenarioId: "il21-autoimmune" }`. Profile/Home question is display-only; `SearchHero` navigates without scenario/query. Optional in-scope for the continuous PR: bind `matchScenario(profile.question)` or URL param **without** opening free-text model spend (API stays scenarioId-gated).  
+2. **Progressive default path** — USP A comparison, cross-domain, and gaps/testable sit in closed `<details>`. Unified `onUnifiedTrailSelect` for “Why differ” does not set `cmpKey` the way USP A trail does — trail step stays incomplete until manual pair pick.  
+3. **Competing shell exits** — App shell still trains researchers onto `/research/gaps`, `/research/ledger`, `/research/knowledge-graph` alongside the one-page spine. Continuous PR should not require those hops for “done”; leave routes in place.  
+4. **Single continuous e2e** — `site/e2e/live-investigation.spec.ts` covers honesty and pieces; missing one script that walks all eight unified steps without `page.goto` hops (select claim → open disagreement + pair → gaps fold → brief limitations → save → reopen).  
+5. **Post-merge homepage reconciliation** — Stack A + Stack B both touch public landing; one composition after owner merge.  
+6. **Live evidence reliability** — clearance / dual-provider / SME (owner).  
+7. **Staging persistence** — device-local save works; Neon durable path held (owner).
 
-Nothing in (1)–(2) requires new scientific engines.
+Nothing in (1)–(4) requires new scientific engines.
 
 ---
 
@@ -145,27 +149,29 @@ Make `/research/workspace` the **default continuous** investigation path for the
 
 | Area | Paths |
 | --- | --- |
-| Trail open contracts | `site/src/pages/InvestigationWorkspace.tsx` — `onUnifiedTrailSelect` / Stage2 checklist selectors: ensure `disagreement` opens `#ws-usp-panels`, `gaps` opens `#ws-gaps-testable`, `brief` focuses `#ws-brief-panel`, `passport` selects first claim if none |
-| Optional small helper | `src/investigation/unifiedJourneyTrail.ts` or new `workspaceTrailNavigation.ts` — pure open-target map (testable) |
-| Panels | Prefer **props** on existing `UspADisagreementPanel` / gaps details (`open` controlled) rather than new panels |
-| Tests | `test/unifiedJourneyTrail.test.ts` (extend) · `site/e2e/live-investigation.spec.ts` **or** new `site/e2e/workspace-continuous-journey.spec.ts` |
-| Docs | Short honesty note under `docs/engineering/` (fold/open contract) |
+| Trail open contracts | `site/src/pages/InvestigationWorkspace.tsx` — `onUnifiedTrailSelect`: `disagreement` opens `#ws-usp-panels` **and** sets first `cmpKey` like USP A; `gaps` opens `#ws-gaps-testable`; `brief` focuses `#ws-brief-panel`; `passport` selects first claim if none |
+| Ask → scenario bridge (thin) | `site/src/lib/useLiveRun.ts`, `site/src/lib/researchHome.ts` / `workbenchPrimary.ts`, optional `ResearchHome.tsx` SearchHero query — scenarioId only; no free-text POST |
+| Optional small helper | `src/investigation/unifiedJourneyTrail.ts` or `workspaceTrailNavigation.ts` — pure open-target map (testable, exhaustive `never`) |
+| Panels | Prefer **controlled `open`** on existing USP / gaps `<details>` rather than new panels |
+| Tests | `test/unifiedJourneyTrail.test.ts` · `test/profileWorkspaceHandoff.test.ts` if handoff changes · `site/e2e/live-investigation.spec.ts` **or** `site/e2e/workspace-continuous-journey.spec.ts` · thin `research-home.spec.ts` handoff assert |
+| Docs | Short honesty note under `docs/engineering/` (fold/open + Ask bridge contract) |
 
 ### Files to leave alone
 
-- `src/demoUniverse/**` (except deep-links from demos)  
-- Neon migrations / write gates / auth grant servers  
-- Enterprise `/enterprise/*` expansion  
-- Capability-status inventing availability  
-- Sealed graph mutation / gold vault  
-- Stage 2 marketing pages (post-merge reconcile is a **separate** docs/UI fix if conflicts appear)
+- `src/demoUniverse/**` (except deep-links)  
+- `ScientificInvestigation.tsx`, `ResearchJourney.tsx`, `ResearchMechanismWorkflow.tsx`  
+- Account `site/src/components/InvestigationWorkspace.tsx` + `investigationWorkspaceService.ts`  
+- Enterprise `/enterprise/*`, `/workspaces/*` dashboards (deep-link only)  
+- Neon migrations / write gates / auth grant servers / gold vault / sealed graph mutation  
+- Stage 2 marketing pages (homepage reconcile is separate after Stack A/B merge)
 
 ### Acceptance tests (engineering — not scientific gold)
 
-1. Playwright: with a fixture/live-safe run (existing workspace harness), walk trail Ask → Evidence → Passport (claim selected) → Disagreement (pair selected or empty honesty) → Gaps fold visible → Brief limitations visible → Save → Reopen same `briefHash`.  
-2. Assert honesty strings: journey complete claimed false; production writes false; potential contradiction ≠ proven.  
-3. Unit: open-target map exhaustive over `UnifiedJourneyStepId` (`never` default).  
-4. No new forbidden marketing claims on workspace copy.
+1. Playwright continuous journey: `/research/workspace` → Run → select supporting claim → unified **Why differ** (panel open + pair / `cmpKey`) → **Gaps** fold visible → **Brief** limitations visible → **Save** → reopen same `briefHash` — **no** required hops to `/research/gaps` or `/research/ledger`.  
+2. Optional handoff: scenario-matching Home question appears on Ask strip and selects correct `scenarioId` on Run.  
+3. Assert honesty: journey complete claimed false; production writes false; potential contradiction ≠ proven.  
+4. Unit: open-target map exhaustive over `UnifiedJourneyStepId` (`never` default); disagreement completion semantics documented if `cmpKey` auto-select changes.  
+5. No new forbidden marketing claims on workspace copy.
 
 ### Still mocked / blocked after this PR
 
