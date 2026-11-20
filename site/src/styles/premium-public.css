@@ -628,7 +628,8 @@
 .ld-flow{position:relative;margin:0;display:grid;gap:28px}
 .ld-flow-track{list-style:none;margin:0;padding:20px 18px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 0;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 48px rgba(16,31,51,.08)}
 .ld-flow-node{position:relative;display:grid;justify-items:center;gap:8px;flex:1 1 0;min-width:88px;padding:8px 6px 12px;text-align:center}
-.ld-flow-n,.ld-path-n,.ld-flow-explain-n{font:650 12px/1 "Host Grotesk Variable",system-ui,sans-serif;color:var(--accent);font-variant-numeric:tabular-nums}
+/* Never use global botanical --accent (#7a9e88): fails 4.5:1 on white/#f4f5f8. */
+.ld-flow-n,.ld-path-n,.ld-flow-explain-n{font:650 12px/1 "Host Grotesk Variable",system-ui,sans-serif;color:var(--accent-ink,var(--botanical,#2f5d45));font-variant-numeric:tabular-nums}
 .ld-flow-label,.ld-path-label{font:650 15px/1.2 "Host Grotesk Variable",system-ui,sans-serif;letter-spacing:-.02em;color:var(--ink)}
 .ld-flow-arrow{position:absolute;right:-14px;top:42%;color:var(--muted);opacity:.7;pointer-events:none}
 .ld-flow-node.is-emphasis{background:var(--wash);border-radius:10px;outline:1px solid var(--line)}
@@ -664,7 +665,8 @@
 .ld-path-track li{display:grid;gap:8px;align-content:start;padding:18px 16px;background:#fff;border:1px solid var(--line);border-radius:12px}
 .ld-path-line{font-size:13.5px;line-height:1.45;color:var(--muted)}
 .pg-gates[data-compact] li{padding:10px 0;font-size:15px}
-@keyframes ld-flow-in{from{opacity:.4;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* Transform only — opacity fades blend fg into bg and fail axe color-contrast mid-run. */
+@keyframes ld-flow-in{from{transform:translateY(5px)}to{transform:none}}
 .ld-flow-track .ld-flow-node,.ld-path-track li{animation:ld-flow-in .55s cubic-bezier(.2,.8,.2,1) both}
 .ld-flow-track .ld-flow-node:nth-child(odd),.ld-path-track li:nth-child(odd){animation-delay:.08s}
 .ld-flow-track .ld-flow-node:nth-child(even),.ld-path-track li:nth-child(even){animation-delay:.16s}
