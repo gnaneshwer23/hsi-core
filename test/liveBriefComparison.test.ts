@@ -1,5 +1,6 @@
 import {describe, expect, test} from "bun:test";
 import {
+  COMPARABILITY_HONESTY_LINE,
   emptyLiveStructuredComparison,
   renderLiveBriefComparisonSections,
 } from "../src/investigation/liveBriefComparison";
@@ -116,6 +117,8 @@ describe("live structured comparison binding", () => {
     expect(md).toContain("## Structured evidence comparison (candidate)");
     expect(md).toContain("potential_contradiction is not a proven contradiction");
     expect(md).toContain("Verification is bound before contradiction language");
+    expect(md).toContain(COMPARABILITY_HONESTY_LINE);
+    expect(md).toContain("Insufficient comparability is not Potential contradiction");
     expect(md.toLowerCase()).not.toContain("scientifically approved");
     expect(renderLiveBriefComparisonSections(undefined)).toContain("No comparable claim pairs");
     expect(emptyLiveStructuredComparison().pairCount).toBe(0);

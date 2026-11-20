@@ -11,7 +11,10 @@ const base={schemaVersion:'hsi-live-investigation-1',mode:'live',scenarioId:'il2
  targets:[],byContext:{ssc:{label:'Systemic sclerosis',records:1,supporting:['c1'],opposing:[],uncertain:[]}},
  verification:{status:'completed',reason:null,checked:1,independence:'independent_execution_only'},
  hypotheses:{status:'generated',reason:null,dropped:0,basis:{findings:2},items:[{id:'h1',statement:'Blocking IL-21 reduces Tfh expansion in systemic sclerosis cells.',rationale:'The cited finding links IL-21 to Tfh expansion.',citedClaimIds:['c1'],prediction:'Fewer Tfh cells with blockade.',experiment:'Culture cells with an IL-21 blocking antibody.',falsifier:'No change in Tfh numbers.',limits:'Human systemic sclerosis, association only.',state:'unvalidated_hypothesis',generatedBy:{verifier:'openai-a',model:'m1'},challenge:{verifier:'openai-b',model:'m2',verdict:'overreach',reason:'Blockade is not in the findings.'},challengeNote:null}]},
- structuredComparison:{...emptyComparison,pairCount:1,summary:{...emptyComparison.summary,contextDependent:1},items:[{leftId:'c1',rightId:'c2b',leftLabel:'IL-21 ~ T follicular helper cells',rightLabel:'IL-21 ~ T follicular helper cells',leftContexts:['Systemic sclerosis'],rightContexts:['Rheumatoid arthritis'],engineOutcome:'context_dependent',outcome:'context_dependent',rationale:'Disease context differs; not treated as proven contradiction.',verificationBindNote:null,verificationLeft:'both checks agree on direction',verificationRight:'both checks agree on direction',sharedSubjectObject:true,contextDepth:'coarse_metadata_only',needsHumanReview:true,potentialContradictionIsNotProven:true}]},
+ structuredComparison:{...emptyComparison,pairCount:2,summary:{...emptyComparison.summary,contextDependent:1,insufficientComparability:1},items:[
+  {leftId:'c1',rightId:'c2b',leftLabel:'IL-21 ~ T follicular helper cells',rightLabel:'IL-21 ~ T follicular helper cells',leftContexts:['Systemic sclerosis'],rightContexts:['Rheumatoid arthritis'],engineOutcome:'context_dependent',outcome:'context_dependent',rationale:'Disease context differs; not treated as proven contradiction.',verificationBindNote:null,verificationLeft:'both checks agree on direction',verificationRight:'both checks agree on direction',sharedSubjectObject:true,contextDepth:'coarse_metadata_only',needsHumanReview:true,potentialContradictionIsNotProven:true},
+  {leftId:'c1',rightId:'c3',leftLabel:'IL-21 ~ T follicular helper cells',rightLabel:'IL-21 ~ B-cell responses',leftContexts:['Systemic sclerosis'],rightContexts:['Systemic lupus erythematosus'],engineOutcome:'insufficient_comparability',outcome:'insufficient_comparability',rationale:'Different objects and incomplete shared experimental axes — not treated as contradiction.',verificationBindNote:null,verificationLeft:'both checks agree on direction',verificationRight:'not checked',sharedSubjectObject:false,contextDepth:'coarse_metadata_only',needsHumanReview:true,potentialContradictionIsNotProven:true},
+ ]},
  gaps:['Search failed: openalex for ssc (HTTP 500). Absence of results there is not evidence of absence.'],budget:null,
  flags:{scientificApproval:false,graphPromotable:false,consensusEstablished:false,humanReview:'required',clinicalAdvice:false,containsPhi:false},
  events:[{stage:'scoped',at:'t',status:'ok',detail:'scoped'},{stage:'searched',at:'t',status:'partial',detail:'1 of 2 searches returned; 1 failed.'},{stage:'retrieved',at:'t',status:'ok',detail:'1 record'},{stage:'mapped',at:'t',status:'ok',detail:'mapped'},{stage:'compared',at:'t',status:'ok',detail:'1 candidate'},{stage:'challenged',at:'t',status:'ok',detail:'checked'},{stage:'brief',at:'t',status:'ok',detail:'brief'}]};
@@ -19,6 +22,7 @@ const checked={...base,candidates:[
  cand({direction:'positive',polarity:'supporting',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[{verifier:'openai-a',model:'m1',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'},{verifier:'openai-b',model:'m2',direction:'positive',evidenceSpan:'IL-21 was increased',reason:'States an increase.'}]}),
  cand({id:'c2',object:'B-cell responses',relationId:'il21-bcell',sentence:'IL-21 is linked to B cells in lupus.',contexts:['sle']}),
  cand({id:'c2b',relationId:'il21-tfh',contexts:['ra'],species:'mouse',sourceId:'s2',sourceUrl:'https://europepmc.org/article/MED/2',sentence:'In murine arthritis IL-21 signalling reduced Tfh expansion.',direction:'negative',polarity:'opposing',polarityBasis:'two_model_challenge',verification:'agree_directional',verdicts:[]}),
+ cand({id:'c3',object:'B-cell responses',relationId:'il21-bcell',contexts:['sle'],sourceId:'s3',sourceUrl:'https://europepmc.org/article/MED/3',sentence:'IL-21 was associated with B-cell responses in lupus abstracts.',direction:'not_assessed',polarity:'uncertain',verification:'not_run',verdicts:[]}),
 ]};
 
 const mockGraph=(page:import('@playwright/test').Page)=>page.route('**/api/research/graph-snapshot?*',(r)=>r.fulfill({json:domainBundle}));
@@ -63,10 +67,20 @@ test('continuous unified journey: Ask → … → Save without gaps/ledger hops'
  await expect.poll(async()=>uspPanels.getAttribute('open')).not.toBeNull();
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
  await expect(disagree).toContainText('Potential contradiction is not');
+ await expect(disagree.getByTestId('ws-comparability-honesty')).toContainText(
+  'Insufficient comparability is not Potential contradiction',
+ );
+ await expect(disagree.getByTestId('ws-comparability-honesty')).toContainText(
+  'not proven conflict',
+ );
  await expect(disagree).toContainText('Context-dependent difference');
+ await expect(disagree).toContainText('Insufficient comparability');
  // Unified trail auto-selects first comparison pair (cmpKey) — dual passports appear.
  await expect(page.getByRole('heading',{name:/Left claim · Evidence Context Passport/})).toBeVisible();
  await expect(page.getByRole('heading',{name:/Right claim · Evidence Context Passport/})).toBeVisible();
+ await disagree.getByRole('button',{name:/Insufficient comparability/}).click();
+ await expect(disagree.getByRole('button',{name:/Insufficient comparability/})).toHaveAttribute('aria-pressed','true');
+ await expect(disagree.getByTestId('ws-comparability-honesty')).toBeVisible();
 
  const gapsFold=page.locator('#ws-gaps-testable');
  expect(await gapsFold.getAttribute('open')).toBeNull();
