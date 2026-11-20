@@ -13,7 +13,7 @@ test('researchers page states preview limits and real CTAs',async({page})=>{
 
 test('research groups page is marketing with labelled demo shells',async({page})=>{
  await page.goto('/enterprise');
- await expect(page.getByRole('heading',{level:1})).toContainText('Connected research for principal investigators');
+ await expect(page.getByRole('heading',{level:1})).toContainText('connected work for principal investigators');
  await expect(page.getByRole('link',{name:/Get Access/}).first()).toHaveAttribute('href','/contact');
  await expect(page.getByRole('link',{name:/Professor \/ PI workspace/})).toHaveAttribute('href','/enterprise/professor');
  await expect(page.getByRole('link',{name:/Student \/ researcher workspace/})).toHaveAttribute('href','/enterprise/student');

@@ -67,16 +67,16 @@ function FaqList(){
 export function KnowledgeGraphPublicPage() {
   return (
     <GraphSnapshotProvider><div className="sp-page fg-page kg-page pg-page pg-sub">
-      <section className="pg-hero pg-hero-dark pg-hero-text kg-phero" aria-labelledby="kg-title">
+      <section className="pg-hero pg-hero-platform pg-hero-text kg-phero" aria-labelledby="kg-title">
         <div className="pg-hero-copy">
           <h1 id="kg-title">Relationships between biological entities, with the evidence attached.</h1>
           <p className="pg-lead">A graph of what research reports about cells, molecules, tissues and conditions, with every connection tied to its source, context and review status. Pick a department, follow a connection, open its source.</p>
           <div className="pg-cta">
-            <Link className="pg-btn pg-btn-light" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
-            <Link className="pg-link pg-link-light" to="/research/knowledge-graph">Open the full explorer <span aria-hidden="true">→</span></Link>
+            <Link className="pg-btn" to="#home-knowledge-graph">Explore the graph <span aria-hidden="true">→</span></Link>
+            <Link className="pg-link" to="/research/knowledge-graph">Open the full explorer <span aria-hidden="true">→</span></Link>
           </div>
           <p className="pg-micro">Published snapshot · candidate-only · unreviewed</p>
-          <p className="pg-micro" role="note">Former “Science” marketing URLs redirect here. Educational topic maps stay under <Link className="pg-link pg-link-light" to="/science/graph">/science/graph</Link>; they are not a separate Science product home.</p>
+          <p className="pg-micro" role="note">Former “Science” marketing URLs redirect here. Educational topic maps stay under <Link className="pg-link" to="/science/graph">/science/graph</Link>; they are not a separate Science product home.</p>
         </div>
       </section>
 

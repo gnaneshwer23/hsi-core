@@ -37,7 +37,6 @@ export function ContactPublicPage(){
   return (
     <div className="sp-page fg-page ct-page pg-page pg-sub s2-landing">
       <header className="pg-phero">
-        <p className="pg-eyebrow">Pricing &amp; Access</p>
         <h1>Contact HSI and start from your research question.</h1>
         <div>
           <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>

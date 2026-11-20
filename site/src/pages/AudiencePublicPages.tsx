@@ -9,6 +9,7 @@ import {
   LandingHero,
   LandingPage,
   LandingPrimaryCta,
+  LandingProofChrome,
   LandingSecondaryCta,
   LandingSection,
 } from "../components/landing/LandingPrimitives";
@@ -51,9 +52,45 @@ export function ResearchersPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Researchers"
-        title="Personal scientific intelligence — with context, not just citations."
+        title="Researchers: personal scientific intelligence with context, not just citations."
         description="HSI connects published evidence to experimental context and uncertainty so you can see what is known, what conflicts, and what to investigate next — without treating a model answer as approved biology."
+        proof={
+          <LandingProofChrome
+            title="Investigation path"
+            badge="Research preview · candidate-only"
+          >
+            <ol className="s2-proof-steps" aria-label="Investigation path preview">
+              <li>
+                <span>01</span>
+                <div>
+                  <strong>Frame the question</strong>
+                  <p>Match concepts on the published graph.</p>
+                </div>
+              </li>
+              <li>
+                <span>02</span>
+                <div>
+                  <strong>Retrieve evidence</strong>
+                  <p>Query permitted public sources with a run trace.</p>
+                </div>
+              </li>
+              <li>
+                <span>03</span>
+                <div>
+                  <strong>Compare context</strong>
+                  <p>Abstain when model, tissue or dose differ.</p>
+                </div>
+              </li>
+              <li>
+                <span>04</span>
+                <div>
+                  <strong>Leave a brief</strong>
+                  <p>State support, gaps and what a human must decide.</p>
+                </div>
+              </li>
+            </ol>
+          </LandingProofChrome>
+        }
       >
         <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
         <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
@@ -134,8 +171,7 @@ export function BiotechPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Biotech & Pharma"
-        title="Assess R&D evidence with provenance you can inspect."
+        title="Biotech and pharma: assess R&D evidence with provenance you can inspect."
         description="For biotech and translational teams, HSI keeps source, experimental context and review status attached to each candidate relationship — so disagreement can be checked before it becomes a decision narrative."
       >
         <LandingPrimaryCta to="/contact">Discuss a research pilot</LandingPrimaryCta>
@@ -197,8 +233,7 @@ export function ClinicalPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Clinical Research"
-        title="Evidence-grounded translational research — not clinical decision support."
+        title="Clinical research: evidence-grounded translation — not clinical decision support."
         description="HSI supports literature-linked mechanism investigation for clinical research programmes. Patient-level work stays on a separate governed plane. This preview uses synthetic patients only; nothing here is live CDS or clinical advice."
       >
         <LandingPrimaryCta to="/contact">Discuss clinical research access</LandingPrimaryCta>
@@ -270,8 +305,7 @@ export function LaboratoriesPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Laboratories & Omics"
-        title="Connect experimental readouts to biological evidence — without inventing QC scores."
+        title="Laboratories and omics: connect readouts to evidence without inventing QC scores."
         description="HSI helps laboratory and multi-omics teams inspect how assay context, literature and candidate mechanisms relate. Live instruments, private datasets and invented feature counts are not claimed on this page."
       >
         <LandingPrimaryCta to="/contact">Discuss laboratory access</LandingPrimaryCta>
@@ -335,8 +369,7 @@ export function CommunityPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Research Community"
-        title="Evidence-grounded discussion — without automatic IP bleed."
+        title="Research community: evidence-grounded discussion without automatic IP bleed."
         description="HSI is built for scientific conversation that keeps source, context and uncertainty attached. Public posting, Circles durable store and automatic sharing of private drafts are not enabled in this preview."
       >
         <LandingPrimaryCta to="/contact">Discuss community access</LandingPrimaryCta>
@@ -400,8 +433,7 @@ export function ValidationPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Scientific Validation"
-        title="How evidence quality is separated from approval."
+        title="Validation: how evidence quality is separated from approval."
         description="Validation here means methodology and governance: how HSI keeps observation, interpretation, verification and publication apart. It is not a claim of superiority over peers or that gold standards are complete."
       >
         <LandingPrimaryCta to="/validation#methodology">View methodology</LandingPrimaryCta>

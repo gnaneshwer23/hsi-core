@@ -18,8 +18,7 @@ export function EnterpriseLandingPage() {
   return (
     <LandingPage>
       <LandingHero
-        eyebrow="Research Groups"
-        title="Connected research for principal investigators and teams."
+        title="Research groups: connected work for principal investigators and teams."
         description="Keep questions, evidence, gaps and briefs on one scientific path across a group — while private work stays private until sharing is explicitly enabled under fail-closed gates."
       >
         <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>

@@ -18,7 +18,7 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 test('home states the vision, the connected journey, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
  const hero=page.locator('.pg-hero');
- await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Biology is connected. Scientific intelligence should be too.');
+ await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence The AI platform for scientific evidence and biological reasoning');
  await expect(hero.locator('.pg-brand')).toHaveText('Human Super Intelligence');
  await expect(hero.getByRole('link',{name:/Explore the platform/})).toHaveAttribute('href','/how-it-works');
  await expect(hero.getByRole('link',{name:/Scientific workbench/})).toHaveAttribute('href','/research/workspace');
