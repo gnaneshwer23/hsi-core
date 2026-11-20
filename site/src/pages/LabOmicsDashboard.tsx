@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LabOmicsShell } from "../components/enterprise/LabOmicsShell";
 import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
+import { DemoOmicsCohortPanel } from "../components/demo/DemoOmicsCohortPanel";
 import {
   labOmicsDashboardDemo,
   type LabAssayDemo,
@@ -227,6 +228,7 @@ export function LabOmicsDashboard() {
       </section>
 
       <DemoUniverseRolePanel roleId="lab" />
+      <DemoOmicsCohortPanel scenarioId="single-cell-omics" />
     </LabOmicsShell>
   );
 }
