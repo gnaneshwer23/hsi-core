@@ -32,17 +32,22 @@ export function ResearchersPublicPage() {
       <LandingHero
         title="Researchers: personal scientific intelligence with context, not just citations."
         description="Published evidence, experimental context and uncertainty — without treating a model answer as approved biology."
+        proof={
+          <AudienceFlowDiagram
+            variant="researchers"
+            capabilities={RESEARCHER_CAPS}
+            ariaLabel="Researcher investigation path"
+          />
+        }
       >
         <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
         <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
       </LandingHero>
 
-      <LandingSection title="What a research investigation looks like.">
-        <AudienceFlowDiagram
-          variant="researchers"
-          capabilities={RESEARCHER_CAPS}
-          ariaLabel="Researcher investigation path"
-        />
+      <LandingSection
+        title="Continue the investigation."
+        description="Open the workspace, graph or audit surfaces that back the path above."
+      >
         <div className="s2-cta-row">
           <LandingPrimaryCta to="/research/workspace">Open the investigation workspace</LandingPrimaryCta>
           <LandingSecondaryCta to="/knowledge-graph">Explore the knowledge graph</LandingSecondaryCta>
@@ -89,18 +94,11 @@ export function BiotechPublicPage() {
       <LandingHero
         title="Biotech and pharma: assess R&D evidence with provenance you can inspect."
         description="Source, experimental context and review status stay attached — so disagreement can be checked before it becomes a narrative."
+        proof={<AudienceFlowDiagram variant="biotech" capabilities={BIOTECH_CAPS} ariaLabel="Biotech R&D flow" />}
       >
         <LandingPrimaryCta to="/contact">Discuss a research pilot</LandingPrimaryCta>
         <LandingSecondaryCta to="/evidence-intelligence">Inspect Evidence Intelligence</LandingSecondaryCta>
       </LandingHero>
-
-      <LandingSection title="Where HSI helps an R&D workflow.">
-        <AudienceFlowDiagram variant="biotech" capabilities={BIOTECH_CAPS} ariaLabel="Biotech R&D flow" />
-        <div className="s2-cta-row">
-          <LandingPrimaryCta to="/enterprise/biotech">Open R&D dashboard preview</LandingPrimaryCta>
-          <LandingSecondaryCta to="/context-conflict-audit">Context-Conflict Audit</LandingSecondaryCta>
-        </div>
-      </LandingSection>
 
       <LandingSection
         title="Pilot discussions stay honest."
@@ -111,8 +109,8 @@ export function BiotechPublicPage() {
           <li>Pilot scope, data-sharing and review authority are agreed separately.</li>
         </ul>
         <div className="s2-cta-row">
-          <LandingPrimaryCta to="/contact">Contact HSI</LandingPrimaryCta>
-          <LandingSecondaryCta to="/validation">Read validation methodology</LandingSecondaryCta>
+          <LandingPrimaryCta to="/enterprise/biotech">Open R&D dashboard preview</LandingPrimaryCta>
+          <LandingSecondaryCta to="/context-conflict-audit">Context-Conflict Audit</LandingSecondaryCta>
         </div>
       </LandingSection>
 
@@ -134,13 +132,18 @@ export function ClinicalPublicPage() {
       <LandingHero
         title="Clinical research: evidence-grounded translation — not clinical decision support."
         description="Literature-linked mechanism investigation on the scientific plane. Synthetic patients only; no live CDS or clinical advice."
+        proof={
+          <AudienceFlowDiagram variant="clinical" capabilities={CLINICAL_CAPS} ariaLabel="Clinical research flow" />
+        }
       >
         <LandingPrimaryCta to="/contact">Discuss clinical research access</LandingPrimaryCta>
         <LandingSecondaryCta to="/trust">Read governance boundaries</LandingSecondaryCta>
       </LandingHero>
 
-      <LandingSection title="Scientific plane, clinical boundary.">
-        <AudienceFlowDiagram variant="clinical" capabilities={CLINICAL_CAPS} ariaLabel="Clinical research flow" />
+      <LandingSection
+        title="Scientific plane, clinical boundary."
+        description="Patient work stays separate. This preview refuses non-synthetic clinical data."
+      >
         <ul className="s2-boundary-list">
           <li>No PHI and no live clinical decision support on this scientific plane.</li>
           <li>Synthetic patients only; the release gate refuses non-synthetic clinical data.</li>
@@ -178,13 +181,22 @@ export function LaboratoriesPublicPage() {
       <LandingHero
         title="Laboratories and omics: connect readouts to evidence without inventing QC scores."
         description="Assay context, literature and candidate mechanisms. Live instruments and private datasets are not claimed here."
+        proof={
+          <AudienceFlowDiagram
+            variant="laboratories"
+            capabilities={LAB_CAPS}
+            ariaLabel="Laboratory investigation flow"
+          />
+        }
       >
         <LandingPrimaryCta to="/contact">Discuss laboratory access</LandingPrimaryCta>
         <LandingSecondaryCta to="/knowledge-graph">Explore the knowledge graph</LandingSecondaryCta>
       </LandingHero>
 
-      <LandingSection title="How laboratory work meets the scientific path.">
-        <AudienceFlowDiagram variant="laboratories" capabilities={LAB_CAPS} ariaLabel="Laboratory investigation flow" />
+      <LandingSection
+        title="Boundaries for laboratory work."
+        description="Assay context stays visible. Private samples and live instruments are not claimed."
+      >
         <ul className="s2-boundary-list">
           <li>No live instrument connections or real-time QC dashboards in this preview.</li>
           <li>No invented accuracy percentages or validated assay performance claims.</li>
@@ -214,13 +226,22 @@ export function CommunityPublicPage() {
       <LandingHero
         title="Research community: evidence-grounded discussion without automatic IP bleed."
         description="Scientific conversation with source, context and uncertainty attached. Public posting and Circles durable store are not enabled."
+        proof={
+          <AudienceFlowDiagram
+            variant="community"
+            capabilities={COMMUNITY_CAPS}
+            ariaLabel="Community collaboration flow"
+          />
+        }
       >
         <LandingPrimaryCta to="/contact">Discuss community access</LandingPrimaryCta>
         <LandingSecondaryCta to="/enterprise/community">Open community demo shell</LandingSecondaryCta>
       </LandingHero>
 
-      <LandingSection title="What community collaboration means here.">
-        <AudienceFlowDiagram variant="community" capabilities={COMMUNITY_CAPS} ariaLabel="Community collaboration flow" />
+      <LandingSection
+        title="What community collaboration means here."
+        description="Shared vocabulary for inspectable artefacts. Durable Circles storage is not enabled."
+      >
         <p className="s2-section-note" role="note">
           The path <code>/community</code> still redirects to the research home. This page is the public Community
           entry — not a revival of that redirect as a discussion product.
@@ -254,6 +275,13 @@ export function ValidationPublicPage() {
       <LandingHero
         title="Validation: how evidence quality is separated from approval."
         description="Methodology and governance — not a claim of superiority, and not that gold standards are complete."
+        proof={
+          <AudienceFlowDiagram
+            variant="validation"
+            capabilities={VALIDATION_CAPS}
+            ariaLabel="Validation methodology flow"
+          />
+        }
       >
         <LandingPrimaryCta to="/validation#methodology">View methodology</LandingPrimaryCta>
         <LandingSecondaryCta to="/trust">Full trust and governance</LandingSecondaryCta>
@@ -264,7 +292,6 @@ export function ValidationPublicPage() {
         title="Methodology, not scoreboard."
         description="Benchmarks and evaluation harnesses exist as frameworks. Public pages never invent accuracy percentages."
       >
-        <AudienceFlowDiagram variant="validation" capabilities={VALIDATION_CAPS} ariaLabel="Validation methodology flow" />
         <div className="s2-cta-row">
           <LandingPrimaryCta to="/how-it-works">See what runs today</LandingPrimaryCta>
           <LandingSecondaryCta to="/context-conflict-audit">Open Context-Conflict Audit</LandingSecondaryCta>

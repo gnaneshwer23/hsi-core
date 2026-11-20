@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "name": "scientific-platform",
-  "label": "Causaly / Benchling craft bar",
+  "name": "diagram-first-scientific-platform",
+  "label": "Diagram-first Causaly / Benchling / Alta craft bar",
   "updated": "2026-11-20",
   "tokens": {
     "ground": "#F4F5F8",
@@ -12,18 +12,25 @@
     "accent": "#3C1FFA",
     "accentInk": "#2A14C9",
     "line": "#D4DFE4",
+    "radiusCta": "8px",
     "radiusControl": "10px",
-    "radiusFrame": "16px",
-    "typeface": "Host Grotesk Variable"
+    "typeface": "Host Grotesk Variable",
+    "heroObject": "investigation-flow-spine",
+    "proofBand": "published-live-graph"
   },
   "references": [
     "https://www.causaly.com/ai-platform/platform",
-    "https://www.benchling.com/"
+    "https://www.benchling.com/",
+    "https://www.altahq.com/b"
   ],
   "files": [
     "site/src/styles/premium-public.css",
     "site/src/styles/stage2-landing.css",
     "site/src/styles/premium-hsi.css",
-    "site/src/styles/research-public.css"
+    "site/src/styles/research-public.css",
+    "site/src/components/landing/InvestigationFlowDiagram.tsx",
+    "site/src/pages/HomeLanding.tsx",
+    "site/src/pages/HowItWorksPage.tsx",
+    "site/src/pages/AudiencePublicPages.tsx"
   ]
 }

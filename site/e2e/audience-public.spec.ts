@@ -6,7 +6,7 @@ test('researchers page states preview limits and real CTAs',async({page})=>{
  await expect(page.getByRole('heading',{level:1})).toContainText('context, not just citations');
  await expect(page.getByRole('link',{name:/Apply for the research preview/})).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('heading',{name:'What this preview is not.'})).toBeVisible();
- await expect(page.getByRole('heading',{name:'What a research investigation looks like.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Continue the investigation.'})).toBeVisible();
  await expect(page.getByRole('list',{name:'Researcher investigation path',exact:true}).locator(':scope > li')).toHaveCount(4);
  await expect(page.locator('#main-content')).toContainText('Live public literature retrieval');
  await expect(page.locator('#main-content')).toContainText('not grant research writes');

@@ -14,12 +14,12 @@ Visitor mode: Persuade. Primary: `site/src/pages/HomeLanding.tsx`. Related: HowI
 Translational researchers deciding whether HSI is a serious evidence platform. Job: understand the investigation loop and act (workbench / research home) without mistaking candidates for approved science.
 
 ## Direction contract
-THESIS: A Causaly/Benchling-class scientific platform site raised with Alta craft disciplines — light cool ground, navy ink, one electric indigo accent, typography-led first viewport with dense chrome-framed product proof — refusing pastel marketing tiles, burgundy Stage-2 heroes, and dark purple inset hero cards.
-OWN-WORLD: Ground `#F4F5F8`, ink `#101F33`, muted `#556B84`, accent `#3C1FFA` / ink `#2A14C9`, soft product wash `#F6F5FC`, Host Grotesk Variable only; 8px CTA / 10px control radii; product demos in white frames with chrome title bars and hairline `#D4DFE4` borders; no mint/peach/lavender meaning tiles as page structure.
-STORY: Visitor sees HSI brand at hero scale, one clear claim, the published graph working inside committed product chrome, then numbered investigation path and honest limits — then chooses workbench or research home.
-FIRST VIEWPORT: Full-bleed light hero (no inset dark card). Brand + claim + lead + CTA pair + honesty microcopy, then live published graph console with chrome title bar as the product object. Status strip under hero from real snapshot counts.
-FORM: Category-standard scientific AI platform (Causaly Platform + Benchling + Alta craft bar), canon path; seed key `canon-causaly-benchling-alta-2026-11-20`.
+THESIS: Diagram-first scientific platform — the numbered investigation spine is the hero instrument across home, how-it-works and audience pages; cool light Causaly/Benchling/Alta craft; refuses card grids, prose walls, pastel tiles, and layered container chrome.
+OWN-WORLD: Ground `#F4F5F8` with soft indigo atmospheric wash, ink `#101F33`, body `#2B3A50`, muted `#556B84`, accent `#3C1FFA` / `#2A14C9`, line `#D4DFE4`, Host Grotesk Variable only; 8px CTAs; flat process figures (no cards); navy close bands; hairline rules.
+STORY: Visitor reads brand + one claim, sees the investigation spine dramatized immediately, then the live published graph as proof, honest limits, and chooses workbench or research home.
+FIRST VIEWPORT: Full-bleed cool light composition. Brand signal + one claim + one lead + CTA pair + honesty microcopy, then the investigation flow diagram as the dominant visual (not a graph console, not inset cards). Status + live graph follow as the proof band.
+FORM: Process-infographic platform (Causaly/Benchling/Alta craft bar, owner-pinned diagram-first raise); seed key `owner-diagram-first-spine-2026-11-20`.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance.
 
 ## Constraints
-PRODUCT honesty labels stay. No invented customers, benchmarks, or clinical claims. Keep Host Grotesk. Agents unnamed on landings. Do not copy Alta branding or GTM claims.
+PRODUCT honesty labels stay. No invented customers, benchmarks, or clinical claims. Keep Host Grotesk. Agents unnamed on landings. Business pre-mortem is brand context only — never landing copy. No PHI/CDS.
