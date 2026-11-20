@@ -606,6 +606,27 @@
   color: var(--s2-muted);
 }
 
+/* Maturity labels in the footnote are plain text — not chip cards */
+.ld-maturity-note .s2-maturity {
+  display: inline;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  font-size: inherit;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--s2-indigo);
+}
+.ld-maturity-note .s2-maturity[data-level="restricted"],
+.ld-maturity-note .s2-maturity[data-level="demonstration"],
+.ld-maturity-note .s2-maturity[data-level="planned"] {
+  color: var(--s2-muted);
+}
+
 .s2-section .ld-audience-flow {
   margin-top: 1.25rem;
 }
