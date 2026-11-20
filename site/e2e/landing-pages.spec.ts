@@ -15,27 +15,28 @@ test('the footer leads to the research app, which opens the app shell',async({pa
  await expect(page.locator('.rh-app')).toBeVisible();
 });
 
-test('home states the vision, the connected journey, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
+test('home leads with investigation flow, compact domains and honest limits; names no agents',async({page})=>{
  await page.goto('/');
  const hero=page.locator('.pg-hero');
  await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence The AI platform for scientific evidence and biological reasoning');
  await expect(hero.locator('.pg-brand')).toHaveText('Human Super Intelligence');
  await expect(hero.getByRole('link',{name:/Explore the platform/})).toHaveAttribute('href','/how-it-works');
  await expect(hero.getByRole('link',{name:/Scientific workbench/})).toHaveAttribute('href','/research/workspace');
- await expect(page.getByRole('region',{name:/Biomedical knowledge is growing/})).toBeVisible();
- await expect(page.getByRole('region',{name:/One connected scientific intelligence journey/})).toBeVisible();
- const journey=page.getByRole('list',{name:'Scientific intelligence journey'}).locator(':scope > li');
- await expect(journey).toHaveCount(5);
- await expect(journey.nth(0)).toContainText('Biomedical evidence');
- await expect(journey.nth(3)).toContainText('AI-powered scientific investigation');
- await expect(page.getByRole('region',{name:/Explore scientific domains/})).toContainText('unequal');
- await expect(page.getByRole('region',{name:/What makes it different/}).getByRole('listitem')).toHaveCount(3);
- await expect(page.getByRole('region',{name:/What makes it different/})).toContainText('Context-aware disagreement analysis');
- await expect(page.getByRole('region',{name:/What makes it different/})).toContainText('Cross-domain mechanism investigation');
- await expect(page.getByRole('region',{name:/What makes it different/})).toContainText('Connected research collaboration');
- const open=page.getByRole('region',{name:/Questions the graph is open on/});
+ const flow=page.getByRole('region',{name:/The investigation flow/});
+ await expect(flow).toBeVisible();
+ await expect(flow.getByRole('list',{name:'Investigation flow: question to brief',exact:true}).locator(':scope > li')).toHaveCount(6);
+ await expect(flow).toContainText('Graph');
+ await expect(flow).toContainText('mechanism node');
+ const diff=page.getByRole('region',{name:/What makes it different/});
+ await expect(diff.getByRole('list',{name:'Product differentiators'}).getByRole('listitem')).toHaveCount(3);
+ await expect(diff).toContainText('Context-aware disagreement');
+ await expect(diff).toContainText('Cross-domain mechanisms');
+ await expect(diff).toContainText('Connected research path');
+ await expect(page.getByRole('region',{name:/Domains/})).toContainText('unequal');
+ await expect(page.getByRole('region',{name:/Audiences/})).toContainText('demonstration');
+ const open=page.getByRole('region',{name:/Open questions on the graph/});
  await expect(open.getByRole('list',{name:/Open research questions/}).getByRole('listitem')).toHaveCount(9);
- await expect(open).toContainText('Candidates for expert review');
+ await expect(open).toContainText('candidates for expert review');
  const get=page.getByRole('region',{name:'Your research home'});
  await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
  await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');
@@ -47,7 +48,7 @@ test('home states the vision, the connected journey, what you get, and what is n
  await expect(body).not.toContainText(/clinically validated|better than|outperforms/i);
 });
 
-test('how it works shows the eight steps, what runs where, and what is missing before real patient data',async({page})=>{
+test('how it works shows the eight-step path, what runs where, and gates before real patient data',async({page})=>{
  await page.goto('/how-it-works');
  const steps=page.getByRole('list',{name:'Walkthrough steps'}).locator(':scope > li');
  await expect(steps).toHaveCount(8);
@@ -61,6 +62,7 @@ test('how it works shows the eight steps, what runs where, and what is missing b
  await expect(page.getByRole('region',{name:'Before any real patient data.'})).toContainText('independent security review');
  await expect(page.getByRole('region',{name:'Inspect working research surfaces.'}).getByRole('link')).toHaveCount(3);
  await expect(page.getByRole('list',{name:'Platform workflow stages'}).getByRole('listitem')).toHaveCount(8);
+ await expect(page.locator('.ld-path .ld-flow-track')).toBeVisible();
 });
 
 test('every public page passes axe, has one h1 and does not overflow at 390px',async({page})=>{

@@ -39,11 +39,10 @@ export function LiveGraphHero(){
  const rels=node&&all?all.cand.filter(e=>e.subjectId===node.id||e.objectId===node.id):[];
  const filtered=dept.length>0||humanOnly||!neg;
   const chrome=(
-   <div className="lg-chrome">
-    <span className="lg-chrome-dots" aria-hidden="true"><i/><i/><i/></span>
+   <figcaption className="lg-inset-label">
     <span className="lg-chrome-title">Published knowledge graph</span>
     <span className="lg-chrome-badge">Live snapshot · candidate-only · unreviewed</span>
-   </div>
+   </figcaption>
   );
   if(failed)return <figure className="lg">{chrome}<div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div></figure>;
   if(!all||!view)return <figure className="lg">{chrome}<div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div></figure>;
