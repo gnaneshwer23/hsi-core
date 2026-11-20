@@ -18,7 +18,8 @@ On the continuous Ask → Evidence → Passport → Brief path, surface **existi
 | Passport evidence table | Source cell links URL; shows DOI/PMID when present; `rights: unverified`; clearance not verified |
 | Brief limitations / markdown | `liveSourceReliabilityLimitations()` always visible |
 
-Helper: `src/investigation/liveSourceReliabilityHonesty.ts`.
+Helper: `src/investigation/liveSourceReliabilityHonesty.ts`.  
+Continuous proof: `site/e2e/workspace-continuous-journey.spec.ts` opens **View all sources** and asserts clearance/licence/rights meta on the Evidence step.
 
 ## Explicit non-goals
 
