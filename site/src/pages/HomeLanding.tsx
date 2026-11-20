@@ -94,7 +94,7 @@ export function HomeLanding(){
     <section className="pg-hero pg-hero-platform pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">
-       <span className="pg-brand">Human Super Intelligence</span>
+       <span className="pg-brand">Human Super Intelligence </span>
        The AI platform for scientific evidence and biological reasoning
       </h1>
       <p className="pg-lead">

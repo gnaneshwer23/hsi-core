@@ -1,6 +1,6 @@
 /* Premium public pages: Causaly / Benchling craft bar.
    Cool near-white ground, navy ink, electric indigo. Host Grotesk Variable. Shared via .pg-*. */
-.pg-page{--ink:#101f33;--body:#2b3a50;--muted:#687e9b;--bg:#f4f5f8;--card:#fff;--line:#d4dfe4;--accent:#3c1ffa;--accent-ink:#2a14c9;--mint:#eef1ff;--mint-ink:#2a14c9;--peach:#f5f0e0;--peach-ink:#5a4a12;--lav:#eeebff;--lav-ink:#2a14c9;--sky:#e8eef3;--sky-ink:#1f568f;--wash:#f6f5fc;
+.pg-page{--ink:#101f33;--body:#2b3a50;--muted:#556b84;--bg:#f4f5f8;--card:#fff;--line:#d4dfe4;--accent:#3c1ffa;--accent-ink:#2a14c9;--mint:#eef1ff;--mint-ink:#2a14c9;--peach:#f5f0e0;--peach-ink:#5a4a12;--lav:#eeebff;--lav-ink:#2a14c9;--sky:#e8eef3;--sky-ink:#1f568f;--wash:#f6f5fc;
  background:var(--bg);color:var(--ink);font-family:'Host Grotesk Variable',system-ui,sans-serif;padding-bottom:72px;-webkit-font-smoothing:antialiased}
 .pg-page ::selection{background:#c5ccf5;color:var(--ink)}
 .pg-page :where(h1,h2,h3,p,ul,ol){margin:0}

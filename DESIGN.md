@@ -11,7 +11,7 @@ Craft bar references: [Causaly Platform](https://www.causaly.com/ai-platform/pla
 | Role | Value |
 |---|---|
 | Ground (public) | `#F4F5F8` with soft indigo wash `#F6F5FC` / `#EEEBFF` in hero corners |
-| Ink / body / muted | `#101F33` / `#2B3A50` / `#687E9B` (body ≥ 4.5:1 on ground) |
+| Ink / body / muted | `#101F33` / `#2B3A50` / `#556B84` (muted ≥ 4.5:1 on white/ground) |
 | Accent | `#3C1FFA` (ink `#2A14C9`) |
 | Line | `#D4DFE4` |
 | Product frame | white panels, 12–14px radius, layered hairline + soft navy shadow, chrome title bar |

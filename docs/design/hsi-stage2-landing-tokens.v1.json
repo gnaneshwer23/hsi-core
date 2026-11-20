@@ -22,7 +22,7 @@
     "indigoInk": { "hex": "#2A14C9", "role": "accent_pressed_and_links" },
     "ink": { "hex": "#101F33", "role": "primary_text" },
     "body": { "hex": "#2B3A50", "role": "body_text" },
-    "muted": { "hex": "#687E9B", "role": "secondary_text" },
+    "muted": { "hex": "#556B84", "role": "secondary_text" },
     "wash": { "hex": "#F6F5FC", "role": "soft_panels" },
     "line": { "hex": "#D4DFE4", "role": "dividers" }
   },
