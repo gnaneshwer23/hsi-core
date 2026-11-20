@@ -219,7 +219,14 @@
 .lg .og-cap,.lg-wait{color:#a9b4d8;font-size:13px}
 .lg .og-cap{margin:10px 4px 0}
 .lg-wait{display:grid;place-items:center;min-height:380px;border-radius:26px;border:1px dashed #3a4580}
-.og-showcase .og-tools button{min-height:44px}
+.og-showcase .og-tools button{min-height:44px;min-width:44px}
+/* Light craft-bar frame: caption sits on white, not the dark canvas. */
+.pg-hero-platform .lg .og-cap,
+.pg-hero-platform .lg-wait,
+.pg-hero-dark .lg .og-cap,
+.pg-hero-dark .lg-wait{color:var(--muted,#556b84)}
+.pg-hero-platform .og-tools,
+.pg-hero-dark .og-tools{z-index:2;gap:12px}
 @media(max-width:980px){.pg-page .pg-hero.pg-hero-dark{grid-template-columns:1fr;border-radius:28px;margin-inline:12px}}
 
 /* Product proof: real captures, large enough to read */
@@ -492,17 +499,18 @@
 .pg-sub .pg-phero .pg-micro{color:var(--muted)}
 .pg-sub .pg-phero .pg-btn,
 .hsi-public .hsi-page-hero.hsi-page-hero .hsi-action:not(.hsi-action-secondary){
-  background:var(--accent);color:#fff!important;border-color:var(--accent);border-radius:10px;
+  /* Prefer craft-bar indigo; never fall through to global botanical --accent (#7a9e88). */
+  background:var(--pm-accent,var(--hsi-teal,#3c1ffa));color:#fff!important;border-color:var(--pm-accent,var(--hsi-teal,#3c1ffa));border-radius:10px;
 }
 .pg-sub .pg-phero .pg-btn:hover,
 .hsi-public .hsi-page-hero .hsi-action:not(.hsi-action-secondary):hover{
-  background:var(--accent-ink);border-color:var(--accent-ink);
+  background:var(--pm-accent-ink,var(--accent-ink,#2a14c9));border-color:var(--pm-accent-ink,var(--accent-ink,#2a14c9));
 }
 .pg-sub .pg-phero .pg-link,
 .hsi-public .hsi-page-hero.hsi-page-hero .hsi-action-secondary,
-.pg-sub .pg-phero a:not(.pg-btn){color:var(--accent-ink)!important;border-color:#9aabbc;background:#fff}
+.pg-sub .pg-phero a:not(.pg-btn){color:var(--pm-accent-ink,var(--accent-ink,#2a14c9))!important;border-color:#9aabbc;background:#fff}
 .pg-sub .pg-phero a:focus-visible,
-.hsi-public .hsi-page-hero a:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.hsi-public .hsi-page-hero a:focus-visible{outline:3px solid var(--pm-accent,var(--hsi-teal,#3c1ffa));outline-offset:3px}
 
 /* Open questions / close: navy band stays as intentional close, not purple */
 .pg-open{
