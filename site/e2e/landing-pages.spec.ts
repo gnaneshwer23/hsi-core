@@ -1,7 +1,9 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import {SEO_PAGES} from '../src/lib/seo/siteSeo';
 
-const PUBLIC=['/','/how-it-works','/knowledge-graph','/researchers','/biotech','/validation','/trust','/about','/contact'];
+/** Indexed marketing pages — keep in lockstep with SEO_PAGES / sitemap.xml. */
+const PUBLIC=Object.keys(SEO_PAGES);
 
 test('the footer leads to the research app, which opens the app shell',async({page})=>{
  await page.route('**/api/research/investigations',r=>r.fulfill({status:401,json:{}}));
