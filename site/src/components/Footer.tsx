@@ -20,9 +20,9 @@ const groups = [
       { to: "/researchers", label: "Researchers" },
       { to: "/enterprise", label: "Research Groups" },
       { to: "/biotech", label: "Biotech & Pharma" },
-      { to: "/enterprise/clinical", label: "Clinical Research" },
-      { to: "/enterprise/lab", label: "Laboratories" },
-      { to: "/enterprise/community", label: "Research Community" },
+      { to: "/clinical", label: "Clinical Research" },
+      { to: "/laboratories", label: "Laboratories" },
+      { to: "/research-community", label: "Research Community" },
     ],
   },
   {

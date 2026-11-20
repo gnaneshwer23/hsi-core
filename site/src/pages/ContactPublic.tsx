@@ -3,7 +3,9 @@ import "../styles/scientific-public.css";
 import "../styles/home-redesign.css";
 import "../styles/contact-figure.css";
 import "../styles/premium-public.css";
+import "../styles/stage2-landing.css";
 import {AccessIntentPanel} from "../components/AccessIntentPanel";
+import {LandingEvidenceCard, LandingMaturityLabel} from "../components/landing/LandingPrimitives";
 import {signInHref,signUpHref} from "../lib/researchContext";
 
 const path=[
@@ -12,11 +14,30 @@ const path=[
   ["Check what you can open","After you sign in, the research account page shows permissions an administrator has provisioned. This page does not start an investigation, and research writes stay closed until an administrator enables them."],
 ] as const;
 
+const ACCESS_TIERS=[
+  {
+    title: "Individual researcher",
+    body: "Research preview for a single investigator: public literature retrieval, published graph and on-device records. Permissions remain administrator-provisioned.",
+    maturity: "available" as const,
+  },
+  {
+    title: "Research group",
+    body: "Group-oriented access for PIs and teams. Organisation tables, seats and confidential science unlocks are not sold on this page.",
+    maturity: "planned" as const,
+  },
+  {
+    title: "Organisation / institution",
+    body: "Institutional programmes under separate agreement. No subscription price, seat catalogue or auto-provisioned writes are listed here.",
+    maturity: "planned" as const,
+  },
+] as const;
+
 /** Contact: research access. Browser draft always; server delivery only when the deployment is configured. */
 export function ContactPublicPage(){
   return (
-    <div className="sp-page fg-page ct-page pg-page pg-sub">
+    <div className="sp-page fg-page ct-page pg-page pg-sub s2-landing">
       <header className="pg-phero">
+        <p className="pg-eyebrow">Pricing &amp; Access</p>
         <h1>Contact HSI and start from your research question.</h1>
         <div>
           <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>
@@ -26,6 +47,22 @@ export function ContactPublicPage(){
           </div>
         </div>
       </header>
+
+      <section className="pg-block" aria-labelledby="ct-tiers">
+        <h2 id="ct-tiers">Access shapes (planned labels only).</h2>
+        <p className="pg-sub-p">
+          No prices, subscriptions or seat SKUs are published here. Labels describe intended access shapes — not a
+          checkout. <LandingMaturityLabel level="planned" /> means not offered for purchase on this page.
+        </p>
+        <div className="s2-card-grid">
+          {ACCESS_TIERS.map((t)=>(
+            <LandingEvidenceCard key={t.title} title={t.title} body={t.body} maturity={t.maturity} />
+          ))}
+        </div>
+        <p className="s2-section-note" role="note">
+          Former <code>/pricing</code> URLs redirect here. Do not treat this section as a commercial offer.
+        </p>
+      </section>
 
       <figure className="fg ct-figure pg-block" aria-labelledby="ct-cap">
         <ol className="ct-path">

@@ -38,16 +38,17 @@ describe("Stage 2 landing design system + nav", () => {
       "/researchers",
       "/enterprise",
       "/biotech",
-      "/enterprise/clinical",
-      "/enterprise/lab",
-      "/enterprise/community",
+      "/clinical",
+      "/laboratories",
+      "/research-community",
     ]);
     const primaryNav = root("site/src/lib/primaryNav.ts");
     for (const retired of ["/platform", "/solutions", "/pricing", "/science", "/technology"]) {
       expect(primaryNav).not.toContain(retired);
     }
     expect(isAudienceNavActive("/researchers")).toBe(true);
-    expect(isAudienceNavActive("/enterprise/lab")).toBe(true);
+    expect(isAudienceNavActive("/clinical")).toBe(true);
+    expect(isAudienceNavActive("/laboratories")).toBe(true);
     expect(isAudienceNavActive("/how-it-works")).toBe(false);
   });
 

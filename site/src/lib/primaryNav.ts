@@ -16,11 +16,11 @@ export const PRIMARY_NAV_LINKS = [
  */
 export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
-  { to: "/enterprise", label: "Research Groups", note: "Demo workspace preview" },
+  { to: "/enterprise", label: "Research Groups", note: "Audience page" },
   { to: "/biotech", label: "Biotech & Pharma", note: "Audience page" },
-  { to: "/enterprise/clinical", label: "Clinical Research", note: "Demo workspace preview" },
-  { to: "/enterprise/lab", label: "Laboratories", note: "Demo workspace preview" },
-  { to: "/enterprise/community", label: "Research Community", note: "Demo workspace preview" },
+  { to: "/clinical", label: "Clinical Research", note: "Audience page" },
+  { to: "/laboratories", label: "Laboratories", note: "Audience page" },
+  { to: "/research-community", label: "Research Community", note: "Audience page" },
 ] as const;
 
 /** Pages that are part of the research app, not the public site. They stay reachable but are not in the public navigation. */
@@ -35,7 +35,11 @@ export const PUBLIC_MARKETING_PATHS = [
   "/how-it-works",
   "/knowledge-graph",
   "/researchers",
+  "/enterprise",
   "/biotech",
+  "/clinical",
+  "/laboratories",
+  "/research-community",
   "/validation",
   "/trust",
   "/about",

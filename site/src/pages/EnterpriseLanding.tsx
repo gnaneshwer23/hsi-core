@@ -1,129 +1,116 @@
 import { Link } from "react-router-dom";
-import "../styles/enterprise-dashboard.css";
+import {
+  LandingEvidenceCard,
+  LandingHero,
+  LandingPage,
+  LandingPrimaryCta,
+  LandingSecondaryCta,
+  LandingSection,
+} from "../components/landing/LandingPrimitives";
+import "../styles/stage2-landing.css";
 
-/** Academic Research Dashboard — role picker (Stage 4 shell; shared science engine). */
+/**
+ * Research Groups marketing landing (Stage 2 PR3).
+ * Professor/student shells remain labelled demonstrations — no org writes, no PHI,
+ * and supervisors do not auto-access private student work.
+ */
 export function EnterpriseLandingPage() {
   return (
-    <div className="ent-shell" style={{ gridTemplateColumns: "1fr" }}>
-      <div className="ent-landing">
-        <span className="ent-badge">Academic Research Dashboard · demonstration · not a separate product</span>
-        <h1>Academic Research Dashboard</h1>
-        <p className="ent-banner" role="status">
-          HSI is disease-agnostic scientific intelligence. These shells preview
-          professor and student academic workspaces on the shared substrate —
-          profiles, group intelligence trees, cross-domain discoveries, evidence
-          gaps, publications, and supervision. People, metrics and any autoimmune /
-          SSc scenario below are labelled demonstration data — not the product
-          boundary. They do not enable production writes, PHI, or durable
-          organisation tables.
+    <LandingPage>
+      <LandingHero
+        eyebrow="Research Groups"
+        title="Connected research for principal investigators and teams."
+        description="Keep questions, evidence, gaps and briefs on one scientific path across a group — while private work stays private until sharing is explicitly enabled under fail-closed gates."
+      >
+        <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>
+        <LandingSecondaryCta to="/research/workspace">Open live investigation</LandingSecondaryCta>
+      </LandingHero>
+
+      <LandingSection
+        title="What a research group needs from HSI."
+        description="Same scientific engine as individual researchers. Group chrome is demonstration-labelled until organisation features are accepted."
+      >
+        <div className="s2-card-grid">
+          <LandingEvidenceCard
+            maturity="available"
+            title="Shared investigation path"
+            body="Question → permitted evidence → experimental context → disagreement → mechanism graph → uncertainty → gaps → reviewable brief."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="PI / professor overview"
+            body="Group overview, intelligence tree and opportunity radar shells preview how a lead might orient work. Metrics are demonstration data, not institutional truth."
+          />
+          <LandingEvidenceCard
+            maturity="demonstration"
+            title="Researcher workspace"
+            body="Personal dashboard chrome that deep-links into live investigation tools. Profile persistence stays fail-closed."
+          />
+          <LandingEvidenceCard
+            maturity="planned"
+            title="Organisation roles and seats"
+            body="Durable organisation tables, seat licensing and confidential science unlocks are not enabled. Roles never become subscriptions that bypass review."
+          />
+        </div>
+      </LandingSection>
+
+      <LandingSection
+        title="Demonstration shells you can open."
+        description="These previews reuse the shared science engine. They do not enable production writes, PHI or durable group stores."
+      >
+        <ul className="s2-role-list" aria-label="Research group demonstration shells">
+          <li>
+            <Link to="/enterprise/professor">
+              <span>Professor / PI workspace</span>
+              <small>Demonstration — private student notes stay inaccessible</small>
+            </Link>
+          </li>
+          <li>
+            <Link to="/enterprise/student">
+              <span>Student / researcher workspace</span>
+              <small>Demonstration — links into live investigation tools</small>
+            </Link>
+          </li>
+        </ul>
+        <p className="s2-section-note" role="note">
+          Supervisors do not receive automatic access to private student work. Sharing requires an explicit,
+          governed path that is not enabled in this preview.
         </p>
-        <div className="ent-role-cards">
-          <Link className="ent-role-card" to="/enterprise/professor">
-            <h2>Professor / PI workspace</h2>
-            <p>
-              Group overview, research intelligence tree, team roster and
-              cross-domain opportunity radar — all demonstration-labelled.
-            </p>
-            <span className="ent-btn">Open professor shell</span>
-          </Link>
-          <Link className="ent-role-card" to="/enterprise/student">
-            <h2>Student / researcher workspace</h2>
-            <p>
-              Personal research dashboard, interests, feed honesty and links into
-              the live investigation workspace.
-            </p>
-            <span className="ent-btn">Open student shell</span>
-          </Link>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/research/home">Open research home</LandingPrimaryCta>
+          <LandingSecondaryCta to="/research/gaps">Gap Register</LandingSecondaryCta>
         </div>
-        <div className="ent-actions">
-          <Link className="ent-btn ent-btn-secondary" to="/research/workspace">
-            Open live investigation
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/research/home">
-            Research home
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/research/gaps">
-            Gap register
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/biotech">
-            Biotech / Pharma shell
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/clinical">
-            Clinical research shell
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/lab">
-            Lab / Omics shell
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/community">
-            Community shell
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/workspaces">
-            Multi-workspace hub (F)
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/participant">
-            Participant shell (G)
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/funding">
-            Funding shell (H)
-          </Link>
-          <Link className="ent-btn ent-btn-secondary" to="/enterprise/pilot">
-            Pilot design (I)
-          </Link>
+      </LandingSection>
+
+      <LandingSection
+        title="Boundaries that stay in place."
+        description="Research Groups marketing is not a separate product and not an organisation control plane."
+      >
+        <ul className="s2-boundary-list">
+          <li>No production organisation writes or durable group tables in this preview.</li>
+          <li>No automatic IP bleed between collaborators; Gate C remains human for collaborative reviews.</li>
+          <li>No PHI and no live clinical decision support on this scientific plane.</li>
+          <li>Other audience shells (biotech, clinical, lab, community) remain separately labelled demonstrations.</li>
+        </ul>
+        <p className="s2-section-note">
+          Related:{" "}
+          <Link to="/biotech">Biotech landing</Link>
+          {" · "}
+          <Link to="/clinical">Clinical landing</Link>
+          {" · "}
+          <Link to="/laboratories">Laboratories landing</Link>
+          {" · "}
+          <Link to="/research-community">Community landing</Link>
+          {" · "}
+          <Link to="/enterprise/community">Community shell</Link>
+          {" · "}
+          <Link to="/workspaces">Multi-workspace hub</Link>
+        </p>
+        <div className="s2-cta-row">
+          <LandingPrimaryCta to="/contact">Discuss a group pilot</LandingPrimaryCta>
+          <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
         </div>
-        <section className="ent-panel" aria-labelledby="ent-workspaces-heading">
-          <h2 id="ent-workspaces-heading" style={{ margin: 0, fontSize: "1.05rem" }}>
-            Stage 4 shells A–I (same engine)
-          </h2>
-          <p className="ent-lead">
-            Audience shells A–E and the multi-workspace hub (F) preview chrome on the
-            shared substrate — they must reuse the shared scientific engine, not fork
-            it. Content contracts:{" "}
-            <code>docs/strategy/HSI_STAGE4_DASHBOARD_CONTENT_MAP.md</code>. Clinical
-            research is not CDS; patient participation stays a future governed path.
-            Circles durable store remains held.
-          </p>
-          <ul>
-            <li>Academic research — this preview</li>
-            <li>
-              Biotech / pharma R&amp;D —{" "}
-              <Link to="/enterprise/biotech">demonstration shell</Link>
-            </li>
-            <li>
-              Clinical research —{" "}
-              <Link to="/enterprise/clinical">synthetic demonstration</Link> (not CDS;
-              PHI gated)
-            </li>
-            <li>
-              Laboratory &amp; omics —{" "}
-              <Link to="/enterprise/lab">demonstration shell</Link>
-            </li>
-            <li>
-              Research community —{" "}
-              <Link to="/enterprise/community">demonstration shell</Link>
-            </li>
-            <li>
-              Multi-workspace hub —{" "}
-              <Link to="/workspaces">eight-role concept</Link> (researcher +
-              enterprise admin + deep-links to A–E)
-            </li>
-            <li>
-              Research participant contribution —{" "}
-              <Link to="/enterprise/participant">demonstration shell</Link> (not a
-              scientific dashboard; not CDS; no PHI)
-            </li>
-            <li>
-              Funding &amp; careers —{" "}
-              <Link to="/enterprise/funding">demonstration shell</Link> (no invented
-              award rates; funding store held)
-            </li>
-            <li>
-              First researcher pilot —{" "}
-              <Link to="/enterprise/pilot">design shell</Link> (pilot ready always
-              false; Stage 2 journey remains the build centre)
-            </li>
-          </ul>
-        </section>
-      </div>
-    </div>
+      </LandingSection>
+    </LandingPage>
   );
 }

@@ -6,8 +6,20 @@ test('researchers page states preview limits and real CTAs',async({page})=>{
  await expect(page.getByRole('heading',{level:1})).toContainText('context, not just citations');
  await expect(page.getByRole('link',{name:/Apply for the research preview/})).toHaveAttribute('href','/welcome');
  await expect(page.getByRole('heading',{name:'What this preview is not.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Capabilities you can inspect today.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('not grant research writes');
  await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+});
+
+test('research groups page is marketing with labelled demo shells',async({page})=>{
+ await page.goto('/enterprise');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Connected research for principal investigators');
+ await expect(page.getByRole('link',{name:/Get Access/}).first()).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Professor \/ PI workspace/})).toHaveAttribute('href','/enterprise/professor');
+ await expect(page.getByRole('link',{name:/Student \/ researcher workspace/})).toHaveAttribute('href','/enterprise/student');
+ await expect(page.locator('#main-content')).toContainText('do not receive automatic access to private student work');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+ await expect(page.getByRole('navigation',{name:'Primary'})).toBeVisible();
 });
 
 test('biotech page discusses pilots without inventing MoUs',async({page})=>{
@@ -16,6 +28,27 @@ test('biotech page discusses pilots without inventing MoUs',async({page})=>{
  await expect(page.getByRole('link',{name:/Discuss a research pilot/})).toHaveAttribute('href','/contact');
  await expect(page.getByRole('heading',{name:'Pilot discussions stay honest.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('No MoU');
+ await expect(page.getByRole('link',{name:/Open R&D dashboard preview/})).toHaveAttribute('href','/enterprise/biotech');
+});
+
+test('clinical research landing forbids CDS and PHI claims',async({page})=>{
+ await page.goto('/clinical');
+ await expect(page.getByRole('heading',{level:1})).toContainText('not clinical decision support');
+ await expect(page.getByRole('link',{name:/Discuss clinical research access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open clinical demo shell/})).toHaveAttribute('href','/enterprise/clinical');
+ await expect(page.locator('#main-content')).toContainText('No PHI');
+ await expect(page.locator('#main-content')).toContainText('Synthetic patients only');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
+ await expect(page.getByRole('navigation',{name:'Primary'})).toBeVisible();
+});
+
+test('laboratories landing forbids live instruments and invented QC',async({page})=>{
+ await page.goto('/laboratories');
+ await expect(page.getByRole('heading',{level:1})).toContainText('without inventing QC scores');
+ await expect(page.getByRole('link',{name:/Discuss laboratory access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open lab demo shell/})).toHaveAttribute('href','/enterprise/lab');
+ await expect(page.locator('#main-content')).toContainText('No live instrument');
+ await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
 });
 
 test('validation methodology page is distinct from synthetic lab',async({page})=>{
@@ -27,4 +60,25 @@ test('validation methodology page is distinct from synthetic lab',async({page})=
  await expect(page.locator('#main-content')).not.toContainText(/\d{2,}% accuracy|120 expert-adjudicated results/i);
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
+});
+
+test('research community landing keeps Circles held and /community redirect honest',async({page})=>{
+ await page.goto('/research-community');
+ await expect(page.getByRole('heading',{level:1})).toContainText('without automatic IP bleed');
+ await expect(page.getByRole('link',{name:/Discuss community access/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('link',{name:/Open community demo shell/})).toHaveAttribute('href','/enterprise/community');
+ await expect(page.locator('#main-content')).toContainText('/community');
+ await expect(page.locator('#main-content')).toContainText('Circles');
+ // Honesty copy may say "No invented testimonials" — forbid promotional member claims only.
+ await expect(page.locator('#main-content')).not.toContainText(/members worldwide|join thousands|customer testimonials|read our testimonials/i);
+});
+
+test('pricing and access page lists planned tiers without inventing prices',async({page})=>{
+ await page.goto('/contact');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Contact HSI');
+ await expect(page.getByRole('heading',{name:'Access shapes (planned labels only).'})).toBeVisible();
+ await expect(page.locator('#main-content')).toContainText('No prices');
+ await expect(page.locator('#main-content')).toContainText('Individual researcher');
+ await expect(page.locator('#main-content')).toContainText('Research group');
+ await expect(page.locator('#main-content')).not.toContainText(/\$\d|£\d|per seat|subscribe now/i);
 });
