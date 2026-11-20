@@ -67,7 +67,10 @@ test('an unchecked run keeps direction unassessed, shows the failed search and l
  await ev.getByRole('button',{name:/IL-21 ~ T follicular helper cells/}).click();
  const insp=page.getByLabel('Selected claim');
  await expect(insp).toContainText('Candidate · unreviewed · not promotable to the graph');
- await expect(insp).toContainText('Not assessed');await expect(insp).toContainText('licence not assessed');
+ await expect(insp).toContainText('Not assessed');
+ await expect(insp).toContainText('licenceStatus: not assessed');
+ await expect(insp).toContainText('sourceClearanceVerified: false');
+ await expect(insp).toContainText('rights: unverified');
  await expect(page.getByRole('heading',{name:'Evidence context passport'})).toBeVisible();
  await expect(page.getByText('EVIDENCE CONTEXT PASSPORT · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
  await expect(page.getByText(/Explicitly missing:/)).toBeVisible();
