@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
-  demoLandingAllowsProductionWrite,
   getDemoLandingPreviewPack,
   type DemoLandingPreviewCard,
 } from "../../demo";
@@ -20,9 +19,7 @@ export function DemoLandingPreviewPanel() {
   return (
     <div className="pg-demo-preview">
       <p className="pg-conflict-honesty" role="status">
-        Pack-backed conflict pairs · schema {pack.schemaVersion} · production write:{" "}
-        {String(demoLandingAllowsProductionWrite())} · staging verified:{" "}
-        {String(pack.stagingVerified)}. Not scientific approval. Not a live investigation.
+        Demonstration workspace · scenario data · not independently validated.
       </p>
       <div className="pg-demo-tabs" role="tablist" aria-label="Demo Universe landing scenarios">
         {pack.cards.map((card) => (
@@ -39,22 +36,22 @@ export function DemoLandingPreviewPanel() {
       </div>
       <article className="pg-demo-card" aria-live="polite">
         <p className="pg-chip">
-          {active.domain} · {active.investigationId} · coverage={active.coverage}
+          {active.domain}
         </p>
         <h3>{active.title}</h3>
         <p>{active.question}</p>
         <div className="pg-conflict-pair" role="group" aria-label="Conflict pair preview">
           <article>
-            <h3>Supporting / left</h3>
+            <h3>Finding A</h3>
             <p>{active.conflictLeft}</p>
           </article>
           <article>
-            <h3>Conflicting / right</h3>
+            <h3>Finding B</h3>
             <p>{active.conflictRight}</p>
           </article>
         </div>
         <p>
-          <strong>Abstention:</strong> {active.abstention}
+          <strong>What remains unresolved:</strong> {active.abstention}
         </p>
         <dl className="pg-demo-counts">
           <div>
@@ -76,10 +73,10 @@ export function DemoLandingPreviewPanel() {
         </dl>
         <div className="pg-cta">
           <Link className="pg-btn" to={active.href}>
-            Open full comparison desk <span aria-hidden="true">→</span>
+            Explore this scenario <span aria-hidden="true">→</span>
           </Link>
           <Link className="pg-link" to="/demo/universe">
-            All Demo Universe scenarios <span aria-hidden="true">→</span>
+            All scenarios <span aria-hidden="true">→</span>
           </Link>
         </div>
       </article>

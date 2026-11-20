@@ -1,18 +1,12 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/how-it-works", label: "Platform" },
-  { to: "/validation", label: "Scientific Validation" },
-  { to: "/knowledge-graph", label: "Resources" },
-  { to: "/trust", label: "Trust" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Pricing & Access" },
+  { to: "/how-it-works", label: "How it works" },
+  { to: "/knowledge-graph", label: "Knowledge graph" },
 ] as const;
 
 /**
- * Audience destinations for the public header menu.
- * UI may label the control "Audiences" or "Solutions"; this file must not contain retired path strings.
- * Interim enterprise demo shells are labelled demonstration until dedicated marketing pages ship.
+ * Audience destinations stay in the footer. Keep their routes available without crowding the header.
  */
 export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
@@ -46,8 +40,8 @@ export const PUBLIC_MARKETING_PATHS = [
   "/contact",
 ] as const;
 
-/** Access enquiry — does not claim a request was delivered. */
-export const PRIMARY_NAV_CTA = { to: "/contact", label: "Get Access" } as const;
+/** Account creation is distinct from provisioned research access. */
+export const PRIMARY_NAV_CTA = { to: "/sign-up", label: "Create account" } as const;
 
 export function isPublicMarketingPath(pathname: string) {
   return (PUBLIC_MARKETING_PATHS as readonly string[]).includes(pathname);

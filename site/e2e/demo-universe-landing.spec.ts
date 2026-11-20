@@ -6,18 +6,18 @@ test("homepage Demo Universe landing preview shows six pack-backed scenarios", a
   await page.goto("/");
   const section = page.locator("#product-demo");
   await expect(
-    section.getByRole("heading", { name: /Demo Research Universe product previews/i }),
+    section.getByRole("heading", { name: /Compare findings across contexts/i }),
   ).toBeVisible();
   const preview = section.locator(".pg-demo-preview");
   await expect(preview).toBeVisible();
-  await expect(preview.getByRole("status")).toContainText(/production write:\s*false/i);
-  await expect(preview.getByRole("status")).toContainText(/Pack-backed conflict pairs/i);
+  await expect(preview.getByRole("status")).toContainText(/Demonstration workspace/i);
+  await expect(preview.getByRole("status")).toContainText(/scenario data/i);
   const tabs = preview.getByRole("tab");
   await expect(tabs).toHaveCount(6);
   await expect(preview.getByRole("heading", { level: 3 }).first()).toBeVisible();
-  await expect(preview.getByText(/Abstention:/i)).toBeVisible();
+  await expect(preview.getByText(/What remains unresolved:/i)).toBeVisible();
   await tabs.nth(1).click();
-  await expect(preview.getByRole("link", { name: /Open full comparison desk/i })).toHaveAttribute(
+  await expect(preview.getByRole("link", { name: /Explore this scenario/i })).toHaveAttribute(
     "href",
     /\/demo\/universe\?scenario=/,
   );
