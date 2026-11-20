@@ -11,23 +11,23 @@ test('shared header stays usable without overlap across mobile and desktop width
 test('desktop header has Stage 2 navigation links and an Audiences control',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
- await expect(nav.getByRole('link')).toHaveText(['Home','Platform','Scientific Validation','Resources','Trust','About','Pricing & Access']);
- await expect(nav.getByRole('button',{name:'Audiences',exact:true})).toBeVisible();
- await nav.getByRole('link',{name:'Platform',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
- await nav.getByRole('link',{name:'Trust',exact:true}).click();await expect(page).toHaveURL(/trust$/);
+ await expect(nav.getByRole('link')).toHaveText(['Home','How it works','Knowledge graph']);
+ await expect(nav.getByRole('button')).toHaveCount(0);
+ await nav.getByRole('link',{name:'How it works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+ await page.getByRole('navigation',{name:'Footer trust'}).getByRole('link',{name:'Governance',exact:true}).click();await expect(page).toHaveURL(/trust$/);
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
  await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');const toggle=page.getByRole('button',{name:'Open menu',exact:true});await expect(toggle.locator('svg')).toBeVisible();const box=(await toggle.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);await toggle.click();
  const drawer=page.getByRole('navigation',{name:'Mobile navigation'});
  await expect(drawer.getByRole('link',{name:'Sign in',exact:true})).toBeVisible();
- await expect(drawer.getByRole('link',{name:'Get Access',exact:true})).toBeVisible();
- await expect(drawer.getByRole('link',{name:'Get Access',exact:true})).toHaveText(/Get Access/);await drawer.getByRole('link',{name:'Get Access',exact:true}).click();await expect(page).toHaveURL(/contact$/);await expect(drawer).toBeHidden();
+ await expect(drawer.getByRole('link',{name:'Create account',exact:true})).toBeVisible();
+ await expect(drawer.getByRole('link',{name:'Create account',exact:true})).toHaveText(/Create account/);await drawer.getByRole('link',{name:'Create account',exact:true}).click();await expect(page).toHaveURL(/sign-up$/);await expect(drawer).toBeHidden();
 });
 test('footer has product, audiences, company and trust navigation with accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){
   await page.setViewportSize({width,height:900});await page.goto('/');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
   for(const name of ['Footer product','Footer audiences','Footer company','Footer trust'])await expect(footer.getByRole('navigation',{name})).toBeVisible();
-  await expect(footer.getByRole('navigation',{name:'Footer product'}).getByRole('link',{name:'Platform',exact:true})).toHaveAttribute('href','/how-it-works');
+  await expect(footer.getByRole('navigation',{name:'Footer product'}).getByRole('link',{name:'How it works',exact:true})).toHaveAttribute('href','/how-it-works');
   for(const gone of ['Science','Applications','Intelligence Collective'])await expect(footer.getByRole('link',{name:gone,exact:true})).toHaveCount(0);
   for(const a of await footer.locator('nav a').all())expect((await a.boundingBox())!.height).toBeGreaterThanOrEqual(44);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);

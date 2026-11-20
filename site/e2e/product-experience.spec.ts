@@ -24,8 +24,8 @@ test("the knowledge graph page opens the existing versioned graph and preserves 
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
- await menu.click();await page.locator("#public-menu").getByRole("link",{name:"Platform",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("From research question to evidence-grounded decision");
+ await menu.click();await page.locator("#public-menu").getByRole("link",{name:"How it works",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+ await expect(page.getByRole("heading",{level:1})).toContainText("Follow a question through the evidence");
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});
