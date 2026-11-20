@@ -52,6 +52,13 @@ test('continuous unified journey: Ask → … → Save without gaps/ledger hops'
 
  await step(/^Evidence\b/).click();
  await expect(page.locator('#ws-ev-h')).toBeVisible();
+ await page.getByRole('button',{name:/View all sources/i}).click();
+ const allSources=page.locator('ul.ws-sources');
+ await expect(allSources).toBeVisible();
+ await expect(allSources).toContainText('sourceClearanceVerified: false');
+ await expect(allSources).toContainText('licenceStatus: not assessed');
+ await expect(allSources).toContainText('rights: unverified');
+ await expect(allSources).toContainText('verificationState: metadata retrieved not claim verified');
 
  await step(/^Passport\b/).click();
  await expect(page.getByRole('heading',{name:'Evidence context passport'})).toBeVisible();
