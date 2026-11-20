@@ -15,6 +15,13 @@ describe("workbench primary reconnect",()=>{
     expect(RESEARCH_HOME_PATH).toBe("/research/home");
     expect(liveInvestigationHref()).toBe("/research/workspace");
     expect(liveInvestigationHref({reopen:true})).toBe("/research/workspace?reopen=1");
+    expect(liveInvestigationHref({scenarioId:"il21-autoimmune"})).toBe(
+      "/research/workspace?scenario=il21-autoimmune",
+    );
+    expect(liveInvestigationHref({scenarioId:"not-a-scenario"})).toBe("/research/workspace");
+    expect(liveInvestigationHref({reopen:true,scenarioId:"il21-autoimmune"})).toBe(
+      "/research/workspace?reopen=1&scenario=il21-autoimmune",
+    );
     expect(authorisedInvestigationHref("hsi-interrogative-demo-12345678")).toBe(
       `${AUTHORISED_INVESTIGATION_PATH}?investigation=hsi-interrogative-demo-12345678`,
     );

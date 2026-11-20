@@ -144,7 +144,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const disagree=page.getByRole('region',{name:/Why findings may differ/i});
  await expect(disagree).toContainText('Context-dependent difference');
  await expect(disagree).toContainText('Potential contradiction is not');
- await disagree.getByRole('button',{name:/Context-dependent difference/}).click();
+ // Unified trail auto-selects the first comparison pair (cmpKey); do not toggle it off.
  await expect(page.getByRole('heading',{name:/Left claim · Evidence Context Passport/})).toBeVisible();
  await expect(page.getByRole('heading',{name:/Right claim · Evidence Context Passport/})).toBeVisible();
  const curated=page.getByRole('region',{name:/Curated disagreement demonstrations/i});
