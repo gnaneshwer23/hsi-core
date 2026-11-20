@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { BiotechShell } from "../components/enterprise/BiotechShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import {
   biotechDashboardDemo,
   type BiotechTarget,
@@ -232,6 +233,8 @@ export function BiotechPharmaDashboard() {
           </Link>
         </div>
       </section>
+
+      <DemoUniverseRolePanel roleId="biotech" />
     </BiotechShell>
   );
 }

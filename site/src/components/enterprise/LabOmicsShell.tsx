@@ -4,6 +4,7 @@ import "../../styles/enterprise-dashboard.css";
 
 const NAV = [
   { to: "/enterprise/lab", label: "Lab overview", end: true },
+  { to: "/demo/universe", label: "Demo universe", end: true },
   { to: "/research/methods", label: "Methods", end: true },
   { to: "/science/study-comparison", label: "Study comparison", end: true },
   { to: "/science/paths", label: "Pathways", end: true },

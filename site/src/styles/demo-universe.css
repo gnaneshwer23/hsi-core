@@ -179,3 +179,44 @@
   margin: 0.35rem 0 0;
   padding-left: 1.1rem;
 }
+
+.du-role-panel .du-role-cards {
+  list-style: none;
+  margin: 0.75rem 0;
+  padding: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+@media (min-width: 800px) {
+  .du-role-panel .du-role-cards {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.du-role-panel .du-role-cards a {
+  display: block;
+  border: 1px solid var(--ent-border, #c5cdd6);
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.9rem;
+  text-decoration: none;
+  color: inherit;
+  background: var(--ent-panel, #fff);
+}
+
+.du-role-panel .du-role-cards strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.du-role-panel .du-role-cards span {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--ent-muted, #5a6570);
+  margin-top: 0.2rem;
+}
+
+.du-role-panel .du-role-q {
+  margin-top: 0.35rem !important;
+  color: var(--ent-ink, #101d2a) !important;
+}

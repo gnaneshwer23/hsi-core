@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LabOmicsShell } from "../components/enterprise/LabOmicsShell";
+import { DemoUniverseRolePanel } from "../components/demo/DemoUniverseRolePanel";
 import {
   labOmicsDashboardDemo,
   type LabAssayDemo,
@@ -224,6 +225,8 @@ export function LabOmicsDashboard() {
           ))}
         </ul>
       </section>
+
+      <DemoUniverseRolePanel roleId="lab" />
     </LabOmicsShell>
   );
 }
