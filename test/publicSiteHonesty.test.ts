@@ -46,7 +46,8 @@ describe("Public HSI site honesty", () => {
     for(const route of ["/platform","/science","/applications","/intelligence","/departments","/connected-intelligence"])expect(primaryNav).not.toContain(route); // retired; they redirect
     for(const route of ["/technology","/solutions","/pricing","/evidence-safety"])expect(primaryNav).not.toContain(route); // retired; they redirect
     expect(primaryNav).not.toContain("/modules"); // the product pages now redirect to /connected-intelligence
-    expect(primaryNav).toContain('label: "Sign up"');
+    expect(primaryNav).toContain('label: "Get Access"');
+    expect(primaryNav).toContain("AUDIENCE_NAV_LINKS");
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
     for(const route of ["/","/how-it-works","/knowledge-graph","/trust","/about"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/research","/evidence-intelligence","/applications","/platform","/science"])expect(primaryLinksBlock).not.toContain(route);
@@ -54,7 +55,7 @@ describe("Public HSI site honesty", () => {
     // product module paths are no longer in the public path list
     for(const route of ["/modules/isi","/modules/aksh-health","/modules/trials","/modules/clinical"])expect(primaryNav).not.toContain(route);
     const nav=site("src/components/Nav.tsx");
-    expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("ENGINEERING_LINKS");
+    expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).toContain("AUDIENCE_NAV_LINKS");expect(nav).not.toContain("ENGINEERING_LINKS");
     const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
     const homeHero=site("src/components/editorial/HomeHero.tsx");
     const homeEcosystem=site("src/components/editorial/HomeEcosystemProducts.tsx");

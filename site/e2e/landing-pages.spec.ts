@@ -64,10 +64,11 @@ test('every public page passes axe, has one h1 and does not overflow at 390px',a
  }
 });
 
-test('the public site is exactly six pages in the sitemap, and the header shows five of them',async({page,request})=>{
+test('the public sitemap lists the marketing pages, and the header shows Stage 2 destinations',async({page,request})=>{
  const sitemap=await (await request.get('/sitemap.xml')).text();
  const locs=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>new URL(m[1]!).pathname).sort();
  expect(locs).toEqual([...PUBLIC].sort());
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
- await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How it works','Knowledge graph','Trust','About']);
+ await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','Platform','Scientific Validation','Resources','Trust','About','Pricing & Access']);
+ await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button',{name:'Audiences',exact:true})).toBeVisible();
 });
