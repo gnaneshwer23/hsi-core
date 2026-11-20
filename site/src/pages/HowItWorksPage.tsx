@@ -44,7 +44,8 @@ export function HowItWorksPage() {
             Retrieve evidence, compare context, inspect candidates, surface uncertainty, leave a brief.
           </p>
           <p className="pg-micro" role="note">
-            One scientific intelligence product — not a portfolio. Illustrative or unreviewed outputs stay labelled.
+            Former “Platform” marketing URLs redirect here. HSI is one scientific intelligence product — not a
+            portfolio of separate platforms. Illustrative or unreviewed outputs stay labelled.
           </p>
           <div className="pg-cta">
             <Link className="pg-btn" to="/research/journey">
