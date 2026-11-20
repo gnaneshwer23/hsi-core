@@ -63,9 +63,11 @@ Agent-shippable **Stage 2 journey productization + §H device-local metrics + Ho
 
 ## D. Recommended next (prioritised)
 
+**20 Nov 2026 update:** Founder HSI 1.0 Integration First programme — file-level plan and single workspace PR scope: [`HSI_1_0_INTEGRATION_FIRST_PLAN_2026-11-20.md`](./HSI_1_0_INTEGRATION_FIRST_PLAN_2026-11-20.md). Owner reconcile of Stage 2 website stack (#554–#561) and Demo Universe stack (#555–#567) before continuous-trail coding.
+
 ### Agent-shippable now (no owner gate)
 
-1. **This PR** — Gaps & testable fold subtitle counts (`N gaps · M next questions`).  
+1. After Stack A/B reconcile: continuous Stage 2 trail open contracts + Playwright journey e2e (§4 of Integration First plan).  
 2. **Stop building dashboards** — further agent work = honesty/docs/e2e hardening or owner-named Stage 2 gaps only.
 
 ### Owner-gated next (do not code as “done”)
