@@ -13,17 +13,20 @@ test('the footer leads to the research app, which opens the app shell',async({pa
  await expect(page.locator('.rh-app')).toBeVisible();
 });
 
-test('home states the vision, the one loop, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
+test('home states the vision, the connected journey, what you get, and what is not true yet; names no agents and no competitors',async({page})=>{
  await page.goto('/');
  const hero=page.locator('.pg-hero');
- await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Connect the biology. Challenge the evidence.');
+ await expect(hero.getByRole('heading',{level:1})).toHaveText('Human Super Intelligence Biology is connected. Scientific intelligence should be too.');
  await expect(hero.locator('.pg-brand')).toHaveText('Human Super Intelligence');
- await expect(hero.getByRole('link',{name:/Join research preview/})).toHaveAttribute('href','/welcome');
- await expect(hero.getByRole('link',{name:/See how it works/})).toHaveAttribute('href','/how-it-works');
- await expect(page.getByRole('link',{name:/Walk through all eight steps/})).toHaveAttribute('href','/how-it-works');
- const loop=page.getByRole('list',{name:'The research loop'}).locator(':scope > li');
- await expect(loop).toHaveCount(6);
- await expect(loop.nth(1)).toContainText('Live public sources');await expect(loop.nth(4)).toContainText('Kept on your device');
+ await expect(hero.getByRole('link',{name:/Explore the platform/})).toHaveAttribute('href','/how-it-works');
+ await expect(hero.getByRole('link',{name:/Scientific workbench/})).toHaveAttribute('href','/research/workspace');
+ await expect(page.getByRole('region',{name:/Biomedical knowledge is growing/})).toBeVisible();
+ await expect(page.getByRole('region',{name:/One connected scientific intelligence journey/})).toBeVisible();
+ const journey=page.getByRole('list',{name:'Scientific intelligence journey'}).locator(':scope > li');
+ await expect(journey).toHaveCount(5);
+ await expect(journey.nth(0)).toContainText('Biomedical evidence');
+ await expect(journey.nth(3)).toContainText('AI-powered scientific investigation');
+ await expect(page.getByRole('region',{name:/Explore scientific domains/})).toContainText('unequal');
  await expect(page.getByRole('region',{name:/What makes it different/}).getByRole('listitem')).toHaveCount(3);
  const open=page.getByRole('region',{name:/Questions the graph is open on/});
  await expect(open.getByRole('list',{name:/Open research questions/}).getByRole('listitem')).toHaveCount(9);
@@ -31,7 +34,7 @@ test('home states the vision, the one loop, what you get, and what is not true y
  const get=page.getByRole('region',{name:'Your research home'});
  await expect(get.getByRole('link',{name:/Set up your research home/})).toHaveAttribute('href','/welcome');
  await expect(get).toContainText('Investigations with proof');await expect(get).toContainText('Your gaps, hypotheses and methods');
- await expect(page.getByRole('region',{name:'Limits, stated up front'})).toContainText('Model checks are off');
+ await expect(page.getByRole('region',{name:/Trust through scientific transparency/})).toContainText('Model checks are off');
  await expect(page.locator('.pg-status')).toContainText('candidate relationships');
  const body=page.locator('#main-content');
  await expect(body).not.toContainText(/NEXUS|AEGIS|SCOUT|LANTERN|HELIX|PARALLAX|VANTAGE|VERITAS|ARBITER|SENTINEL|CALIBER|WARDEN/);

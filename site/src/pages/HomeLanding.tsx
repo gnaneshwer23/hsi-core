@@ -4,21 +4,23 @@ import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {OpenQuestions} from "../components/home/OpenQuestions";
 import {ClaimAnatomy} from "../components/home/ClaimAnatomy";
 import {HomepageWorkedConflict} from "../components/home/HomepageWorkedConflict";
+import {ScientificIntelligenceJourney} from "../components/home/ScientificIntelligenceJourney";
+import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
 import "../styles/premium-public.css";
+
+const DOMAINS=[
+ "Immunology & Inflammation",
+ "Neuroscience",
+ "Microbiome & Metabolism",
+ "Genomics & Multi-omics",
+ "Organ & Tissue Biology",
+ "Disease Mechanisms",
+] as const;
 
 const PILLARS=[
  {n:"01",title:"Every claim keeps its evidence.",text:"A relationship is stored with its source, the model it was studied in, tissue, population, assay and limitations, and its review status. Findings that did not hold stay in the graph instead of being dropped.",to:"/knowledge-graph",cta:"See how a line is built"},
  {n:"02",title:"It shows what is missing, and says how sure it is.",text:"A gap is first only a gap in the graph. HSI then counts the literature for it, and only an expert decides whether it is a real gap in knowledge. The three are never mixed up.",to:"/research/gaps",cta:"Open the Gap Register"},
  {n:"03",title:"It keeps patient data apart.",text:"Patient-level work runs in a separate, governed plane. Here that plane holds synthetic patients only, small groups are suppressed, and trial pre-screening reports what is unknown instead of saying someone is eligible.",to:"/trust",cta:"Read the governance model"},
-] as const;
-
-const FLOW=[
- {title:"Frame the question",text:"Match the genes, cells, diseases and drugs you name to concepts in the graph.",status:"Live"},
- {title:"Retrieve evidence",text:"Search Europe PMC, OpenAlex and Open Targets, with a trace of how the answer was produced and which searches failed.",status:"Live public sources"},
- {title:"Weigh support and conflict",text:"Compare findings by model, tissue, population and assay, so a real conflict can be told from a difference in context.",status:"Published snapshot · unreviewed"},
- {title:"Find what is missing",text:"Rank graph gaps, count the literature for each, and leave the final call to an expert.",status:"Live counts · expert review separate"},
- {title:"Form a testable hypothesis",text:"State a prediction and what would prove it wrong, and keep the history of every change.",status:"Kept on your device"},
- {title:"Review before anything enters the graph",text:"Independent reviewers decide what is promoted. Nothing is promoted automatically, and nothing is reviewed yet.",status:"Workflow built · no claim reviewed"},
 ] as const;
 
 const LIMITS=[
@@ -38,16 +40,58 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-dark pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <h1 id="home-title"><span className="pg-brand">Human Super Intelligence</span> Connect the biology. Challenge the evidence.</h1>
-      <p className="pg-lead">Compare findings in experimental context, trace supporting evidence and mark what remains uncertain. Domain coverage is unequal today; systemic sclerosis is the validation case, not a claim of uniform depth.</p>
-      <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Join research preview <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/how-it-works">See how it works</Link></div>
-      <p className="pg-micro">Research preview. Candidate-only: nothing here is scientifically approved. No account is needed to start, public evidence is live, and patient data is synthetic.</p>
+      <h1 id="home-title"><span className="pg-brand">Human Super Intelligence</span> Biology is connected. Scientific intelligence should be too.</h1>
+      <p className="pg-lead">
+       A connected biomedical intelligence platform that brings together scientific evidence, biological mechanisms, knowledge graphs and AI-powered investigation — helping researchers understand what is known, uncover what remains uncertain, and make better-informed research decisions.
+      </p>
+      <div className="pg-cta">
+       <Link className="pg-btn pg-btn-light" to="/how-it-works">
+        Explore the platform <span aria-hidden="true">→</span>
+       </Link>
+       <Link className="pg-link pg-link-light" to={LIVE_INVESTIGATION_PATH}>
+        Scientific workbench
+       </Link>
+      </div>
+      <p className="pg-micro">
+       Research preview. Candidate-only: nothing here is scientifically approved. Domain coverage is unequal today; systemic sclerosis is the validation case, not a claim of uniform depth. No clinical advice; patient data on this site is synthetic.
+      </p>
      </div>
      <LiveGraphHero/>
     </section>
     <div className="pg-strip"><Status/></div>
 
+    <section className="pg-story" aria-labelledby="pg-challenge-h">
+     <div className="pg-story-block">
+      <h2 id="pg-challenge-h">Biomedical knowledge is growing. Evidence is still fragmented.</h2>
+      <p>
+       Findings sit across publications, experiments, biological systems and disciplines. Researchers must decide what conflicts, what is merely non-comparable context, and what remains unknown — without losing the trail to the source.
+      </p>
+     </div>
+     <div className="pg-story-block">
+      <h2 id="pg-vision-h">From disconnected information to connected understanding.</h2>
+      <p>
+       HSI moves researchers from scattered scientific records toward evidence-grounded understanding of human biology: what is known, what is uncertain, and what to investigate next — with provenance attached.
+      </p>
+     </div>
+    </section>
+
+    <ScientificIntelligenceJourney/>
+
     <HomepageWorkedConflict/>
+
+    <section className="pg-domains" aria-labelledby="pg-domains-h">
+     <div className="pg-domains-copy">
+      <h2 id="pg-domains-h">Explore scientific domains through one graph.</h2>
+      <p>
+       Cross-domain scope is the product. Depth is unequal today: published candidates concentrate where the validation case is deepest, and other domains remain thinner until expert review expands them.
+      </p>
+     </div>
+     <ul className="pg-domain-list" aria-label="Scientific domains in scope">
+      {DOMAINS.map((d)=>(
+       <li key={d}>{d}</li>
+      ))}
+     </ul>
+    </section>
 
     <section className="pg-pillars" aria-labelledby="pg-pillars-h">
      <div className="pg-pillars-copy">
@@ -69,17 +113,6 @@ export function HomeLanding(){
      <OpenQuestions/>
     </section>
 
-    <section className="pg-loop" aria-labelledby="pg-loop-h">
-     <div className="pg-loop-head">
-      <h2 id="pg-loop-h">From a question to a testable next step.</h2>
-      <p>Each step says whether it runs on live sources, on the published snapshot, or only on your device.</p>
-      <Link className="pg-link" to="/how-it-works">Walk through all eight steps <span aria-hidden="true">→</span></Link>
-     </div>
-     <ol className="pg-steps" aria-label="The research loop">{FLOW.map((s,i)=>(
-      <li key={s.title}><span className="pg-num" aria-hidden="true">{i+1}</span><div><h3>{s.title}</h3><span className="pg-chip">{s.status}</span><p>{s.text}</p></div></li>
-     ))}</ol>
-    </section>
-
     <section className="pg-product" aria-labelledby="pg-product-h">
      <div className="pg-product-copy">
       <h2 id="pg-product-h">Your research home</h2>
@@ -89,7 +122,10 @@ export function HomeLanding(){
        <li><b>Your gaps, hypotheses and methods.</b> Kept on your device today, with a history of every change.</li>
        <li><b>One place to pick up.</b> Your loop progress and activity, from real records only.</li>
       </ul>
-      <div className="pg-cta"><Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link></div>
+      <div className="pg-cta">
+       <Link className="pg-btn" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link>
+       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>Open scientific workbench <span aria-hidden="true">→</span></Link>
+      </div>
      </div>
      <div className="pg-shots">
       <figure className="pg-shot">
@@ -104,17 +140,21 @@ export function HomeLanding(){
     </section>
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">
-     <h2 id="pg-honest-h">Limits, stated up front</h2>
+     <h2 id="pg-honest-h">Trust through scientific transparency</h2>
      <ul>{LIMITS.map(h=>(<li key={h.title}><h3>{h.title}</h3><p>{h.text}</p></li>))}</ul>
      <p><Link className="pg-link" to="/trust">Read how evidence, privacy and governance are handled <span aria-hidden="true">→</span></Link></p>
     </section>
 
     <section className="pg-close" aria-labelledby="pg-close-h">
      <div>
-      <h2 id="pg-close-h">Start with your own topics.</h2>
-      <p>Set up your research home, or create an account so your sign-in is ready when saving to a server is available.</p>
+      <h2 id="pg-close-h">See scientific intelligence in action.</h2>
+      <p>Open the workbench on a curated investigation, walk the platform loop, or set up a research home around your topics.</p>
      </div>
-     <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/welcome">Set up your research home <span aria-hidden="true">→</span></Link><Link className="pg-link pg-link-light" to="/sign-up">Create an account</Link></div>
+     <div className="pg-cta">
+      <Link className="pg-btn pg-btn-light" to={LIVE_INVESTIGATION_PATH}>Scientific workbench <span aria-hidden="true">→</span></Link>
+      <Link className="pg-link pg-link-light" to="/how-it-works">Explore the platform</Link>
+      <Link className="pg-link pg-link-light" to="/welcome">Set up research home</Link>
+     </div>
     </section>
    </GraphSnapshotProvider>
   </div>
