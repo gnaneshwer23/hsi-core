@@ -95,7 +95,7 @@
 | PR | Scope | Out of scope |
 | --- | --- | --- |
 | **1** | Shared Stage 2 tokens CSS, landing primitives, Nav (audience menu), Footer, `primaryNav`, honesty/brand-doc sync | Homepage/platform rewrite; new audience pages |
-| **2** | Homepage + Platform (`/how-it-works`) Stage 2 story, USPs, workflow preview | Billing; fake metrics |
+| **2** | Homepage + Platform (`/how-it-works`) Stage 2 story, USPs, workflow preview — branch `cursor/stage2-homepage-platform-2f71` | Billing; fake metrics |
 | **3** | Researchers + Research Groups marketing pages + truthful previews | Org writes; supervisor auto-access to private student work |
 | **4** | Biotech, Clinical Research, Laboratories landings + governance copy | PHI, CDS, live instruments/datasets claims |
 | **5** | Community, Validation deepen, Pricing & Access (Planned tiers), CTAs | Invented prices/subscriptions; fake testimonials |
