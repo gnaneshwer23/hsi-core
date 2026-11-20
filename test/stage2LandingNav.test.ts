@@ -11,20 +11,20 @@ import {
 const root = (...p: string[]) => readFileSync(resolve(import.meta.dir, "..", ...p), "utf8");
 
 describe("Stage 2 landing design system + nav", () => {
-  it("ships Stage 2 token JSON and CSS aligned to navy/burgundy brief", () => {
+  it("ships Stage 2 token JSON and CSS aligned to craft-bar brief", () => {
     const tokens = JSON.parse(root("docs/design/hsi-stage2-landing-tokens.v1.json")) as {
       schemaVersion: string;
       palette: Record<string, { hex: string }>;
       marketingHeadline: string;
     };
     expect(tokens.schemaVersion).toBe("hsi-stage2-landing-tokens-1");
-    expect(tokens.palette.primaryBackground.hex).toBe("#101D2A");
-    expect(tokens.palette.burgundy.hex).toBe("#963E56");
-    expect(tokens.palette.mutedTeal.hex).toBe("#427B79");
+    expect(tokens.palette.primaryBackground.hex).toBe("#F4F5F8");
+    expect(tokens.palette.indigo.hex).toBe("#3C1FFA");
+    expect(tokens.palette.ink.hex).toBe("#101F33");
     expect(tokens.marketingHeadline).toContain("Connect the Science");
     const css = root("site/src/styles/stage2-landing.css");
-    expect(css).toContain("--s2-bg: #101d2a");
-    expect(css).toContain("--s2-burgundy: #963e56");
+    expect(css).toContain("--s2-bg: #f4f5f8");
+    expect(css).toContain("--s2-indigo: #3c1ffa");
     expect(root("site/src/main.tsx")).toContain("stage2-landing.css");
   });
 

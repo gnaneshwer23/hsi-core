@@ -16,17 +16,19 @@
   ],
   "forbiddenExpansions": ["Human Systems Intelligence"],
   "palette": {
-    "primaryBackground": { "hex": "#101D2A", "role": "hero_and_chrome" },
-    "deeperBackground": { "hex": "#08121E", "role": "depth_bands" },
-    "burgundy": { "hex": "#963E56", "role": "emphasis_selection" },
-    "roseAccent": { "hex": "#C45267", "role": "sparse_accent" },
-    "mutedTeal": { "hex": "#427B79", "role": "scientific_secondary" },
-    "offWhite": { "hex": "#F7F7F8", "role": "page_reading" },
-    "secondaryText": { "hex": "#AEBBC9", "role": "muted_on_dark" }
+    "primaryBackground": { "hex": "#F4F5F8", "role": "page_ground" },
+    "deeperBackground": { "hex": "#ECEEF4", "role": "depth_bands" },
+    "indigo": { "hex": "#3C1FFA", "role": "primary_accent" },
+    "indigoInk": { "hex": "#2A14C9", "role": "accent_pressed_and_links" },
+    "ink": { "hex": "#101F33", "role": "primary_text" },
+    "body": { "hex": "#2B3A50", "role": "body_text" },
+    "muted": { "hex": "#687E9B", "role": "secondary_text" },
+    "wash": { "hex": "#F6F5FC", "role": "soft_panels" },
+    "line": { "hex": "#D4DFE4", "role": "dividers" }
   },
   "typography": {
     "productionInterface": "Host Grotesk Variable",
-    "productionDisplay": "Red Hat Display Variable",
+    "productionDisplay": "Host Grotesk Variable",
     "optionalMarketingDisplay": "Instrument Serif — only if integrated without bundle regression",
     "mono": "JetBrains Mono Variable",
     "avoidDefaultStacks": ["Inter", "Roboto", "Arial"]
@@ -35,6 +37,7 @@
   "stage1TokensRemainAuthoritativeFor": "docs/design/hsi-brand-tokens.v1.json midnight/mint suite until owner retires Stage 1 comps",
   "notes": [
     "One HSI scientific intelligence platform — not a marketed product portfolio.",
+    "Causaly/Benchling craft-bar visual world: cool near-white ground, navy ink, one electric indigo accent.",
     "Demo/preview maturity labels required on illustrative surfaces.",
     "No invented benchmarks, customers, prices, or clinical capabilities."
   ]

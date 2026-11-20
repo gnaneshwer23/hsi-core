@@ -79,9 +79,10 @@ describe("Stage 2 integrated QA locks", () => {
   it("preserves hero secondary CTA contrast rules and QA inventory", () => {
     const css = root("site/src/styles/stage2-landing.css");
     expect(css).toContain(".s2-hero .s2-btn-secondary");
-    expect(css).toContain("color: var(--s2-offwhite)");
+    // Light craft-bar hero: secondary CTA uses navy ink on white, not off-white on dark.
+    expect(css).toContain("color: var(--s2-ink)");
     expect(css).toContain(".s2-maturity");
-    expect(css).toContain("color: #2a5553");
+    expect(css).toContain("color: var(--s2-indigo-ink)");
     const qa = root("docs/design/HSI_STAGE2_INTEGRATED_QA_2026-11-19.md");
     expect(qa).toContain("Owner visual review");
     expect(qa).toContain("cursor/stage2-integrated-qa-2f71");
