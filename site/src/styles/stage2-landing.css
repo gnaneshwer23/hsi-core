@@ -572,42 +572,38 @@
   }
 }
 
-/* Audience flow + maturity chips (diagram-first) */
+/* Audience process infographic + maturity footnote (not chip cards) */
 .ld-audience-flow {
   display: grid;
-  gap: 1.25rem;
+  gap: 1rem;
   margin-top: 0.5rem;
 }
 
-.ld-maturity-chips {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.55rem 0.75rem;
+.ld-maturity-note {
+  margin: 0.25rem 0 0;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid var(--s2-line);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--s2-body);
 }
 
-.ld-maturity-chips li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 44px;
-  padding: 0.35rem 0.75rem 0.35rem 0.45rem;
-  border: 1px solid var(--s2-line);
-  border-radius: 10px;
-  background: #fff;
-  font-size: 0.92rem;
+.ld-maturity-item {
+  display: inline;
+  white-space: normal;
+}
+
+.ld-maturity-item .s2-maturity {
+  margin-right: 0.35rem;
+}
+
+.ld-maturity-title {
   font-weight: 550;
   color: var(--s2-ink);
 }
 
-.s2-hero-proof-slot .ld-flow {
-  margin: 0;
-}
-
-.s2-hero-proof-slot .ld-flow-explain {
-  display: none;
+.ld-maturity-sep {
+  color: var(--s2-muted);
 }
 
 .s2-section .ld-audience-flow {

@@ -24,7 +24,7 @@ test('home leads with investigation flow, compact domains and honest limits; nam
  await expect(hero.getByRole('link',{name:/Scientific workbench/})).toHaveAttribute('href','/research/workspace');
  const flow=page.getByRole('region',{name:/The investigation flow/});
  await expect(flow).toBeVisible();
- await expect(flow.getByRole('list',{name:/Investigation flow/}).locator(':scope > li')).toHaveCount(6);
+ await expect(flow.getByRole('list',{name:'Investigation flow: question to brief',exact:true}).locator(':scope > li')).toHaveCount(6);
  await expect(flow).toContainText('Graph');
  await expect(flow).toContainText('mechanism node');
  const diff=page.getByRole('region',{name:/What makes it different/});
