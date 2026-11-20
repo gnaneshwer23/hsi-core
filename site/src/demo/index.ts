@@ -6,5 +6,11 @@ export {
   getDemoInvestigationJourney,
   getDemoUniverseBundle,
   listDemoScenarioIds,
+  listDemoScenarioSummaries,
+  buildDemoComparisonView,
+  provenanceLabel,
   demoUniverseAllowsProductionWrite,
+  type DemoScenarioSummary,
+  type DemoComparisonView,
+  type DemoComparisonSide,
 } from "@hsi/demoUniverse";

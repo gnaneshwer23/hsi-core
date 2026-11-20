@@ -181,8 +181,8 @@ export const DEMO_UNIVERSE_MANIFEST = {
   ] satisfies readonly DemoRegistryEntry[],
   delivery: [
     "PR1 registry + schemas + provenance + Phase 1 core investigation",
-    "PR2 six-domain scenarios + shared nodes (this PR)",
-    "PR3 evidence comparison UI + briefs",
+    "PR2 six-domain scenarios + shared nodes",
+    "PR3 evidence comparison UI + briefs (this PR) — /demo/universe",
     "PR4 role dashboard adapters",
     "PR5 omics / lab / synthetic cohorts",
     "PR6 landing-page integration + e2e",

@@ -122,6 +122,7 @@ export const REVIEWER_TOOL_PATHS = [
 const REVIEWER_TOOL = new Set<string>(REVIEWER_TOOL_PATHS);
 
 const LABS_SYNTHETIC = new Set([
+  "/demo/universe",
   "/clinical-timeline",
   "/trials-criteria",
   "/gateway",

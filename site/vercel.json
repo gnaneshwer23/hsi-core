@@ -649,6 +649,10 @@
       "destination": "/_pages/science--body.html"
     },
     {
+      "source": "/demo/universe",
+      "destination": "/_pages/demo--universe.html"
+    },
+    {
       "source": "/demo",
       "destination": "/_pages/demo.html"
     }

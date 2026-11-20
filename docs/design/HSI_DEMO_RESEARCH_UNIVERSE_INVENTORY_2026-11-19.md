@@ -1,8 +1,8 @@
 # HSI Demo Research Universe — reuse inventory & Phase 1–2
 
 **Date:** 19 November 2026 (Europe/London)  
-**Branch:** `cursor/demo-universe-five-scenarios-2f71` (stacks on `cursor/demo-research-universe-2f71`)  
-**Code:** [`src/demoUniverse/`](../../src/demoUniverse/)  
+**Branch:** `cursor/demo-universe-comparison-brief-ui-2f71` (stacks on Demo PR2 / `#562`)  
+**Code:** [`src/demoUniverse/`](../../src/demoUniverse/) · UI [`/demo/universe`](../../site/src/pages/DemoUniversePage.tsx)  
 **Honesty:** Synthetic users/orgs + verified public bibliographic metadata + labelled simulated findings. Not scientific approval. No production graph writes. No PHI to external AI.
 
 ---
@@ -68,11 +68,21 @@ Bundles: `src/demoUniverse/fixtures/phase2Scenarios.ts`
 
 ---
 
+## Phase 3 delivered (this PR)
+
+Interactive evidence comparison + reviewable brief UI at **`/demo/universe`**.
+
+| Layer | Path |
+| --- | --- |
+| Presentation helpers | `src/demoUniverse/presentation.ts` — `listDemoScenarioSummaries`, `buildDemoComparisonView` |
+| Page | `site/src/pages/DemoUniversePage.tsx` |
+| Shell | `site/src/components/demo/DemoUniverseShell.tsx` |
+| Tests | `test/demoUniversePresentation.test.ts` · `site/e2e/demo-universe.spec.ts` |
+
 ## Planned expansion (later PRs)
 
 | PR | Scope |
 | --- | --- |
-| 3 | Interactive evidence comparison + brief UI |
 | 4 | Role dashboard adapters over shared records |
 | 5 | Omics / assays / synthetic cohorts |
 | 6 | Landing-page product previews + e2e |
@@ -85,13 +95,14 @@ Bundles: `src/demoUniverse/fixtures/phase2Scenarios.ts`
 import {
   getDemoInvestigationJourney,
   listDemoScenarioIds,
+  buildDemoComparisonView,
   demoUniverseAllowsProductionWrite,
 } from "@hsi/demoUniverse";
 
 demoUniverseAllowsProductionWrite(); // always false
 listDemoScenarioIds(); // six seeded scenario ids
+buildDemoComparisonView("immune-inflammation");
 getDemoInvestigationJourney("DEMO-INV-001");
-getDemoInvestigationJourney("DEMO-INV-004");
 ```
 
 Integrity: `validateDemoUniverseBundle` / `assertValidDemoUniverseBundle` in `src/demoUniverse/schema.ts`.
