@@ -1,4 +1,4 @@
-.relationship-diagram{margin:0;color:#101f33;border-top:1px solid #cbd2df;border-bottom:1px solid #cbd2df;padding:24px 0}
+.relationship-diagram{margin:28px 0 0;color:#101f33;border-top:1px solid #cbd2df;border-bottom:1px solid #cbd2df;padding:24px 0}
 .relationship-diagram>figcaption{font-size:14px;color:#475569}
 .relationship-layout{display:grid;grid-template-columns:1.4fr 1fr;gap:5%;align-items:center}
 .relationship-drawing svg{display:block;width:100%;height:auto;overflow:visible}
