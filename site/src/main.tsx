@@ -18,6 +18,7 @@ import "./styles/research-public.css";
 import "./styles/public-system.css";
 import "./styles/premium-hsi.css";
 import "./styles/collective-system.css";
+import "./styles/stage2-landing.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;
