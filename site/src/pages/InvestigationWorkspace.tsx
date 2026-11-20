@@ -8,6 +8,12 @@ import {useRunGapTracking} from "../lib/useRunGapTracking";
 import {useLedger} from "../lib/useLedger";
 import {fromRunHypothesis} from "../../../src/investigation/hypothesisLedger";
 import {useLiveRun} from "../lib/useLiveRun";
+import {
+  LIVE_SCENARIO_QUERY_KEY,
+  resolveCuratedScenarioId,
+} from "../lib/workbenchPrimary";
+import {workspaceTrailNavActions} from "../../../src/investigation/workspaceTrailNavigation";
+import {LIVE_SCENARIOS} from "../../../src/investigation/scenarios";
 import {HowProducedPanel} from "../components/HowProducedPanel";
 import {EvidenceContextPassportView} from "../components/EvidenceContextPassport";
 import {PassportEvidenceTable} from "../components/PassportEvidenceTable";
@@ -276,6 +282,28 @@ export function InvestigationWorkspacePage(){
   const el=document.getElementById("ws-gaps-testable") as HTMLDetailsElement|null;
   if(el&&!el.open)el.open=true;
  };
+ const openDetailsById=(elementId:string)=>{
+  const el=document.getElementById(elementId) as HTMLDetailsElement|null;
+  if(el&&!el.open)el.open=true;
+ };
+ const selectFirstClaimIfNeeded=()=>{
+  if(sel||!run?.candidates.length)return;
+  const supporting=run.candidates.find((c)=>c.polarity==="supporting"||c.verification==="agree_directional");
+  setSel((supporting??run.candidates[0]).id);
+ };
+ const selectFirstComparisonIfNeeded=()=>{
+  if(cmpKey||!comparison?.items[0])return;
+  const item=comparison.items[0];
+  setCmpKey(comparisonPairKey(item));
+  setSel(item.leftId);
+ };
+ const searchParams=new URLSearchParams(loc.search);
+ const urlScenarioId=resolveCuratedScenarioId(searchParams.get(LIVE_SCENARIO_QUERY_KEY));
+ const handoffScenarioId=urlScenarioId
+  ??(profileHandoff.matchedScenarioId&&LIVE_SCENARIOS[profileHandoff.matchedScenarioId]
+   ?profileHandoff.matchedScenarioId
+   :null);
+ const runScenarioId=handoffScenarioId??lr.activeScenarioId;
  const onStage2ChecklistSelect=(id:typeof stage2Checklist.items[number]["id"])=>{
   if(id==="ask_run"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
   if(id==="evidence"||id==="passport_or_disagreement"){
@@ -298,26 +326,29 @@ export function InvestigationWorkspacePage(){
   document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
  const onUnifiedTrailSelect=(id:UnifiedJourneyStepId)=>{
-  if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="evidence"||id==="passport"){document.getElementById("ws-ev-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  if(id==="disagreement"){
-   openUspPanelsFold();
-   document.getElementById("ws-disagree-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
+  for(const action of workspaceTrailNavActions(id)){
+   switch(action.kind){
+    case "scroll":
+     document.getElementById(action.elementId)?.scrollIntoView({behavior:"smooth",block:"start"});
+     break;
+    case "openDetails":
+     openDetailsById(action.elementId);
+     break;
+    case "selectFirstClaim":
+     selectFirstClaimIfNeeded();
+     break;
+    case "selectFirstComparison":
+     selectFirstComparisonIfNeeded();
+     break;
+    case "openBrief":
+     setBrief(true);
+     break;
+    default:{
+     const _exhaustive:never=action;
+     void _exhaustive;
+    }
+   }
   }
-  if(id==="crossDomain"){
-   openUspPanelsFold();
-   document.getElementById("ws-cross-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
-  }
-  if(id==="gaps"){
-   openGapsTestableFold();
-   document.getElementById("ws-gp-h")?.scrollIntoView({behavior:"smooth",block:"start"});
-   return;
-  }
-  if(id==="save"){document.getElementById("ws-conn-h")?.scrollIntoView({behavior:"smooth",block:"start"});return}
-  setBrief(true);
-  document.getElementById("ws-brief-panel")?.scrollIntoView({behavior:"smooth",block:"start"});
  };
  const onTrailSelect=(id:UspATrailStepId)=>{
   if(id==="ask"){document.getElementById("ws-ask-strip")?.scrollIntoView({behavior:"smooth",block:"start"});return}
@@ -375,7 +406,7 @@ export function InvestigationWorkspacePage(){
        {state==="error"&&<p className="ws-err" role="alert">{lr.error} No findings were generated.</p>}
       </div>
        <div className="ws-actions">
-       <button type="button" className="ws-run" onClick={()=>{clearRunSelections();void lr.start()}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
+       <button type="button" className="ws-run" onClick={()=>{clearRunSelections();void lr.start(runScenarioId)}} disabled={state==="running"}><Icon name="spark" size={16}/>{state==="running"?"Running…":run?"Run again":"Run live investigation"}</button>
        {!run&&saved&&<button type="button" className="ws-btn" onClick={()=>{clearRunSelections();lr.reopen()}}>Reopen saved run</button>}
       </div>
      </section>
@@ -386,8 +417,13 @@ export function InvestigationWorkspacePage(){
     <section className="ws-ask-strip" id="ws-ask-strip" aria-labelledby="ws-ask-h">
      <h2 id="ws-ask-h">Ask</h2>
      <p className="ws-muted">
-      Start from Research Home Ask, or run the default IL-21 cross-context question here.
+      Start from Research Home Ask, or run a curated scenario here (scenarioId only — no free-text model spend).
       Disease chips below are demonstration scenarios — HSI is disease-agnostic.
+     </p>
+     <p className="ws-muted" role="status" data-testid="ws-scenario-handoff">
+      Curated scenario for Run: <b>{runScenarioId}</b>
+      {urlScenarioId?" · from Home/URL handoff":handoffScenarioId?" · from profile match":" · default"}
+      {" · production writes: false"}
      </p>
      {profileHandoff.ready?(
       <div className="ws-ask-handoff" role="status">

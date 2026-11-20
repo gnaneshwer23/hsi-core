@@ -7,12 +7,19 @@ import {
   type LiveRunLibrary,
   type LiveRunLibraryEntry,
 } from "../../../src/investigation/liveRunLibrary";
+import {LIVE_SCENARIOS} from "../../../src/investigation/scenarios";
 import {recordActivation} from "../../../src/investigation/activationMilestone";
 import {recordRepeatUsageReopen} from "../../../src/investigation/repeatUsageMilestone";
 import type {Run} from "./workspaceView";
 
 export const LIVE_SCENARIO_ID="il21-autoimmune";
 export type RunState="idle"|"running"|"error";
+
+/** Curated scenarioId only — unknown values fall back to the default IL-21 scenario. */
+export function resolveLiveScenarioId(raw:string|null|undefined):string{
+  if(typeof raw==="string"&&LIVE_SCENARIOS[raw.trim()])return raw.trim();
+  return LIVE_SCENARIO_ID;
+}
 
 function browserStore():Storage|null{
   try{return typeof localStorage==="undefined"?null:localStorage}catch{return null}
@@ -25,16 +32,19 @@ export function useLiveRun(){
  const [savedThisSession,setSavedThisSession]=useState(false);
  const [reopenedThisSession,setReopenedThisSession]=useState(false);
  const [lastSavedEntry,setLastSavedEntry]=useState<LiveRunLibraryEntry|null>(null);
+ const [activeScenarioId,setActiveScenarioId]=useState(LIVE_SCENARIO_ID);
 
  const refreshLibrary=useCallback(()=>{
   const store=browserStore();
   setLibrary(migrateLegacyLiveRunIntoLibrary(store));
  },[]);
 
- const start=useCallback(async()=>{
+ const start=useCallback(async(scenarioId?:string|null)=>{
+  const id=resolveLiveScenarioId(scenarioId);
+  setActiveScenarioId(id);
   setState("running");setError("");setNote("");setSavedThisSession(false);setReopenedThisSession(false);
   try{
-   const res=await fetch("/api/research/live-investigation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({scenarioId:LIVE_SCENARIO_ID})});
+   const res=await fetch("/api/research/live-investigation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({scenarioId:id})});
    if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The investigation could not run (HTTP "+res.status+").")}
    const run=await res.json() as Run;
    setRun(run);setState("idle");
@@ -94,6 +104,7 @@ export function useLiveRun(){
  return {
   run,state,error,note,start,save,reopen,reopenFromLibrary,hasSaved,
   library,refreshLibrary,savedThisSession,reopenedThisSession,lastSavedEntry,
+  activeScenarioId,
  };
 }
 

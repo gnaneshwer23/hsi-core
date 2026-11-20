@@ -107,7 +107,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
     <div className="rh-searchbar">
      <Icon name="search" size={22}/>
      <input id="rh-q" ref={inputRef} type="search" value={q} maxLength={500} autoComplete="off" onChange={e=>setQ(e.target.value)} placeholder="Investigate a gene, pathway, disease, biological mechanism or research question…" aria-describedby="rh-q-help"/>
-     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(LIVE_INVESTIGATION_PATH)}}>Investigate <Icon name="arrow" size={16}/></button>
+     <button type="button" className="rh-go" onClick={()=>{const t=q.trim();if(!t){inputRef.current?.focus();return}nav(liveInvestigationHref({scenarioId:live}))}}>Investigate <Icon name="arrow" size={16}/></button>
     </div>
     {ready&&!profile.onboarded&&<p className="rh-note"><Link to="/welcome">Tell us about your research</Link> (2 minutes) so your home is built around your area.</p>}
     <p id="rh-q-help" className="rh-note">{bundle?`Searching ${n(bundle.nodes.length)} concepts in the published graph (candidates, unreviewed). Entities outside it are not searched yet.`:"Verifying the published graph…"}</p>
@@ -115,13 +115,13 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
      {intent!=="empty"&&<div className="rh-panel">
       {hits.length>0&&<ul className="rh-hits" aria-label="Matching concepts">{hits.map(h=>(
        <li key={h.id}><span className="rh-ico-tile" aria-hidden="true"><Icon name="graph" size={18}/></span><div><b>{h.name}</b><span>{h.kind}{h.matchedOn!==h.name?` · matched “${h.matchedOn}”`:""}</span><small>Graph concept {h.id.replace(/^concept:/,"").slice(0,40)}</small></div>
-        <div className="rh-row"><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={LIVE_INVESTIGATION_PATH}>Investigate</Link></div></li>))}</ul>}
+        <div className="rh-row"><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={liveInvestigationHref({scenarioId:live})}>Investigate</Link></div></li>))}</ul>}
       {hits.length===0&&bundle&&<p>No concept in the published graph matches “{q.trim()}”. {trial?"This looks like a clinical trial identifier; trial records are not searched from here yet. ":""}Try a broader term or an alternative name, or start an investigation from it.</p>}
       <div className="rh-intent">
        <p>{intent==="investigation"?"This reads as a research question. Choose how to work on it:":"You can also treat this as a question:"}</p>
        <div className="rh-row">
         <Link className="rh-ghost" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
-        <Link className="rh-primary" to={LIVE_INVESTIGATION_PATH}>{live?"Deep Investigate: run live":"Open live investigation"}</Link>
+        <Link className="rh-primary" to={liveInvestigationHref({scenarioId:live})}>{live?"Deep Investigate: run live":"Open live investigation"}</Link>
         <Link className="rh-ghost" to={saveQuestionHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>Save question for review</Link>
        </div>
        <p className="rh-note">{live?"This matches a curated scenario, so a live run is available: it searches Europe PMC, OpenAlex and Open Targets now, then two models check the direction of the best claims. Nothing starts until you press Run on the next page.":"Live runs cover curated scenarios only (currently IL-21 across autoimmune diseases). Your question can be saved for scientific review, which needs a research account."} Quick Explore reads the published graph.</p>
