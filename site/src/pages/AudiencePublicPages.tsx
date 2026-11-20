@@ -1,7 +1,7 @@
 /**
  * Public audience pages: Researchers, Biotech / Clinical / Laboratories / Community, Validation.
  * Honesty: no fake metrics, no live CDS, no invented pilots or gold-standard claims.
- * Diagram-first: role flow + maturity chips, not essay card grids.
+ * One process infographic per page — not card grids or layered chrome.
  */
 import { Link } from "react-router-dom";
 import { PublicNotices } from "../components/public/PublicNotices";
@@ -10,7 +10,6 @@ import {
   LandingHero,
   LandingPage,
   LandingPrimaryCta,
-  LandingProofChrome,
   LandingSecondaryCta,
   LandingSection,
   type LandingMaturityLevel,
@@ -33,11 +32,6 @@ export function ResearchersPublicPage() {
       <LandingHero
         title="Researchers: personal scientific intelligence with context, not just citations."
         description="Published evidence, experimental context and uncertainty — without treating a model answer as approved biology."
-        proof={
-          <LandingProofChrome title="Investigation path" badge="Research preview · candidate-only">
-            <AudienceFlowDiagram variant="researchers" ariaLabel="Researcher investigation flow" />
-          </LandingProofChrome>
-        }
       >
         <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
         <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>

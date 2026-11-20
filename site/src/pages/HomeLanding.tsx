@@ -105,11 +105,11 @@ export function HomeLanding(){
     <section className="pg-flow" aria-labelledby="pg-flow-h">
      <h2 id="pg-flow-h">The investigation flow.</h2>
      <p className="pg-flow-lead">
-      One path from a research question to a reviewable brief. The live graph above is the mechanism node.
+      One path from question to brief. The live graph above is the mechanism node.
      </p>
      <InvestigationFlowDiagram emphasizeId="graph"/>
      <p className="pg-flow-note">
-      Candidate-only and unreviewed. Agents propose candidates in the background and are not named here.
+      Candidate-only and unreviewed. Agents propose in the background and are not named here.
      </p>
     </section>
 
