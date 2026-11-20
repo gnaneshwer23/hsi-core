@@ -2,6 +2,14 @@
 import type {LiveInvestigation} from "./liveRun";
 import {renderLiveBriefComparisonSections} from "./liveBriefComparison";
 import {renderLiveBriefPassportSections} from "./liveBriefPassport";
+import {
+  formatLiveSourceReliabilityMeta,
+  liveSourceReliabilityLimitations,
+} from "./liveSourceReliabilityHonesty";
+import {
+  PROVISIONAL_EXPERIMENT_LABEL,
+  PROVISIONAL_HYPOTHESIS_HONESTY_LINE,
+} from "./provisionalHypothesisHonesty";
 const safe=(s:string)=>s.replace(/[<>&`*_\[\]#|]/g,c=>"&#"+c.charCodeAt(0)+";").replace(/[\r\n]+/g," ");
 const DIR:Record<string,string>={positive:"positive (rise or act together, or promotes)",negative:"negative (inverse, or suppresses)",none:"no relationship stated",association_only:"linked, direction not stated",unresolved:"unresolved (the checks disagreed or could not tell)",not_assessed:"not assessed"};
 const VERIFY:Record<LiveInvestigation["candidates"][number]["verification"],string>={
@@ -21,8 +29,8 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
    `  - Verification: ${VERIFY[c.verification]} · polarity ${c.polarity} · basis ${c.polarityBasis.replaceAll("_"," ")}`,
    `  - Direction: ${DIR[c.direction]??c.direction}`,
    `  - Passage: "${safe(c.sentence)}"`,
-   `  - Source: ${safe(r?.title??c.sourceId)} · ${r?.doi?`DOI ${safe(r.doi)} · `:""}${r?.pmid?`PMID ${safe(r.pmid)} · `:""}${c.sourceUrl} · retrieved ${r?.retrievedAt??"unknown"} · retraction: ${(r?.retraction??"unknown").replaceAll("_"," ")} · licence not assessed`,
-   `  - Limitations: abstract-only live candidate; licence/reuse not assessed; not graph-promotable; human review required.`,
+   `  - Source: ${safe(r?.title??c.sourceId)} · ${c.sourceUrl} · ${formatLiveSourceReliabilityMeta(r??{sourceUrl:c.sourceUrl,title:c.sourceId})}`,
+   `  - Limitations: abstract-only live candidate; sourceClearanceVerified: false; not graph-promotable; human review required.`,
    ...c.verdicts.map(v=>`  - ${safe(v.verifier)} (${safe(v.model)}): ${v.direction.replaceAll("_"," ")}. ${safe(v.reason)}${v.evidenceSpan?` Quoted: "${safe(v.evidenceSpan)}"`:""}`)].join("\n");
  };
  const checked=b.candidates.filter(c=>c.verification!=="not_run");
@@ -41,17 +49,16 @@ export function renderLiveBriefMarkdown(b:LiveInvestigation):string{
   ...part("Checked, no direction established",checked.filter(c=>c.polarity==="uncertain"),"None."),"",
   renderLiveBriefPassportSections(b).trimEnd(),"",
   renderLiveBriefComparisonSections(b.structuredComparison).trimEnd(),"",
-  `## Hypotheses (unvalidated model proposals) (${b.hypotheses.items.length})`,
-  ...(b.hypotheses.items.length?["Proposed from findings both checks agreed on. They are not findings, not recommendations and have not been reviewed.",...b.hypotheses.items.flatMap(h=>[
+  `## Hypotheses (provisional, unvalidated model proposals) (${b.hypotheses.items.length})`,
+  ...(b.hypotheses.items.length?[PROVISIONAL_HYPOTHESIS_HONESTY_LINE,"Proposed from findings both checks agreed on. They are not findings, not recommendations and have not been reviewed.",...b.hypotheses.items.flatMap(h=>[
    `- **${safe(h.statement)}**`,
    `  - Based on: ${h.citedClaimIds.map(id=>{const c=b.candidates.find(x=>x.id===id);return c?`${safe(c.subject)} ~ ${safe(c.object)} (${safe(rec.get(c.sourceId)?.title??c.sourceId)})`:safe(id)}).join("; ")}`,
-   `  - Rationale: ${safe(h.rationale)}`,`  - Prediction if true: ${safe(h.prediction)}`,`  - Experiment: ${safe(h.experiment)}`,`  - Would be falsified by: ${safe(h.falsifier)}`,`  - Limits: ${safe(h.limits)}`,
+   `  - Rationale: ${safe(h.rationale)}`,`  - Prediction if true: ${safe(h.prediction)}`,`  - ${PROVISIONAL_EXPERIMENT_LABEL}: ${safe(h.experiment)}`,`  - Would be falsified by: ${safe(h.falsifier)}`,`  - Limits: ${safe(h.limits)}`,
    `  - Proposed by ${safe(h.generatedBy.verifier)} (${safe(h.generatedBy.model)}). ${h.challenge?`Challenged by ${safe(h.challenge.verifier)} (${safe(h.challenge.model)}): ${h.challenge.verdict}. ${safe(h.challenge.reason)}`:"Not challenged by a second model."}`])]:[`- ${safe(b.hypotheses.reason??b.hypotheses.status)}`]),"",
   `## Not checked (${b.candidates.length-checked.length} lower-priority candidates, directions not assessed)`,
   ...b.candidates.filter(c=>c.verification==="not_run").map(c=>`- ${safe(c.subject)} ~ ${safe(c.object)} (${c.contexts.map(ctx).map(safe).join(", ")||"context not stated"}): "${safe(c.sentence)}" ${c.sourceUrl}`),"",
   "## Missing evidence and limits",...b.gaps.map(g=>"- "+safe(g)),
-  "- Abstracts are not included in this export; licence for redistribution was not assessed.",
-  "- Current source permissions must be rechecked before this brief is shared or cited.",
+  ...liveSourceReliabilityLimitations().map((l)=>"- "+safe(l)),
   "- Passport columns that are Not stated / Not extracted are explicit gaps — they are not invented or implied.",
   "- Structured comparison classes are candidates only; potential_contradiction is not proven contradiction.",
   "- Model agreement is not scientific proof; graph promotion remains prohibited until human review.",""

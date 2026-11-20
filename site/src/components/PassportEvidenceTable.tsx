@@ -14,7 +14,22 @@ type Props={
   heading?:string;
 };
 
-function Row({row,onInspect}:{row:PassportEvidenceRow;onInspect?:(edgeId:string)=>void}){
+function Row({
+  row,
+  source,
+  onInspect,
+}:{
+  row:PassportEvidenceRow;
+  source:DomainSource|undefined;
+  onInspect?:(edgeId:string)=>void;
+}){
+  const title=source?.title??row.sourceTitle??row.sourceId??"No source attached";
+  const locators=[
+    source?.doi?`DOI ${source.doi}`:null,
+    source?.pmid?`PMID ${source.pmid}`:null,
+    source?`rights: ${source.rights}`:null,
+    "sourceClearanceVerified: false",
+  ].filter(Boolean).join(" · ");
   return (
     <tr>
       <th scope="row">
@@ -28,7 +43,14 @@ function Row({row,onInspect}:{row:PassportEvidenceRow;onInspect?:(edgeId:string)
         <span className="pet-counts">{row.reportedCount} reported · {row.missingCount} missing</span>
       </th>
       <td className="pet-finding">{row.assertion}</td>
-      <td className="pet-source">{row.sourceTitle??row.sourceId??"No source attached"}</td>
+      <td className="pet-source">
+        {source?.url?(
+          <a href={source.url} target="_blank" rel="noreferrer noopener">{title}</a>
+        ):(
+          title
+        )}
+        {locators?(<><br/><span className="pet-source-meta">{locators}</span></>):null}
+      </td>
       {row.cells.map(cell=>(
         <td key={cell.fieldId} data-status={cell.status} title={cell.label}>
           {cell.display}
@@ -46,13 +68,15 @@ export function PassportEvidenceTable({
   heading="Evidence table",
 }:Props){
   const table=useMemo(()=>buildPassportEvidenceTable(edges,sources),[edges,sources]);
+  const sourceById=useMemo(()=>new Map(sources.map(s=>[s.id,s])),[sources]);
   return (
     <section className="ecp pet" aria-labelledby="pet-heading">
-      <p className="ecp-kicker">EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED</p>
+      <p className="ecp-kicker">EVIDENCE TABLE · PASSPORT COLUMNS · NOT SCIENTIFICALLY APPROVED · SOURCE CLEARANCE NOT VERIFIED</p>
       <h3 id="pet-heading">{heading}</h3>
       <p className="ecp-summary">
         {table.rowCount} source-candidate row{table.rowCount===1?"":"s"}. Columns match the Evidence Context Passport.
         Passage-linked fields (dose, sample size, …) are not extracted here — open a passport per connection.
+        Locators are not proof of support; rights remain unverified.
       </p>
       <div className="pet-scroll" role="region" aria-label="Passport evidence table" tabIndex={0}>
         <table className="pet-table">
@@ -72,12 +96,17 @@ export function PassportEvidenceTable({
                 <td colSpan={3+table.columns.length}>No source-candidate edges in this brief slice.</td>
               </tr>
             ):table.rows.map(row=>(
-              <Row key={row.edgeId} row={row} onInspect={onInspect}/>
+              <Row
+                key={row.edgeId}
+                row={row}
+                source={row.sourceId?sourceById.get(row.sourceId):undefined}
+                onInspect={onInspect}
+              />
             ))}
           </tbody>
         </table>
       </div>
-      <p className="ecp-note">{table.note} Unreviewed · confidence not calibrated · graph promotion prohibited.</p>
+      <p className="ecp-note">{table.note} Unreviewed · confidence not calibrated · graph promotion prohibited · sourceClearanceVerified: false.</p>
     </section>
   );
 }
