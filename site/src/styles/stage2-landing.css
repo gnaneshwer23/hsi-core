@@ -572,6 +572,48 @@
   }
 }
 
+/* Audience flow + maturity chips (diagram-first) */
+.ld-audience-flow {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+
+.ld-maturity-chips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 0.75rem;
+}
+
+.ld-maturity-chips li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 44px;
+  padding: 0.35rem 0.75rem 0.35rem 0.45rem;
+  border: 1px solid var(--s2-line);
+  border-radius: 10px;
+  background: #fff;
+  font-size: 0.92rem;
+  font-weight: 550;
+  color: var(--s2-ink);
+}
+
+.s2-hero-proof-slot .ld-flow {
+  margin: 0;
+}
+
+.s2-hero-proof-slot .ld-flow-explain {
+  display: none;
+}
+
+.s2-section .ld-audience-flow {
+  margin-top: 1.25rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .s2-btn {
     transition: none;

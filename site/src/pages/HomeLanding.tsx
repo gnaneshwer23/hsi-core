@@ -3,34 +3,26 @@ import {DemoLandingPreviewPanel} from "../components/demo/DemoLandingPreviewPane
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {OpenQuestions} from "../components/home/OpenQuestions";
-import {ClaimAnatomy} from "../components/home/ClaimAnatomy";
 import {HomepageWorkedConflict} from "../components/home/HomepageWorkedConflict";
-import {ScientificIntelligenceJourney} from "../components/home/ScientificIntelligenceJourney";
+import {InvestigationFlowDiagram} from "../components/landing/InvestigationFlowDiagram";
 import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
 import "../styles/premium-public.css";
 
-/** Three product differentiators — linked only to real surfaces. */
 const USPS=[
  {
-  n:"01",
-  title:"Context-aware disagreement analysis",
-  text:"Compare findings by model, tissue, dose and endpoint before treating them as contradiction. When studies are not comparable, HSI says so and abstains.",
+  title:"Context-aware disagreement",
+  text:"Compare by model, tissue, dose and endpoint — or abstain.",
   to:"/context-conflict-audit",
-  cta:"Open the context comparison",
  },
  {
-  n:"02",
-  title:"Cross-domain mechanism investigation",
-  text:"Follow candidate relationships across immunology, neuroscience, microbiome, metabolism, genomics and tissue biology on the published graph — with source and review status attached.",
+  title:"Cross-domain mechanisms",
+  text:"Follow candidate relationships with source and review status.",
   to:"/knowledge-graph",
-  cta:"Explore the knowledge graph",
  },
  {
-  n:"03",
-  title:"Connected research collaboration",
-  text:"Keep questions, evidence, gaps and briefs in one research path. Group and role workspaces remain demonstration-labelled until organisation features are accepted.",
+  title:"Connected research path",
+  text:"Questions, evidence, gaps and briefs stay on one trail.",
   to:"/welcome",
-  cta:"Set up a research home",
  },
 ] as const;
 
@@ -53,18 +45,9 @@ const AUDIENCES=[
 ] as const;
 
 const LIMITS=[
- {
-  title:"Evidence, inference and approval stay separate.",
-  text:"Graph relationships are candidates with source, context and review status. Nothing here is scientifically approved.",
- },
- {
-  title:"Patient data stays in a separate plane.",
-  text:"This preview uses synthetic patients only. The release gate refuses non-synthetic clinical data.",
- },
- {
-  title:"What is not true yet.",
-  text:"Dual-model checks are off by default, many saves remain on-device, there is no real patient data, and nothing is clinical advice.",
- },
+ "Evidence, inference and approval stay separate — graph relationships are candidates, not scientifically approved.",
+ "Patient data stays in a separate plane; this preview uses synthetic patients only.",
+ "Dual-model checks are off by default, many saves remain on-device, and nothing is clinical advice.",
 ] as const;
 
 function Status(){
@@ -98,7 +81,7 @@ export function HomeLanding(){
        The AI platform for scientific evidence and biological reasoning
       </h1>
       <p className="pg-lead">
-       Connect published evidence, experimental context and candidate mechanisms so researchers can see what is known, what conflicts, and what to investigate next — with provenance attached and approval kept separate.
+       Evidence, experimental context and candidate mechanisms — with provenance attached and approval kept separate.
       </p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/how-it-works">
@@ -119,95 +102,73 @@ export function HomeLanding(){
      <Status/>
     </div>
 
-    <section className="pg-story" aria-labelledby="pg-challenge-h">
-     <div className="pg-story-block">
-      <h2 id="pg-challenge-h">Biomedical knowledge is growing. Evidence is still fragmented.</h2>
-      <p>
-       Findings sit across publications, experiments, biological systems and disciplines. Researchers must decide what conflicts, what is merely non-comparable context, and what remains unknown — without losing the trail to the source.
-      </p>
-     </div>
-     <div className="pg-story-block">
-      <h2 id="pg-vision-h">From disconnected information to connected understanding.</h2>
-      <p>
-       HSI moves researchers from scattered scientific records toward evidence-grounded understanding of human biology: what is known, what is uncertain, and what to investigate next — with provenance attached.
-      </p>
-     </div>
+    <section className="pg-flow" aria-labelledby="pg-flow-h">
+     <h2 id="pg-flow-h">The investigation flow.</h2>
+     <p className="pg-flow-lead">
+      One path from a research question to a reviewable brief. The live graph above is the mechanism node.
+     </p>
+     <InvestigationFlowDiagram emphasizeId="graph"/>
+     <p className="pg-flow-note">
+      Candidate-only and unreviewed. Agents propose candidates in the background and are not named here.
+     </p>
     </section>
 
-    <ScientificIntelligenceJourney/>
+    <section className="pg-links" aria-labelledby="pg-diff-h">
+     <div className="pg-links-row">
+      <h2 id="pg-diff-h">What makes it different.</h2>
+      <ul className="pg-usp-row" aria-label="Product differentiators">
+       {USPS.map((p)=>(
+        <li key={p.title}>
+         <Link to={p.to}>{p.title} <span aria-hidden="true">→</span></Link>
+         <span>{p.text}</span>
+        </li>
+       ))}
+      </ul>
+     </div>
+    </section>
 
     <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
      <div className="pg-demo-universe-head">
       <h2 id="pg-demo-universe-h">Demo Research Universe product previews</h2>
-      <p>Pack-backed conflict pairs from seeded Demo Universe scenarios. Not scientific approval. Open the full comparison desk for briefs, abstention and assay sketches.</p>
+      <p>Pack-backed conflict pairs from seeded scenarios. Not scientific approval.</p>
      </div>
      <DemoLandingPreviewPanel/>
     </section>
 
-    <section className="pg-pillars" aria-labelledby="pg-pillars-h">
-     <div className="pg-pillars-copy">
-      <h2 id="pg-pillars-h">What makes it different.</h2>
-      <p className="pg-sec-lead">
-       Three capabilities define the product. Each links to a working surface — labelled for what is live,
-       illustrative or not yet reviewed.
-      </p>
-      <ol>
-       {USPS.map((p)=>(
-        <li key={p.n}>
-         <span className="pg-pn" aria-hidden="true">{p.n}</span>
-         <div>
-          <h3>{p.title}</h3>
-          <p>{p.text}</p>
-          <Link className="pg-link" to={p.to}>
-           {p.cta} <span aria-hidden="true">→</span>
-          </Link>
-         </div>
-        </li>
-       ))}
-      </ol>
-     </div>
-     <ClaimAnatomy/>
-    </section>
-
     <HomepageWorkedConflict/>
 
-    <section className="pg-domains" aria-labelledby="pg-domains-h">
-     <h2 id="pg-domains-h">Explore scientific domains through one graph.</h2>
-     <p className="pg-sec-lead">
-      Coverage is unequal today. Systemic sclerosis remains a validation case, not a claim of uniform depth
-      across biology.
-     </p>
-     <ul className="pg-domain-list" aria-label="Scientific domains in scope">
-      {DOMAINS.map((d)=>(
-       <li key={d.label}>
-        <Link to={d.to}>{d.label}</Link>
-       </li>
-      ))}
-     </ul>
+    <section className="pg-links" aria-labelledby="pg-domains-h">
+     <div className="pg-links-row">
+      <h2 id="pg-domains-h">Domains</h2>
+      <p>Coverage is unequal today. Systemic sclerosis is a validation case, not uniform depth.</p>
+      <ul className="pg-domain-list" aria-label="Scientific domains in scope">
+       {DOMAINS.map((d)=>(
+        <li key={d.label}>
+         <Link to={d.to}>{d.label}</Link>
+        </li>
+       ))}
+      </ul>
+     </div>
     </section>
 
-    <section className="pg-audiences" aria-labelledby="pg-audiences-h">
-     <h2 id="pg-audiences-h">Built for how research is organised.</h2>
-     <p className="pg-sec-lead">
-      Choose the path that matches your role. Enterprise shells are demonstration previews until organisation
-      features are accepted.
-     </p>
-     <ul className="pg-audience-list">
-      {AUDIENCES.map((a)=>(
-       <li key={a.label}>
-        <Link to={a.to}>{a.label}</Link>
-       </li>
-      ))}
-     </ul>
+    <section className="pg-links" aria-labelledby="pg-audiences-h">
+     <div className="pg-links-row">
+      <h2 id="pg-audiences-h">Audiences</h2>
+      <p>Enterprise shells are demonstration previews until organisation features are accepted.</p>
+      <ul className="pg-audience-list">
+       {AUDIENCES.map((a)=>(
+        <li key={a.label}>
+         <Link to={a.to}>{a.label}</Link>
+        </li>
+       ))}
+      </ul>
+     </div>
     </section>
 
     <section className="pg-open" aria-labelledby="pg-open-h">
      <div className="pg-open-head">
-      <h2 id="pg-open-h">Questions the graph is open on today.</h2>
-      <p>
-       Gaps recorded in the published graph. Each opens concepts, evidence and a next study a researcher could
-       run. Candidates for expert review — not findings.
-      </p>
+      <h2 id="pg-open-h">Open questions on the graph.</h2>
+      <p>Recorded gaps — candidates for expert review, not findings.</p>
       <Link className="pg-btn pg-btn-light" to="/research/gaps">
        Open the Gap Register <span aria-hidden="true">→</span>
       </Link>
@@ -274,11 +235,11 @@ export function HomeLanding(){
 
     <section className="pg-honest" aria-labelledby="pg-honest-h">
      <h2 id="pg-honest-h">Limits, stated up front</h2>
-     <ul>
-      {LIMITS.map((h)=>(
-       <li key={h.title}>
-        <h3>{h.title}</h3>
-        <p>{h.text}</p>
+     <ul className="pg-honest-list">
+      {LIMITS.map((line)=>(
+       <li key={line}>
+        <span className="pg-honest-mark" aria-hidden="true">—</span>
+        <span>{line}</span>
        </li>
       ))}
      </ul>
@@ -296,7 +257,7 @@ export function HomeLanding(){
     <section className="pg-close" aria-labelledby="pg-close-h">
      <div>
       <h2 id="pg-close-h">See scientific intelligence in action.</h2>
-      <p>Open the workbench on a curated investigation, walk the platform loop, or set up a research home around your topics.</p>
+      <p>Open the workbench, walk the platform loop, or set up a research home.</p>
      </div>
      <div className="pg-cta">
       <Link className="pg-btn pg-btn-light" to={LIVE_INVESTIGATION_PATH}>
