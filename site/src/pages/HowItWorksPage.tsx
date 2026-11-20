@@ -86,7 +86,6 @@ export function HowItWorksPage() {
   return (
     <div className="pg-page pg-sub">
       <header className="pg-phero">
-        <p className="pg-eyebrow">Platform</p>
         <h1>From research question to evidence-grounded decision.</h1>
         <div>
           <p className="pg-lead">

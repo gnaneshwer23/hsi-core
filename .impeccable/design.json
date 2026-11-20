@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "name": "scientific-platform",
+  "label": "Causaly / Benchling craft bar",
+  "updated": "2026-11-20",
+  "tokens": {
+    "ground": "#F4F5F8",
+    "wash": "#F6F5FC",
+    "ink": "#101F33",
+    "body": "#2B3A50",
+    "muted": "#687E9B",
+    "accent": "#3C1FFA",
+    "accentInk": "#2A14C9",
+    "line": "#D4DFE4",
+    "radiusControl": "10px",
+    "radiusFrame": "16px",
+    "typeface": "Host Grotesk Variable"
+  },
+  "references": [
+    "https://www.causaly.com/ai-platform/platform",
+    "https://www.benchling.com/"
+  ],
+  "files": [
+    "site/src/styles/premium-public.css",
+    "site/src/styles/stage2-landing.css",
+    "site/src/styles/premium-hsi.css",
+    "site/src/styles/research-public.css"
+  ]
+}

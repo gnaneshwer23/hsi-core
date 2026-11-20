@@ -28,12 +28,12 @@ export function LandingMaturityLabel({
 }
 
 export function LandingHero({
-  eyebrow,
   title,
   description,
   children,
   id = "page-title",
 }: {
+  /** @deprecated Eyebrows are banned on public landings; ignored if passed. */
   eyebrow?: string;
   title: string;
   description: string;
@@ -43,7 +43,6 @@ export function LandingHero({
   return (
     <header className="s2-hero">
       <div className="s2-wrap">
-        {eyebrow ? <p className="mp-eyebrow">{eyebrow}</p> : null}
         <h1 id={id}>{title}</h1>
         <p className="s2-lead">{description}</p>
         {children ? <div className="s2-cta-row">{children}</div> : null}

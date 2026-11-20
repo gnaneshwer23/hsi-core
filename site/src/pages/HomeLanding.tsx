@@ -91,20 +91,20 @@ export function HomeLanding(){
  return (
   <div className="pg-page">
    <GraphSnapshotProvider>
-    <section className="pg-hero pg-hero-dark pg-hero-console pg-hero-stage2" aria-labelledby="home-title">
+    <section className="pg-hero pg-hero-platform pg-hero-console" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <h1 id="home-title">
-       <span className="pg-brand">Human Super Intelligence</span>{" "}
-       Biology is connected. Scientific intelligence should be too.
+       <span className="pg-brand">Human Super Intelligence</span>
+       The AI platform for scientific evidence and biological reasoning
       </h1>
       <p className="pg-lead">
-       A connected biomedical intelligence platform that brings together scientific evidence, biological mechanisms, knowledge graphs and AI-powered investigation — helping researchers understand what is known, uncover what remains uncertain, and make better-informed research decisions.
+       Connect published evidence, experimental context and candidate mechanisms so researchers can see what is known, what conflicts, and what to investigate next — with provenance attached and approval kept separate.
       </p>
       <div className="pg-cta">
-       <Link className="pg-btn pg-btn-light" to="/how-it-works">
+       <Link className="pg-btn" to="/how-it-works">
         Explore the platform <span aria-hidden="true">→</span>
        </Link>
-       <Link className="pg-link pg-link-light" to={LIVE_INVESTIGATION_PATH}>
+       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
         Scientific workbench
        </Link>
       </div>

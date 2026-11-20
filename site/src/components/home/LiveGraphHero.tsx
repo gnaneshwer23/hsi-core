@@ -38,8 +38,8 @@ export function LiveGraphHero(){
  const node=sel&&b?b.nodes.find(n=>n.id===sel):null;
  const rels=node&&all?all.cand.filter(e=>e.subjectId===node.id||e.objectId===node.id):[];
  const filtered=dept.length>0||humanOnly||!neg;
- if(failed)return <div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div>;
- if(!all||!view)return <div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div>;
+ if(failed)return <figure className="lg"><div className="lg-wait" role="status">Snapshot unavailable. No substitute graph is shown.</div></figure>;
+ if(!all||!view)return <figure className="lg"><div className="lg-wait lg-load" role="status">Verifying the published snapshot…</div></figure>;
  return (
   <figure className="lg">
    {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
