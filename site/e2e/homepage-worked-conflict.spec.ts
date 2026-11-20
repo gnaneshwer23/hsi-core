@@ -2,7 +2,7 @@ import {test,expect} from "@playwright/test";
 
 test("homepage worked conflict shows sealed DIAB pair with unreviewed honesty", async ({page}) => {
   await page.goto("/");
-  const section = page.getByRole("region", {name: "One worked conflict"}).or(page.locator("section.pg-conflict"));
+  const section = page.getByRole("region", {name: "One worked conflict"});
   await expect(section.getByRole("heading", {name: "One worked conflict", exact: true})).toBeVisible();
   await expect(section).toContainText("DIAB-003");
   await expect(section).toContainText("DIAB-015");

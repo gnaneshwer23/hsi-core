@@ -14,7 +14,11 @@
       "bun"
     ],
     "jsx": "react-jsx",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@hsi/*": ["src/*"]
+    }
   },
   "include": [
     "types/**/*.d.ts",
