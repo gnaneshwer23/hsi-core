@@ -235,8 +235,8 @@ describe("brief export",()=>{
   expect(r.records.every((x:any)=>!("abstract" in x)&&typeof x.hasAbstract==="boolean")).toBe(true);
   const md=renderLiveBriefMarkdown(r);
   for(const h of ["## Execution","## Searches","## Supporting (both checks agree)","## Opposing (both checks agree)","## Checked, no direction established","## Claim verification status","## Evidence table (context passport columns)","## Not checked","## Missing evidence and limits"])expect(md).toContain(h);
-  expect(md).toContain("independence unverified");expect(md).toContain("licence not assessed");expect(md).toContain("openai (openai-model): positive");expect(md).toContain("Quoted:");
-  expect(md).toContain("Abstracts are not included");
+  expect(md).toContain("independence unverified");expect(md).toContain("licenceStatus: not assessed");expect(md).toContain("sourceClearanceVerified: false");expect(md).toContain("openai (openai-model): positive");expect(md).toContain("Quoted:");
+  expect(md).toContain("Abstracts are not redistributed in exports");
   expect(md).toContain("Verification:");expect(md).toContain("Limitations: abstract-only");
   expect(md).toContain("Study system");expect(md).toContain("Scientific approval: false");
   expect(md).toContain("Passport columns that are Not stated");

@@ -59,6 +59,7 @@ import {
   loadResearcherUsefulnessStore,
 } from "../../../src/investigation/researcherUsefulnessFeedback";
 import {matchScenario} from "../../../src/investigation/scenarios";
+import {formatLiveSourceReliabilityMeta} from "../../../src/investigation/liveSourceReliabilityHonesty";
 import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {DepartmentSlug} from "../../../src/knowledgeGraph/departments";
 import {UspADisagreementTrail} from "../components/workspace/UspADisagreementTrail";
@@ -488,7 +489,7 @@ export function InvestigationWorkspacePage(){
          <span className="ws-meta"><em>{BUCKET_LABEL[b]}{x.direction!=="not_assessed"?` · ${DIR[x.direction]??x.direction}`:""}</em>{x.contexts.map(ctxLabel).join(", ")||"context not stated"} · {yearOf(r?.publicationDate)}</span></button></li>})}
         {list.length===0&&<li className="ws-muted">No claims match this filter.</li>}</ul>
        <button type="button" className="ws-link" aria-expanded={sources} onClick={()=>setSources(s=>!s)}>{sources?"Hide":"View"} all sources ({run.records.length})</button>
-       {sources&&<ul className="ws-sources">{run.records.map(r=><li key={r.sourceId}><a href={r.sourceUrl} target="_blank" rel="noreferrer noopener">{r.title}</a><span>{r.provider} · {yearOf(r.publicationDate)}{r.doi?` · DOI ${r.doi}`:""}{r.retraction==="flagged"?" · flagged retracted":""}</span></li>)}</ul>}
+       {sources&&<ul className="ws-sources">{run.records.map(r=><li key={r.sourceId}><a href={r.sourceUrl} target="_blank" rel="noreferrer noopener">{r.title}</a><span>{yearOf(r.publicationDate)} · {formatLiveSourceReliabilityMeta(r)}{r.retraction==="flagged"?" · flagged retracted":""}</span></li>)}</ul>}
       </>}
      </section>
 
@@ -506,9 +507,9 @@ export function InvestigationWorkspacePage(){
          <p className="ws-q">“{picked.sentence}”</p>
          <dl><dt>Direction</dt><dd>{DIR[picked.direction]??picked.direction}{picked.verification==="not_run"?" (not checked: ranked lower)":""}</dd>
           <dt>Why it was ranked</dt><dd>{picked.priority.reasons.join("; ")||"Not ranked"}</dd>
-          <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a>{rec&&<><br/>{rec.provider} · {rec.doi?`DOI ${rec.doi} · `:""}{rec.pmid?`PMID ${rec.pmid} · `:""}retrieved {rec.retrievedAt} · retraction: {rec.retraction.replaceAll("_"," ")} · licence not assessed</>}</dd></dl>
+          <dt>Source</dt><dd><a href={picked.sourceUrl} target="_blank" rel="noreferrer noopener">{rec?.title??picked.sourceId}</a><br/>{formatLiveSourceReliabilityMeta(rec??{sourceUrl:picked.sourceUrl,title:picked.sourceId})}</dd></dl>
          {picked.verdicts.map(v=><p key={v.verifier} className="ws-verdict"><b>{v.verifier}</b> ({v.model}): {v.direction.replaceAll("_"," ")}. {v.reason}{v.evidenceSpan&&<><br/>Quoted: “{v.evidenceSpan}”</>}</p>)}
-         <p className="ws-state">Candidate · unreviewed · not promotable to the graph</p>
+         <p className="ws-state">Candidate · unreviewed · not promotable to the graph · sourceClearanceVerified: false</p>
          {passportEdge&&<EvidenceContextPassportView edge={passportEdge} heading="Evidence context passport" headingLevel={3}/>}
         </>}
        </div>

@@ -52,6 +52,10 @@ test('continuous unified journey: Ask → … → Save without gaps/ledger hops'
  await step(/^Passport\b/).click();
  await expect(page.getByRole('heading',{name:'Evidence context passport'})).toBeVisible();
  await expect(page.getByText('EVIDENCE CONTEXT PASSPORT · NOT SCIENTIFICALLY APPROVED')).toBeVisible();
+ const inspect=page.getByLabel('Selected claim');
+ await expect(inspect).toContainText('sourceClearanceVerified: false');
+ await expect(inspect).toContainText('licenceStatus: not assessed');
+ await expect(inspect).toContainText('rights: unverified');
 
  const uspPanels=page.locator('#ws-usp-panels');
  expect(await uspPanels.getAttribute('open')).toBeNull();
@@ -74,6 +78,9 @@ test('continuous unified journey: Ask → … → Save without gaps/ledger hops'
  const briefPanel=page.getByRole('region',{name:/Research decision brief/i});
  await expect(briefPanel).toContainText('briefAccepted: false');
  await expect(briefPanel.getByRole('heading',{name:/Limitations \(always visible\)/i})).toBeVisible();
+ await expect(briefPanel).toContainText('sourceClearanceVerified: false');
+ await expect(briefPanel.getByRole('region',{name:'Passport evidence table'})).toContainText('rights: unverified');
+ await expect(briefPanel.getByRole('region',{name:'Passport evidence table'})).toContainText('sourceClearanceVerified: false');
 
  await step(/^Save\b/).click();
  const connected=page.getByRole('region',{name:/Connected research \(personal\)/i});
