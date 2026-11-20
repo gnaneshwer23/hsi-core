@@ -468,6 +468,60 @@
 .pg-sub .pg-phero a:focus-visible,
 .hsi-public .hsi-page-hero a:focus-visible{outline:3px solid var(--pm-accent,var(--hsi-teal,#3c1ffa));outline-offset:3px}
 
+/* How-it-works hero compositions (A default; B/C via data-hero-style for comps) */
+.pg-sub .pg-phero.pg-phero-spine{
+  display:grid;grid-template-columns:1fr;gap:clamp(1.5rem,3vw,2.5rem);
+  align-items:start;width:min(1240px,calc(100% - 64px));margin-inline:auto;
+  padding:clamp(3rem,6vw,5rem) 0 clamp(2.25rem,4vw,3.5rem);
+}
+.pg-phero-spine .pg-phero-intro{display:grid;gap:12px;max-width:40rem}
+.pg-phero-spine .pg-phero-intro .pg-lead{margin:0;max-width:46ch;font-size:17px;line-height:1.55}
+.pg-phero-spine .pg-phero-intro .pg-micro{margin:0;max-width:52ch}
+.pg-phero-spine .pg-phero-intro .pg-cta{margin-top:4px}
+.pg-phero-spine .pg-phero-figure{min-width:0}
+.pg-phero-spine .pg-phero-figure .ld-path{margin:0}
+.pg-phero-spine .pg-phero-figure-note{margin:14px 0 0;font-size:14px;line-height:1.5;color:var(--muted);max-width:52ch}
+/* A — Infographic-first: compact intro, spine dominates the first viewport */
+.pg-phero-spine[data-hero-style=a] h1{font-size:clamp(1.85rem,3.2vw,2.75rem);max-width:18ch;line-height:1.05}
+.pg-phero-spine[data-hero-style=a] .pg-phero-figure{padding-top:4px}
+.pg-phero-spine[data-hero-style=a] .ld-flow-n{width:40px;height:40px;font-size:13px}
+.pg-phero-spine[data-hero-style=a] .ld-flow-label{font-size:15.5px}
+/* B — Quiet strip + full-bleed figure band */
+.pg-phero-spine[data-hero-style=b]{gap:0;padding-bottom:0}
+.pg-phero-spine[data-hero-style=b] .pg-phero-intro{
+  grid-template-columns:minmax(0,1fr) auto;column-gap:32px;row-gap:10px;align-items:end;
+  max-width:none;padding-bottom:1.35rem;border-bottom:1px solid var(--line);
+}
+.pg-phero-spine[data-hero-style=b] h1{grid-column:1;font-size:clamp(1.55rem,2.4vw,2.1rem);max-width:22ch;margin:0}
+.pg-phero-spine[data-hero-style=b] .pg-lead{grid-column:1;font-size:15.5px}
+.pg-phero-spine[data-hero-style=b] .pg-micro{grid-column:1}
+.pg-phero-spine[data-hero-style=b] .pg-cta{grid-column:2;grid-row:1/3;margin:0;align-self:center}
+.pg-phero-spine[data-hero-style=b] .pg-phero-figure{
+  width:100vw;max-width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);
+  padding:clamp(1.75rem,3vw,2.75rem) max(20px,calc((100vw - 1240px) / 2));
+  background:radial-gradient(780px 280px at 50% 0%,#eeebff 0%,transparent 70%);
+  border-bottom:1px solid var(--line);
+}
+.pg-phero-spine[data-hero-style=b] .pg-phero-figure-note{margin-inline:auto}
+/* C — Editorial stack: monumental type, max whitespace, figure only visual */
+.pg-phero-spine[data-hero-style=c]{
+  justify-items:center;text-align:center;
+  padding-top:clamp(4.5rem,10vw,8rem);padding-bottom:clamp(3rem,6vw,5rem);gap:clamp(2.5rem,5vw,4rem);
+}
+.pg-phero-spine[data-hero-style=c] .pg-phero-intro{justify-items:center;max-width:36rem;gap:18px}
+.pg-phero-spine[data-hero-style=c] h1{font-size:clamp(2.4rem,5.2vw,4rem);max-width:12ch;letter-spacing:-.038em}
+.pg-phero-spine[data-hero-style=c] .pg-lead,.pg-phero-spine[data-hero-style=c] .pg-micro{margin-inline:auto}
+.pg-phero-spine[data-hero-style=c] .pg-cta{justify-content:center}
+.pg-phero-spine[data-hero-style=c] .pg-phero-figure{width:100%}
+.pg-phero-spine[data-hero-style=c] .pg-phero-figure-note{margin-inline:auto}
+@media(max-width:1000px){
+  .pg-sub .pg-phero.pg-phero-spine{width:calc(100% - 40px);padding:2.25rem 0 1.75rem;gap:1.35rem}
+  .pg-phero-spine[data-hero-style=b] .pg-phero-intro{grid-template-columns:1fr}
+  .pg-phero-spine[data-hero-style=b] .pg-cta{grid-column:1;grid-row:auto;justify-self:start}
+  .pg-phero-spine[data-hero-style=b] .pg-phero-figure{padding-inline:20px}
+  .pg-phero-spine[data-hero-style=c]{padding-top:3rem;gap:1.75rem}
+}
+
 /* Open questions / close: navy band stays as intentional close, not purple */
 .pg-open{
   border-radius:20px;

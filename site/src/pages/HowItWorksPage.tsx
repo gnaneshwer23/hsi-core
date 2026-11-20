@@ -30,38 +30,39 @@ const GATES = [
   "A data-sharing agreement with a data controller",
 ];
 
+/**
+ * Hero compositions via data-hero-style:
+ *   a (default) — Infographic-first: short intro, process spine dominates the viewport
+ *   b — Full-bleed figure band: quiet strip then edge-to-edge spine
+ *   c — Editorial stack: monumental centered type, figure as the only visual
+ * Toggle in DevTools or Playwright: document.querySelector('.pg-phero').dataset.heroStyle = 'b'
+ */
 export function HowItWorksPage() {
   return (
     <div className="pg-page pg-sub">
-      <header className="pg-phero">
-        <h1>From research question to evidence-grounded decision.</h1>
-        <div>
+      <header className="pg-phero pg-phero-spine" data-hero-style="a" aria-labelledby="hw-title">
+        <div className="pg-phero-intro">
+          <h1 id="hw-title">From research question to evidence-grounded decision.</h1>
           <p className="pg-lead">
-            Retrieve evidence, compare context, inspect candidate mechanisms, surface uncertainty, leave a brief.
-            Illustrative or unreviewed outputs stay labelled.
+            Retrieve evidence, compare context, inspect candidates, surface uncertainty, leave a brief.
           </p>
           <p className="pg-micro" role="note">
             Former “Platform” marketing URLs redirect here. HSI is one scientific intelligence product — not a
-            portfolio of separate platforms.
+            portfolio of separate platforms. Illustrative or unreviewed outputs stay labelled.
           </p>
           <div className="pg-cta">
             <Link className="pg-btn" to="/research/journey">
               Explore Workflow <span aria-hidden="true">→</span>
             </Link>
-            <Link className="pg-link" to="/welcome">
-              Set up your research home <span aria-hidden="true">→</span>
-            </Link>
           </div>
         </div>
+        <div className="pg-phero-figure">
+          <PlatformPathFlow />
+          <p className="pg-phero-figure-note">
+            One product spine. Audience pages reuse it — not separate engines.
+          </p>
+        </div>
       </header>
-
-      <section className="pg-block" aria-labelledby="hw-flow-h">
-        <h2 id="hw-flow-h">The scientific investigation path.</h2>
-        <p className="pg-sub-p">
-          One product spine. Audience pages reuse it — not separate engines.
-        </p>
-        <PlatformPathFlow />
-      </section>
 
       <section className="pg-block" aria-labelledby="hw-labels-h">
         <h2 id="hw-labels-h">How to read maturity labels.</h2>
