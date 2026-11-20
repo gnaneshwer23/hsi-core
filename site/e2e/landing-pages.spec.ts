@@ -62,7 +62,7 @@ test('how it works shows the eight-step path, what runs where, and gates before 
  await expect(page.getByRole('region',{name:'Before any real patient data.'})).toContainText('independent security review');
  await expect(page.getByRole('region',{name:'Inspect working research surfaces.'}).getByRole('link')).toHaveCount(3);
  await expect(page.getByRole('list',{name:'Platform workflow stages'}).getByRole('listitem')).toHaveCount(8);
- await expect(page.locator('.ld-path-track')).toBeVisible();
+ await expect(page.locator('.ld-path .ld-flow-track')).toBeVisible();
 });
 
 test('every public page passes axe, has one h1 and does not overflow at 390px',async({page})=>{

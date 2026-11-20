@@ -58,7 +58,7 @@ export function HowItWorksPage() {
       <section className="pg-block" aria-labelledby="hw-flow-h">
         <h2 id="hw-flow-h">The scientific investigation path.</h2>
         <p className="pg-sub-p">
-          One product spine. Audience pages reuse it — not separate engines.
+          Product spine. Audience pages reuse the same path — not separate engines.
         </p>
         <PlatformPathFlow />
       </section>
