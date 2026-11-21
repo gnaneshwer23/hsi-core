@@ -283,3 +283,12 @@ test("pilot job routes are unavailable by default and injected handlers still re
  const path="/api/research/jobs";expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(404);let calls=0;const pilotJobApi=async()=>{calls++;return Response.json({id:"TEST_JOB"},{status:202})};
  expect((await handleVercelResearch(post(path),env,{transport:noCalls,pilotJobApi})).status).toBe(202);expect(calls).toBe(1);expect((await handleVercelResearch(new Request("https://attacker.test"+path,{method:"POST"}),env,{transport:noCalls,pilotJobApi})).status).toBe(403);expect(calls).toBe(1);
 });
+
+test("router fallthrough and health method errors expose stable codes",async()=>{
+ const missing=await handleVercelResearch(req("/api/unknown"),env,{transport:noCalls});
+ expect(missing.status).toBe(404);
+ expect(await missing.json()).toEqual({code:"NOT_FOUND",error:"Not found"});
+ const healthMethod=await handleVercelResearch(post("/api/research/health"),env,{transport:noCalls});
+ expect(healthMethod.status).toBe(405);
+ expect(await healthMethod.json()).toEqual({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"});
+});

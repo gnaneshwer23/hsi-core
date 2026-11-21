@@ -71,7 +71,7 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
    writesEnabled:config.ok&&config.writesEnabled,
    databaseUrl:config.ok?config.databaseUrl:"",
    neonProjectId:config.ok?config.neonProjectId:env.HSI_NEON_PROJECT_ID,
-  })??gatewayJson({error:"Not found"},404);
+  })??gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
  }
  if(path==="/api/research/onboarding-profile/status"){
   return await handleOnboardingProfileApi(request,{
@@ -80,17 +80,17 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
    databaseUrl:config.ok?config.databaseUrl:"",
    neonProjectId:config.ok?config.neonProjectId:env.HSI_NEON_PROJECT_ID,
    store:dependencies.onboardingProfileStore??null,
-  })??gatewayJson({error:"Not found"},404);
+  })??gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
  }
  if(path==="/api/research/health"){
-  if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
+  if(request.method!=="GET")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
   const requestOrigin=new URL(request.url).origin;
   const originMatches=config.ok&&requestOrigin===config.publicOrigin;
   const maintenance=env.HSI_RESEARCH_MAINTENANCE==="true";
   return gatewayJson({service:"hsi-research",status:!config.ok?"configuration_required":originMatches?(maintenance?"maintenance":"configuration_validated"):"origin_mismatch",...(config.ok?{writesEnabled:config.writesEnabled,publicOrigin:config.publicOrigin,requestOrigin,originMatches}:{missing:config.missing}),authUrlsMatch:config.authUrlsMatch,endpointPrefixesMatch:config.endpointPrefixesMatch,maintenance,databaseConnectionTested:false},config.ok&&originMatches&&!maintenance?200:503);
  }
- if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({error:"Not found"},404);
- if(path.startsWith("/api/research/")&&!(dependencies.pilotJobApi&&/^\/api\/research\/jobs(?:\/job-[a-f0-9-]{36})?$/.test(path))&&!(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!GRAPH_WORKSPACE_PATH.test(path)&&!ONBOARDING_PROFILE_PATH.test(path)&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome|outcome-receipt|context-audit|context-audit-review))?$/.test(path))return gatewayJson({error:"Not found"},404);
+ if(!path.startsWith("/api/auth/")&&!path.startsWith("/api/research/"))return gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
+ if(path.startsWith("/api/research/")&&!(dependencies.pilotJobApi&&/^\/api\/research\/jobs(?:\/job-[a-f0-9-]{36})?$/.test(path))&&!(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))&&path!=="/api/research/investigations"&&path!=="/api/research/account"&&path!=="/api/research/session-diagnostics"&&path!=="/api/research/scientific-review/queue"&&path!=="/api/research/scientific-review/history"&&path!=="/api/research/graph/ssc"&&path!=="/api/research/discovery/ssc"&&!GRAPH_WORKSPACE_PATH.test(path)&&!ONBOARDING_PROFILE_PATH.test(path)&&!/^\/api\/research\/interrogative\/hsi-interrogative-[a-zA-Z0-9-]{8,100}(?:\/(?:submit-review|decision|graph-context|review-package|brief|revision|outcome|outcome-receipt|context-audit|context-audit-review))?$/.test(path))return gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
  if(!config.ok)return gatewayJson({code:"AUTH_GATEWAY_NOT_CONFIGURED",error:"Research service requires deployment configuration"},503);
  if(new URL(request.url).origin!==config.publicOrigin)return gatewayJson({code:"DEPLOYMENT_ORIGIN_MISMATCH",error:"Deployment origin mismatch"},403);
  if(dependencies.pilotHealth&&["/api/research/configuration","/api/research/ready"].includes(path))return dependencies.pilotHealth(request);

@@ -137,7 +137,7 @@ export async function handleAuthGateway(request:Request,config:AuthGatewayConfig
 
 /** Anonymous GET-only provider check. Never forwards browser cookies or returns session data. */
 export async function diagnoseAuthProvider(request:Request,config:AuthGatewayConfig,transport:FetchLike=fetch):Promise<Response>{
- if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
+ if(request.method!=="GET")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
  try{
   const response=await requestProvider(config,new Request(config.publicOrigin+"/api/auth/diagnostics"),"/get-session",undefined,transport);
   if(!(response.headers.get("content-type")??"").toLowerCase().includes("application/json"))return gatewayJson({service:"hsi-auth",status:"provider_invalid_response",providerHttpStatus:response.status},502);

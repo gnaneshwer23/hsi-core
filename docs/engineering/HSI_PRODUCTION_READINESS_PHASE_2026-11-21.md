@@ -48,5 +48,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U12 L1 restricted-preview readiness + write/health codes + PROD-QA-003 scan | Done — see `HSI_U12_RESTRICTED_PREVIEW_AND_WRITES_CODES_2026-11-21.md` (owner staging grant still open) |
 | U13 Interrogative API stable codes + `scan:client-bundle` script | Done — see `HSI_U13_INTERROGATIVE_API_CODES_2026-11-21.md` |
 | U14 Live evidence + scientific site API codes | Done — see `HSI_U14_LIVE_AND_SCIENTIFIC_API_CODES_2026-11-21.md` |
+| U15 Gateway envelope wave 3 (onboarding / graph / router / snapshot) | Done — see `HSI_U15_GATEWAY_ENVELOPE_WAVE3_2026-11-21.md` |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U14 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U15 soft-landed; owner evidence still required.
