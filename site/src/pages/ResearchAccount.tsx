@@ -3,6 +3,7 @@ import {Link,useNavigate} from "react-router-dom";
 import {AUTH_ERROR_MESSAGES} from "../../../src/authErrors";
 import {authBaseUrl,hsiAuth,type HsiAuthSession} from "../lib/hsiAuth";
 import {checkResearchAccount,type AccountCheck} from "../lib/researchAccountClient";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 import "../styles/sign-in.css";
 /** Provider identity and backend research permissions are checked independently. */
 export function ResearchAccount(){
@@ -54,11 +55,11 @@ export function ResearchAccount(){
   setHistoryStatus("Loading authorised decision history…");
   try{
    const response=await fetch("/api/research/scientific-review/history",{credentials:"same-origin",cache:"no-store"});
-   if(!response.ok)throw Error("Review history unavailable or access denied.");
+   if(!response.ok)throw Error(await researchApiErrorMessage(response,"review_history","Review history unavailable or access denied."));
    const data=await response.json() as {items?:typeof history};
-   if(!Array.isArray(data.items))throw Error("Invalid history response");
+   if(!Array.isArray(data.items))throw Error("Review history unavailable or access denied.");
    setHistory(data.items);setHistoryStatus(data.items.length?"":"No decisions recorded for this reviewer.");
-  }catch(e){setHistory([]);setHistoryStatus(e instanceof Error?e.message:"Unable to load history")}
+  }catch(e){setHistory([]);setHistoryStatus(e instanceof Error&&e.message?e.message:"Review history unavailable or access denied.")}
  }
  async function sendVerification(){
   if(sendingVerification||verifyingCode)return;setSendingVerification(true);setVerificationMessage("");setCodeError("");

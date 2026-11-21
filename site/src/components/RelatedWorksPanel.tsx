@@ -1,6 +1,6 @@
 import {useEffect,useState} from "react";
 import type {RelatedWorksResult} from "../../../src/evidence/openAlexRelatedWorks";
-import {rateLimitedMessage} from "../lib/retryAfter";
+import {formatResearchApiError} from "../lib/researchApiErrors";
 import {HowProducedPanel} from "./HowProducedPanel";
 
 type RelatedPayload={
@@ -42,12 +42,16 @@ export function RelatedWorksPanel({
      body:JSON.stringify({seed:trimmed,limit:12}),
      signal:controller.signal,
     });
-    const body=await response.json() as RelatedPayload&{error?:string};
+    const body=await response.json() as RelatedPayload&{error?:string;code?:string};
     if(controller.signal.aborted)return;
     if(response.status===404){setData(body);setError(body.error||"Seed work not found in OpenAlex");return;}
     if(!response.ok){
-     const fallback=`Related works service returned HTTP ${response.status}`;
-     throw new Error(response.status===429?rateLimitedMessage(response,body.error,fallback):(body.error||fallback));
+     throw new Error(formatResearchApiError(
+      response,
+      {code:typeof body.code==="string"?body.code:undefined,error:typeof body.error==="string"?body.error:undefined},
+      "scientific_retrieval",
+      `Related works service returned HTTP ${response.status}`,
+     ));
     }
     setData(body);
    }catch(e){
@@ -70,11 +74,15 @@ export function RelatedWorksPanel({
     headers:{"Content-Type":"application/json"},
     body:JSON.stringify({seed:trimmed,limit:12}),
    });
-   const body=await response.json() as RelatedPayload&{error?:string};
+   const body=await response.json() as RelatedPayload&{error?:string;code?:string};
    if(response.status===404){setData(body);setError(body.error||"Seed work not found in OpenAlex");return;}
    if(!response.ok){
-    const fallback=`Related works service returned HTTP ${response.status}`;
-    throw new Error(response.status===429?rateLimitedMessage(response,body.error,fallback):(body.error||fallback));
+    throw new Error(formatResearchApiError(
+     response,
+     {code:typeof body.code==="string"?body.code:undefined,error:typeof body.error==="string"?body.error:undefined},
+     "scientific_retrieval",
+     `Related works service returned HTTP ${response.status}`,
+    ));
    }
    setData(body);
   }catch(e){

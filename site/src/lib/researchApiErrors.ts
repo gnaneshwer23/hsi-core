@@ -12,7 +12,10 @@ export type ResearchApiErrorContext=
  |"brief_download"
  |"outcome_load"
  |"review_queue"
+ |"review_history"
  |"evidence_context"
+ |"investigation_load"
+ |"scientific_retrieval"
  |"generic";
 
 /** Read a fail-closed research JSON envelope without throwing on non-JSON. */
@@ -40,10 +43,10 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
     return "Your session needs attention. Sign in again before continuing.";
    }
-   if(context==="review_queue"){
+   if(context==="review_queue"||context==="review_history"){
     return "Sign in with an independently authorised scientific reviewer account to open this queue.";
    }
-   if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"){
+   if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="investigation_load"){
     return "Sign in with a verified research account to open this evidence brief.";
    }
    return "Sign in with a verified research account to open your investigations.";
@@ -51,9 +54,13 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    return "Verify your email address before using the research workspace.";
   case "RESEARCH_ACCESS_DENIED":
   case "RESEARCH_ACCESS_REQUIRED":
-   return context==="review_queue"
-    ?"The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required."
-    :"Research access has not been confirmed. Check your research account or contact the research administrator.";
+   if(context==="review_queue"){
+    return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
+   }
+   if(context==="review_history"){
+    return "Review history unavailable or access denied.";
+   }
+   return "Research access has not been confirmed. Check your research account or contact the research administrator.";
   case "RESEARCH_WRITES_DISABLED":
    return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="evidence_context"
     ?"Saving is not available for your account on this deployment. Your question has been kept here."
@@ -71,9 +78,13 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "WORKSPACE_UNAVAILABLE":
   case "WORKSPACE_DENIED":
   case "RESEARCH_RECORD_DENIED":
-   return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"
-    ?"Save could not be confirmed. Retry to check the same request without creating a duplicate."
-    :"Your investigations could not be loaded. Please retry.";
+   if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+    return "Save could not be confirmed. Retry to check the same request without creating a duplicate.";
+   }
+   if(context==="investigation_load"){
+    return "Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.";
+   }
+   return "Your investigations could not be loaded. Please retry.";
   case "DELIVERY_UNAVAILABLE":
   case "DELIVERY_DENIED":
    return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
@@ -91,9 +102,12 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "REVIEW_QUEUE_UNAVAILABLE":
   case "REVIEW_QUEUE_DENIED":
   case "INVALID_REVIEW_QUEUE_CURSOR":
+   return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
   case "REVIEW_HISTORY_UNAVAILABLE":
   case "REVIEW_HISTORY_DENIED":
-   return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
+   return context==="review_history"
+    ?"Review history unavailable or access denied."
+    :"The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
   case "EVIDENCE_CONTEXT_UNAVAILABLE":
   case "EVIDENCE_CONTEXT_DENIED":
    return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";
@@ -106,7 +120,23 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "UNKNOWN_SCENARIO":
    return "That live investigation scenario is not available.";
   case "RUN_FAILED":
-   return "Investigation could not run. No findings were generated.";
+   return context==="scientific_retrieval"
+    ?"The scientific retrieval request could not be completed. Nothing was generated."
+    :"Investigation could not run. No findings were generated.";
+  case "RETRIEVAL_UNAVAILABLE":
+   return "Scientific retrieval is unavailable. No claims can be verified while retrieval is unavailable.";
+  case "INVALID_SEARCH_TERM":
+  case "INVALID_CURSOR":
+  case "INVALID_SEED":
+  case "INVALID_LIMIT":
+  case "INVALID_TOPICS":
+  case "INVALID_DAYS":
+  case "INVALID_ORCID":
+  case "INVALID_PAPERS":
+  case "INVALID_TERMS":
+  case "INVALID_PAIRS":
+  case "INVALID_INPUT":
+   return "Check the search or retrieval inputs and try again.";
   case "LIVE_PERSISTENCE_DISABLED":
   case "LIVE_EVIDENCE_DISABLED":
    return "Live evidence persistence is disabled on this deployment.";
@@ -119,15 +149,17 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "SCHEMA_NOT_APPLIED":
    return "Researcher workspace tables are not applied. Nothing was stored or sent.";
   case "NOT_FOUND":
-   return "That research resource was not found.";
+   return context==="investigation_load"
+    ?"Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator."
+    :"That research resource was not found.";
   case "JSON_REQUIRED":
   case "INVALID_JSON":
   case "PAYLOAD_TOO_LARGE":
   case "REQUEST_TOO_LARGE":
   case "REQUEST_TIMEOUT":
-   return context==="live_run"
-    ?"The investigation request was refused. Check the scenario and try again."
-    :"The research request was refused. Check the question and try again.";
+   if(context==="live_run")return "The investigation request was refused. Check the scenario and try again.";
+   if(context==="scientific_retrieval")return "The scientific retrieval request was refused. Check the inputs and try again.";
+   return "The research request was refused. Check the question and try again.";
   default:
    return undefined;
  }
@@ -140,10 +172,10 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
    return "Your session needs attention. Sign in again before continuing.";
   }
   if(context==="live_run")return "Sign in is required before a live investigation can run.";
-  if(context==="review_queue"){
+  if(context==="review_queue"||context==="review_history"){
    return "Sign in with an independently authorised scientific reviewer account to open this queue.";
   }
-  if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="evidence_context"){
+  if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="evidence_context"||context==="investigation_load"){
    return "Sign in with a verified research account to open this evidence brief.";
   }
   return "Sign in with a verified research account to open your investigations.";
@@ -158,6 +190,9 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
   if(context==="review_queue"){
    return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
   }
+  if(context==="review_history"){
+   return "Review history unavailable or access denied.";
+  }
   if(context==="delivery_load"||context==="brief_download"){
    return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
   }
@@ -166,6 +201,9 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
   }
   if(context==="evidence_context"){
    return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";
+  }
+  if(context==="investigation_load"){
+   return "Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.";
   }
   return undefined;
  }
@@ -182,13 +220,14 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
  * Prefer stable `code` honesty, then HTTP-status honesty for research surfaces,
  * then server `error` text, then context fallback.
  * On 429 / RATE_LIMITED, append a Retry-After wait hint when present.
+ * Use when the response body was already parsed (or cloned).
  */
-export async function researchApiErrorMessage(
+export function formatResearchApiError(
  res:Response,
+ body:ResearchApiErrorBody,
  context:ResearchApiErrorContext,
  fallback:string,
-):Promise<string>{
- const body=await parseResearchErrorBody(res);
+):string{
  const fromCode=messageForResearchCode(body.code,context);
  const fromStatus=fromCode?undefined:messageForResearchStatus(res.status,context);
  const serverError=body.error?.trim();
@@ -197,6 +236,19 @@ export async function researchApiErrorMessage(
   return rateLimitedMessage(res,base,fallback);
  }
  return base;
+}
+
+/**
+ * Prefer stable `code` honesty, then HTTP-status honesty for research surfaces,
+ * then server `error` text, then context fallback.
+ * On 429 / RATE_LIMITED, append a Retry-After wait hint when present.
+ */
+export async function researchApiErrorMessage(
+ res:Response,
+ context:ResearchApiErrorContext,
+ fallback:string,
+):Promise<string>{
+ return formatResearchApiError(res,await parseResearchErrorBody(res),context,fallback);
 }
 
 export function researchRetryAfterSeconds(res:Response):number|undefined{
