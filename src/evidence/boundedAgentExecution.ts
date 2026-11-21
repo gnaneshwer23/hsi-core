@@ -957,16 +957,25 @@ export async function runBoundedAgentExecution(input: {
           reason: "Reused completed durable checkpoint",
         };
       }
-      const started =
-        existing?.state === "running"
-          ? existing
-          : await startHsiCheckpoint({
-              store: checkpointStore,
-              investigationId: input.investigationId,
-              taskId: stageId,
-              inputHash,
-              startedAt: now(),
-            });
+      let started: HsiDurableCheckpoint;
+      if (existing?.state === "running") {
+        // Orphan RUNNING fences require explicit recoverStage — never silent continue.
+        if (input.recoverStage?.stageId !== stageId) {
+          fail(
+            "Interrupted running checkpoint requires explicit human recovery before continue",
+          );
+        }
+        if (existing.inputHash !== inputHash) fail("Checkpoint input mismatch");
+        started = existing;
+      } else {
+        started = await startHsiCheckpoint({
+          store: checkpointStore,
+          investigationId: input.investigationId,
+          taskId: stageId,
+          inputHash,
+          startedAt: now(),
+        });
+      }
       stageCheckpoints.set(stageId, started);
       try {
         if (context.signal.aborted) fail("Execution cancelled before stage body");
