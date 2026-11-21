@@ -1,8 +1,11 @@
 import {verifyReceiptedResearchOutcome,renderResearchOutcome,type ResearchOutcome} from "../../../src/researchOutcome";
 import type {EvidenceBrief} from "../../../src/investigationDelivery";
 import {deliveryDigest} from "./investigationDeliveryClient";
-export async function readResearchOutcomeResponse(response:Response){
- if(!response.ok||!response.body)throw Error("Outcome unavailable");
+import {researchApiErrorMessage} from "./researchApiErrors";
+export async function readResearchOutcomeResponse(response:Response,context:"outcome_load"="outcome_load"){
+ if(!response.ok||!response.body){
+  throw Error(await researchApiErrorMessage(response,context,"Outcome unavailable. Refresh the brief and verify access before retrying."));
+ }
  const reader=response.body.getReader(),chunks:Uint8Array[]=[];let bytes=0;
  try{while(true){const item=await reader.read();if(item.done)break;bytes+=item.value.byteLength;if(bytes>2_100_000)throw Error("Outcome exceeds display budget");chunks.push(item.value)}}finally{await reader.cancel()}
  const buffer=new Uint8Array(bytes);let offset=0;for(const chunk of chunks){buffer.set(chunk,offset);offset+=chunk.byteLength}return new TextDecoder("utf-8",{fatal:true}).decode(buffer);

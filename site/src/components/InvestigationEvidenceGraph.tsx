@@ -2,6 +2,7 @@ import {useEffect,useRef,useState} from "react";
 import {Link} from "react-router-dom";
 import {projectInvestigationGraphContext,verifyInvestigationGraphContext,type InvestigationGraphContext} from "../../../src/investigationGraphContext";
 import type {InterrogativeInvestigation} from "../../../src/interrogativeValidation";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 import "../styles/investigation-evidence-graph.css";
 const digest=async(text:string)=>Array.from(new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text))),x=>x.toString(16).padStart(2,"0")).join("");
 export function InvestigationEvidenceGraph({investigation}:{investigation:InterrogativeInvestigation}){
@@ -13,12 +14,13 @@ export function InvestigationEvidenceGraph({investigation}:{investigation:Interr
   setBusy(true);setError("");setContext(null);setCanCapture(false);const timer=setTimeout(()=>c.abort(),20000);
   try{
    const response=await fetch("/api/research/interrogative/"+encodeURIComponent(investigation.id)+"/graph-context",{method:capture?"POST":"GET",credentials:"same-origin",cache:"no-store",redirect:"error",signal:c.signal,headers:{Accept:"application/json",...(capture?{"Content-Type":"application/json"}:{})},...(capture?{body:"{}"}:{})});
-   if(!response.ok)throw Error();const raw=await response.text();if(raw.length>1_500_000)throw Error();const result=JSON.parse(raw);
+   if(!response.ok)throw Error(await researchApiErrorMessage(response,"evidence_context","The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown."));
+   const raw=await response.text();if(raw.length>1_500_000)throw Error("The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.");const result=JSON.parse(raw);
    if(result.status==="not_captured"&&result.context===null&&typeof result.canCapture==="boolean"&&!capture){if(!c.signal.aborted)setCanCapture(result.canCapture);return}
-   if(result.status!=="saved"||result.canCapture!==false)throw Error();
+   if(result.status!=="saved"||result.canCapture!==false)throw Error("The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.");
    const verified=await verifyInvestigationGraphContext(result.context,investigation,digest);
    if(!c.signal.aborted){setContext(verified);setSelected(null);setFocus(null)}
-  }catch{if(active.current===c)setError(c.signal.aborted?"The evidence request timed out. Refresh to check whether a capture completed.":"The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.")}
+  }catch(e){if(active.current===c)setError(c.signal.aborted?"The evidence request timed out. Refresh to check whether a capture completed.":(e instanceof Error&&e.message?e.message:"The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown."))}
   finally{clearTimeout(timer);if(active.current===c){pending.current=false;setBusy(false)}}
  }
  useEffect(()=>{void load();return()=>{active.current?.abort();active.current=null;pending.current=false}},[investigation.id,investigation.state]);
