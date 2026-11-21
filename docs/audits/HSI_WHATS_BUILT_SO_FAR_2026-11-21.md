@@ -116,7 +116,7 @@ The newest vision adds three significant areas **not** yet fully implemented:
 
 ### Recommended next milestone (binding build filter)
 
-1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path).  
+1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent engineering runtime (21 Nov 2026 / U35)** — continue expanding checkpointed research roles; staging multi-process E2E and GA still open.  
 2. **Then** build the **Scientific Companion** directly on the Living Knowledge Graph and evidence services (text-first).  
 3. **Then** research networking and opportunity matching using the same scientific context.
 

@@ -68,5 +68,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U32 External tool adapter cancel/idempotency audit | Done — see `HSI_U32_EXTERNAL_TOOL_ADAPTER_AUDIT_2026-11-21.md` (live multi-process adapter E2E still open) |
 | U33 Exclusive checkpoint ownership race | Done — see `HSI_U33_EXCLUSIVE_CHECKPOINT_OWNERSHIP_2026-11-21.md` (live OS multi-process E2E still open) |
 | U34 Crash/restart recovery soft-land | Done — see `HSI_U34_CRASH_RESTART_RECOVERY_2026-11-21.md` (live OS multi-process E2E still open) |
+| U35 Owner-authorized research agent runtime | Done — see `HSI_U35_RESEARCH_AGENT_RUNTIME_2026-11-21.md` (owner approved engineering build; GA / Gate C / PHI still closed) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U34 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U35 soft-landed; owner evidence still required.
