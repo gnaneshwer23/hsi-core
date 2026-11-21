@@ -45,5 +45,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U9 API envelope wave 2 + Ask Retry-After UI | Done — see `HSI_U9_API_ENVELOPE_WAVE2_2026-11-21.md` |
 | U10 Client Retry-After across research UIs | Done — see `HSI_U10_CLIENT_RETRY_AFTER_2026-11-21.md` |
 | U11 Access-request client + L0 launch readiness | Done — see `HSI_U11_ACCESS_REQUEST_AND_L0_LAUNCH_2026-11-21.md` (owner GO still open) |
+| U12 L1 restricted-preview readiness + write/health codes + PROD-QA-003 scan | Done — see `HSI_U12_RESTRICTED_PREVIEW_AND_WRITES_CODES_2026-11-21.md` (owner staging grant still open) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U11 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U12 soft-landed; owner evidence still required.

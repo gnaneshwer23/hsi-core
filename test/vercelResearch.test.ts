@@ -269,7 +269,9 @@ test("outcome Vercel route uses the trusted session bridge with writes disabled"
  const dependencies={transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"alice",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),outcome:async(input:{serverSessionToken:string|null;investigationId:string})=>{seen=input.serverSessionToken??"";return f.service.outcome(input.serverSessionToken,input.investigationId)}}};
  const r=await handleVercelResearch(req(path,{headers:{cookie,"x-role":"research_admin","x-principal-id":"bob"}}),env,dependencies);
  expect(r.status).toBe(200);expect(seen).toBe("alice");expect((await r.json()).scope.clinicalAdvice).toBe(false);
- expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
+ const writesOff=await handleVercelResearch(post(path),env,{transport:noCalls});
+ expect(writesOff.status).toBe(403);
+ expect(await writesOff.json()).toMatchObject({code:"RESEARCH_WRITES_DISABLED"});
  expect((await handleVercelResearch(req(path),env,{transport:noCalls})).status).toBe(401);
 });
 

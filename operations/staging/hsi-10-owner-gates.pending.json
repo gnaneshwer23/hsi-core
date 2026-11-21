@@ -77,6 +77,8 @@
     "operations/staging/hsi-10-scientific-reliability-u7.pending.json",
     "operations/staging/hsi-10-pilot-readiness-u8.pending.json",
     "operations/staging/hsi-10-public-launch-readiness-u11.pending.json",
+    "operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json",
+    "operations/staging/client-bundle-secret-scan.pending.json",
     "operations/staging/e2e-03-source-clearance.pending.json",
     "operations/staging/e2e-05-staging-save-resume.pending.json",
     "operations/staging/e2e-10-sme-gold-vault.pending.json",

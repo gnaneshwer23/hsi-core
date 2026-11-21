@@ -98,8 +98,8 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
  if(path==="/api/auth/diagnostics")return diagnoseAuthProvider(request,config,dependencies.transport);
  if(path.startsWith("/api/auth/"))return handleAuthGateway(request,config,dependencies.transport);
  if(env.HSI_RESEARCH_MAINTENANCE==="true")return gatewayJson({code:"RESEARCH_MAINTENANCE",error:"Research access temporarily unavailable"},503);
- if(path==="/api/research/session-diagnostics"&&request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
- if(request.method==="POST"&&!config.writesEnabled)return gatewayJson({error:"Research writes are disabled on this deployment"},403);
+ if(path==="/api/research/session-diagnostics"&&request.method!=="GET")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
+ if(request.method==="POST"&&!config.writesEnabled)return gatewayJson({code:"RESEARCH_WRITES_DISABLED",error:"Research writes are disabled on this deployment"},403);
  try{
   const provider=await verifiedProviderSession(config,request,dependencies.transport);
   if(!provider)return gatewayJson({code:"BACKEND_PROVIDER_SESSION_REQUIRED",error:"A provider-verified session cookie is required"},401);
@@ -119,7 +119,7 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
     writesEnabled:config.writesEnabled,
     databaseUrl:config.databaseUrl,
     neonProjectId:config.neonProjectId,
-   })??gatewayJson({error:"Not found"},404);
+   })??gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
   }
   if(path==="/api/research/onboarding-profile"){
    return await handleOnboardingProfileApi(authed,{
@@ -128,8 +128,8 @@ async function handleVercelResearchCore(request:Request,env:Environment,dependen
     databaseUrl:config.databaseUrl,
     neonProjectId:config.neonProjectId,
     store:dependencies.onboardingProfileStore??null,
-   },{id:provider.user.id,emailVerified:provider.user.emailVerified})??gatewayJson({error:"Not found"},404);
+   },{id:provider.user.id,emailVerified:provider.user.emailVerified})??gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
   }
   return handleInterrogativeApi(authed,dependencies.services??createNeonInterrogativeApiServices(config));
- }catch{return gatewayJson({error:"Research session verification unavailable"},503)}
+ }catch{return gatewayJson({code:"SESSION_VERIFICATION_UNAVAILABLE",error:"Research session verification unavailable"},503)}
 }
