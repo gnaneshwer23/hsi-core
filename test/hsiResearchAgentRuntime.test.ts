@@ -1,11 +1,16 @@
 import {test, expect} from "bun:test";
 import type {InterrogativeInvestigation} from "../src/interrogativeContracts";
 import type {FalsificationReport} from "../src/interrogativeFalsificationEngine";
+import type {GapVerificationOutcomeSection} from "../src/evidence/gapVerification";
+import type {HypothesisRegistry} from "../src/evidence/hypothesisRegistry";
 import {
   HSI_RESEARCH_AGENT_OWNER_APPROVAL,
   validateHsiResearchAgentOwnerApproval,
 } from "../src/hsiResearchAgentAuthorization";
-import {runHsiAuthorizedResearchAgentRuntime} from "../src/hsiResearchAgentRuntime";
+import {
+  HSI_EXPANDED_SSC_ROLES,
+  runHsiAuthorizedResearchAgentRuntime,
+} from "../src/hsiResearchAgentRuntime";
 import type {HsiInvestigationArtifactSink} from "../src/hsiArch003AgentAdapters";
 import {createMemoryCheckpointStore} from "../src/evidence/boundedAgentExecution";
 
@@ -18,17 +23,27 @@ const release = {
 function memorySink(): HsiInvestigationArtifactSink & {
   draft: InterrogativeInvestigation | null;
   report: FalsificationReport | null;
+  gaps: GapVerificationOutcomeSection | null;
+  hypotheses: HypothesisRegistry | null;
 } {
   const state: {
     draft: InterrogativeInvestigation | null;
     report: FalsificationReport | null;
-  } = {draft: null, report: null};
+    gaps: GapVerificationOutcomeSection | null;
+    hypotheses: HypothesisRegistry | null;
+  } = {draft: null, report: null, gaps: null, hypotheses: null};
   return {
     get draft() {
       return state.draft;
     },
     get report() {
       return state.report;
+    },
+    get gaps() {
+      return state.gaps;
+    },
+    get hypotheses() {
+      return state.hypotheses;
     },
     saveDraft: async (d) => {
       state.draft = d;
@@ -41,6 +56,14 @@ function memorySink(): HsiInvestigationArtifactSink & {
     saveFalsification: async (r) => {
       state.report = r;
       return "falsification-ref";
+    },
+    saveGapVerification: async (r) => {
+      state.gaps = r;
+      return "gap-ref";
+    },
+    saveHypothesisRegistry: async (r) => {
+      state.hypotheses = r;
+      return "hypothesis-ref";
     },
   };
 }
@@ -79,6 +102,8 @@ test("authorized runtime runs planner then contradiction behind checkpoints", as
   });
 
   expect(result.schemaVersion).toBe("hsi-research-agent-runtime-1");
+  expect(result.pipeline).toBe("planner_contradiction");
+  expect(result.rolesExecuted).toEqual(["question_planner", "contradiction_analyst"]);
   expect(result.orchestration.status).toBe("completed");
   expect(result.orchestration.results.plan?.outputRef).toBe("draft-ref");
   expect(result.orchestration.results.contradict?.outputRef).toBe("falsification-ref");
@@ -90,6 +115,51 @@ test("authorized runtime runs planner then contradiction behind checkpoints", as
   expect(result.gateCAutoApprove).toBe(false);
   expect(result.phiAllowed).toBe(false);
   expect(result.implementedAsLiveMultiProcessE2E).toBe(false);
+});
+
+test("expanded SSc pipeline checkpoints verifier, hypothesis, and safety gate", async () => {
+  const sink = memorySink();
+  const store = createMemoryCheckpointStore();
+  const result = await runHsiAuthorizedResearchAgentRuntime({
+    authorization: HSI_RESEARCH_AGENT_OWNER_APPROVAL,
+    investigationId: "inv-research-expanded-1",
+    pipeline: "expanded_ssc",
+    plan: {
+      question: "Which SSc mechanisms require investigation?",
+      actorPrincipal: "researcher-1",
+      createdAt: "2026-11-21T22:00:00Z",
+      dataClass: "public_biomedical",
+      focus: "systemic_sclerosis",
+      release,
+    },
+    sink,
+    checkpointStore: store,
+    now: () => "2026-11-21T22:00:00Z",
+  });
+
+  expect(result.pipeline).toBe("expanded_ssc");
+  expect(result.rolesExecuted).toEqual([
+    "question_planner",
+    "contradiction_analyst",
+    "claim_verifier",
+    "hypothesis_generator",
+    "safety_policy_gate",
+  ]);
+  expect(result.rolesExecuted.every((r) => (HSI_EXPANDED_SSC_ROLES as readonly string[]).includes(r))).toBe(
+    true,
+  );
+  expect(result.orchestration.status).toBe("completed");
+  expect(result.orchestration.results.verify?.outputRef).toBe("gap-ref");
+  expect(result.orchestration.results.hypothesize?.outputRef).toBe("hypothesis-ref");
+  expect(result.orchestration.results.policy?.outputRef).toContain("policy-cleared");
+  expect(result.checkpoints.verify?.state).toBe("completed");
+  expect(result.checkpoints.hypothesize?.state).toBe("completed");
+  expect(result.checkpoints.policy?.state).toBe("completed");
+  expect(sink.gaps?.honesty.scientificallyValidated).toBe(false);
+  expect(sink.hypotheses?.records.every((r) => r.lifecycle === "proposed")).toBe(true);
+  expect(result.scientificApproval).toBe(false);
+  expect(result.gateCAutoApprove).toBe(false);
+  expect(result.phiAllowed).toBe(false);
 });
 
 test("runtime refuses without canonical owner approval", async () => {

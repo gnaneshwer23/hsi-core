@@ -1,5 +1,5 @@
 # ADR-009 — Unified HSI Agent Intelligence Architecture (Phase 1)
-Status: ACCEPTED for engineering research-agent runtime build (owner approval 21 Nov 2026 / U35) — contracts + first checkpointed ARCH-003 host; not Gate C / PHI / GA
+Status: ACCEPTED for engineering research-agent runtime build (owner approval 21 Nov 2026 / U35) — contracts + checkpointed ARCH-003 host; **U39** expands verifier / hypothesis / safety-policy (and optional evidence retriever); not Gate C / PHI / GA
 Date: 2026-11-04 (runtime activation recorded 2026-11-21)
 Scope: HSI core, ISI, Aksh Health, HSI Clinical, HSI Trials
 
