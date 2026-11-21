@@ -116,9 +116,13 @@ describe("live investigation endpoint",()=>{
  });
  test("rejects unknown scenarios, free-text prompts, foreign origins and bad content types",async()=>{
   resetLiveInvestigationLimiter();const controls=loose();
-  expect((await handleLiveInvestigation(post({scenarioId:"nope"}),{},{controls})).status).toBe(404);
+  const unknown=await handleLiveInvestigation(post({scenarioId:"nope"}),{},{controls});
+  expect(unknown.status).toBe(404);
+  expect((await unknown.json() as {code:string}).code).toBe("UNKNOWN_SCENARIO");
   expect((await handleLiveInvestigation(post({question:"anything"}),{},{controls})).status).toBe(404);
-  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"},{controls})).status).toBe(403);
+  const forbidden=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"},{controls});
+  expect(forbidden.status).toBe(403);
+  expect((await forbidden.json() as {code:string}).code).toBe("ORIGIN_NOT_ALLOWED");
   expect((await handleLiveInvestigation(new Request("https://x.test/a",{method:"POST",body:"x"}),{},{controls})).status).toBe(415);
  });
  test("runs retrieval-only by default and rate limits",async()=>{
@@ -126,7 +130,10 @@ describe("live investigation endpoint",()=>{
   const r=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls});
   const b:any=await r.json();expect(r.status).toBe(200);expect(b.verification.status).toBe("not_configured");expect(b.verification.reason).toContain("disabled");
   for(let i=0;i<4;i++)await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls});
-  expect((await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls})).status).toBe(429);
+  const limited=await handleLiveInvestigation(post({scenarioId:"il21-autoimmune"}),{},{fetcher:f,controls});
+  expect(limited.status).toBe(429);
+  expect(limited.headers.get("Retry-After")).toBe("600");
+  expect((await limited.json() as {code:string}).code).toBe("RATE_LIMITED");
  });
  test("OpenAI only: two different models run as independent execution, not independent providers",async()=>{
   resetLiveInvestigationLimiter();const controls=loose();

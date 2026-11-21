@@ -37,6 +37,7 @@
     }
   },
   "references": {
+    "human_2_clearance_policy_ref": "UNASSIGNED",
     "human_5_staging_write_packet_ref": "NOT_STARTED",
     "human_3_isolation_signer_ref": "UNASSIGNED",
     "human_4_sme_gold_vault_ref": "NOT_STARTED",
@@ -69,5 +70,18 @@
       "reuse": "next-f-soak-pilot-release"
     }
   },
-  "notes": "Map only. Fill private refs after real humans and approved staging evidence exist. Soft-land never invents acceptance, SME gold, or pilot invites."
+  "notes": "Map only. Fill private refs after real humans and approved staging evidence exist. Continuous journey evidence soft-land: operations/staging/hsi-10-continuous-journey-evidence.pending.json. Soft-land never invents acceptance, SME gold, or pilot invites. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/hsi-10-continuous-journey-evidence.pending.json",
+    "operations/staging/hsi-10-owner-packets.pending.json",
+    "operations/staging/hsi-10-scientific-reliability-u7.pending.json",
+    "operations/staging/hsi-10-pilot-readiness-u8.pending.json",
+    "operations/staging/hsi-10-public-launch-readiness-u11.pending.json",
+    "operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json",
+    "operations/staging/client-bundle-secret-scan.pending.json",
+    "operations/staging/e2e-03-source-clearance.pending.json",
+    "operations/staging/e2e-05-staging-save-resume.pending.json",
+    "operations/staging/e2e-10-sme-gold-vault.pending.json",
+    "operations/staging/next-f-soak-pilot-release.pending.json"
+  ]
 }

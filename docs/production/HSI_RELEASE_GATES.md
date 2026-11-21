@@ -2,6 +2,8 @@
 
 **State:** Proposed release criteria. **All gates initially unverified** until evidence and accountable reviewers are recorded.
 
+**Not a release gate:** Internal business pre-mortem doctrine is strategy-only. Do not block technical launch stages on premortem completion ([production readiness phase](../plans/HSI_PRODUCTION_READINESS_PHASE_2026-11-21.md)).
+
 | Gate | Required evidence | Accountable sign-off |
 |---|---|---|
 | G0 Product truth | Live arbitrary-question workflow; accurate readiness labels; no fixture substitution | Product + engineering |

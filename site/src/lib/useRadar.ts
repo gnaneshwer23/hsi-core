@@ -1,7 +1,8 @@
 import {useCallback,useEffect,useMemo,useRef,useState} from "react";
+import type {RadarResult} from "../../../src/investigation/radar";
 import {departments} from "./departments";
 import type {Profile} from "./researchHome";
-import type {RadarResult} from "../../../src/investigation/radar";
+import {rateLimitedMessage} from "./retryAfter";
 
 export const RADAR_KEY="hsi-radar-v1",RADAR_TTL_MS=6*3600_000;
 /** Free-text topics only: broad department names would match half of biology. */
@@ -21,7 +22,11 @@ export function useRadar(profile:Profile,ready:boolean){
   setSt(s=>({...s,status:"loading",error:"",days:d}));
   try{
    const res=await fetch("/api/research/radar",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({topics,days:d,orcid:profile.orcid,papers:profile.papers})});
-   if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The radar could not be built (HTTP "+res.status+").")}
+   if(!res.ok){
+    const b=await res.json().catch(()=>null) as {error?:string}|null;
+    const fallback="The radar could not be built (HTTP "+res.status+").";
+    throw Error(res.status===429?rateLimitedMessage(res,b?.error,fallback):(b?.error??fallback));
+   }
    const data=await res.json() as RadarResult;if(id!==seq.current)return;
    try{const prev=JSON.parse(localStorage.getItem(RADAR_KEY)??"null")?.entries??{};const entries:Record<string,unknown>={...prev,[key]:{at:Date.now(),data}};const keep=Object.entries(entries as Record<string,{at:number}>).sort((a,b)=>b[1].at-a[1].at).slice(0,4);localStorage.setItem(RADAR_KEY,JSON.stringify({entries:Object.fromEntries(keep)}))}catch{/* cache is optional */}
    setSt({status:"ready",data,error:"",days:d,fromCache:false});

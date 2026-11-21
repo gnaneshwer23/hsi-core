@@ -19,11 +19,11 @@ const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(J
 
 export async function handleLiveInvestigation(request:Request,env:Env,deps:LiveInvestigationDependencies={}):Promise<Response>{
  // Cheap rejects before research_write admission so foreign-origin/method spam does not exhaust the shared write budget.
- if(request.method!=="GET"&&request.method!=="POST")return json({error:"Method not allowed"},405,{Allow:"GET, POST"});
+ if(request.method!=="GET"&&request.method!=="POST")return json({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"GET, POST"});
  if(request.method==="POST"){
   const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
-  if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
-  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
+  if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
+  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({code:"JSON_REQUIRED",error:"JSON body required"},415);
  }
  return withResearchRequestControls(request,()=>runLiveInvestigationRequest(request,env,deps),resolveResearchControls(env,deps.controls??{}));
 }

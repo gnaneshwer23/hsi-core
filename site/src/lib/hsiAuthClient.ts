@@ -1,7 +1,8 @@
 import type { FetchLike } from "../../../src/fetchLike";
 import {AUTH_ERROR_MESSAGES,knownAuthErrorCode} from "../../../src/authErrors";
+import {rateLimitedMessage} from "./retryAfter";
 /** Pure browser authentication transport. No database credentials, sessions or role grants are stored here. */
-export type AuthError={message:string;code?:string};
+export type AuthError={message:string;code?:string;retryAfterSeconds?:number};
 export type AuthResult<T>={data:T|null;error:AuthError|null};
 export type HsiAuthSession={session:{id:string;expiresAt:string;userId?:string};user:{id:string;name?:string;email:string;emailVerified:boolean}};
 export type HsiRegistration={user:{id:string;email:string;emailVerified:boolean};verificationEmailRequested?:boolean};
@@ -54,8 +55,15 @@ export function createHsiAuthClient(configured:unknown,request:FetchLike=fetch,t
     let value:unknown;try{value=await response.json();}catch{return{data:null,error:{message:"Authentication endpoint returned invalid JSON.",code:"auth_invalid_response"}};}
     if(!response.ok){
      const code=knownAuthErrorCode(value)??"";
-
-     return{data:null,error:{message:code==="AUTH_PROVIDER_REJECTED"?`The authentication provider rejected the request (HTTP ${response.status}). Contact the HSI administrator with this status.`:AUTH_ERROR_MESSAGES[code]??(response.status===429?"Too many authentication attempts. Please try again later.":`Authentication failed (HTTP ${response.status}). Contact the HSI administrator with this status.`),code:AUTH_ERROR_MESSAGES[code]?code:"auth_denied"}};
+     const base=code==="AUTH_PROVIDER_REJECTED"
+      ?`The authentication provider rejected the request (HTTP ${response.status}). Contact the HSI administrator with this status.`
+      :AUTH_ERROR_MESSAGES[code]??(response.status===429||code==="RATE_LIMITED"
+       ?"Too many authentication attempts. Please try again later."
+       :`Authentication failed (HTTP ${response.status}). Contact the HSI administrator with this status.`);
+     const message=response.status===429||code==="RATE_LIMITED"
+      ?rateLimitedMessage(response,base,"Too many authentication attempts. Please try again later.")
+      :base;
+     return{data:null,error:{message,code:AUTH_ERROR_MESSAGES[code]?code:(response.status===429||code==="RATE_LIMITED"?"RATE_LIMITED":"auth_denied")}};
     }
     try{return{data:parse(value),error:null};}
     catch(error){

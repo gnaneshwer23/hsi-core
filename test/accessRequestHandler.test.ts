@@ -64,7 +64,9 @@ describe("access request handler",()=>{
    headers:{"content-type":"application/json",origin:"https://hsi.example","content-length":"4001"},
    body:"x".repeat(4001),
   });
-  expect((await handleAccessRequest(huge,{HSI_PUBLIC_ORIGIN:"https://hsi.example",HSI_ACCESS_REQUEST_WEBHOOK_URL:"https://hooks.example/x"},{fetcher})).status).toBe(413);
+  const oversized=await handleAccessRequest(huge,{HSI_PUBLIC_ORIGIN:"https://hsi.example",HSI_ACCESS_REQUEST_WEBHOOK_URL:"https://hooks.example/x"},{fetcher});
+  expect(oversized.status).toBe(413);
+  expect(await oversized.json()).toMatchObject({code:"PAYLOAD_TOO_LARGE"});
   expect(calls).toBe(0);
  });
 

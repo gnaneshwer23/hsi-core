@@ -23,18 +23,18 @@ export async function runLiveInvestigationRequest(request:Request,env:Env,deps:L
   return json({scenarios:Object.values(LIVE_SCENARIOS).map(s=>({id:s.id,title:s.title,question:s.question})),
    modelStep:{enabled:env.HSI_LIVE_MODEL_STEP_ENABLED==="true",providers:providerStatus(env).map(p=>({provider:p.provider,configured:p.configured}))}});
  }
- if(request.method!=="POST")return json({error:"Method not allowed"},405,{Allow:"GET, POST"});
+ if(request.method!=="POST")return json({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"GET, POST"});
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
- if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
- if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
+ if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
+ if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({code:"JSON_REQUIRED",error:"JSON body required"},415);
  const raw=await request.text();
- if(raw.length>2000)return json({error:"Request too large"},413);
- let body:any;try{body=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
+ if(raw.length>2000)return json({code:"REQUEST_TOO_LARGE",error:"Request too large"},413);
+ let body:any;try{body=JSON.parse(raw)}catch{return json({code:"INVALID_JSON",error:"Invalid JSON"},400)}
  const scenario=typeof body?.scenarioId==="string"?LIVE_SCENARIOS[body.scenarioId]:undefined;
- if(!scenario)return json({error:"Unknown scenario"},404);
+ if(!scenario)return json({code:"UNKNOWN_SCENARIO",error:"Unknown scenario"},404);
  const now=deps.now??Date.now,ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now()-t<600_000);
- if(recent.length>=5){return json({error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"})}
+ if(recent.length>=5){return json({code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"})}
  hits.set(ip,[...recent,now()]);
  if(hits.size>2000)hits.clear();
  let verifiers:readonly [VerifierSlot,VerifierSlot]|null=null,verifierReason="The model step is disabled on this deployment.";
@@ -59,6 +59,6 @@ export async function runLiveInvestigationRequest(request:Request,env:Env,deps:L
   const result=await runLiveInvestigation({scenario,fetcher:deps.fetcher,mailto:env.HSI_OPENALEX_CONTACT,verifiers,verifierReason,budget,maxVerified:4,signal:ac.signal});
   console.log(JSON.stringify({event:"live_investigation",scenario:scenario.id,modelChecked:!!verifiers,calls:budget.usage().calls,inputTokens:budget.usage().inputTokens,outputTokens:budget.usage().outputTokens,refused:budget.usage().refused,ms:Date.now()-t0}));
   return json(result);
- }catch{return json({error:"Investigation could not run. No findings were generated."},502)}
+ }catch{return json({code:"RUN_FAILED",error:"Investigation could not run. No findings were generated."},502)}
  finally{clearTimeout(timer)}
 }

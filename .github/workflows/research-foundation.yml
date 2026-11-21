@@ -63,6 +63,8 @@ jobs:
       - run: bun --no-env-file ../scripts/ci-bun-audit.ts
         working-directory: site
       - run: bun run site:build
+      - name: Scan client bundle for high-confidence secrets (PROD-QA-003 soft-land; not AppSec GO)
+        run: bun run scan:client-bundle
       - name: Check public benchmark artifacts after build
         run: bun --no-env-file scripts/immuno-benchmark.ts --check
       - run: bunx --no-install playwright install chromium

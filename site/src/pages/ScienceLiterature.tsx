@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RelatedWorksPanel } from "../components/RelatedWorksPanel";
+import { rateLimitedMessage } from "../lib/retryAfter";
 import "../styles/science-body.css";
 
 type Publication = {
@@ -40,7 +41,10 @@ export function ScienceLiterature(){
     if(search.query)p.set("term",search.query);
     const response=await fetch(`/api/research/literature-search?${p}`,{signal:controller.signal});
     const data=await response.json() as Result;
-    if(!response.ok)throw new Error(data.error||`Literature service returned HTTP ${response.status}`);
+    if(!response.ok){
+     const fallback=`Literature service returned HTTP ${response.status}`;
+     throw new Error(response.status===429?rateLimitedMessage(response,data.error,fallback):(data.error||fallback));
+    }
     if(!Array.isArray(data.records))throw new Error("Literature service returned an invalid response");
     setRecords(data.records);
     setTotal(typeof data.hitCount==="number"?data.hitCount:null);

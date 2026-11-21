@@ -30,5 +30,5 @@ export function handleResearcherWorkspaceApi(request: Request, options: { writes
       403,
     );
   }
-  return json({ error: "Not found" }, 404);
+  return json({ code: "NOT_FOUND", error: "Not found" }, 404);
 }

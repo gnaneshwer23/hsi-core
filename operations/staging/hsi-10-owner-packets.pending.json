@@ -1,0 +1,77 @@
+{
+  "schemaVersion": "hsi-1-0-owner-packets-pending-1",
+  "purpose": "hsi_1_0_owner_packets_u6_scaffold",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "gateCAutoApprove": false,
+  "inventedSigner": false,
+  "inventedStagingUrl": false,
+  "inventedMoU": false,
+  "migrationHoldsChanged": false,
+  "honesty": {
+    "catalogsExistAcceptanceBlocked": true,
+    "noInventedSigner": true,
+    "noInventedStagingUrl": true,
+    "noInventedMoU": true,
+    "noHoldRemoval": true,
+    "noProductionWrites": true,
+    "noGateCAutoApprove": true,
+    "fixtureIsNotOwnerAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10OwnerPacketsScaffold.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e03SourceClearanceComposition.test.ts test/nextBIsolationSoftLand.test.ts test/e2eIsolationAcceptancePacket.test.ts test/e2e05StagingSaveResume.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "human_2_clearance_policy_ref": "UNASSIGNED",
+    "human_2_clearance_authority_ref": "UNASSIGNED",
+    "human_2_managed_signer_ref": "UNASSIGNED",
+    "human_3_isolation_signer_ref": "UNASSIGNED",
+    "human_3_two_user_http_evidence_ref": "NOT_STARTED",
+    "human_5_staging_write_packet_ref": "NOT_STARTED",
+    "human_5_staging_target_ref": "NOT_APPROVED"
+  },
+  "packets": {
+    "human_2_source_clearance": {
+      "humanGate": 2,
+      "checklistItem": 2,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "e2e-03-source-clearance"
+    },
+    "human_3_isolation_review": {
+      "humanGate": 3,
+      "checklistItem": 6,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "next-b-isolation + e2e-02"
+    },
+    "human_5_staging_persistence": {
+      "humanGate": 5,
+      "checklistItem": 5,
+      "status": "OWNER_GATED",
+      "accepted": false,
+      "reuse": "e2e-05-staging-save-resume"
+    }
+  },
+  "notes": "U6 scaffold only. Fill private refs after real humans and approved staging evidence exist. Soft-land never invents clearance signatures, isolation signers, MoUs, staging hosts, or hold removals. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/e2e-03-source-clearance.pending.json",
+    "operations/staging/next-b-isolation-soft-land.pending.json",
+    "operations/staging/e2e-02-isolation-acceptance.pending.json",
+    "operations/staging/e2e-05-staging-save-resume.pending.json",
+    "operations/staging/hsi-10-owner-gates.pending.json"
+  ]
+}

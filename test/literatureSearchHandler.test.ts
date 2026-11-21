@@ -23,18 +23,20 @@ describe("literature search handler",()=>{
   const b:any=await r.json();
   expect(r.status).toBe(200);expect(b.records[0].title).toContain("IL-21");expect(b.records[0].url).toContain("europepmc.org");
   expect(seen).toContain("ebi.ac.uk/europepmc");expect(seen).toContain("cursorMark");
-  expect((await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search",{headers:{origin:"https://evil.example"}}),{HSI_PUBLIC_ORIGIN:"https://hsi.example"},{fetcher})).status).toBe(403);
+  const forbidden=await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search",{headers:{origin:"https://evil.example"}}),{HSI_PUBLIC_ORIGIN:"https://hsi.example"},{fetcher});
+  expect(forbidden.status).toBe(403);
+  expect(await forbidden.json()).toMatchObject({code:"ORIGIN_NOT_ALLOWED"});
  });
 
  test("provider failures stay 502 and do not look like zero hits",async()=>{
   const fetcher=(async()=>epmc({status:503,body:{}})) as any;
   const r=await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search"),{},{fetcher});
-  expect(r.status).toBe(502);expect(await r.json()).toMatchObject({error:expect.stringContaining("unavailable")});
+  expect(r.status).toBe(502);expect(await r.json()).toMatchObject({code:"RETRIEVAL_UNAVAILABLE",error:expect.stringContaining("unavailable")});
  });
 
  test("rejects control characters in the refine term before provider work",async()=>{
   let calls=0;const fetcher=(async()=>{calls++;return epmc()}) as any;
   const r=await handleLiteratureSearch(new Request("https://hsi.example/api/research/literature-search?term=foo%0Abar"),{},{fetcher});
-  expect(r.status).toBe(400);expect(await r.json()).toMatchObject({error:"Invalid search term"});expect(calls).toBe(0);
+  expect(r.status).toBe(400);expect(await r.json()).toMatchObject({code:"INVALID_SEARCH_TERM",error:"Invalid search term"});expect(calls).toBe(0);
  });
 });

@@ -12,15 +12,33 @@ test('serves the existing public snapshot with verified identity and all approva
 });
 test('invalid, duplicate and unexpected queries and mutation methods never read storage',async()=>{
  let calls=0;const handler=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>{calls++;return bytes}});
- for(const suffix of ['?version=../../secret','?version=','?version='+version+'&version='+version,'?databaseUrl=secret','?version='+version+'&owner=forged'])expect((await handler(request(suffix))).status).toBe(400);
- for(const method of ['POST','PUT','DELETE'])expect((await handler(request('',method))).status).toBe(405);
+ for(const [suffix,code] of [
+  ['?version=../../secret','INVALID_GRAPH_VERSION'],
+  ['?version=','INVALID_GRAPH_VERSION'],
+  ['?version='+version+'&version='+version,'INVALID_GRAPH_REQUEST'],
+  ['?databaseUrl=secret','INVALID_GRAPH_REQUEST'],
+  ['?version='+version+'&owner=forged','INVALID_GRAPH_REQUEST'],
+ ] as const){
+  const bad=await handler(request(suffix));expect(bad.status).toBe(400);expect((await bad.json() as {code:string}).code).toBe(code);
+ }
+ for(const method of ['POST','PUT','DELETE']){
+  const denied=await handler(request('',method));expect(denied.status).toBe(405);expect((await denied.json() as {code:string}).code).toBe('METHOD_NOT_ALLOWED');
+ }
  expect(calls).toBe(0);
 });
 test('corrupt, oversized, unavailable and mismatched snapshots fail closed without reflecting contents',async()=>{
  for(const value of [new TextEncoder().encode('secret malformed JSON'),new Uint8Array(2_000_001),new TextEncoder().encode(JSON.stringify({...JSON.parse(bytes.toString()),scientificApproval:true}))]){
- const h=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>value});const r=await h(request());expect(r.status).toBe(503);expect(await r.text()).not.toContain('secret');}
- const h=createPublicGraphSnapshotHandler({currentVersion:'a'.repeat(64),readPublishedSnapshot:async()=>bytes});expect((await h(request())).status).toBe(503);
- const missing=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>{throw Error('private path')}});expect((await missing(request())).status).toBe(503);
+  const h=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>value});
+  const r=await h(request());
+  expect(r.status).toBe(503);
+  const text=await r.text();
+  expect(text).not.toContain('secret');
+  expect(JSON.parse(text).code).toBe('GRAPH_SNAPSHOT_UNAVAILABLE');
+ }
+ const h=createPublicGraphSnapshotHandler({currentVersion:'a'.repeat(64),readPublishedSnapshot:async()=>bytes});
+ const mismatch=await h(request());expect(mismatch.status).toBe(503);expect((await mismatch.json() as {code:string}).code).toBe('GRAPH_SNAPSHOT_UNAVAILABLE');
+ const missing=createPublicGraphSnapshotHandler({currentVersion:version,readPublishedSnapshot:async()=>{throw Error('private path')}});
+ const gone=await missing(request());expect(gone.status).toBe(503);expect((await gone.json() as {code:string}).code).toBe('GRAPH_SNAPSHOT_UNAVAILABLE');
 });
 
 test('Vercel preview share metadata never changes graph selection or reflects a token',async()=>{

@@ -7,7 +7,12 @@ const legacy={"csp-report":{"document-uri":"https://x.test/research/home?token=S
 
 describe("health",()=>{
  test("GET returns ok with no detail",async()=>{const r=handleHealth(new Request("https://x.test/api/health"),()=>0);expect(r.status).toBe(200);expect(await r.json()).toEqual({status:"ok",time:"1970-01-01T00:00:00.000Z"});expect(r.headers.get("cache-control")).toBe("no-store")});
- test("HEAD has no body, POST is refused",async()=>{expect(await handleHealth(new Request("https://x.test/h",{method:"HEAD"})).text()).toBe("");expect(handleHealth(new Request("https://x.test/h",{method:"POST"})).status).toBe(405)});
+ test("HEAD has no body, POST is refused",async()=>{
+  expect(await handleHealth(new Request("https://x.test/h",{method:"HEAD"})).text()).toBe("");
+  const refused=handleHealth(new Request("https://x.test/h",{method:"POST"}));
+  expect(refused.status).toBe(405);
+  expect(await refused.json()).toMatchObject({code:"METHOD_NOT_ALLOWED"});
+ });
 });
 
 describe("csp report",()=>{

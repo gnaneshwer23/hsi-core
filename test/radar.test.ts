@@ -62,12 +62,16 @@ describe("radar endpoint",()=>{
   expect((await handleRadar(new Request("https://x.test/a"),{})).status).toBe(405);
   expect((await handleRadar(new Request("https://x.test/a",{method:"POST",body:"x"}),{})).status).toBe(415);
   expect(await st({topics:["IL-21"],days:7},{origin:"https://evil.test"})).toBe(200);
-  expect((await handleRadar(post({topics:["IL-21"],days:7},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"},{fetcher:f})).status).toBe(403);
+  const forbidden=await handleRadar(post({topics:["IL-21"],days:7},{origin:"https://evil.test"}),{HSI_PUBLIC_ORIGIN:"https://x.test"},{fetcher:f});
+  expect(forbidden.status).toBe(403);
+  expect(await forbidden.json()).toMatchObject({code:"ORIGIN_NOT_ALLOWED"});
  });
  test("rate limits and never echoes the ORCID back in errors",async()=>{
-  resetRadarLimiter();const f=fakeFetch().f;let last=200;
-  for(let i=0;i<21;i++)last=(await handleRadar(post({topics:["IL-21"],days:7}),{},{fetcher:f})).status;
-  expect(last).toBe(429);
+  resetRadarLimiter();const f=fakeFetch().f;let last:Response=new Response();
+  for(let i=0;i<21;i++)last=await handleRadar(post({topics:["IL-21"],days:7}),{},{fetcher:f});
+  expect(last.status).toBe(429);
+  expect(last.headers.get("Retry-After")).toBe("600");
+  expect(await last.json()).toMatchObject({code:"RATE_LIMITED"});
   resetRadarLimiter();
   const r=await handleRadar(post({topics:[],days:7,orcid:"0000-0002-1825-0097"}),{},{fetcher:fakeFetch({oaFail:true}).f});
   const body=await r.text();expect(body).not.toContain("0000-0002-1825-0097");

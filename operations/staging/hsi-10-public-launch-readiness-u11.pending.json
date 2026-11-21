@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "hsi-1-0-public-launch-readiness-u11-pending-1",
+  "purpose": "hsi_1_0_public_launch_readiness_u11_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "stage": "L0_public",
+  "publicLaunchClaimed": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "premortemIsReleaseGate": false,
+  "inventedOwnerGo": false,
+  "honesty": {
+    "catalogsExistLaunchBlocked": true,
+    "noInventedOwnerGo": true,
+    "noScientificApproval": true,
+    "noProductionWrites": true,
+    "premortemNotAGate": true,
+    "fixtureIsNotPublicLaunch": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10PublicLaunchReadinessU11SoftLand.test.ts test/accessRequestClient.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/demoUniverseIntegrity.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "visual_acceptance_ref": "UNASSIGNED",
+    "public_launch_go_ref": "UNASSIGNED",
+    "qa_packet_path": "docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md",
+    "evidence_folder_ref": "docs/qa/evidence/prod-2026-11-21/"
+  },
+  "surfaces": {
+    "public_qa_packet": { "status": "ENGINEERING_READY", "publicLaunchClaimed": false },
+    "demo_universe_synthetic": { "status": "ENGINEERING_READY", "publicLaunchClaimed": false },
+    "landing_honesty_labels": { "status": "ENGINEERING_READY", "publicLaunchClaimed": false },
+    "production_probe_writes_false": { "status": "ENGINEERING_READY", "publicLaunchClaimed": false },
+    "premortem_non_gate": { "status": "ENGINEERING_READY", "publicLaunchClaimed": false },
+    "owner_visual_acceptance": { "status": "OWNER_GATED", "publicLaunchClaimed": false },
+    "owner_public_launch_go": { "status": "OWNER_GATED", "publicLaunchClaimed": false }
+  },
+  "notes": "U11 scaffold only. Owner visual acceptance and GO/NO-GO remain UNASSIGNED. Soft-land never invents public launch, scientific approval, or write enablement. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/hsi-10-owner-packets.pending.json",
+    "operations/staging/hsi-10-continuous-journey-evidence.pending.json"
+  ]
+}
