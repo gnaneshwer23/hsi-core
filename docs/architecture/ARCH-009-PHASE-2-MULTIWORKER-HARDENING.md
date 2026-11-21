@@ -28,4 +28,4 @@ Status: Implemented, staging SQL smoke passed, latest CI pending.
 - [ ] Latest full CI green.
 - [ ] Two independent processes demonstrate exactly one checkpoint owner.
 - [x] Server crash/restart and stale-worker recovery E2E (**U34 soft-land**, 21 Nov 2026 — in-process orphan resume / reconcile / abandon-then-retry; live OS multi-process E2E still open).
-- [ ] External tool adapter cancellation and idempotency audit.
+- [x] External tool adapter cancellation and idempotency audit (**U32 soft-land**, 21 Nov 2026 — in-process catalog + late-side-effect refuse records; live multi-process adapter E2E still open).
