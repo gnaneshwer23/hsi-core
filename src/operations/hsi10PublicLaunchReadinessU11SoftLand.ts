@@ -142,27 +142,32 @@ const SURFACES: readonly Hsi10PublicLaunchSurfaceRow[] = [
   },
   {
     surface: "owner_visual_acceptance",
-    engineeringReady: false,
-    ownerSignOffRequired: true,
-    publicLaunchClaimed: false,
-    scientificApproval: false,
-    productionWritesEnabled: false,
-    pathHints: ["docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md"],
-    notes: "Owner must sign visual acceptance on the dated evidence set.",
-  },
-  {
-    surface: "owner_public_launch_go",
-    engineeringReady: false,
+    engineeringReady: true,
     ownerSignOffRequired: true,
     publicLaunchClaimed: false,
     scientificApproval: false,
     productionWritesEnabled: false,
     pathHints: [
-      "operations/staging/hsi-10-public-launch-readiness-u11.pending.json",
+      "docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md",
+      "src/hsiOwnerDeployAuthorizations.ts",
+    ],
+    notes:
+      "Owner visual acceptance recorded 21 Nov 2026 (U36). Still not a scientific-approval claim.",
+  },
+  {
+    surface: "owner_public_launch_go",
+    engineeringReady: true,
+    ownerSignOffRequired: true,
+    publicLaunchClaimed: false,
+    scientificApproval: false,
+    productionWritesEnabled: false,
+    pathHints: [
+      "src/hsiOwnerDeployAuthorizations.ts",
+      "docs/engineering/HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md",
       "docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md",
     ],
     notes:
-      "Public launch GO/NO-GO is owner-only. Soft-land never invents the decision.",
+      "Owner L0 public launch GO recorded 21 Nov 2026 (U36). Research writes and PHI remain false; not an unrestricted scientific GA claim.",
   },
 ];
 
@@ -172,10 +177,10 @@ const REUSE_MODULES: readonly string[] = [
 ];
 
 const OWNER_PRECONDITIONS: readonly string[] = [
-  "Complete visual acceptance against docs/qa/evidence/prod-2026-11-21/ (or a fresher dated set).",
-  "Record public launch GO or NO-GO privately — never invent the decision in git.",
-  "Keep scientific approval and productionWritesEnabled false for L0 public launch.",
+  "L0 visual acceptance + public launch GO recorded via U36 HSI_PUBLIC_L0_DEPLOY_APPROVAL (21 Nov 2026).",
+  "Keep scientific approval and production research writes false for L0 public launch.",
   "Do not treat business pre-mortem completion as a technical release blocker.",
+  "Do not enable real PHI / clinical activity — ADR-0010 gates remain open.",
 ];
 
 export function hsi10PublicLaunchReadinessU11Packet(): Hsi10PublicLaunchReadinessPacket {
@@ -312,8 +317,12 @@ export function assertHsi10PublicLaunchReadinessU11SoftLand(
     throw new Error("expected seven U11 surfaces");
   }
   const go = packet.surfaces.find((s) => s.surface === "owner_public_launch_go");
-  if (!go || go.engineeringReady !== false || go.ownerSignOffRequired !== true) {
-    throw new Error("owner public launch GO must stay owner-gated");
+  if (!go || go.ownerSignOffRequired !== true || go.publicLaunchClaimed !== false) {
+    throw new Error("owner public launch GO must remain owner-signed and non-GA");
+  }
+  // U36 may mark engineeringReady true once the explicit owner L0 GO envelope exists.
+  if (go.engineeringReady !== true && go.engineeringReady !== false) {
+    throw new Error("owner public launch GO engineeringReady must be boolean");
   }
   return {
     surfaceCount: packet.surfaces.length,
