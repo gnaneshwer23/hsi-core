@@ -24,7 +24,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 - Clinical, patient-level, production and public deployment: NOT APPROVED.
 
 ## Required next actions
-- Disposable Neon staging-derived test branch for true multi-process E2E; preserve immutable audit semantics and discard branch afterward with explicit approval.
+- Disposable Neon staging-derived test branch for true multi-process E2E; preserve immutable audit semantics and discard branch afterward with explicit approval (**U33** soft-lands exclusive ownership race in-process only).
 - Explicit recovered-attempt executor and crash-window reconciliation (U24 soft-land present; live E2E still open).
 - Trusted backend test credentials with research_admin grant for authenticated recovery E2E.
 - Integration tests for external tool cancellation, idempotency and no late side effects (U25/U27/U28 soft-land for bounded stages; live multi-process adapters still host-owned).
