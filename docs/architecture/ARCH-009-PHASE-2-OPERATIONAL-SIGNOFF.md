@@ -13,8 +13,8 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 1. No real independent-process E2E with two database connections was completed. The repository does not contain an approved disposable test branch with safe artifact cleanup; immutable artifacts intentionally prohibit deletion. A proposed harness with unsafe cleanup was reverted before execution.
 2. No crash/restart recovery using an authenticated research administrator was executed. Existing recovery service has a server-authenticated research_admin gate and audit transaction, but is not E2E verified.
 3. Tool-side effects require idempotency and cancellation in each external adapter; AbortSignal alone cannot forcibly stop remote operations.
-4. The checkpointed executor requires a fresh checkpoint claim; a recovered RUNNING checkpoint is not yet consumed by a resume-specific executor. Thus restart-safe resume is incomplete.
-5. The artifact sink commits its own transaction and the checkpoint completion is separate; reconciliation after a crash between them is not implemented.
+4. ~~The checkpointed executor requires a fresh checkpoint claim; a recovered RUNNING checkpoint is not yet consumed by a resume-specific executor.~~ **Engineering soft-land (U24, 21 Nov 2026):** `continueHsiCheckpointedExecution` resumes an explicitly recovered RUNNING fence. Live multi-process restart E2E and research_admin recovery credentials remain open.
+5. ~~The artifact sink commits its own transaction and the checkpoint completion is separate; reconciliation after a crash between them is not implemented.~~ **Engineering soft-land (U24):** `applyHsiCommittedArtifactReconciliation` CAS-completes from a single fenced artifact without executor replay. Staging multi-process crash-window E2E remains owner-gated.
 6. Fingerprint versioning and scientific-review revision rounds remain unresolved.
 7. No patient-identifiable data or autonomous scientific approval may be introduced.
 
