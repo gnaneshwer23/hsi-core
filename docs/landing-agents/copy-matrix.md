@@ -15,3 +15,14 @@
 | Hero secondary (deferred) | Scientific workbench → `/research/workspace` | Future: add provisioned-access microcopy | Restricted preview | `/research/workspace` |
 
 No invented capabilities, customers, benchmarks or approval claims.
+
+## PR1b — Live investigation + provisioned access (specialist consensus)
+
+| Surface | Current | Proposed | Evidence / status | Destination |
+|---|---|---|---|---|
+| Hero secondary CTA | Scientific workbench | Live investigation | Matches workspace product language | `/research/workspace` |
+| Hero microcopy | … synthetic patients only | … · live investigation uses public literature · server saves need provisioned researcher access | PRODUCT: access provisioned separately | n/a |
+| Product band secondary | Open scientific workbench | Open live investigation | Same | `/research/workspace` |
+| Close primary | Scientific workbench | Live investigation | Same | `/research/workspace` |
+| Close lead | … or open the scientific workbench. | … or open a live investigation (provisioned server saves). | Honesty | n/a |
+| Domains band | Coverage varies by area. | + Disease mechanisms opens the full public graph—use Research condition to narrow. | No disease-mechanisms department slug | Disease mechanisms → `/knowledge-graph` (kept) |

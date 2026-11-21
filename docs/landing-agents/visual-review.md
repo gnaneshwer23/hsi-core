@@ -36,3 +36,10 @@ bunx playwright test e2e/landing-pages.spec.ts e2e/seo.spec.ts e2e/demo-universe
 - [ ] **Deploy** — separate owner GO; agents must not deploy  
 
 Do not merge or deploy without the owner box above.
+
+## PR1b addendum (team build)
+
+Additional owner review: hero CTA now reads **Live investigation**; honesty microcopy includes provisioned researcher access; domains band clarifies Disease mechanisms → public graph.
+
+- [ ] Visual GO includes PR1b CTA/microcopy
+- [ ] NO-GO on CTA naming or microcopy length at 390px

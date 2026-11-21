@@ -29,6 +29,10 @@ test('home leads with the graph, context diagram and working scenario choices',a
  await expect(page.locator('.pg-status')).toContainText('candidate relationships');
  await expect(page.locator('.pg-product')).toContainText('illustrative');
  await expect(page.locator('.pg-shots figcaption').first()).toContainText(/illustrative/i);
+ await expect(page.locator('.pg-hero .pg-micro')).toContainText('server saves need provisioned researcher access');
+ await expect(page.getByRole('link',{name:'Live investigation',exact:true}).first()).toHaveAttribute('href','/research/workspace');
+ await expect(page.locator('.pg-domain-list').getByRole('link',{name:'Disease mechanisms',exact:true})).toHaveAttribute('href','/knowledge-graph');
+ await expect(page.locator('.pg-links-row')).toContainText('Disease mechanisms opens the full public graph');
 });
 
 test('how it works shows the research flow and separates checks from approval',async({page})=>{
