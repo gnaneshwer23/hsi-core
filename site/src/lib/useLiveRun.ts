@@ -10,6 +10,7 @@ import {
 import {LIVE_SCENARIOS} from "../../../src/investigation/scenarios";
 import {recordActivation} from "../../../src/investigation/activationMilestone";
 import {recordRepeatUsageReopen} from "../../../src/investigation/repeatUsageMilestone";
+import {researchApiErrorMessage} from "./researchApiErrors";
 import type {Run} from "./workspaceView";
 
 export const LIVE_SCENARIO_ID="il21-autoimmune";
@@ -45,7 +46,9 @@ export function useLiveRun(){
   setState("running");setError("");setNote("");setSavedThisSession(false);setReopenedThisSession(false);
   try{
    const res=await fetch("/api/research/live-investigation",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({scenarioId:id})});
-   if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The investigation could not run (HTTP "+res.status+").")}
+   if(!res.ok){
+    throw Error(await researchApiErrorMessage(res,"live_run","The investigation could not run (HTTP "+res.status+")."));
+   }
    const run=await res.json() as Run;
    setRun(run);setState("idle");
    recordActivation(browserStore(),{

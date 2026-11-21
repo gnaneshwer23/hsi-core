@@ -1,5 +1,6 @@
 import {useState} from "react";
 import {parseInvestigationWorkspace,type InvestigationWorkspace,type InvestigationSummary} from "@hsi/interrogativeWorkspace";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 
 /** Uses existing HSI-owned authenticated workspace. No client-supplied identity, role or evidence. */
 export function SavedResearchInvestigations({question}:{question:string}){
@@ -14,8 +15,9 @@ export function SavedResearchInvestigations({question}:{question:string}){
   try{
    const url="/api/research/investigations"+(next?"?cursor="+encodeURIComponent(JSON.stringify(next)):"");
    const response=await fetch(url,{credentials:"same-origin",headers:{Accept:"application/json"},cache:"no-store"});
-   if(response.status===401)throw new Error("Sign in with a verified HSI research account to access saved investigations.");
-   if(!response.ok)throw new Error("Saved investigations are unavailable or this account lacks access.");
+   if(!response.ok){
+    throw new Error(await researchApiErrorMessage(response,"workspace_load","Saved investigations are unavailable or this account lacks access."));
+   }
    const result=parseInvestigationWorkspace(await response.json());
    setWorkspace(result);setItems(previous=>next?[...previous,...result.items.filter(x=>!previous.some(y=>y.id===x.id))]:result.items);
    setCursor(result.nextCursor);
@@ -28,7 +30,9 @@ export function SavedResearchInvestigations({question}:{question:string}){
   setBusy(true);setError("");setNotice("");
   try{
    const response=await fetch("/api/research/investigations",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({question:question.trim(),releaseId:release.id,requestId:crypto.randomUUID()})});
-   if(!response.ok)throw new Error(response.status===403?"Research writes are not enabled or authorized.":"Unable to create an investigation for the configured release.");
+   if(!response.ok){
+    throw new Error(await researchApiErrorMessage(response,"workspace_create","Unable to create an investigation for the configured release."));
+   }
    const result=await response.json() as {id?:string};
    if(!result.id||!/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(result.id))throw new Error("Unexpected saved investigation response.");
    setNotice("Research investigation saved under the server-approved release. Live PubMed retrieval was not attached or scientifically approved.");

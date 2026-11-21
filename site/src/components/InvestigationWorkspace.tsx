@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState,type FormEvent} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {parseInvestigationWorkspace,type InvestigationWorkspace as Workspace,type InvestigationCursor,type InvestigationSummary} from "../../../src/interrogativeWorkspace";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 import "../styles/investigation-workspace.css";
 
 class WorkspaceUiError extends Error{
@@ -26,7 +27,12 @@ export function InvestigationWorkspace({onSnapshot}:{onSnapshot?:(value:Workspac
   try{
    const suffix=cursor?"?"+new URLSearchParams({cursor:JSON.stringify(cursor)}):"";
    const response=await fetch("/api/research/investigations"+suffix,{credentials:"same-origin",cache:"no-store",redirect:"error",signal:c.signal,headers:{Accept:"application/json"}});
-   if(!response.ok)throw new WorkspaceUiError(response.status===401?"Sign in with a verified research account to open your investigations.":response.status===403?"Research access has not been confirmed. Check your research account or contact the research administrator.":"Your investigations could not be loaded. Please retry.",response.status);
+   if(!response.ok){
+    throw new WorkspaceUiError(
+     await researchApiErrorMessage(response,"workspace_load","Your investigations could not be loaded. Please retry."),
+     response.status,
+    );
+   }
    const value=parseInvestigationWorkspace(await response.json());
    if(c.signal.aborted)return;
    setWorkspace(value);setItems(previous=>cursor?[...previous,...value.items.filter(i=>!previous.some(p=>p.id===i.id))]:value.items);
@@ -45,7 +51,12 @@ export function InvestigationWorkspace({onSnapshot}:{onSnapshot?:(value:Workspac
    const trimmed=question.trim();
    if(!requestKey.current||requestKey.current.question!==trimmed||requestKey.current.releaseId!==releaseId)requestKey.current={question:trimmed,releaseId,id:crypto.randomUUID()};
    const response=await fetch("/api/research/investigations",{method:"POST",credentials:"same-origin",cache:"no-store",redirect:"error",signal:c.signal,headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify({question:trimmed,releaseId,requestId:requestKey.current.id})});
-   if(!response.ok)throw new WorkspaceUiError(response.status===401?"Your session needs attention. Sign in again before saving.":response.status===403?"Saving is not available for your account on this deployment. Your question has been kept here.":response.status===409?"The selected release or save request is no longer available. Refresh the workspace before trying again.":response.status===400?"Use a non-identifying research question of up to 500 characters. Patient information is not permitted.":"Save could not be confirmed. Retry to check the same request without creating a duplicate.");
+   if(!response.ok){
+    throw new WorkspaceUiError(
+     await researchApiErrorMessage(response,"workspace_create","Save could not be confirmed. Retry to check the same request without creating a duplicate."),
+     response.status,
+    );
+   }
    const result=await response.json();
    if(!result||typeof result.id!=="string"||!/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(result.id)||typeof result.created!=="boolean")throw new WorkspaceUiError("Save could not be confirmed. Retry the same request.");
    if(c.signal.aborted)return;
