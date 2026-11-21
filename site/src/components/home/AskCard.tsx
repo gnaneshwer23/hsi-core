@@ -5,12 +5,16 @@ import {useAsk} from "../../lib/useAsk";
 import {HowProducedPanel} from "../HowProducedPanel";
 import {Icon} from "./AppIcons";
 
-const FAIL:Record<string,string>={
- limited:"You have reached the hourly limit for questions. Try again later.",
+ const FAIL:Record<string,string>={
  unavailable:"Ask is not available on this deployment yet. Nothing was run.",
  invalid:"Ask a question between 8 and 500 characters.",
  error:"The question could not be answered. No findings were generated.",
 };
+function limitedMessage(retryAfterSeconds?:number):string{
+ if(retryAfterSeconds===undefined)return"You have reached the hourly limit for questions. Try again later.";
+ const minutes=Math.max(1,Math.ceil(retryAfterSeconds/60));
+ return`You have reached the hourly limit for questions. Try again in about ${minutes} minute${minutes===1?"":"s"}.`;
+}
 /** Signed-in question box. Routes to curated investigations only, and says so. No agent names; the trace shows how the answer was produced. */
 export function AskCard(){
  const {access,busy,outcome,saveNote,submit,saveRun}=useAsk(),nav=useNavigate(),[q,setQ]=useState(""),id=useId();
@@ -28,6 +32,7 @@ export function AskCard(){
    </form>}
    <div role="status" aria-live="polite" className="rh-ask-out">
     {busy&&<p className="rh-note">Searching Europe PMC, OpenAlex and Open Targets…</p>}
+    {outcome?.kind==="limited"&&<p className="rh-err" role="alert">{limitedMessage(outcome.retryAfterSeconds)}</p>}
     {outcome&&outcome.kind in FAIL&&<p className="rh-err" role="alert">{FAIL[outcome.kind]}</p>}
     {outcome?.kind==="unrouted"&&<div className="rh-panel"><p>{outcome.message}</p>{outcome.available.length>0&&<><b>What can be asked today</b><ul className="rh-ask-list">{outcome.available.map(a=><li key={a.id}><button type="button" className="rh-link" onClick={()=>setQ(a.question)}>{a.question}</button></li>)}</ul></>}</div>}
     {outcome?.kind==="routed"&&<div className="rh-panel rh-ask-result">

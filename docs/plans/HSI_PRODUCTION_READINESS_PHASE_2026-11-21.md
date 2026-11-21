@@ -228,13 +228,13 @@ U6–U8 are **owner-gated**; agents prepare packets and runners only.
 
 ### Global
 
-- [ ] Premortem not listed as a release blocker in launch checklists  
-- [ ] No held migrations released without explicit owner approval  
-- [ ] `productionWritesEnabled` / `writesEnabled` remain false unless separately authorised  
-- [ ] Public stage has dated QA evidence  
+- [x] Premortem not listed as a release blocker in launch checklists (`HSI_RELEASE_GATES.md` + phase docs)  
+- [x] No held migrations released without explicit owner approval (holds unchanged this phase)  
+- [x] `productionWritesEnabled` / `writesEnabled` remain false unless separately authorised  
+- [x] Public stage has dated QA evidence (`docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md`)  
 - [ ] Preview stage has auth + continuous-journey evidence packet (owner-filled)  
 - [ ] GA stage has Human #2/#3/#4/#5 closed before unrestricted claims  
-- [ ] Capability register asOf refreshed after hardening wave  
+- [x] Capability register asOf refreshed after hardening wave (2026-11-21)  
 
 ### Per unit
 

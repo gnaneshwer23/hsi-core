@@ -4,17 +4,26 @@ export type AskTrace={matchedBy:string;question:string;sources:string[];modelChe
 export type AskOutcome=
  |{kind:"routed";scenarioId:string;trace:AskTrace;run:Run}
  |{kind:"unrouted";message:string;available:{id:string;title:string;question:string}[]}
- |{kind:"signed-out"}|{kind:"unverified"}|{kind:"limited"}|{kind:"unavailable"}|{kind:"invalid"}|{kind:"error"};
+ |{kind:"signed-out"}|{kind:"unverified"}|{kind:"limited";retryAfterSeconds?:number}|{kind:"unavailable"}|{kind:"invalid"}|{kind:"error"};
 export const ASK_MIN=8,ASK_MAX=500;
 export const askLengthOk=(q:string)=>{const n=q.trim().length;return n>=ASK_MIN&&n<=ASK_MAX};
 const rec=(v:unknown):v is Record<string,unknown>=>typeof v==="object"&&v!==null&&!Array.isArray(v);
+function parseRetryAfterSeconds(res:Response):number|undefined{
+ const raw=res.headers.get("Retry-After");
+ if(!raw)return undefined;
+ const n=Number(raw);
+ return Number.isFinite(n)&&n>0?Math.floor(n):undefined;
+}
 export async function askQuestion(question:string,request:typeof fetch=fetch):Promise<AskOutcome>{
  if(!askLengthOk(question))return {kind:"invalid"};
  let res:Response;
  try{res=await request("/api/ask",{method:"POST",credentials:"same-origin",headers:{"Content-Type":"application/json"},body:JSON.stringify({question:question.trim()})})}catch{return {kind:"error"}}
  if(res.status===401)return {kind:"signed-out"};
  if(res.status===403){const b=await res.json().catch(()=>null);return rec(b)&&b.code==="EMAIL_NOT_VERIFIED"?{kind:"unverified"}:{kind:"error"}}
- if(res.status===429)return {kind:"limited"};
+ if(res.status===429){
+  const retryAfterSeconds=parseRetryAfterSeconds(res);
+  return retryAfterSeconds===undefined?{kind:"limited"}:{kind:"limited",retryAfterSeconds};
+ }
  if(res.status===503)return {kind:"unavailable"};
  if(res.status===400)return {kind:"invalid"};
  if(!res.ok)return {kind:"error"};

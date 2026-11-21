@@ -10,17 +10,17 @@ export const MAX_PAPERS=6,CANDIDATES=10,PER_PAPER_MS=11_000;
 const json=(b:unknown,status=200,extra:Record<string,string>={})=>new Response(JSON.stringify(b),{status,headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store","X-Content-Type-Options":"nosniff",...extra}});
 export const CAVEAT="Values are read from the text by patterns, not by a model, and accuracy has not been measured. Each value shows the sentence it came from; read it before relying on it. A difference between papers is not a judgement that one is better.";
 export async function handleMethodsCompare(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>Date}={}):Promise<Response>{
- if(request.method!=="POST")return json({error:"Method not allowed"},405,{Allow:"POST"});
+ if(request.method!=="POST")return json({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"POST"});
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
- if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
- if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
- const raw=await request.text();if(raw.length>600)return json({error:"Request too large"},413);
- let b:any;try{b=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
+ if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
+ if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({code:"JSON_REQUIRED",error:"JSON body required"},415);
+ const raw=await request.text();if(raw.length>600)return json({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
+ let b:any;try{b=JSON.parse(raw)}catch{return json({code:"INVALID_JSON",error:"Invalid JSON"},400)}
  const query=typeof b?.query==="string"?b.query.trim().replace(/\s+/g," "):"";
- if(!QUERY.test(query))return json({error:"Describe the technique in 3 to 120 characters using letters, numbers and simple punctuation."},400);
+ if(!QUERY.test(query))return json({code:"INVALID_QUERY",error:"Describe the technique in 3 to 120 characters using letters, numbers and simple punctuation."},400);
  const now=deps.now??(()=>new Date()),ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now().getTime()-t<600_000);
- if(recent.length>=6)return json({error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
+ if(recent.length>=6)return json({code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
  hits.set(ip,[...recent,now().getTime()]);if(hits.size>2000)hits.clear();
  const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),22_000);
  try{
@@ -37,6 +37,6 @@ export async function handleMethodsCompare(request:Request,env:Env,deps:{fetcher
   const rows=compareMethods(readable);
   return json({query,retrievedAt:now().toISOString(),source:"Europe PMC open-access full text (CC BY or CC0 only)",papers:papers.map(p=>({id:p.id,title:p.title,url:p.url,licence:p.licence,methodsFound:p.methodsFound,parameters:p.params.length})),rows,
    notes:[CAVEAT,...(found.length===0?["No open-access paper with a CC BY or CC0 licence matched. Nothing is shown."]:[]),...(unread>0?[`${unread} candidate paper(s) had no readable methods section${timedOut>0?` or were too slow to read (${timedOut})`:""} and were not compared.`]:[])]});
- }catch{return json({error:"Open-access text could not be read. Nothing was generated."},502)}
+ }catch{return json({code:"RETRIEVAL_UNAVAILABLE",error:"Open-access text could not be read. Nothing was generated."},502)}
  finally{clearTimeout(timer)}
 }
