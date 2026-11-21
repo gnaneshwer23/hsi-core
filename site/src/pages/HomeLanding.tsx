@@ -6,7 +6,6 @@ import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {RelationshipDiagram} from "../components/landing/RelationshipDiagram";
 
 import {InvestigationFlowDiagram} from "../components/landing/InvestigationFlowDiagram";
-import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
 import "../styles/premium-public.css";
 
 const DOMAINS=[
@@ -45,12 +44,9 @@ export function HomeLanding(){
     <section className="pg-hero pg-hero-platform pg-hero-spine" aria-labelledby="home-title">
      <div className="pg-hero-copy">
       <p className="pg-vision">{PRODUCT_TAGLINE}</p>
-      <h1 id="home-title">
-       <span className="pg-brand">Human Super Intelligence </span>
-       See what the evidence actually supports.
-      </h1>
+      <h1 id="home-title">See what the evidence actually supports.</h1>
       <p className="pg-lead">
-       HSI helps scientists determine what biomedical evidence actually supports, why findings disagree, and what to investigate next — with a traceable explanation you can reopen.
+       Trace a finding, see why studies disagree, and leave with the next question — source still attached.
       </p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/how-it-works">
@@ -66,21 +62,15 @@ export function HomeLanding(){
      </div>
 
      <div className="pg-hero-figure" role="region" aria-labelledby="pg-flow-h">
-      <h2 id="pg-flow-h">From a question to a research brief.</h2>
-      <p className="pg-flow-lead">
-       Connect, verify, reason and collaborate. One path, grouped from the question through to a brief you can reopen.
-      </p>
+      <h2 id="pg-flow-h">One path. Six steps.</h2>
       <InvestigationFlowDiagram emphasizeId="graph"/>
-      <p className="pg-flow-note">
-       Research preview. Model interpretation and scientific approval remain separate.
-      </p>
      </div>
     </section>
 
     <section className="pg-proof" aria-labelledby="pg-proof-h">
      <div className="pg-proof-head">
-      <h2 id="pg-proof-h">Published knowledge graph</h2>
-      <p>Live from the digest-verified snapshot. Every relationship is a candidate.</p>
+      <h2 id="pg-proof-h">The published graph</h2>
+      <p>Every relationship is a candidate. Nothing here is approved.</p>
      </div>
      <LiveGraphHero/>
      <div className="pg-strip pg-strip-inline">
@@ -89,23 +79,22 @@ export function HomeLanding(){
     </section>
 
     <section className="pg-block" aria-labelledby="context-section-title">
-     <h2 id="context-section-title">A connection is only the beginning.</h2>
-     <p className="pg-sub-p">Inspect its evidence, experimental conditions and review status.</p>
+     <h2 id="context-section-title">Open a connection.</h2>
+     <p className="pg-sub-p">Evidence, conditions, then review status.</p>
      <RelationshipDiagram/>
     </section>
 
     <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
      <div className="pg-demo-universe-head">
-      <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
-      <p>An example investigation. The studies are labelled Example, and they are not an approval.</p>
+      <h2 id="pg-demo-universe-h">Compare two findings.</h2>
+      <p>Labelled Example studies. Not an approval.</p>
      </div>
      <DemoLandingPreviewPanel/>
     </section>
 
     <section className="pg-links" aria-labelledby="pg-domains-h">
      <div className="pg-links-row">
-      <h2 id="pg-domains-h">Connected biological systems.</h2>
-      <p>Six areas of investigation. Published evidence coverage varies by area.</p>
+      <h2 id="pg-domains-h">Six areas.</h2>
       <ul className="pg-domain-list" aria-label="Scientific domains in scope">
        {DOMAINS.map(d=><li key={d.label}><Link to={d.to}>{d.label}</Link></li>)}
       </ul>
@@ -114,69 +103,23 @@ export function HomeLanding(){
 
     <section className="pg-links" aria-labelledby="pg-who-h">
      <div className="pg-links-row">
-      <h2 id="pg-who-h">Who it is for.</h2>
-      <p>Two paths. Other audiences stay in the footer.</p>
+      <h2 id="pg-who-h">Two ways in.</h2>
       <ul className="pg-usp-row pg-who">
        <li>
         <Link to="/biotech">Biotech teams</Link>
-        <span>Small R&amp;D and funded translational groups can inspect evidence, see why findings disagree, and request a pilot conversation.</span>
+        <span>Request a pilot.</span>
        </li>
        <li>
         <Link to="/researchers">Researchers</Link>
-        <span>Academic scientists can join as design partners and run a labelled example investigation.</span>
+        <span>Join as a design partner.</span>
        </li>
       </ul>
      </div>
     </section>
 
-    <section className="pg-product" aria-labelledby="pg-product-h">
-     <div className="pg-product-copy">
-      <h2 id="pg-product-h">Your research home</h2>
-      <p>Choose your topics. Explore the graph. Keep your investigation and brief together.</p>
-      <p className="pg-micro">Many saved records remain on this device.</p>
-      <div className="pg-cta">
-       <Link className="pg-btn" to="/welcome">
-        Set up your research home <span aria-hidden="true">→</span>
-       </Link>
-       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Open scientific workbench <span aria-hidden="true">→</span>
-       </Link>
-      </div>
-     </div>
-     <div className="pg-shots">
-      <figure className="pg-shot">
-       <img
-        src="/images/product/dashboard-v2.webp"
-        width={1440}
-        height={1120}
-        alt="Researcher home showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
-        loading="lazy"
-        decoding="async"
-       />
-       <figcaption>
-        <b>Your home.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
-       </figcaption>
-      </figure>
-      <figure className="pg-shot">
-       <img
-        src="/images/product/explorer-v2.webp"
-        width={1440}
-        height={900}
-        alt="Knowledge graph explorer with department colouring, gap markers and an evidence panel by experimental model."
-        loading="lazy"
-        decoding="async"
-       />
-       <figcaption>
-        <b>The explorer.</b> Filter, select, trace routes and open research gaps with their evidence.
-       </figcaption>
-      </figure>
-     </div>
-    </section>
-
     <section className="pg-close" aria-labelledby="pg-close-h">
      <div>
-      <h2 id="pg-close-h">Start with one research question.</h2>
-      <p>Open the example, or request a pilot conversation.</p>
+      <h2 id="pg-close-h">Start with one question.</h2>
      </div>
      <div className="pg-cta">
       <Link className="pg-btn pg-btn-light" to="/how-it-works">

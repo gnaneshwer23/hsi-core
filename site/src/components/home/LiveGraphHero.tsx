@@ -51,7 +51,7 @@ export function LiveGraphHero(){
     {chrome}
     {view.nodes.length===0?<div className="lg-wait" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</div>:
     <Suspense fallback={<div className="lg-wait lg-load" role="status">Loading the graph…</div>}>
-     <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`Live from the published snapshot (version ${b!.version.slice(0,7)}): showing ${view.nodes.length} of ${b!.nodes.length} concepts and ${view.edges.length} of ${all.cand.length} candidate relationships. Drag a concept, use the zoom buttons or Ctrl or ⌘ with scroll, click to select. Every line is a candidate and unreviewed.`} exportName="hsi-landing-graph"/>
+     <Canvas showcase preset={PRESET} groupColors={all.colors} nodes={view.nodes} edges={view.edges} selected={sel??""} highlight={match} onSelect={id=>setSel(s=>s===id?null:id)} onSelectEdge={()=>{}} caption={`${view.nodes.length} of ${b!.nodes.length} concepts · ${view.edges.length} candidate relationships · unreviewed`} exportName="hsi-landing-graph"/>
     </Suspense>}
     <div className="lg-filters">
      <div className="lg-search">

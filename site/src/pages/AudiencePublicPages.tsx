@@ -4,7 +4,6 @@
  * One process infographic per page — not card grids or layered chrome.
  */
 import { Link } from "react-router-dom";
-import { PublicNotices } from "../components/public/PublicNotices";
 import { AudienceFlowDiagram } from "../components/landing/AudienceFlowDiagram";
 import {
   LandingHero,
@@ -31,7 +30,7 @@ export function ResearchersPublicPage() {
     <LandingPage>
       <LandingHero
         title="Be a design partner in the investigation, not another reader of citations."
-        description="Published evidence, experimental context and uncertainty, in one path you can reopen. A model answer is never treated as approved biology."
+        description="One path you can reopen. A model answer is not approved biology."
         proof={
           <AudienceFlowDiagram
             variant="researchers"
@@ -77,7 +76,6 @@ export function ResearchersPublicPage() {
         </div>
       </LandingSection>
 
-      <PublicNotices />
     </LandingPage>
   );
 }
@@ -94,7 +92,7 @@ export function BiotechPublicPage() {
     <LandingPage>
       <LandingHero
         title="A reproducible investigation for a small R&D team."
-        description="For biotech and funded translational groups who need to see what the evidence supports, why two studies disagree, and which question is worth testing next — with the source and context still attached."
+        description="See what the evidence supports, why two studies disagree, and which question is worth testing next."
         proof={<AudienceFlowDiagram variant="biotech" capabilities={BIOTECH_CAPS} ariaLabel="Biotech R&D flow" />}
       >
         <LandingPrimaryCta to="/contact">Request a pilot conversation</LandingPrimaryCta>
@@ -115,7 +113,6 @@ export function BiotechPublicPage() {
         </div>
       </LandingSection>
 
-      <PublicNotices />
     </LandingPage>
   );
 }
@@ -132,7 +129,7 @@ export function ClinicalPublicPage() {
     <LandingPage>
       <LandingHero
         title="Clinical research: evidence-grounded translation — not clinical decision support."
-        description="Literature-linked mechanism investigation on the scientific plane. No patient data on this site, no live clinical decision support, and no clinical advice."
+        description="No patient data on this site. No live clinical decision support. No clinical advice."
         proof={
           <AudienceFlowDiagram variant="clinical" capabilities={CLINICAL_CAPS} ariaLabel="Clinical research flow" />
         }
@@ -164,7 +161,6 @@ export function ClinicalPublicPage() {
         </div>
       </LandingSection>
 
-      <PublicNotices />
     </LandingPage>
   );
 }
@@ -181,7 +177,7 @@ export function LaboratoriesPublicPage() {
     <LandingPage>
       <LandingHero
         title="Laboratories and omics: connect readouts to evidence without inventing QC scores."
-        description="Assay context, literature and candidate mechanisms. Live instruments and private datasets are not claimed here."
+        description="Assay context stays visible. Live instruments are not connected."
         proof={
           <AudienceFlowDiagram
             variant="laboratories"
@@ -209,7 +205,6 @@ export function LaboratoriesPublicPage() {
         </div>
       </LandingSection>
 
-      <PublicNotices />
     </LandingPage>
   );
 }
@@ -226,7 +221,7 @@ export function CommunityPublicPage() {
     <LandingPage>
       <LandingHero
         title="Research community: evidence-grounded discussion without automatic IP bleed."
-        description="Scientific conversation with source, context and uncertainty attached. Public posting and Circles durable store are not enabled."
+        description="Discussion stays attached to a source. Public posting is not enabled."
         proof={
           <AudienceFlowDiagram
             variant="community"
@@ -258,7 +253,6 @@ export function CommunityPublicPage() {
         </div>
       </LandingSection>
 
-      <PublicNotices />
     </LandingPage>
   );
 }

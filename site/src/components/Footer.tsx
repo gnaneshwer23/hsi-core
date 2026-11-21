@@ -1,6 +1,5 @@
 import { HsiIdentity } from "./HsiIdentity";
 import { Link } from "react-router-dom";
-import { PRODUCT_TAGLINE } from "../lib/brand";
 import "../styles/chrome-redesign.css";
 
 const groups = [
@@ -61,7 +60,7 @@ export function Footer() {
           <Link className="hsi-wordmark" to="/">
             <HsiIdentity />
           </Link>
-          <p>{PRODUCT_TAGLINE}</p>
+          <p>Trace the evidence. Choose the next question.</p>
           <Link className="hsi-text-link" to="/contact">
             Request a pilot conversation
           </Link>

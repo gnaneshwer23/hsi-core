@@ -10,7 +10,7 @@ export function HowItWorksPage(){
   <header className="pg-phero pg-phero-spine" data-hero-style="b" aria-labelledby="hw-title">
    <div className="pg-phero-intro">
     <h1 id="hw-title">From a research question to a decision you can reopen.</h1>
-    <p className="pg-lead">Follow one example investigation from the first source to a brief: what the evidence supports, why findings disagree, and what to look at next.</p>
+    <p className="pg-lead">Four stages. One labelled example. A brief you can reopen.</p>
     <div className="pg-cta"><Link className="pg-btn" to="/demo/universe">Open an example investigation</Link><Link className="pg-link" to="/trust">Read how approval stays separate</Link></div>
     <p className="pg-micro">Research preview · example findings are labelled · no clinical advice · no patient data on this site</p>
    </div>
@@ -22,8 +22,7 @@ export function HowItWorksPage(){
    <RelationshipDiagram/>
   </section>
   <section className="pg-block" aria-labelledby="hw-steps-h">
-   <h2 id="hw-steps-h">The workflow on screen.</h2>
-   <p className="pg-sub-p">Product previews. Simulated and local-only steps remain labelled.</p>
+   <h2 id="hw-steps-h">On screen.</h2>
    <div className="pg-shots">
     <figure className="pg-shot"><img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="Graph explorer with a selected relationship and evidence context" loading="lazy"/><figcaption>Explore a relationship and inspect its evidence.</figcaption></figure>
     <figure className="pg-shot"><img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="Research home with topic metrics and a graph panel" loading="lazy"/><figcaption>Return to your topics and continue the investigation.</figcaption></figure>
@@ -40,7 +39,7 @@ export function HowItWorksPage(){
    <p className="pg-micro">Published graph relationships are currently unreviewed. Model checks require configuration; many saves remain on-device. <Link to="/trust#validation">Validation methodology</Link></p>
   </section>
   <section className="pg-close" aria-labelledby="hw-close-h">
-   <div><h2 id="hw-close-h">Inspect an example investigation.</h2><p>Choose a labelled example. Follow its evidence and open the brief.</p></div>
+   <div><h2 id="hw-close-h">Open the example.</h2></div>
    <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/demo/universe">Open an example investigation</Link><Link className="pg-link pg-link-light" to="/trust">Read how approval stays separate</Link></div>
   </section>
  </div>;

@@ -39,7 +39,8 @@ export function ContactPublicPage(){
       <header className="pg-phero">
         <h1>Request a design-partner pilot.</h1>
         <div>
-          <p className="pg-lead">Tell us the research question you want to test with HSI. This page prepares a local draft. An access request is sent only when notification delivery is configured, and it does not grant research access or scientific-review rights. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently. An account is not research access.</p>
+          <p className="pg-lead">Tell us the research question. This page keeps a browser draft. An account is not research access.</p>
+          <p className="pg-micro">Researcher, source and scientific-review permissions are provisioned independently. The page never claims operator receipt unless the server reports provider acceptance.</p>
           <div className="pg-cta">
             <a className="pg-btn" href="#pilot-request">Start a pilot request <span aria-hidden="true">→</span></a>
             <Link className="pg-link" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>

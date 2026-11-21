@@ -609,16 +609,21 @@
 }
 
 .ld-maturity-note {
-  margin: 0.25rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.25rem;
+  margin: 0.75rem 0 0;
   padding: 0.85rem 0 0;
   border-top: 1px solid var(--s2-line);
   font-size: 0.9rem;
-  line-height: 1.55;
+  line-height: 1.4;
   color: var(--s2-body);
 }
 
 .ld-maturity-item {
-  display: inline;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
   white-space: normal;
 }
 
@@ -632,7 +637,7 @@
 }
 
 .ld-maturity-sep {
-  color: var(--s2-muted);
+  display: none;
 }
 
 /* Maturity labels in the footnote are plain text — not chip cards */

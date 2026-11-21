@@ -28,7 +28,7 @@ export function EnterpriseLandingPage() {
     <LandingPage>
       <LandingHero
         title="Research groups: connected work for principal investigators and teams."
-        description="Questions, evidence, gaps and briefs on one path — private work stays private until sharing is explicitly enabled."
+        description="Private work stays private until sharing is explicitly enabled."
       >
         <LandingPrimaryCta to="/researchers">Researchers and design partners</LandingPrimaryCta>
         <LandingSecondaryCta to="/biotech">Biotech teams</LandingSecondaryCta>
