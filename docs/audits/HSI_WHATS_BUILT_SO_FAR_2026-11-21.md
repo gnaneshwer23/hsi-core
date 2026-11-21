@@ -4,7 +4,7 @@
 **Basis:** Founder / GitHub audit narrative for `gnaneshwer23/hsi-core`, reconciled to repository truth.  
 **Honesty:** Distinguishes **implemented software**, **working demonstrations**, and **independently verified production** readiness. Engineering classifications ≠ scientific or production certification. HSI 1.0 verified acceptance remains **0 / 8**. No live CDS/PHI in `hsi-core`. Business pre-mortem is **not** treated as a release blocker.
 
-**Cross-refs:** End-to-end vision soft-land [PR #596](https://github.com/gnaneshwer23/hsi-core/pull/596) (`HSI_END_TO_END_VISION_AND_USER_JOURNEY.md` once merged) · capability register [`../../operations/capability-register/capability-register.v1.json`](../../operations/capability-register/capability-register.v1.json) · Phase 1 agent soft-lands U24–U27.
+**Cross-refs:** End-to-end vision soft-land [PR #596](https://github.com/gnaneshwer23/hsi-core/pull/596) (`HSI_END_TO_END_VISION_AND_USER_JOURNEY.md` once merged) · capability register [`../../operations/capability-register/capability-register.v1.json`](../../operations/capability-register/capability-register.v1.json) · Phase 1 agent soft-lands U24–U28.
 
 ---
 

@@ -2,6 +2,7 @@ import {test, expect} from "bun:test";
 import {
   buildHsiToolIdempotencyKey,
   createHsiFencedToolCaller,
+  unwrapHsiFencedToolSuccess,
 } from "../src/hsiAgentFencedToolCaller";
 
 test("idempotency keys are stable and attempt-scoped", () => {
@@ -68,6 +69,27 @@ test("successful invoke returns value and increments attempt", async () => {
   }));
   expect(second.attempt).toBe(2);
   expect(second.status).toBe("success");
+});
+
+test("unwrapHsiFencedToolSuccess returns value or throws stable labels", () => {
+  expect(
+    unwrapHsiFencedToolSuccess(
+      {status: "success", idempotencyKey: "k", resultRef: "r", value: {ok: true}},
+      "Graph query",
+    ),
+  ).toEqual({value: {ok: true}, resultRef: "r"});
+  expect(() =>
+    unwrapHsiFencedToolSuccess(
+      {status: "late_commit_refused", idempotencyKey: "k", reason: "late"},
+      "Graph query",
+    ),
+  ).toThrow("late commit refused");
+  expect(() =>
+    unwrapHsiFencedToolSuccess(
+      {status: "failed", idempotencyKey: "k", reason: "boom"},
+      "Graph query",
+    ),
+  ).toThrow("Graph query failed: boom");
 });
 
 test("permission denial from assertTool never reaches the adapter", async () => {

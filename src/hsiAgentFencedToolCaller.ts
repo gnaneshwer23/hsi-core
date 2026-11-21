@@ -44,6 +44,29 @@ export function buildHsiToolIdempotencyKey(input: {
   return `${input.investigationId}:${input.taskId}:${input.tool}:attempt-${input.attempt}`;
 }
 
+/** Unwrap a successful fenced outcome or throw a stable host error. */
+export function unwrapHsiFencedToolSuccess<T>(
+  outcome: HsiToolFenceOutcome & {value?: T},
+  toolLabel: string,
+): {value: T; resultRef: string} {
+  if (outcome.status === "success") {
+    if (outcome.value === undefined) throw Error(`${toolLabel} succeeded without value`);
+    return {value: outcome.value, resultRef: outcome.resultRef};
+  }
+  switch (outcome.status) {
+    case "late_commit_refused":
+      throw Error(`${toolLabel} late commit refused after abort`);
+    case "cancelled":
+      throw Error(`${toolLabel} cancelled`);
+    case "failed":
+      throw Error(`${toolLabel} failed: ${outcome.reason}`);
+    default: {
+      const _exhaustive: never = outcome;
+      throw Error(`Unknown fence outcome: ${String(_exhaustive)}`);
+    }
+  }
+}
+
 export function createHsiFencedToolCaller(input: {
   investigationId: string;
   taskId: string;
