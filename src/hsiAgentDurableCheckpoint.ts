@@ -16,6 +16,9 @@ export interface HsiCheckpointStore{
  compareAndSwap(expectedVersion:number|null,next:HsiDurableCheckpoint):Promise<boolean>;
 }
 const hex=/^[a-f0-9]{64}$/;
+/** Canonical sorted-key SHA-256. Algorithm id: `canonical-sorted-sha256-v1` (see hsiAgentFingerprint).
+ * Do not compare this digest to insertion-order fingerprints without an explicit algorithm check.
+ */
 export function hashHsiCheckpointInput(value:unknown):string{
  const canonical=(x:unknown):string=>Array.isArray(x)?"["+x.map(canonical).join(",")+"]":x&&typeof x==="object"?"{"+Object.entries(x as Record<string,unknown>).sort(([a],[b])=>a.localeCompare(b)).map(([k,v])=>JSON.stringify(k)+":"+canonical(v)).join(",")+"}":JSON.stringify(x)??"null";
  return createHash("sha256").update(canonical(value)).digest("hex");

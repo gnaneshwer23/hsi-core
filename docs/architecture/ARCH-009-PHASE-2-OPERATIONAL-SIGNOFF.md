@@ -15,7 +15,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 3. Tool-side effects require idempotency and cancellation in each external adapter; AbortSignal alone cannot forcibly stop remote operations. **Engineering soft-land (U25, 21 Nov 2026):** `runHsiFencedToolInvocation` + idempotency ledger refuse late commits after abort; hosts must still wire each adapter. Bounded execution refuses orphan RUNNING stage continue without `recoverStage`.
 4. ~~The checkpointed executor requires a fresh checkpoint claim; a recovered RUNNING checkpoint is not yet consumed by a resume-specific executor.~~ **Engineering soft-land (U24, 21 Nov 2026):** `continueHsiCheckpointedExecution` resumes an explicitly recovered RUNNING fence. Live multi-process restart E2E and research_admin recovery credentials remain open.
 5. ~~The artifact sink commits its own transaction and the checkpoint completion is separate; reconciliation after a crash between them is not implemented.~~ **Engineering soft-land (U24):** `applyHsiCommittedArtifactReconciliation` CAS-completes from a single fenced artifact without executor replay. Staging multi-process crash-window E2E remains owner-gated.
-6. Fingerprint versioning and scientific-review revision rounds remain unresolved.
+6. Fingerprint versioning and scientific-review revision rounds remain unresolved. **Engineering soft-land (U26, 21 Nov 2026):** explicit algorithm IDs + migration policy (no in-place rewrite / no cross-algorithm equality) and append-only revision-round contract with `implementedInDatabase: false`. Neon migration and live reviewer revision E2E remain owner-gated.
 7. No patient-identifiable data or autonomous scientific approval may be introduced.
 
 ## Release decision
