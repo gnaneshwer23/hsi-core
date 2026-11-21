@@ -74,5 +74,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U38 Multi-process crash/restart E2E harness | Done — see `HSI_U38_MULTIPROCESS_CRASH_RESTART_E2E_2026-11-21.md` (fixture OS E2E green; Neon live still owner-gated) |
 | U39 Expanded checkpointed research-agent roles | Done — see `HSI_U39_EXPANDED_RESEARCH_AGENT_ROLES_2026-11-21.md` (verifier / hypothesis / policy; entity/graph/interrogator still open) |
 | U40 Restricted-preview auth + continuous-journey evidence runners | Done — see `HSI_U40_RESTRICTED_PREVIEW_EVIDENCE_RUNNERS_2026-11-21.md` (fill U12 with owner staging refs; preview GO / checklist #1 still open) |
+| U41 Scientific Companion text-first (KG/evidence) | Done — see `HSI_U41_SCIENTIFIC_COMPANION_TEXT_FIRST_2026-11-21.md` (voice/avatar/networking still Phase 3+) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U40 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U41 soft-landed; owner evidence still required.

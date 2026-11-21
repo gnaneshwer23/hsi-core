@@ -9,12 +9,13 @@ import {loadProfile,type Profile} from "../../lib/researchHome";
 import "../../styles/research-home.css";
 import "../../styles/premium-app.css";
 
-export type ShellNav="home"|"investigations"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"journey"|"methods"|"evaluation"|"graph"|"evidence"|"library"|"updates";
+export type ShellNav="home"|"investigations"|"companion"|"gaps"|"ledger"|"targets"|"cohort"|"prescreen"|"journey"|"methods"|"evaluation"|"graph"|"evidence"|"library"|"updates";
 type NavItem={label:string;to:string;icon:string;key?:ShellNav;badge?:"ledger"|"gaps"};
 const GROUPS:{label:string;items:NavItem[];governed?:boolean}[]=[
  {label:"Ask",items:[
   {label:"Home",to:"/research/home",icon:"home",key:"home"},
   {label:"Live investigation",to:"/research/workspace",icon:"search",key:"investigations"},
+  {label:"Scientific Companion",to:"/research/companion",icon:"spark",key:"companion"},
   {label:"Guided walkthrough",to:"/research/journey",icon:"compass",key:"journey"}]},
  {label:"Explore",items:[
   {label:"Knowledge Graph",to:"/research/knowledge-graph",icon:"graph",key:"graph"},

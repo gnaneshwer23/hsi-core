@@ -23,7 +23,7 @@
 | Demo Research Universe | Multi-domain scenarios, synthetic cohorts, omics demos | Built; curated/synthetic labels required |
 | Researcher dashboards | Academic, biotech, clinical, laboratory, community interfaces | Mix of real workbench + demo shells |
 | Authentication and persistence | Sign-in, permission controls, storage infrastructure | Present; production writes fail-closed / migrations held |
-| Scientific Companion / Avatar | Proposed conversational scientific assistant | **Proposed** — not journey-accepted |
+| Scientific Companion / Avatar | Text-first companion turns on KG/interrogative path (`/research/companion`, U41); voice/avatar still proposed | **Partial** — text-first engineering soft-land; avatar/voice not journey-accepted |
 | Research networking and opportunities | Early community interfaces; matching / opportunity discovery | Demo / **proposed** — not live matching |
 
 The capability register tracks **49** capabilities (`asOf` 2026-11-21). A narrative rollup cited for this audit is **18 implemented · 29 partial · 2 stub**. Those are **engineering classifications**, not production certification. Counts can lag merges; always prefer the register JSON + this honesty table over marketing claims.
@@ -75,7 +75,7 @@ A researcher can explore a substantial portion of the intended investigation jou
 
 | Proposed capability | Current position |
 | --- | --- |
-| Conversational Scientific Companion | Engines reusable; integrated conversation experience **needs development** |
+| Conversational Scientific Companion | Text-first U41 soft-land on interrogative KG path; deeper live-evidence conversation + avatar still open |
 | Real-time Nuance-style avatar | **Not implemented** |
 | Conversational dataset critique | Analysis components exist; integrated experience **not established** |
 | Cross-domain AI discussion | Graph/investigation foundations exist; conversational orchestration **not established** |
@@ -116,8 +116,8 @@ The newest vision adds three significant areas **not** yet fully implemented:
 
 ### Recommended next milestone (binding build filter)
 
-1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35) and live scientific platform L1 engineering composition (U37, 21 Nov 2026)** — staging grant / restricted-preview GO, multi-process E2E, and GA still open.  
-2. **Then** build the **Scientific Companion** directly on the Living Knowledge Graph and evidence services (text-first).  
+1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35), live scientific platform (U37), and preview-evidence runners (U40)** — staging grant / restricted-preview GO and GA still open.  
+2. **Scientific Companion text-first** soft-landed (**U41**, 21 Nov 2026) on KG/interrogative services — deepen live-evidence conversation next; voice/avatar remain Phase 3.  
 3. **Then** research networking and opportunity matching using the same scientific context.
 
 Extend what is already built — do **not** start another disconnected platform. Do **not** delay scientific-engine validation to finish avatar or networking (aligns with end-to-end vision Phases 1–2 in PR #596).
