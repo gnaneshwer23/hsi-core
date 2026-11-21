@@ -2,7 +2,8 @@
 
 **Phase:** Production readiness · ARCH-009 · Phase 1 scientific-engine hardening  
 **Scope:** Soft-land in-process crash/restart recovery paths for an orphan RUNNING fence: same-attempt resume, committed-artifact reconciliation, or abandon-then-retry — each gated by a U31 recovery decision.  
-**Not claimed:** Live OS multi-process E2E, research_admin credentials, Neon writes, scientific approval, or Gate C.
+**Not claimed (U34 alone):** Live OS multi-process E2E, research_admin credentials, Neon writes, scientific approval, or Gate C.  
+**Follow-on:** **U38** fixture proves OS multi-process abandon-then-retry; Neon live / research_admin HTTP remain owner-gated.
 
 ## Change
 

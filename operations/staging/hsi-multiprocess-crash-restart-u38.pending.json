@@ -1,0 +1,51 @@
+{
+  "schemaVersion": "hsi-multiprocess-crash-restart-u38-pending-1",
+  "purpose": "hsi_multiprocess_crash_restart_e2e_u38",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "FIXTURE_OS_READY_NEON_LIVE_GATED",
+  "closesSoftLandGaps": ["U33", "U34"],
+  "acceptedForScope": false,
+  "scientificApproval": false,
+  "gateCAutoApprove": false,
+  "productionWritesEnabled": false,
+  "inventedNeonHost": false,
+  "inventedResearchAdmin": false,
+  "honesty": {
+    "fixtureOsProcessesAreNotNeon": true,
+    "liveRequiresDisposableTarget": true,
+    "acceptedForScopeStaysFalse": true,
+    "noInventedHosts": true,
+    "noGateC": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun run staging:multiprocess:check",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun run staging:multiprocess:fixture",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "disposable_neon_target_ref": "NOT_APPROVED",
+    "live_neon_run_ref": "NOT_STARTED",
+    "research_admin_recovery_ref": "UNASSIGNED"
+  },
+  "surfaces": {
+    "exclusive_ownership_os_race": { "status": "ENGINEERING_READY", "acceptedForScope": false },
+    "crash_restart_orphan_resume": { "status": "ENGINEERING_READY", "acceptedForScope": false },
+    "sqlite_fixture_store": { "status": "ENGINEERING_READY", "acceptedForScope": false },
+    "neon_live_store": { "status": "OWNER_GATED", "acceptedForScope": false },
+    "disposable_neon_target": { "status": "OWNER_GATED", "acceptedForScope": false },
+    "research_admin_recovery_http": { "status": "OWNER_GATED", "acceptedForScope": false }
+  },
+  "notes": "U38 fixture proves OS multi-process exclusive ownership + crash/restart on SQLite. Live Neon requires disposable HSI target env — never invent hosts in git.",
+  "relatedSoftLands": [
+    "docs/engineering/HSI_U33_EXCLUSIVE_CHECKPOINT_OWNERSHIP_2026-11-21.md",
+    "docs/engineering/HSI_U34_CRASH_RESTART_RECOVERY_2026-11-21.md",
+    "docs/engineering/DB_ISOLATION_SUITE_RUNBOOK.md"
+  ]
+}
