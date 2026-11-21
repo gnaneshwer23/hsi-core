@@ -28,6 +28,11 @@ describe("researchApiErrors",()=>{
   expect(messageForResearchCode("RESEARCH_WRITES_DISABLED","workspace_create")).toContain("not available");
   expect(messageForResearchCode("INVALID_CREATE_INVESTIGATION","workspace_create")).toContain("Patient information");
   expect(messageForResearchCode("UNKNOWN_SCENARIO","live_run")).toContain("scenario");
+  expect(messageForResearchCode("DELIVERY_DENIED","delivery_load")).toContain("evidence brief");
+  expect(messageForResearchCode("BRIEF_UNAVAILABLE","brief_download")).toContain("Brief unavailable");
+  expect(messageForResearchCode("OUTCOME_DENIED","outcome_load")).toContain("Outcome unavailable");
+  expect(messageForResearchCode("REVIEW_QUEUE_DENIED","review_queue")).toContain("reviewer");
+  expect(messageForResearchCode("EVIDENCE_CONTEXT_DENIED","evidence_context")).toContain("evidence context");
   expect(messageForResearchCode("MADE_UP_CODE","generic")).toBeUndefined();
  });
 
@@ -64,5 +69,21 @@ describe("researchApiErrors",()=>{
    "fallback",
   );
   expect(denied).toContain("Research access has not been confirmed");
+ });
+
+ test("delivery and review contexts map codes and 429 Retry-After",async()=>{
+  const delivery=await researchApiErrorMessage(
+   jsonRes(403,{code:"DELIVERY_DENIED",error:"ignored"}),
+   "delivery_load",
+   "fallback",
+  );
+  expect(delivery).toContain("evidence brief");
+  const queue=await researchApiErrorMessage(
+   jsonRes(429,{code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},{"Retry-After":"120"}),
+   "review_queue",
+   "fallback",
+  );
+  expect(queue).toContain("Rate limit reached");
+  expect(queue).toContain("about 2 minute");
  });
 });
