@@ -2,6 +2,8 @@
 
 **Definitive product vision frozen — 18 November 2026:** See [`HSI_DEFINITIVE_PRODUCT_VISION.md`](./HSI_DEFINITIVE_PRODUCT_VISION.md). That freeze is the north star for product, scientific and engineering decisions: *Building the intelligence layer for understanding human biology.* Product promise: *Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.* Where purpose/USP/maturity wording conflicts with older sections below, **the freeze wins**.
 
+**What’s built so far — 21 November 2026:** [`../audits/HSI_WHATS_BUILT_SO_FAR_2026-11-21.md`](../audits/HSI_WHATS_BUILT_SO_FAR_2026-11-21.md) — implemented vs demo vs verified; register honesty; next milestone = harden scientific engine → text Companion → networking/opportunities.
+
 **Business vision execution audit — 19 November 2026:** [`HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md`](./HSI_BUSINESS_VISION_EXECUTION_AUDIT_2026-11-19.md) — repository truth vs USP A/B/C and the 13-step researcher journey; next five PRs; blockers; lean budget. **Build centre = complete scientific journey, not more dashboard shells.**
 
 **Public positioning correction — 13 November 2026 (explicit user direction):** HSI is one scientific intelligence technology. Do not market it as a portfolio, four-product ecosystem or collection of named product modules. The homepage, platform, navigation, public diagrams and search metadata must present the Living Knowledge Graph, evidence, context and scientific investigation under HSI alone. Older product-naming sections below are historical architectural **ownership** context and do not authorise public promotion. Existing data isolation, source permissions, no-PHI/no-CDS and independent human-review boundaries remain binding.
