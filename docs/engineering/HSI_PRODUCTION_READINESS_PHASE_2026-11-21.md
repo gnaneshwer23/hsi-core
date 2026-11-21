@@ -54,5 +54,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U18 Auth Retry-After + graph / researcher workspace envelopes | Done — see `HSI_U18_AUTH_AND_GRAPH_CLIENT_ENVELOPES_2026-11-21.md` |
 | U19 Interrogative delivery client envelopes | Done — see `HSI_U19_INTERROGATIVE_DELIVERY_CLIENT_ENVELOPES_2026-11-21.md` |
 | U20 Access-request alert + Retry-After polish | Done — see `HSI_U20_ACCESS_REQUEST_ALERT_RETRY_2026-11-21.md` |
+| U21 Remaining preview client envelopes | Done — see `HSI_U21_REMAINING_PREVIEW_CLIENT_ENVELOPES_2026-11-21.md` |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U20 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U21 soft-landed; owner evidence still required.

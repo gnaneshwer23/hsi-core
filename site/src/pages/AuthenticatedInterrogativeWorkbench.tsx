@@ -5,6 +5,8 @@ import {InvestigationDelivery} from "../components/InvestigationDelivery";
 import {InvestigationEvidenceGraph} from "../components/InvestigationEvidenceGraph";
 import {InterrogativeWorkbench} from "../components/InterrogativeWorkbench";
 import {validateInterrogativeInvestigation,type InterrogativeInvestigation} from "../../../src/interrogativeValidation";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
+const loadFallback="Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.";
 /** This page never accepts an investigation from URL JSON or local storage.
  * It loads only from a same-origin, session-authenticated server endpoint.
  * The endpoint must be implemented by the trusted HSI backend before deployment.
@@ -21,15 +23,18 @@ export function AuthenticatedInterrogativeWorkbench(){
   const controller=new AbortController();
   setStatus("Loading authorised investigation…");
   fetch("/api/research/interrogative/"+encodeURIComponent(id),{credentials:"same-origin",cache:"no-store",signal:controller.signal,headers:{"Accept":"application/json"}})
-   .then(async response=>{if(!response.ok)throw Error("Research investigation unavailable or access denied");return response.json() as Promise<unknown>})
+   .then(async response=>{
+    if(!response.ok)throw Error(await researchApiErrorMessage(response,"investigation_load",loadFallback));
+    return response.json() as Promise<unknown>;
+   })
    .then(value=>{
     if(controller.signal.aborted)return;
     const i=value as InterrogativeInvestigation;
     validateInterrogativeInvestigation(i);
-    if(i.id!==id)throw Error("Investigation identity mismatch");
+    if(i.id!==id)throw Error(loadFallback);
     setRecord(i);setStatus("");
    })
-   .catch(()=>{if(!controller.signal.aborted){setRecord(null);setStatus("Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.")}});
+   .catch(e=>{if(!controller.signal.aborted){setRecord(null);setStatus(e instanceof Error&&e.message?e.message:loadFallback)}});
   return ()=>controller.abort();
  },[id]);
  if(!id||!/^hsi-interrogative-[a-zA-Z0-9-]{8,100}$/.test(id)){

@@ -1,5 +1,5 @@
 import {useRef,useState} from "react";
-import {rateLimitedMessage} from "../lib/retryAfter";
+import {formatResearchApiError} from "../lib/researchApiErrors";
 
 type LookupState={status:"idle"|"loading"|"success"|"error";message:string;
   protein?:{accession:string;name:string;url:string;retrievedAt:string};
@@ -30,8 +30,18 @@ export function BiomedicalMetadataPanel(){
       const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
       if(!response.ok||record.ok===false){
         const fallback="Lookup failed. Public provider access may be blocked or unavailable.";
-        const serverError=typeof record.error==="string"?record.error:undefined;
-        setState({status:"error",message:response.status===429?rateLimitedMessage(response,serverError,fallback):(serverError??fallback)});
+        setState({
+          status:"error",
+          message:formatResearchApiError(
+            response,
+            {
+              code:typeof record.code==="string"?record.code:undefined,
+              error:typeof record.error==="string"?record.error:undefined,
+            },
+            "scientific_retrieval",
+            fallback,
+          ),
+        });
         return;
       }
       const protein=record.protein&&typeof record.protein==="object"&&!Array.isArray(record.protein)?record.protein as Record<string,unknown>:null;

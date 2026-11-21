@@ -1,5 +1,6 @@
 import {describe,expect,test} from "bun:test";
 import {
+  formatResearchApiError,
   messageForResearchCode,
   messageForResearchStatus,
   parseResearchErrorBody,
@@ -33,6 +34,10 @@ describe("researchApiErrors",()=>{
   expect(messageForResearchCode("OUTCOME_DENIED","outcome_load")).toContain("could not be verified");
   expect(messageForResearchCode("REVIEW_QUEUE_DENIED","review_queue")).toContain("reviewer");
   expect(messageForResearchCode("EVIDENCE_CONTEXT_DENIED","evidence_context")).toContain("evidence context");
+  expect(messageForResearchCode("RETRIEVAL_UNAVAILABLE","scientific_retrieval")).toContain("retrieval is unavailable");
+  expect(messageForResearchCode("INVALID_SEED","scientific_retrieval")).toContain("inputs");
+  expect(messageForResearchCode("REVIEW_HISTORY_DENIED","review_history")).toContain("Review history");
+  expect(messageForResearchCode("RESEARCH_RECORD_DENIED","investigation_load")).toContain("authorised investigation");
   expect(messageForResearchCode("MADE_UP_CODE","generic")).toBeUndefined();
  });
 
@@ -85,5 +90,18 @@ describe("researchApiErrors",()=>{
   );
   expect(queue).toContain("Rate limit reached");
   expect(queue).toContain("about 2 minute");
+ });
+
+ test("formatResearchApiError supports already-parsed scientific retrieval bodies",()=>{
+  const res=jsonRes(429,{code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},{"Retry-After":"90"});
+  const message=formatResearchApiError(
+   res,
+   {code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},
+   "scientific_retrieval",
+   "fallback",
+  );
+  expect(message).toContain("Rate limit reached");
+  expect(message).toContain("about 2 minute");
+  expect(messageForResearchStatus(403,"investigation_load")).toContain("authorised investigation");
  });
 });
