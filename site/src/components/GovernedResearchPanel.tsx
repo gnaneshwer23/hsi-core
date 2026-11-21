@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 type WorkbenchResult={schemaVersion:"hsi-workbench-1";focusNodeId:string;readOnly:true;nodes:{id:string;label:string;kind:string;layer:string}[];relationships:{id:string;subjectId:string;predicate:string;objectId:string;epistemicType:string;reviewState:string;evidenceAssessment:string;warnings:string[]}[];qa:{total:number;reviewed:number;contested:number;missingDossiers:number;warnings:string[]}};
 /** Optional authenticated research surface. No local catalogue is represented as governed data.
  * Backend endpoint is intentionally disabled unless explicitly configured.
@@ -15,9 +16,9 @@ export function GovernedResearchPanel({focusNodeId,endpoint}:{focusNodeId:string
    if(url.origin!==window.location.origin||url.pathname!=="/api/research/graph-workbench")throw Error("Research endpoint configuration rejected");
    url.searchParams.set("focusNodeId",focusNodeId);
    const response=await fetch(url.toString(),{credentials:"same-origin",headers:{Accept:"application/json"},cache:"no-store"});
-   if(!response.ok)throw Error(response.status===401||response.status===403?"Research authorisation required":"Governed research data unavailable");
+   if(!response.ok)throw Error(await researchApiErrorMessage(response,"generic","Governed research data unavailable"));
    const data:unknown=await response.json();
-   if(!data||typeof data!=="object"||!("schemaVersion" in data)||data.schemaVersion!=="hsi-workbench-1"||!("readOnly" in data)||data.readOnly!==true||!("focusNodeId" in data)||data.focusNodeId!==focusNodeId||!("relationships" in data)||!Array.isArray(data.relationships)||!("qa" in data)||!data.qa||typeof data.qa!=="object")throw Error("Invalid governed research response");
+   if(!data||typeof data!=="object"||!("schemaVersion" in data)||data.schemaVersion!=="hsi-workbench-1"||!("readOnly" in data)||data.readOnly!==true||!("focusNodeId" in data)||data.focusNodeId!==focusNodeId||!("relationships" in data)||!Array.isArray(data.relationships)||!("qa" in data)||!data.qa||typeof data.qa!=="object")throw Error("Governed research data unavailable");
    setResult(data as WorkbenchResult);
   }catch(e){setError(e instanceof Error?e.message:"Research data unavailable");}
   finally{setLoading(false)}

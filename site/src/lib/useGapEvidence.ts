@@ -1,6 +1,7 @@
 import {useState} from "react";
 import type {CooccurrenceResult} from "../../../src/investigation/cooccurrence";
 import {classify,type GapRow} from "./gapFinder";
+import {researchApiErrorMessage} from "./researchApiErrors";
 
 export type GapEvidence={status:"idle"|"loading"|"ready"|"error"|"unsearchable";row:GapRow|null;message:string;at:string};
 /** A name usable as one Europe PMC phrase: parenthetical text removed, no brackets, slashes or quotes. */
@@ -17,7 +18,7 @@ export function useGapEvidence(){
   setSt({status:"loading",row:null,message:"",at:""});
   try{
    const res=await fetch("/api/research/cooccurrence",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({terms:[ta,tb],pairs:[[0,1]]})});
-   if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The count could not be run (HTTP "+res.status+").")}
+   if(!res.ok)throw Error(await researchApiErrorMessage(res,"scientific_retrieval","The count could not be run (HTTP "+res.status+")."));
    const data=await res.json() as CooccurrenceResult,row=classify(data)[0]??null;
    setSt({status:"ready",row,message:"",at:data.generatedAt});
   }catch(e){setSt({status:"error",row:null,message:e instanceof Error?e.message:"The count could not be run.",at:""})}

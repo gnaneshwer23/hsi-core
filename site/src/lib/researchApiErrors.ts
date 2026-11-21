@@ -9,6 +9,7 @@ export type ResearchApiErrorContext=
  |"delivery_load"
  |"delivery_submit"
  |"delivery_revise"
+ |"delivery_decide"
  |"brief_download"
  |"outcome_load"
  |"review_queue"
@@ -40,7 +41,7 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "AUTH_REQUIRED":
   case "BACKEND_PROVIDER_SESSION_REQUIRED":
   case "BACKEND_DATABASE_SESSION_REQUIRED":
-   if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+   if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="delivery_decide"){
     return "Your session needs attention. Sign in again before continuing.";
    }
    if(context==="review_queue"||context==="review_history"){
@@ -62,7 +63,7 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    }
    return "Research access has not been confirmed. Check your research account or contact the research administrator.";
   case "RESEARCH_WRITES_DISABLED":
-   return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="evidence_context"
+   return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="delivery_decide"||context==="evidence_context"
     ?"Saving is not available for your account on this deployment. Your question has been kept here."
     :"Research writes are not enabled or authorized.";
   case "PUBLISHED_RELEASE_REQUIRED":
@@ -81,10 +82,15 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
     return "Save could not be confirmed. Retry to check the same request without creating a duplicate.";
    }
+   if(context==="delivery_decide"){
+    return "The decision could not be confirmed. Your input is retained. Retry the same request or refresh to check whether it was recorded.";
+   }
    if(context==="investigation_load"){
     return "Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.";
    }
    return "Your investigations could not be loaded. Please retry.";
+  case "INVESTIGATION_MISMATCH":
+   return "The decision could not be confirmed. Your input is retained. Retry the same request or refresh to check whether it was recorded.";
   case "DELIVERY_UNAVAILABLE":
   case "DELIVERY_DENIED":
    return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
@@ -168,7 +174,7 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
 /** Status honesty when a stable `code` is absent (older envelopes / test doubles). */
 export function messageForResearchStatus(status:number,context:ResearchApiErrorContext):string|undefined{
  if(status===401){
-  if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+  if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="delivery_decide"){
    return "Your session needs attention. Sign in again before continuing.";
   }
   if(context==="live_run")return "Sign in is required before a live investigation can run.";
@@ -183,6 +189,9 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
  if(status===403){
   if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
    return "Saving is not available for your account on this deployment. Your question has been kept here.";
+  }
+  if(context==="delivery_decide"){
+   return "The decision could not be confirmed. Your input is retained. Retry the same request or refresh to check whether it was recorded.";
   }
   if(context==="workspace_load"){
    return "Research access has not been confirmed. Check your research account or contact the research administrator.";
