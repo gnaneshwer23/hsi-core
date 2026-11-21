@@ -45,3 +45,5 @@ Stale `site/dist` can false-fail nav assertions — always rebuild first.
 | Public launch GO / NO-GO | _UNASSIGNED_ | Pending |
 
 **Not claimed by this packet:** scientific validation, clearance, staging persistence, or unrestricted researcher access.
+
+**Readiness soft-land:** [`docs/engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md`](../engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md) — engineering surfaces ready; owner visual acceptance + GO/NO-GO still required.

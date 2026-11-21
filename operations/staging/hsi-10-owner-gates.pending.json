@@ -76,6 +76,7 @@
     "operations/staging/hsi-10-owner-packets.pending.json",
     "operations/staging/hsi-10-scientific-reliability-u7.pending.json",
     "operations/staging/hsi-10-pilot-readiness-u8.pending.json",
+    "operations/staging/hsi-10-public-launch-readiness-u11.pending.json",
     "operations/staging/e2e-03-source-clearance.pending.json",
     "operations/staging/e2e-05-staging-save-resume.pending.json",
     "operations/staging/e2e-10-sme-gold-vault.pending.json",

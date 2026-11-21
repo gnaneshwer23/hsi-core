@@ -1,5 +1,9 @@
-import {useEffect,useRef,useState,type FormEvent} from "react";
+import {useEffect,useState,type FormEvent} from "react";
 import {Link,useSearchParams} from "react-router-dom";
+import {
+  fetchAccessRequestStatus,
+  submitAccessRequest,
+} from "../lib/accessRequestClient";
 import {
   clearAccessIntent,
   readAccessIntent,
@@ -27,7 +31,6 @@ export function AccessIntentPanel(){
   const [status,setStatus]=useState("");
   const [deliveryStatus,setDeliveryStatus]=useState<DeliveryStatus>("loading");
   const [busy,setBusy]=useState(false);
-  const statusAttempts=useRef(0);
 
   useEffect(()=>{
     const existing=readAccessIntent();
@@ -41,20 +44,12 @@ export function AccessIntentPanel(){
   useEffect(()=>{
     const controller=new AbortController();
     void (async()=>{
-      try{
-        const r=await fetch("/api/access-requests",{signal:controller.signal});
-        const b:unknown=await r.json();
-        if(controller.signal.aborted)return;
-        const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
-        if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
-        else if(r.ok)setDeliveryStatus("unavailable");
-        else setDeliveryStatus("unknown");
-      }catch{
-        if(controller.signal.aborted)return;
-        // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
-        statusAttempts.current+=1;
-        setDeliveryStatus("unavailable");
-      }
+      const result=await fetchAccessRequestStatus(fetch,controller.signal);
+      if(controller.signal.aborted)return;
+      // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
+      if(result.kind==="configured")setDeliveryStatus("configured");
+      else if(result.kind==="unavailable")setDeliveryStatus("unavailable");
+      else setDeliveryStatus("unavailable");
     })();
     return ()=>controller.abort();
   },[]);
@@ -97,52 +92,53 @@ export function AccessIntentPanel(){
     }
     setBusy(true);
     try{
-      const response=await fetch("/api/access-requests",{
-        method:"POST",
-        headers:{"content-type":"application/json"},
-        body:JSON.stringify({
-          question:trimmed,
-          email:emailSnapshot||undefined,
-          domain:domain||undefined,
-          scenarioId:scenario||undefined,
-          company_website:honeypotSnapshot,
-        }),
+      const result=await submitAccessRequest({
+        question:trimmed,
+        email:emailSnapshot||undefined,
+        domain:domain||undefined,
+        scenarioId:scenario||undefined,
+        company_website:honeypotSnapshot,
       });
-      const data:unknown=await response.json().catch(()=>({}));
-      const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
-      if(response.status===202&&record.ok===true&&record.providerAccepted!==true&&record.delivered!==true){
-        // Honeypot / quiet accept: do not claim provider delivery and do not show a failure.
-        setQuestion(trimmed);
-        setEmailHint(emailSnapshot);
-        setStatus("Request recorded. Nothing was claimed as delivered to the operator.");
-        return;
-      }
-      if(response.ok&&(record.providerAccepted===true||record.delivered===true)){
-        try{
-          writeAccessIntent({
-            question:trimmed,
-            domain:domain||undefined,
-            scenarioId:scenario||undefined,
-            emailHint:emailSnapshot||undefined,
-          });
-          setDraft(readAccessIntent());
-        }catch{
-          // Browser draft is optional after provider acceptance.
+      switch(result.kind){
+        case"quiet_accept":
+          setQuestion(trimmed);
+          setEmailHint(emailSnapshot);
+          setStatus(result.note);
+          break;
+        case"accepted":
+          try{
+            writeAccessIntent({
+              question:trimmed,
+              domain:domain||undefined,
+              scenarioId:scenario||undefined,
+              emailHint:emailSnapshot||undefined,
+            });
+            setDraft(readAccessIntent());
+          }catch{
+            // Browser draft is optional after provider acceptance.
+          }
+          setQuestion(trimmed);
+          setEmailHint(emailSnapshot);
+          setStatus(result.note);
+          break;
+        case"not_configured":
+          setDeliveryStatus("unavailable");
+          saveDraft();
+          setStatus("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.");
+          break;
+        case"rate_limited":
+          setStatus(result.error);
+          break;
+        case"refused":
+        case"error":
+          setStatus(result.error);
+          break;
+        default:{
+          const _exhaustive:never=result;
+          setStatus("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
+          void _exhaustive;
         }
-        setQuestion(trimmed);
-        setEmailHint(emailSnapshot);
-        setStatus(typeof record.note==="string"?record.note:"Accepted by the notification provider. Operator receipt is not confirmed. This does not grant research access.");
-        return;
       }
-      if(response.status===503||record.code==="ACCESS_REQUEST_NOT_CONFIGURED"){
-        setDeliveryStatus("unavailable");
-        saveDraft();
-        setStatus("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.");
-        return;
-      }
-      setStatus(typeof record.error==="string"?record.error:"The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
-    }catch{
-      setStatus("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
     }finally{setBusy(false)}
   }
 
@@ -156,16 +152,10 @@ export function AccessIntentPanel(){
 
   async function retryStatus(){
     setDeliveryStatus("loading");
-    try{
-      const r=await fetch("/api/access-requests");
-      const b:unknown=await r.json();
-      const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
-      if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
-      else if(r.ok)setDeliveryStatus("unavailable");
-      else setDeliveryStatus("unknown");
-    }catch{
-      setDeliveryStatus("unknown");
-    }
+    const result=await fetchAccessRequestStatus();
+    if(result.kind==="configured")setDeliveryStatus("configured");
+    else if(result.kind==="unavailable")setDeliveryStatus("unavailable");
+    else setDeliveryStatus("unknown");
   }
 
   const continueSignUp=signUpHref({
