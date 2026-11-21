@@ -1,10 +1,13 @@
 import {verifyReceiptedResearchOutcome,renderResearchOutcome,type ResearchOutcome} from "../../../src/researchOutcome";
 import type {EvidenceBrief} from "../../../src/investigationDelivery";
 import {deliveryDigest} from "./investigationDeliveryClient";
-import {researchApiErrorMessage} from "./researchApiErrors";
-export async function readResearchOutcomeResponse(response:Response,context:"outcome_load"="outcome_load"){
+import {researchApiErrorMessage,type ResearchApiErrorContext} from "./researchApiErrors";
+export async function readResearchOutcomeResponse(response:Response,context:ResearchApiErrorContext="outcome_load"){
+ const fallback=context==="context_audit"
+  ?"Audit-review access is unavailable or has changed. No review authority is inferred."
+  :"The research outcome could not be verified. Refresh to check current evidence and access.";
  if(!response.ok||!response.body){
-  throw Error(await researchApiErrorMessage(response,context,"The research outcome could not be verified. Refresh to check current evidence and access."));
+  throw Error(await researchApiErrorMessage(response,context,fallback));
  }
  const reader=response.body.getReader(),chunks:Uint8Array[]=[];let bytes=0;
  try{while(true){const item=await reader.read();if(item.done)break;bytes+=item.value.byteLength;if(bytes>2_100_000)throw Error("Outcome exceeds display budget");chunks.push(item.value)}}finally{await reader.cancel()}

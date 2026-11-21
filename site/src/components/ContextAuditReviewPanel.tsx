@@ -5,6 +5,17 @@ import { canonicalGraphContext } from '../../../src/investigationGraphContext';
 import type { ContextConflictAudit } from '../../../src/evidence/contextConflictAudit';
 import type { ContextAuditReviewRequest } from '../../../src/evidence/contextAuditReview';
 
+/** Prefer API honesty copy; never surface raw transport failures (e.g. Failed to fetch). */
+function researchHonestyMessage(err: unknown, fallback: string): string {
+  if (!(err instanceof Error)) return fallback;
+  const message = err.message.trim();
+  if (!message) return fallback;
+  if (/^failed to fetch$/i.test(message) || /networkerror/i.test(message) || err.name === 'AbortError')
+    return fallback;
+  if (/^abort(ed)?$/i.test(message) || /timed?\s*out/i.test(message)) return fallback;
+  return message;
+}
+
 /** Capabilities come from the authenticated backend; identities and scopes are never posted. */
 export function ContextAuditReviewPanel({
   investigationId,
@@ -38,7 +49,7 @@ export function ContextAuditReviewPanel({
       headers: { Accept: 'application/json' },
     })
       .then(async (r) => {
-        const text = await readResearchOutcomeResponse(r);
+        const text = await readResearchOutcomeResponse(r, 'context_audit');
         const view = JSON.parse(text),
           row = view.artifact;
         if (
@@ -62,10 +73,13 @@ export function ContextAuditReviewPanel({
           );
         }
       })
-      .catch(() => {
+      .catch((e) => {
         if (!c.signal.aborted)
           setMessage(
-            'Audit-review access is unavailable or has changed. No review authority is inferred.',
+            researchHonestyMessage(
+              e,
+              'Audit-review access is unavailable or has changed. No review authority is inferred.',
+            ),
           );
       })
       .finally(() => clearTimeout(timer));
@@ -102,7 +116,7 @@ export function ContextAuditReviewPanel({
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({ ...fields, requestId }),
       });
-      const saved = JSON.parse(await readResearchOutcomeResponse(r));
+      const saved = JSON.parse(await readResearchOutcomeResponse(r, 'context_audit'));
       if (
         saved.auditHash !== audit.auditHash ||
         saved.packageHash !== packageHash ||
@@ -110,21 +124,28 @@ export function ContextAuditReviewPanel({
         saved.scientificApproval !== false ||
         saved.graphPromotable !== false
       )
-        throw Error();
+        throw Error(
+          'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        );
       const { decisionHash, id, ...body } = saved;
       if (
         (await deliveryDigest(canonicalGraphContext(body))) !== decisionHash ||
         id !== 'audit-review-' + decisionHash.slice(0, 32)
       )
-        throw Error();
+        throw Error(
+          'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        );
       setAllowed(false);
       setMessage(
         'This audit assessment was recorded. Scientific approval and graph publication remain separate.',
       );
       onReviewed();
-    } catch {
+    } catch (err) {
       setMessage(
-        'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        researchHonestyMessage(
+          err,
+          'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        ),
       );
     } finally {
       setBusy(false);

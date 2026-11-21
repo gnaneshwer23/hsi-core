@@ -7,6 +7,7 @@ import {triageResearchQuestion} from "@hsi/scientificDiscoveryQuestionTriage";
 import {useMemo,useState} from "react";
 import {Link} from "react-router-dom";
 import {buildScientificInvestigation,EXAMPLE_QUESTIONS,renderInvestigationJson} from "@hsi/scientificInvestigation";
+import {formatResearchApiError} from "../lib/researchApiErrors";
 import "../styles/scientific-discovery-experience.css";
 
 const VIEWS=["Question","Plan","Evidence","Mechanisms","Disagreements","Hypotheses","Report"] as const;
@@ -39,15 +40,36 @@ export function ScientificDiscoveryExperience(){
  const exactQuestion=triage.eligibleFixture===questionId;
  async function inspectAbstract(pmid:string){
   setAbstractLoading(true);setAbstractContext(null);setAbstractError("");
-  try{const response=await fetch("/api/scientific-abstract?pmid="+encodeURIComponent(pmid));const data=await response.json();if(!response.ok)throw new Error(data.error??"Abstract unavailable");setAbstractContext(data as AbstractContext);}
+  try{
+   const response=await fetch("/api/scientific-abstract?pmid="+encodeURIComponent(pmid));
+   const data=await response.json() as AbstractContext&{code?:string;error?:string};
+   if(!response.ok){
+    throw new Error(formatResearchApiError(
+     response,
+     {code:typeof data.code==="string"?data.code:undefined,error:typeof data.error==="string"?data.error:undefined},
+     "scientific_retrieval",
+     "Abstract unavailable",
+    ));
+   }
+   setAbstractContext(data as AbstractContext);
+  }
   catch(e){setAbstractError(e instanceof Error?e.message:"Abstract unavailable");}
   finally{setAbstractLoading(false);}
  }
  async function searchLiterature(){
   if(draft.trim().length<5||draft.trim().length>400)return;
   setLiteratureState("loading");setLiterature(null);setLiveTrace(null);setLiteratureError("");setAbstractContext(null);setAbstractError("");
-  try{const response=await fetch("/api/scientific-investigation-trace?q="+encodeURIComponent(draft.trim()),{headers:{Accept:"application/json"}});
-   const payload=await response.json();if(!response.ok)throw new Error(payload.error??"Retrieval failed");
+  try{
+   const response=await fetch("/api/scientific-investigation-trace?q="+encodeURIComponent(draft.trim()),{headers:{Accept:"application/json"}});
+   const payload=await response.json() as LiveInvestigationTrace&{code?:string;error?:string};
+   if(!response.ok){
+    throw new Error(formatResearchApiError(
+     response,
+     {code:typeof payload.code==="string"?payload.code:undefined,error:typeof payload.error==="string"?payload.error:undefined},
+     "scientific_retrieval",
+     "Retrieval failed",
+    ));
+   }
    setLiveTrace(payload as LiveInvestigationTrace);setLiterature((payload as LiveInvestigationTrace).bibliography);setLiteratureState("idle");
   }catch(e){setLiteratureState("error");setLiteratureError(e instanceof Error?e.message:"Retrieval failed");}
  }
