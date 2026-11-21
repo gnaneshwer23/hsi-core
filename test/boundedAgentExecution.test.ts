@@ -280,6 +280,43 @@ describe("bounded agent execution durable traces", () => {
     }
   });
 
+  test("orphan running checkpoint refuses continue without recoverStage", async () => {
+    const checkpointStore = createMemoryCheckpointStore();
+    checkpointStore.rows.set("inv-orphan-1:evidence-retrieval", {
+      schemaVersion: "hsi-agent-checkpoint-1",
+      investigationId: "inv-orphan-1",
+      taskId: "evidence-retrieval",
+      attempt: 1,
+      state: "running",
+      version: 1,
+      inputHash: "c".repeat(64),
+      outputRef: null,
+      errorCode: null,
+      startedAt: retrievedAt,
+      finishedAt: null,
+    });
+
+    const result = await runBoundedAgentExecution({
+      investigationId: "inv-orphan-1",
+      question: "Tfh IL-21 systemic sclerosis fibrosis",
+      entities: {freeTextTerms: ["Tfh IL-21"]},
+      graphRelease,
+      now: () => retrievedAt,
+      fetcher: mockFetcher(),
+      cache: createMemoryRetrievalCache(),
+      checkpointStore,
+      artifactStore: createMemoryFencedArtifactStore({checkpointStore}),
+      persistStore: createMemoryDynamicEvidencePersistStore(),
+    });
+
+    expect(result.status).toBe("failed");
+    const retrieval = result.stages.find((s) => s.stageId === "evidence-retrieval");
+    expect(retrieval?.status).toBe("failed");
+    // Orphan RUNNING must not be completed or silently replayed.
+    expect(checkpointStore.rows.get("inv-orphan-1:evidence-retrieval")?.state).toBe("running");
+    expect(retrieval?.artifact).toBeNull();
+  });
+
   test("failed stage remains visible and requires explicit recovery", async () => {
     const checkpointStore = createMemoryCheckpointStore();
     const failStore = createMemoryFencedArtifactStore({checkpointStore});

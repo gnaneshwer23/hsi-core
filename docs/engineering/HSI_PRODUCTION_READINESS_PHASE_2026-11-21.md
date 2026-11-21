@@ -58,5 +58,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U22 Reviewer / governed client envelopes | Done — see `HSI_U22_REVIEWER_GOVERNED_CLIENT_ENVELOPES_2026-11-21.md` |
 | U23 Context-audit / discovery client envelopes | Done — see `HSI_U23_AUDIT_DISCOVERY_CLIENT_ENVELOPES_2026-11-21.md` |
 | U24 Agent checkpoint resume + reconciliation apply | Done — see `HSI_U24_AGENT_CHECKPOINT_RESUME_2026-11-21.md` (live agent workloads still not approved) |
+| U25 Agent tool fence + orphan RUNNING refuse | Done — see `HSI_U25_AGENT_TOOL_FENCE_2026-11-21.md` (live agent workloads still not approved) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U24 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U25 soft-landed; owner evidence still required.
