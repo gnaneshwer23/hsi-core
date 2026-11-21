@@ -29,6 +29,6 @@ Related: [`HSI_1_0_ACCEPTANCE_STATUS_2026-11-20.md`](./HSI_1_0_ACCEPTANCE_STATUS
 ## Owner next steps
 
 1. Approve a disposable HSI staging target privately.  
-2. Capture continuous Ask→brief→save evidence under a real grant.  
-3. Update pending JSON refs only with real evidence identifiers.  
+2. Capture continuous Ask→brief→save evidence under a real grant via `bun run staging:preview-evidence:live` (U40).  
+3. Update pending JSON refs only with real evidence identifiers from the U40 fill proposal.  
 4. Keep migrations held and production writes disabled until separately authorised.

@@ -2,6 +2,7 @@
 
 **Status:** Engineering soft-land. CI-safe catalog of L1 restricted-preview readiness vs owner staging-grant GO.  
 **U37 update (21 Nov 2026):** Live scientific platform engineering composition is owner-authorized; staging grant + restricted-preview GO remain open.  
+**U40 update (21 Nov 2026):** Restricted-preview auth + continuous-journey evidence runners are owner-authorized (`staging:preview-evidence:*`). Fill pending refs only with real staging digests; preview GO / checklist #1 remain open.  
 **Not claimed:** Restricted preview acceptance, staging hosts, grants, production writes, or scientific approval.
 
 Typed catalog: [`src/operations/hsi10RestrictedPreviewReadinessU12SoftLand.ts`](../../src/operations/hsi10RestrictedPreviewReadinessU12SoftLand.ts).  
@@ -39,8 +40,9 @@ Depends on: [`HSI_10_CONTINUOUS_JOURNEY_EVIDENCE_SOFT_LAND.md`](./HSI_10_CONTINU
 ## Owner next steps
 
 1. Approve disposable HSI staging target privately.  
-2. Provision a preview grant; capture continuous journey evidence.  
-3. Keep production writes false; Human #5 before durable staging save.  
-4. Record restricted-preview GO/NO-GO privately — U37 engineering authorization is not that GO.
+2. Provision a preview grant; capture continuous journey evidence via `bun run staging:preview-evidence:live` (U40).  
+3. Apply non-placeholder digests from the U40 fill proposal to this pending worksheet and the continuous-journey pending worksheet.  
+4. Keep production writes false; Human #5 before durable staging save.  
+5. Record restricted-preview GO/NO-GO privately — U37/U40 engineering authorization is not that GO.
 
 **Never invent** staging hosts, grants, or preview GO in this soft-land.

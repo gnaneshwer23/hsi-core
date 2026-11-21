@@ -22,6 +22,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 - Repository development and staging schema: ACCEPTED for continued testing.
 - Engineering research-agent runtime build: **OWNER-APPROVED** (21 November 2026) — see U35 `hsiResearchAgentAuthorization` / `hsiResearchAgentRuntime`; **U39** expands checkpointed roles beyond planner→contradiction. Still **not** a claim of live multi-process staging E2E, Gate C, PHI, or unrestricted researcher GA.
 - Live scientific platform L1 engineering composition: **OWNER-APPROVED** (21 November 2026) — see U37 `hsiLiveScientificPlatformAuthorization` / `hsiLiveScientificPlatformRuntime`. Still **not** restricted-preview GO, staging grant acceptance, writes, Gate C, PHI, or GA.
+- Restricted-preview auth + continuous-journey evidence runners: **OWNER-APPROVED** (21 November 2026) — see U40 `hsiRestrictedPreviewEvidenceAuthorization` / `staging:preview-evidence:*`. Still **not** restricted-preview GO, checklist #1 verified, invented hosts/grants, writes, Gate C, PHI, or GA.
 - Clinical, patient-level, production and public deployment: NOT APPROVED.
 
 ## Required next actions
