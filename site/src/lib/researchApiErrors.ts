@@ -85,7 +85,7 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "OUTCOME_DENIED":
   case "OUTCOME_RECEIPT_UNAVAILABLE":
   case "INVALID_OUTCOME_FORMAT":
-   return "Outcome unavailable. Refresh the brief and verify access before retrying.";
+   return "The research outcome could not be verified. Refresh to check current evidence and access.";
   case "REVISION_UNAVAILABLE":
    return "Revision creation could not be confirmed. Your response is kept here. Retry the same request or refresh to find an existing linked revision.";
   case "REVIEW_QUEUE_UNAVAILABLE":
@@ -162,7 +162,7 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
    return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
   }
   if(context==="outcome_load"){
-   return "Outcome unavailable. Refresh the brief and verify access before retrying.";
+   return "The research outcome could not be verified. Refresh to check current evidence and access.";
   }
   if(context==="evidence_context"){
    return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";

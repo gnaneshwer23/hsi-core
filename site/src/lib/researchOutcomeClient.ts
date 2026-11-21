@@ -4,7 +4,7 @@ import {deliveryDigest} from "./investigationDeliveryClient";
 import {researchApiErrorMessage} from "./researchApiErrors";
 export async function readResearchOutcomeResponse(response:Response,context:"outcome_load"="outcome_load"){
  if(!response.ok||!response.body){
-  throw Error(await researchApiErrorMessage(response,context,"Outcome unavailable. Refresh the brief and verify access before retrying."));
+  throw Error(await researchApiErrorMessage(response,context,"The research outcome could not be verified. Refresh to check current evidence and access."));
  }
  const reader=response.body.getReader(),chunks:Uint8Array[]=[];let bytes=0;
  try{while(true){const item=await reader.read();if(item.done)break;bytes+=item.value.byteLength;if(bytes>2_100_000)throw Error("Outcome exceeds display budget");chunks.push(item.value)}}finally{await reader.cancel()}
@@ -22,7 +22,10 @@ export async function fetchResearchOutcome(brief:EvidenceBrief,signal:AbortSigna
   return await verifyReceiptedResearchOutcome(value,JSON.parse(await readResearchOutcomeResponse(receipt)),brief,deliveryDigest);
  }catch(e){
   // Keep API honesty envelopes; never surface internal digest/binding throw text.
-  if(e instanceof Error&&/^(Sign in|Research access|Outcome unavailable|Rate limit|Verify your email)/.test(e.message))throw e;
+  if(
+   e instanceof Error&&
+   (/^(Sign in|Research access|Rate limit|Verify your email)/.test(e.message)||e.message.includes("could not be verified"))
+  )throw e;
   throw Error(outcomeUnavailable);
  }
 }

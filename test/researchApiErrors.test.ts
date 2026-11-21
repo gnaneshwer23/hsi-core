@@ -30,7 +30,7 @@ describe("researchApiErrors",()=>{
   expect(messageForResearchCode("UNKNOWN_SCENARIO","live_run")).toContain("scenario");
   expect(messageForResearchCode("DELIVERY_DENIED","delivery_load")).toContain("evidence brief");
   expect(messageForResearchCode("BRIEF_UNAVAILABLE","brief_download")).toContain("Brief unavailable");
-  expect(messageForResearchCode("OUTCOME_DENIED","outcome_load")).toContain("Outcome unavailable");
+  expect(messageForResearchCode("OUTCOME_DENIED","outcome_load")).toContain("could not be verified");
   expect(messageForResearchCode("REVIEW_QUEUE_DENIED","review_queue")).toContain("reviewer");
   expect(messageForResearchCode("EVIDENCE_CONTEXT_DENIED","evidence_context")).toContain("evidence context");
   expect(messageForResearchCode("MADE_UP_CODE","generic")).toBeUndefined();
