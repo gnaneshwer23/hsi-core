@@ -69,5 +69,9 @@
       "reuse": "next-f-soak-pilot-release"
     }
   },
-  "notes": "Map only. Fill private refs after real humans and approved staging evidence exist. Soft-land never invents acceptance, SME gold, or pilot invites."
+  "notes": "Map only. Fill private refs after real humans and approved staging evidence exist. Continuous journey evidence soft-land: operations/staging/hsi-10-continuous-journey-evidence.pending.json. Soft-land never invents acceptance, SME gold, or pilot invites. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/hsi-10-continuous-journey-evidence.pending.json",
+    "operations/staging/e2e-05-staging-save-resume.pending.json"
+  ]
 }

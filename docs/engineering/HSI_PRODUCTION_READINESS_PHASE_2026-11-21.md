@@ -28,3 +28,16 @@ Launch in stages:
 5. U5+ — Reliability hardening and owner packets as authorised  
 
 Do **not** enable held migrations, production research writes, or unapproved deploys from this phase alone.
+
+
+## Execution progress (this branch)
+
+| Unit | Status |
+| --- | --- |
+| U1 Register / STATUS / acceptance reconcile | Done on this PR |
+| U2 Public launch QA packet + evidence | Done on this PR |
+| U3 Open PR hygiene note | Done (owner still closes PRs) |
+| U4 Continuous journey evidence soft-land | Done (owner fills staging refs) |
+| U5–U8 | Not started — owner / follow-on PRs |
+
+Verified acceptance remains **0 / 8**.

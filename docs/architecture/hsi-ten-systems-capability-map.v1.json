@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-ten-systems-capability-map-1",
-  "frozenAt": "2026-11-18",
+  "frozenAt": "2026-11-21",
   "vision": "docs/strategy/HSI_DEFINITIVE_PRODUCT_VISION.md",
   "architecture": "docs/architecture/HSI_TECHNOLOGY_ARCHITECTURE_TEN_SYSTEMS.md",
   "honesty": {
@@ -10,8 +10,18 @@
     "writesEnabledProduction": false,
     "gateCAutoApprove": false
   },
-  "statusVocabulary": ["shipped", "partial", "contract_only", "later"],
-  "buildStages": ["A", "B", "C", "D"],
+  "statusVocabulary": [
+    "shipped",
+    "partial",
+    "contract_only",
+    "later"
+  ],
+  "buildStages": [
+    "A",
+    "B",
+    "C",
+    "D"
+  ],
   "priorityDifferentiator": "03",
   "systems": [
     {
@@ -19,7 +29,10 @@
       "name": "Biomedical Data & Evidence Ingestion",
       "band": "foundation",
       "status": "partial",
-      "stageFit": ["A", "B"],
+      "stageFit": [
+        "A",
+        "B"
+      ],
       "anchors": [
         "src/evidence/liveSources.ts",
         "src/evidence/europePmcBibliographicLookup.ts",
@@ -40,7 +53,10 @@
       "name": "Biomedical Ontology & Knowledge Graph",
       "band": "foundation",
       "status": "partial",
-      "stageFit": ["B", "C"],
+      "stageFit": [
+        "B",
+        "C"
+      ],
       "anchors": [
         "src/knowledgeGraph/domainGraph.ts",
         "src/knowledgeGraph/claimGraph.ts",
@@ -60,7 +76,10 @@
       "name": "Biological Context Intelligence",
       "band": "core_usp",
       "status": "partial",
-      "stageFit": ["B", "C"],
+      "stageFit": [
+        "B",
+        "C"
+      ],
       "anchors": [
         "src/knowledgeGraph/evidenceContextPassport.ts",
         "src/knowledgeGraph/passportEvidenceTable.ts",
@@ -79,7 +98,10 @@
       "name": "Scientific Verification Engine",
       "band": "core_usp",
       "status": "partial",
-      "stageFit": ["A", "C"],
+      "stageFit": [
+        "A",
+        "C"
+      ],
       "anchors": [
         "src/evidence/entailmentVerifier.ts",
         "src/researchV2/scientificVerification.ts",
@@ -99,7 +121,10 @@
       "name": "Mechanism Investigation Engine",
       "band": "core",
       "status": "partial",
-      "stageFit": ["C", "D"],
+      "stageFit": [
+        "C",
+        "D"
+      ],
       "anchors": [
         "src/immuneMechanismInvestigation.ts",
         "src/helixMechanism.ts",
@@ -109,7 +134,7 @@
       ],
       "hsi1Gaps": [
         "Model-backed HELIX not enabled in production",
-        "Live Ask→mechanism→brief blocked on writes (#5)",
+        "Live Ask\u2192mechanism\u2192brief blocked on writes (#5)",
         "Coverage thin beyond SSc/RA starters"
       ]
     },
@@ -118,7 +143,10 @@
       "name": "Contradiction & Research Gap Intelligence",
       "band": "core_usp",
       "status": "partial",
-      "stageFit": ["B", "C"],
+      "stageFit": [
+        "B",
+        "C"
+      ],
       "anchors": [
         "src/knowledgeGraph/gapIndex.ts",
         "src/knowledgeGraph/contextConflict.ts",
@@ -129,7 +157,7 @@
       "hsi1Gaps": [
         "Live support/oppose + scientist adjudication unaccepted",
         "Contradiction Neon migrations held",
-        "Eng gap classes ≠ SME-ranked gaps"
+        "Eng gap classes \u2260 SME-ranked gaps"
       ]
     },
     {
@@ -137,7 +165,10 @@
       "name": "Scientific Investigation Orchestration",
       "band": "core",
       "status": "partial",
-      "stageFit": ["B", "C"],
+      "stageFit": [
+        "B",
+        "C"
+      ],
       "anchors": [
         "src/hsiAgentOrchestrator.ts",
         "src/hsiAgentDurableCheckpoint.ts",
@@ -156,7 +187,9 @@
       "name": "Scientific Decision Memory",
       "band": "core",
       "status": "contract_only",
-      "stageFit": ["C"],
+      "stageFit": [
+        "C"
+      ],
       "anchors": [
         "src/researchOutcome.ts",
         "src/correctionProvenance.ts",
@@ -175,7 +208,9 @@
       "name": "Hypothesis & Experimental Intelligence",
       "band": "later",
       "status": "later",
-      "stageFit": ["D"],
+      "stageFit": [
+        "D"
+      ],
       "anchors": [
         "src/evidence/hypothesisRegistry.ts",
         "src/evidence/falsifiableExperimentProposals.ts",
@@ -192,7 +227,9 @@
       "name": "Unified Scientific Research Workbench",
       "band": "ux",
       "status": "partial",
-      "stageFit": ["C"],
+      "stageFit": [
+        "C"
+      ],
       "anchors": [
         "site/src/pages/ScientificResearchWorkbench.tsx",
         "src/researchWorkbench.ts",
@@ -201,26 +238,50 @@
         "src/server/researcherWorkspaceApi.ts"
       ],
       "hsi1Gaps": [
-        "Parallel workbench entry points — reconnect nav, do not rebuild",
+        "Parallel workbench entry points \u2014 reconnect nav, do not rebuild",
         "Authenticated production journey not currently available (writes off)",
-        "Device-local saves still default for some ledgers"
+        "Device-local saves still default for some ledgers",
+        "Continuous /research/workspace trail shipped; staging grant acceptance open",
+        "Public diagram-first landings shipped; visual owner sign-off open"
       ]
     }
   ],
   "sharedInfrastructure": {
-    "database": ["docs/NEON_PROJECT_MAP.md", "src/db/neonGuard.ts", "src/db/migrationHolds.ts"],
-    "deploy": ["site/api/research/[...path].ts", "src/server/vercelResearch.ts"],
-    "auth": ["src/server/neonAuthGateway.ts", "site/api/auth/[...path].ts"],
-    "aiProviders": ["src/modelProviders/index.ts", "src/liveModels.ts"],
-    "ci": [".github/workflows/research-foundation.yml", ".github/workflows/production-probe.yml"],
-    "monitoring": ["src/operations/opsAlertCatalog.ts"],
-    "evaluation": ["evaluation/", "src/goldEvaluationSuite.ts"]
+    "database": [
+      "docs/NEON_PROJECT_MAP.md",
+      "src/db/neonGuard.ts",
+      "src/db/migrationHolds.ts"
+    ],
+    "deploy": [
+      "site/api/research/[...path].ts",
+      "src/server/vercelResearch.ts"
+    ],
+    "auth": [
+      "src/server/neonAuthGateway.ts",
+      "site/api/auth/[...path].ts"
+    ],
+    "aiProviders": [
+      "src/modelProviders/index.ts",
+      "src/liveModels.ts"
+    ],
+    "ci": [
+      ".github/workflows/research-foundation.yml",
+      ".github/workflows/production-probe.yml"
+    ],
+    "monitoring": [
+      "src/operations/opsAlertCatalog.ts"
+    ],
+    "evaluation": [
+      "evaluation/",
+      "src/goldEvaluationSuite.ts"
+    ]
   },
   "hsi1CriticalPath": [
     "Close rights (#2)",
     "Staging writes (#5) under fail-closed gates",
     "Passport-complete reviewed slice",
     "Dual-verifier with SME gold (#4)",
-    "One authenticated workbench Ask→brief→export"
-  ]
+    "One authenticated workbench Ask\u2192brief\u2192export"
+  ],
+  "postMergeNote": "Public landings + Demo Universe + continuous trail merged; acceptance still owner-gated. Premortem is not a release blocker."
 }
