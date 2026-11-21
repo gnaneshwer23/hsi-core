@@ -1,6 +1,7 @@
 import {describe,expect,test} from "bun:test";
 import {
   messageForResearchCode,
+  messageForResearchStatus,
   parseResearchErrorBody,
   researchApiErrorMessage,
 } from "../site/src/lib/researchApiErrors";
@@ -46,5 +47,22 @@ describe("researchApiErrors",()=>{
   );
   expect(limited).toContain("Rate limit reached");
   expect(limited).toContain("about 10 minute");
+ });
+
+ test("workspace load without a code prefers status honesty over opaque server error tokens",async()=>{
+  expect(messageForResearchStatus(401,"workspace_load")).toContain("Sign in");
+  expect(messageForResearchStatus(403,"workspace_load")).toContain("Research access has not been confirmed");
+  const auth=await researchApiErrorMessage(
+   jsonRes(401,{error:"Authentication required"}),
+   "workspace_load",
+   "fallback",
+  );
+  expect(auth).toContain("Sign in with a verified research account");
+  const denied=await researchApiErrorMessage(
+   jsonRes(403,{error:"Denied"}),
+   "workspace_load",
+   "fallback",
+  );
+  expect(denied).toContain("Research access has not been confirmed");
  });
 });

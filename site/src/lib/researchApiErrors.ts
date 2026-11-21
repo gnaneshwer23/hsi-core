@@ -94,8 +94,34 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
  }
 }
 
+/** Status honesty when a stable `code` is absent (older envelopes / test doubles). */
+export function messageForResearchStatus(status:number,context:ResearchApiErrorContext):string|undefined{
+ if(status===401){
+  return context==="workspace_create"
+   ?"Your session needs attention. Sign in again before saving."
+   :context==="live_run"
+   ?"Sign in is required before a live investigation can run."
+   :"Sign in with a verified research account to open your investigations.";
+ }
+ if(status===403){
+  return context==="workspace_create"
+   ?"Saving is not available for your account on this deployment. Your question has been kept here."
+   :context==="workspace_load"
+   ?"Research access has not been confirmed. Check your research account or contact the research administrator."
+   :undefined;
+ }
+ if(status===409&&context==="workspace_create"){
+  return "The selected release or save request is no longer available. Refresh the workspace before trying again.";
+ }
+ if(status===400&&context==="workspace_create"){
+  return "Use a non-identifying research question of up to 500 characters. Patient information is not permitted.";
+ }
+ return undefined;
+}
+
 /**
- * Prefer stable `code` honesty, then server `error` text, then context fallback.
+ * Prefer stable `code` honesty, then HTTP-status honesty for workspace surfaces,
+ * then server `error` text, then context fallback.
  * On 429 / RATE_LIMITED, append a Retry-After wait hint when present.
  */
 export async function researchApiErrorMessage(
@@ -105,8 +131,9 @@ export async function researchApiErrorMessage(
 ):Promise<string>{
  const body=await parseResearchErrorBody(res);
  const fromCode=messageForResearchCode(body.code,context);
+ const fromStatus=fromCode?undefined:messageForResearchStatus(res.status,context);
  const serverError=body.error?.trim();
- const base=fromCode??(serverError||fallback);
+ const base=fromCode??fromStatus??(serverError||fallback);
  if(res.status===429||body.code==="RATE_LIMITED"){
   return rateLimitedMessage(res,base,fallback);
  }
