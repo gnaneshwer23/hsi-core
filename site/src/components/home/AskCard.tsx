@@ -1,19 +1,18 @@
 import {useId,useState} from "react";
 import {Link,useNavigate} from "react-router-dom";
 import {ASK_MAX,askLengthOk} from "../../lib/askClient";
+import {formatRetryAfterHint} from "../../lib/retryAfter";
 import {useAsk} from "../../lib/useAsk";
 import {HowProducedPanel} from "../HowProducedPanel";
 import {Icon} from "./AppIcons";
 
- const FAIL:Record<string,string>={
+const FAIL:Record<string,string>={
  unavailable:"Ask is not available on this deployment yet. Nothing was run.",
  invalid:"Ask a question between 8 and 500 characters.",
  error:"The question could not be answered. No findings were generated.",
 };
 function limitedMessage(retryAfterSeconds?:number):string{
- if(retryAfterSeconds===undefined)return"You have reached the hourly limit for questions. Try again later.";
- const minutes=Math.max(1,Math.ceil(retryAfterSeconds/60));
- return`You have reached the hourly limit for questions. Try again in about ${minutes} minute${minutes===1?"":"s"}.`;
+ return`You have reached the hourly limit for questions. ${formatRetryAfterHint(retryAfterSeconds)}`;
 }
 /** Signed-in question box. Routes to curated investigations only, and says so. No agent names; the trace shows how the answer was produced. */
 export function AskCard(){

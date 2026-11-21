@@ -2,6 +2,7 @@ import {useState} from "react";
 import {Link,useSearchParams} from "react-router-dom";
 import {addTargetPick} from "../../../src/investigation/hypothesisLedger";
 import type {TargetCandidate} from "../../../src/investigation/targetProfile";
+import {formatRetryAfterHint} from "../lib/retryAfter";
 import {fetchTargets,type TargetOutcome} from "../lib/targetEvidenceClient";
 import {useLedger} from "../lib/useLedger";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
@@ -9,7 +10,11 @@ import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
 
 const DISEASES=[{id:"MONDO_0005100",label:"Systemic sclerosis"},{id:"MONDO_0008383",label:"Rheumatoid arthritis"},{id:"MONDO_0007915",label:"Systemic lupus erythematosus"},{id:"MONDO_0005148",label:"Type 2 diabetes mellitus"}];
-const WHY:Record<string,string>={not_found:"Open Targets does not recognise that disease id.",limited:"Too many requests. Try again in a few minutes.",invalid:"Enter an id such as MONDO_0005100 or EFO_0000384.",unavailable:"Open Targets could not be reached, so no targets are shown. Nothing was generated."};
+const WHY:Record<string,string>={not_found:"Open Targets does not recognise that disease id.",invalid:"Enter an id such as MONDO_0005100 or EFO_0000384.",unavailable:"Open Targets could not be reached, so no targets are shown. Nothing was generated."};
+function whyMessage(out:Exclude<TargetOutcome,{kind:"ok"}>):string{
+ if(out.kind==="limited")return`Too many requests. ${formatRetryAfterHint(out.retryAfterSeconds,"Try again in a few minutes.")}`;
+ return WHY[out.kind];
+}
 const pct=(n:number)=>n.toFixed(2);
 
 function Row({c,hyps,onPick}:{c:TargetCandidate;hyps:{id:string;statement:string}[];onPick:(hyp:string,c:TargetCandidate,reason:string)=>string}){
@@ -55,7 +60,7 @@ export function TargetWorkflowPage(){
       <div className="rh-row"><button type="submit" className="rh-primary" disabled={busy}>{busy?"Reading Open Targets…":"Find candidate targets"}</button></div>
      </form>
      <div role="status" aria-live="polite">
-      {out&&out.kind!=="ok"&&<p className="rh-err" role="alert">{WHY[out.kind]}</p>}
+      {out&&out.kind!=="ok"&&<p className="rh-err" role="alert">{whyMessage(out)}</p>}
       {out?.kind==="ok"&&<p className="rh-note">{out.profile.diseaseName} ({out.profile.diseaseId}): showing the top {out.profile.shown} of {out.profile.totalAssociations} direct associations, read {out.profile.retrievedAt.slice(0,10)}. {out.caveat}</p>}
      </div>
     </section>

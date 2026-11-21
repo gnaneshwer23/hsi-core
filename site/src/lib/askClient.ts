@@ -1,4 +1,5 @@
 import type {Run} from "./workspaceView";
+import {parseRetryAfterSeconds} from "./retryAfter";
 /** Browser client for POST /api/ask. Maps every outcome to a state the UI can show honestly; never invents an answer. */
 export type AskTrace={matchedBy:string;question:string;sources:string[];modelCheck:string};
 export type AskOutcome=
@@ -8,12 +9,6 @@ export type AskOutcome=
 export const ASK_MIN=8,ASK_MAX=500;
 export const askLengthOk=(q:string)=>{const n=q.trim().length;return n>=ASK_MIN&&n<=ASK_MAX};
 const rec=(v:unknown):v is Record<string,unknown>=>typeof v==="object"&&v!==null&&!Array.isArray(v);
-function parseRetryAfterSeconds(res:Response):number|undefined{
- const raw=res.headers.get("Retry-After");
- if(!raw)return undefined;
- const n=Number(raw);
- return Number.isFinite(n)&&n>0?Math.floor(n):undefined;
-}
 export async function askQuestion(question:string,request:typeof fetch=fetch):Promise<AskOutcome>{
  if(!askLengthOk(question))return {kind:"invalid"};
  let res:Response;

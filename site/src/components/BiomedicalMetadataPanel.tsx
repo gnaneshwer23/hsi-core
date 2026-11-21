@@ -1,4 +1,5 @@
 import {useRef,useState} from "react";
+import {rateLimitedMessage} from "../lib/retryAfter";
 
 type LookupState={status:"idle"|"loading"|"success"|"error";message:string;
   protein?:{accession:string;name:string;url:string;retrievedAt:string};
@@ -28,7 +29,9 @@ export function BiomedicalMetadataPanel(){
       if(myId!==requestId.current)return;
       const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
       if(!response.ok||record.ok===false){
-        setState({status:"error",message:typeof record.error==="string"?record.error:"Lookup failed. Public provider access may be blocked or unavailable."});
+        const fallback="Lookup failed. Public provider access may be blocked or unavailable.";
+        const serverError=typeof record.error==="string"?record.error:undefined;
+        setState({status:"error",message:response.status===429?rateLimitedMessage(response,serverError,fallback):(serverError??fallback)});
         return;
       }
       const protein=record.protein&&typeof record.protein==="object"&&!Array.isArray(record.protein)?record.protein as Record<string,unknown>:null;

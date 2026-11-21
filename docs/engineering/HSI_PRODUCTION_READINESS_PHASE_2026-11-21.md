@@ -43,5 +43,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U7 Scientific reliability / Human #4 scaffold | Done — see `HSI_10_SCIENTIFIC_RELIABILITY_U7_SOFT_LAND.md` (no gold invented) |
 | U8 Pilot readiness / Human #8 scaffold | Done — see `HSI_10_PILOT_READINESS_U8_SOFT_LAND.md` (invites still blocked) |
 | U9 API envelope wave 2 + Ask Retry-After UI | Done — see `HSI_U9_API_ENVELOPE_WAVE2_2026-11-21.md` |
+| U10 Client Retry-After across research UIs | Done — see `HSI_U10_CLIENT_RETRY_AFTER_2026-11-21.md` |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U9 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U10 soft-landed; owner evidence still required.

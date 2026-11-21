@@ -1,6 +1,7 @@
 import {useEffect,useState} from "react";
-import {HowProducedPanel} from "./HowProducedPanel";
 import type {RelatedWorksResult} from "../../../src/evidence/openAlexRelatedWorks";
+import {rateLimitedMessage} from "../lib/retryAfter";
+import {HowProducedPanel} from "./HowProducedPanel";
 
 type RelatedPayload={
  status:RelatedWorksResult["status"];
@@ -44,7 +45,10 @@ export function RelatedWorksPanel({
     const body=await response.json() as RelatedPayload&{error?:string};
     if(controller.signal.aborted)return;
     if(response.status===404){setData(body);setError(body.error||"Seed work not found in OpenAlex");return;}
-    if(!response.ok)throw new Error(body.error||`Related works service returned HTTP ${response.status}`);
+    if(!response.ok){
+     const fallback=`Related works service returned HTTP ${response.status}`;
+     throw new Error(response.status===429?rateLimitedMessage(response,body.error,fallback):(body.error||fallback));
+    }
     setData(body);
    }catch(e){
     if(controller.signal.aborted)return;
@@ -68,7 +72,10 @@ export function RelatedWorksPanel({
    });
    const body=await response.json() as RelatedPayload&{error?:string};
    if(response.status===404){setData(body);setError(body.error||"Seed work not found in OpenAlex");return;}
-   if(!response.ok)throw new Error(body.error||`Related works service returned HTTP ${response.status}`);
+   if(!response.ok){
+    const fallback=`Related works service returned HTTP ${response.status}`;
+    throw new Error(response.status===429?rateLimitedMessage(response,body.error,fallback):(body.error||fallback));
+   }
    setData(body);
   }catch(e){
    setError(e instanceof Error?e.message:"Related works retrieval unavailable");
