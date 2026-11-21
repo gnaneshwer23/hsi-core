@@ -39,6 +39,10 @@ import {
   type HsiAgentTask,
   type HsiOrchestrationResult,
 } from "../hsiAgentOrchestrator";
+import {
+  createHsiFencedToolCaller,
+  type HsiFencedToolCaller,
+} from "../hsiAgentFencedToolCaller";
 import {commitHsiFencedArtifact, type HsiFencedArtifactStore} from "../hsiFencedArtifact";
 import {
   buildContextualCandidatePack,
@@ -937,6 +941,7 @@ export async function runBoundedAgentExecution(input: {
     stageId: BoundedStageId,
     body: (ctx: {
       assertTool: (tool: HsiToolId) => void;
+      invokeFencedTool: HsiFencedToolCaller["invoke"];
       signal: AbortSignal;
     }) => Promise<{status: "completed" | "blocked"; artifact: BoundedStageArtifact; reason: string | null}>,
   ): HsiAgentExecutor => {
@@ -979,7 +984,17 @@ export async function runBoundedAgentExecution(input: {
       stageCheckpoints.set(stageId, started);
       try {
         if (context.signal.aborted) fail("Execution cancelled before stage body");
-        const result = await body({assertTool: context.assertTool, signal: context.signal});
+        const toolCaller = createHsiFencedToolCaller({
+          investigationId: input.investigationId,
+          taskId: stageId,
+          assertTool: context.assertTool,
+          signal: context.signal,
+        });
+        const result = await body({
+          assertTool: context.assertTool,
+          invokeFencedTool: toolCaller.invoke,
+          signal: context.signal,
+        });
         if (context.signal.aborted) fail("Execution cancelled before checkpoint commit");
         const outputRef = await persistStageArtifact({
           store: artifactStore,
@@ -1062,21 +1077,42 @@ export async function runBoundedAgentExecution(input: {
       return {status: "completed", artifact: plan, reason: null};
     }),
 
-    evidence_retriever: wrapStage("evidence-retrieval", async ({assertTool, signal}) => {
-      assertTool("literature.search");
-      const retrieval = await runDynamicEvidenceRetrieval({
-        query: {
-          question,
-          entities: input.entities,
-          pageSize: budgets.pageSize,
-          contentAccess: "metadata",
-        },
-        fetcher: input.fetcher,
-        now: () => new Date(now()),
-        rateLimitMs: 0,
-        cache,
-        signal,
+    evidence_retriever: wrapStage("evidence-retrieval", async ({invokeFencedTool, signal}) => {
+      const fenced = await invokeFencedTool("literature.search", async ({signal: toolSignal}) => {
+        const retrieval = await runDynamicEvidenceRetrieval({
+          query: {
+            question,
+            entities: input.entities,
+            pageSize: budgets.pageSize,
+            contentAccess: "metadata",
+          },
+          fetcher: input.fetcher,
+          now: () => new Date(now()),
+          rateLimitMs: 0,
+          cache,
+          signal: toolSignal.aborted ? toolSignal : signal,
+        });
+        const resultRef =
+          "hsi-tool:literature.search:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({
+              searchRecordHash: retrieval.record.searchRecordHash,
+              bibliographic: retrieval.record.retrievedBibliographic.length,
+            }))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: retrieval};
       });
+      if (fenced.status !== "success" || !fenced.value) {
+        fail(
+          fenced.status === "late_commit_refused"
+            ? "Literature search late commit refused after abort"
+            : fenced.status === "cancelled"
+              ? "Literature search cancelled"
+              : `Literature search failed: ${"reason" in fenced ? fenced.reason : "unknown"}`,
+        );
+      }
+      const retrieval = fenced.value;
       scratch.searchRecord = retrieval.record;
 
       // Treat retrieved titles as untrusted — never escalate permissions from text.
@@ -1122,17 +1158,52 @@ export async function runBoundedAgentExecution(input: {
       return {status: "completed", artifact, reason: null};
     }),
 
-    graph_reasoner: wrapStage("mechanism-analysis", async ({assertTool}) => {
-      assertTool("graph.query");
-      assertTool("evidence.get");
+    graph_reasoner: wrapStage("mechanism-analysis", async ({invokeFencedTool}) => {
       if (!scratch.persistencePlan) fail("Mechanism analysis requires persistence plan");
-      const pack = buildContextualCandidatePack({
-        plan: scratch.persistencePlan,
-        openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
-        surfaceLabel: "candidate",
-        generatedAt: now(),
-        opposingSearchStatus: "not_executed",
+      const graphFence = await invokeFencedTool("graph.query", async () => {
+        const pack = buildContextualCandidatePack({
+          plan: scratch.persistencePlan!,
+          openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
+          surfaceLabel: "candidate",
+          generatedAt: now(),
+          opposingSearchStatus: "not_executed",
+        });
+        const resultRef =
+          "hsi-tool:graph.query:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({id: pack.searchRecordId, n: pack.relationships.length}))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: pack};
       });
+      if (graphFence.status !== "success" || !graphFence.value) {
+        fail(
+          graphFence.status === "late_commit_refused"
+            ? "Graph query late commit refused after abort"
+            : graphFence.status === "cancelled"
+              ? "Graph query cancelled"
+              : `Graph query failed: ${"reason" in graphFence ? graphFence.reason : "unknown"}`,
+        );
+      }
+      const evidenceFence = await invokeFencedTool("evidence.get", async () => ({
+        resultRef:
+          "hsi-tool:evidence.get:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({pack: graphFence.resultRef}))
+            .digest("hex")
+            .slice(0, 24),
+        value: {candidatePackId: graphFence.resultRef},
+      }));
+      if (evidenceFence.status !== "success") {
+        fail(
+          evidenceFence.status === "late_commit_refused"
+            ? "Evidence get late commit refused after abort"
+            : evidenceFence.status === "cancelled"
+              ? "Evidence get cancelled"
+              : `Evidence get failed: ${"reason" in evidenceFence ? evidenceFence.reason : "unknown"}`,
+        );
+      }
+      const pack = graphFence.value;
       scratch.candidatePack = pack;
       const artifact: MechanismAssessmentArtifact = {
         schemaVersion: "hsi-mechanism-assessment-1",
