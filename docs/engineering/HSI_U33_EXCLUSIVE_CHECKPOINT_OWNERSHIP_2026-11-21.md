@@ -2,7 +2,8 @@
 
 **Phase:** Production readiness · ARCH-009 · Phase 1 scientific-engine hardening  
 **Scope:** Soft-land the multi-worker checklist that concurrent claimers yield exactly one checkpoint owner, and that stale finish attempts conflict after the owner advances the fence.  
-**Not claimed:** Live OS multi-process E2E, research_admin credentials, Neon writes, scientific approval, or Gate C.
+**Not claimed (U33 alone):** Live OS multi-process E2E, research_admin credentials, Neon writes, scientific approval, or Gate C.  
+**Follow-on:** **U38** fixture proves OS multi-process exclusive ownership; Neon live remains owner-gated.
 
 ## Change
 

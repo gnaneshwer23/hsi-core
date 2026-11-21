@@ -66,9 +66,10 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U30 Orchestration cancel / termination taxonomy | Done — see `HSI_U30_ORCHESTRATION_CANCEL_TAXONOMY_2026-11-21.md` (classified stops; side effects not undone) |
 | U31 Recovery decision trail + bounded termination surface | Done — see `HSI_U31_RECOVERY_DECISION_TRAIL_2026-11-21.md` (research_admin live E2E still open) |
 | U32 External tool adapter cancel/idempotency audit | Done — see `HSI_U32_EXTERNAL_TOOL_ADAPTER_AUDIT_2026-11-21.md` (live multi-process adapter E2E still open) |
-| U33 Exclusive checkpoint ownership race | Done — see `HSI_U33_EXCLUSIVE_CHECKPOINT_OWNERSHIP_2026-11-21.md` (live OS multi-process E2E still open) |
-| U34 Crash/restart recovery soft-land | Done — see `HSI_U34_CRASH_RESTART_RECOVERY_2026-11-21.md` (live OS multi-process E2E still open) |
+| U33 Exclusive checkpoint ownership race | Done — see `HSI_U33_EXCLUSIVE_CHECKPOINT_OWNERSHIP_2026-11-21.md` (OS multi-process via U38 fixture; Neon live still open) |
+| U34 Crash/restart recovery soft-land | Done — see `HSI_U34_CRASH_RESTART_RECOVERY_2026-11-21.md` (OS multi-process via U38 fixture; Neon live still open) |
 | U35 Owner-authorized research agent runtime | Done — see `HSI_U35_RESEARCH_AGENT_RUNTIME_2026-11-21.md` (owner approved engineering build; GA / Gate C / PHI still closed) |
 | U36 Public L0 GO + clinical synthetic approvals | Done — see `HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md` (real PHI / ADR-0010 gates still open) |
+| U38 Multi-process crash/restart E2E harness | Done — see `HSI_U38_MULTIPROCESS_CRASH_RESTART_E2E_2026-11-21.md` (fixture OS E2E green; Neon live still owner-gated) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U36 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U36 and U38 soft-landed; owner evidence still required.
