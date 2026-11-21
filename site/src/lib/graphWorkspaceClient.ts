@@ -16,6 +16,7 @@ import {
  type SavedInvestigation,
  type SaveResult,
 } from "../../../src/knowledgeGraph/investigationStore";
+import {researchApiErrorMessage} from "./researchApiErrors";
 
 export type GraphWorkspaceClientMode="local"|"server";
 
@@ -86,7 +87,7 @@ export async function listGraphInvestigations(
  const response=await fetchImpl("/api/research/graph-workspace/investigations",{
   method:"GET",credentials:"same-origin",cache:"no-store",
  });
- if(!response.ok)throw Error("Could not list server investigations");
+ if(!response.ok)throw Error(await researchApiErrorMessage(response,"generic","Could not list server investigations"));
  const body=await response.json() as {investigations?:InvestigationSummary[]};
  return Array.isArray(body.investigations)?body.investigations:[];
 }
@@ -110,8 +111,7 @@ export async function saveGraphInvestigation(
   body:JSON.stringify({record}),
  });
  if(!response.ok){
-  const err=await response.json().catch(()=>({})) as {error?:string};
-  throw Error(err.error??"Could not save on the server");
+  throw Error(await researchApiErrorMessage(response,"generic","Could not save on the server"));
  }
  const body=await response.json() as SaveResult;
  return{...body,path:"server"};
@@ -133,7 +133,7 @@ export async function loadGraphInvestigation(
   {method:"GET",credentials:"same-origin",cache:"no-store"},
  );
  if(response.status===404)return null;
- if(!response.ok)throw Error("Could not load server investigation");
+ if(!response.ok)throw Error(await researchApiErrorMessage(response,"generic","Could not load server investigation"));
  const body=await response.json() as {saved?:SavedInvestigation};
  const saved=body.saved;
  if(!saved||saved.schemaVersion!=="hsi-saved-investigation-1")return null;

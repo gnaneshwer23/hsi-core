@@ -71,6 +71,16 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "LIVE_PERSISTENCE_DISABLED":
   case "LIVE_EVIDENCE_DISABLED":
    return "Live evidence persistence is disabled on this deployment.";
+  case "GRAPH_WORKSPACE_STORE_DISABLED":
+   return "Graph workspace server storage is disabled. This browser can keep a device-local copy only.";
+  case "GRAPH_WORKSPACE_DENIED":
+   return "Graph workspace operation denied or unavailable.";
+  case "SESSION_REQUIRED":
+   return "Sign in with a verified research account before using graph workspace server storage.";
+  case "SCHEMA_NOT_APPLIED":
+   return "Researcher workspace tables are not applied. Nothing was stored or sent.";
+  case "NOT_FOUND":
+   return "That research resource was not found.";
   case "JSON_REQUIRED":
   case "INVALID_JSON":
   case "PAYLOAD_TOO_LARGE":

@@ -27,5 +27,16 @@ test("session() maps expired cookie to auth_session_expired, not auth_unavailabl
 });
 test("signed-out null and valid identity are separate from backend reviewer grants",async()=>{expect(await createHsiAuthClient("https://auth.example",mock(async()=>response(null))).session()).toEqual({data:null,error:null});const result=await createHsiAuthClient("https://auth.example",mock(async()=>response({...valid,roles:["scientific_reviewer"]}))).session();expect(result.data?.user.id).toBe("user-one");expect(result.data).not.toHaveProperty("roles");expect(result.data).not.toHaveProperty("scientific_reviewer");});
 test("auth failures never echo arbitrary provider details or submitted passwords",async()=>{const c=createHsiAuthClient("https://auth.example",mock(async()=>response({message:"secret echoed from a provider",code:"INTERNAL_ERROR"},500)));expect(JSON.stringify(await c.signIn("researcher@example.invalid","dummy-password"))).not.toContain("secret");});
+test("auth rate limits surface Retry-After wait hints without leaking provider details",async()=>{
+ const limited=new Response(JSON.stringify({code:"RATE_LIMITED",message:"secret provider detail"}),{
+  status:429,
+  headers:{"content-type":"application/json","Retry-After":"120"},
+ });
+ const result=await createHsiAuthClient("https://auth.example",mock(async()=>limited)).signIn("researcher@example.invalid","dummy-password");
+ expect(result.error?.code).toBe("RATE_LIMITED");
+ expect(result.error?.message).toContain("Too many authentication attempts");
+ expect(result.error?.message).toContain("about 2 minute");
+ expect(result.error?.message).not.toContain("secret");
+});
 test("stalled auth settles with a timeout instead of leaving sign-in pending",async()=>{const c=createHsiAuthClient("https://auth.example",mock(async()=>await new Promise<Response>(()=>{})),10);expect((await c.session()).error?.code).toBe("auth_timeout");});
 test("auth transport includes secure-session credentials and does not follow redirects",async()=>{let options:RequestInit|undefined;const c=createHsiAuthClient("https://auth.example",mock(async(_input,init)=>{options=init;return response(valid);}));await c.session();expect(options?.credentials).toBe("include");expect(options?.redirect).toBe("error");expect(options?.cache).toBe("no-store");});
