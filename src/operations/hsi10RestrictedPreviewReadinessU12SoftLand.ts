@@ -175,9 +175,10 @@ const SURFACES: readonly Hsi10RestrictedPreviewSurfaceRow[] = [
     pathHints: [
       "operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json",
       "docs/engineering/HSI_1_0_ACCEPTANCE_STATUS_2026-11-20.md",
+      "src/hsiLiveScientificPlatformRuntime.ts",
     ],
     notes:
-      "Restricted-preview GO is owner-only after staging grant evidence. Soft-land never invents the decision.",
+      "U37 authorized L1 engineering composition only. Restricted-preview GO remains owner-only after real staging grant evidence. Soft-land never invents the decision.",
   },
 ];
 
@@ -185,13 +186,14 @@ const REUSE_MODULES: readonly string[] = [
   "src/operations/hsi10ContinuousJourneyEvidenceSoftLand.ts",
   "src/operations/hsi10OwnerPacketsScaffold.ts",
   "src/operations/hsi10PublicLaunchReadinessU11SoftLand.ts",
+  "src/hsiLiveScientificPlatformRuntime.ts",
 ];
 
 const OWNER_PRECONDITIONS: readonly string[] = [
   "Approve a disposable HSI staging target privately — never invent hosts in git.",
   "Provision a real research-preview grant and capture continuous Ask→brief→device-local save evidence.",
   "Keep productionWritesEnabled false on public production; durable staging save only after Human #5.",
-  "Record restricted-preview GO or NO-GO privately after staging evidence exists.",
+  "Record restricted-preview GO or NO-GO privately after staging evidence exists — U37 engineering authorization is not preview GO.",
 ];
 
 export function hsi10RestrictedPreviewReadinessU12Packet(): Hsi10RestrictedPreviewReadinessPacket {
