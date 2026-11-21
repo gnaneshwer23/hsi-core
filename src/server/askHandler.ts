@@ -57,7 +57,7 @@ async function prepareAsk(request:Request,env:Env,deps:AskDependencies):Promise<
 async function runPreparedAsk(prepared:PreparedAsk,request:Request,env:Env,deps:AskDependencies):Promise<Response>{
  const now=(deps.now??Date.now)();
  const recent=(users.get(prepared.userId)??[]).filter(t=>now-t<3_600_000);
- if(recent.length>=ASK_USER_LIMIT_PER_HOUR)return gatewayJson({code:"RATE_LIMITED",error:"Hourly limit reached. Try again later."},429);
+ if(recent.length>=ASK_USER_LIMIT_PER_HOUR)return gatewayJson({code:"RATE_LIMITED",error:"Hourly limit reached. Try again later."},429,{"Retry-After":"3600"});
  users.set(prepared.userId,[...recent,now]);
  if(users.size>5000)users.clear();
 

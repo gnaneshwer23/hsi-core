@@ -38,6 +38,7 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U2 Public launch QA packet + evidence | Done on this PR |
 | U3 Open PR hygiene note | Done (owner still closes PRs) |
 | U4 Continuous journey evidence soft-land | Done (owner fills staging refs) |
-| U5–U8 | Not started — owner / follow-on PRs |
+| U5 API reliability (Ask / live investigation envelopes) | Done — see `HSI_U5_API_RELIABILITY_HARDENING_2026-11-21.md` |
+| U6–U8 | Owner-gated / follow-on PRs |
 
 Verified acceptance remains **0 / 8**.

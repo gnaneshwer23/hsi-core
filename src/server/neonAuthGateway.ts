@@ -15,8 +15,8 @@ export function providerCookies(request:Request):string{
  if(raw.length>16384)throw Error("Oversized cookie header");
  return raw.split(";").map(s=>s.trim()).filter(s=>COOKIE.test(s.split("=",1)[0]??"")).join("; ");
 }
-export function gatewayJson(body:unknown,status=200):Response{
- return Response.json(body,{status,headers:{"Cache-Control":"no-store","Vary":"Cookie","X-Content-Type-Options":"nosniff"}});
+export function gatewayJson(body:unknown,status=200,extraHeaders:Record<string,string>={}):Response{
+ return Response.json(body,{status,headers:{"Cache-Control":"no-store","Vary":"Cookie","X-Content-Type-Options":"nosniff",...extraHeaders}});
 }
 function safeUser(value:unknown){
  const u=value as Record<string,unknown>|null;
