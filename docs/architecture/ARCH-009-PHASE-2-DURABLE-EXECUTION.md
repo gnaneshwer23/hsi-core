@@ -11,7 +11,7 @@ Status: Implemented in source; latest CI pending; persistence integration NOT de
 
 ## Limits and open gates
 1. No actual durable database adapter, deployment or database migration exists. In-memory tests prove the interface semantics only, not restart survival.
-2. The orchestrator is not yet wired to checkpoint storage; execution results are in-process. Do not call it resumable until this is integrated and tested across process restarts.
+2. ~~The orchestrator is not yet wired to checkpoint storage; execution results are in-process.~~ **Engineering soft-land (U35, 21 Nov 2026):** `runHsiAuthorizedResearchAgentRuntime` wraps ARCH-003 executors with `checkpointHsiExecutor` under owner approval. Live multi-process restart E2E and Neon durable adapter deploy remain open.
 3. Timeout via Promise.race does not stop an executor's side effects. Before external tools, add cooperative AbortSignal, isolation, lease/fencing tokens and idempotency keys. A timed-out tool must not commit a late result.
 4. Recovery is operator-authorised by a nonempty identifier at the contract level; authentication, authorisation and append-only approval auditing must be enforced by a trusted backend.
 5. Fingerprint versioning and multi-round scientific review remain separate migration/design dependencies. Never overwrite historical decisions.
