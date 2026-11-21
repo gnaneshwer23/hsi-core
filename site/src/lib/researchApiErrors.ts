@@ -16,6 +16,7 @@ export type ResearchApiErrorContext=
  |"review_history"
  |"evidence_context"
  |"investigation_load"
+ |"context_audit"
  |"scientific_retrieval"
  |"generic";
 
@@ -47,7 +48,7 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    if(context==="review_queue"||context==="review_history"){
     return "Sign in with an independently authorised scientific reviewer account to open this queue.";
    }
-   if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="investigation_load"){
+   if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="investigation_load"||context==="context_audit"){
     return "Sign in with a verified research account to open this evidence brief.";
    }
    return "Sign in with a verified research account to open your investigations.";
@@ -60,6 +61,9 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
    }
    if(context==="review_history"){
     return "Review history unavailable or access denied.";
+   }
+   if(context==="context_audit"){
+    return "Audit-review access is unavailable or has changed. No review authority is inferred.";
    }
    return "Research access has not been confirmed. Check your research account or contact the research administrator.";
   case "RESEARCH_WRITES_DISABLED":
@@ -117,6 +121,11 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "EVIDENCE_CONTEXT_UNAVAILABLE":
   case "EVIDENCE_CONTEXT_DENIED":
    return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";
+  case "AUDIT_ARCHIVE_NOT_CONFIGURED":
+  case "AUDIT_OR_RECEIPT_DENIED":
+   return context==="context_audit"
+    ?"Audit-review access is unavailable or has changed. No review authority is inferred."
+    :"Audit or receipt unavailable, changed or access denied.";
   case "METHOD_NOT_ALLOWED":
    return "This research action is not available with the current request method.";
   case "ORIGIN_NOT_ALLOWED":
@@ -130,7 +139,10 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
     ?"The scientific retrieval request could not be completed. Nothing was generated."
     :"Investigation could not run. No findings were generated.";
   case "RETRIEVAL_UNAVAILABLE":
+  case "ABSTRACT_UNAVAILABLE":
    return "Scientific retrieval is unavailable. No claims can be verified while retrieval is unavailable.";
+  case "INVALID_PUBMED_ID":
+  case "INVALID_RESEARCH_QUESTION":
   case "INVALID_SEARCH_TERM":
   case "INVALID_CURSOR":
   case "INVALID_SEED":
@@ -142,7 +154,12 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "INVALID_TERMS":
   case "INVALID_PAIRS":
   case "INVALID_INPUT":
+  case "INVALID_GRAPH_NODE":
    return "Check the search or retrieval inputs and try again.";
+  case "RESEARCH_SERVICE_UNAVAILABLE":
+   return "Research discovery service unavailable";
+  case "GRAPH_DENIED":
+   return "Research permission denied";
   case "LIVE_PERSISTENCE_DISABLED":
   case "LIVE_EVIDENCE_DISABLED":
    return "Live evidence persistence is disabled on this deployment.";
@@ -181,7 +198,7 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
   if(context==="review_queue"||context==="review_history"){
    return "Sign in with an independently authorised scientific reviewer account to open this queue.";
   }
-  if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="evidence_context"||context==="investigation_load"){
+  if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="evidence_context"||context==="investigation_load"||context==="context_audit"){
    return "Sign in with a verified research account to open this evidence brief.";
   }
   return "Sign in with a verified research account to open your investigations.";
@@ -213,6 +230,9 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
   }
   if(context==="investigation_load"){
    return "Unable to load an authorised investigation. Sign in with a verified research account or contact the research administrator.";
+  }
+  if(context==="context_audit"){
+   return "Audit-review access is unavailable or has changed. No review authority is inferred.";
   }
   return undefined;
  }

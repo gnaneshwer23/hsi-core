@@ -1,4 +1,5 @@
 import {useEffect,useState} from "react";
+import {researchApiErrorMessage} from "../lib/researchApiErrors";
 type Candidate={id:string;kind:string;relationshipIds:string[];sourceEvidenceIds:string[];explanation:string;reviewState:string};
 type Dossier={schemaVersion:string;disease:string;scope:string;candidateCount:number;relationshipCount:number;candidates:Candidate[];readOnly:boolean;graphPromotable:boolean};
 export function SscGovernedDiscovery({nodeId}:{nodeId:string|null}){
@@ -6,9 +7,9 @@ export function SscGovernedDiscovery({nodeId}:{nodeId:string|null}){
  useEffect(()=>{setData(null);setError("");setRequested(null);setSelected(null)},[nodeId]);
  async function investigate(){if(!nodeId)return;setLoading(true);setError("");setData(null);setRequested(nodeId);try{
  const r=await fetch("/api/research/discovery/ssc?node="+encodeURIComponent(nodeId),{credentials:"same-origin",cache:"no-store",headers:{Accept:"application/json"}});
- if(!r.ok)throw Error(r.status===401?"Verified researcher sign-in required":r.status===403?"Research permission denied":"Research discovery service unavailable");
+ if(!r.ok)throw Error(await researchApiErrorMessage(r,"generic","Research discovery service unavailable"));
  const x:Dossier=await r.json();
- if(x.schemaVersion!=="hsi-governed-discovery-1"||x.scope!=="governed_research"||x.disease!=="systemic_sclerosis"||x.readOnly!==true||x.graphPromotable!==false||!Array.isArray(x.candidates)||x.candidates.length>1000)throw Error("Unexpected scientific discovery response");
+ if(x.schemaVersion!=="hsi-governed-discovery-1"||x.scope!=="governed_research"||x.disease!=="systemic_sclerosis"||x.readOnly!==true||x.graphPromotable!==false||!Array.isArray(x.candidates)||x.candidates.length>1000)throw Error("Research discovery service unavailable");
  setData(x);
  }catch(e){setError(e instanceof Error?e.message:"Discovery unavailable")}finally{setLoading(false)}}
  const candidate=data?.candidates.find(c=>c.id===selected);

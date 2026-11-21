@@ -40,6 +40,9 @@ describe("researchApiErrors",()=>{
   expect(messageForResearchCode("RESEARCH_RECORD_DENIED","investigation_load")).toContain("authorised investigation");
   expect(messageForResearchCode("RESEARCH_RECORD_DENIED","delivery_decide")).toContain("decision could not be confirmed");
   expect(messageForResearchCode("INVESTIGATION_MISMATCH","delivery_decide")).toContain("decision could not be confirmed");
+  expect(messageForResearchCode("AUDIT_OR_RECEIPT_DENIED","context_audit")).toContain("Audit-review access");
+  expect(messageForResearchCode("ABSTRACT_UNAVAILABLE","scientific_retrieval")).toContain("retrieval is unavailable");
+  expect(messageForResearchCode("GRAPH_DENIED","generic")).toContain("Research permission denied");
   expect(messageForResearchCode("MADE_UP_CODE","generic")).toBeUndefined();
  });
 
