@@ -13,11 +13,11 @@ for(const [from,to] of retired){
 test('platform and science redirects land on honest destination copy',async({page})=>{
  await page.goto('/platform');
  await expect(page).toHaveURL(/\/how-it-works$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('Follow a question through the evidence');
+ await expect(page.getByRole('heading',{level:1})).toContainText('evidence-linked decisions');
  await expect(page.locator('.pg-micro').first()).toContainText('Research preview');
  await page.goto('/science');
  await expect(page).toHaveURL(/\/knowledge-graph$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('Relationships between biological entities');
+ await expect(page.getByRole('heading',{level:1})).toContainText('connections behind complex biology');
  await expect(page.locator('.pg-micro').first()).toContainText('unreviewed');
 });
 test('retired pages are permanent redirects at the host and absent from the sitemap',async({request})=>{

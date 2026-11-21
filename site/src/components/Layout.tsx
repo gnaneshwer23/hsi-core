@@ -38,6 +38,7 @@ export function Layout() {
     isPublicPage || isHome ? "home-shell" : "",
     isPublicPage && !isHome ? "platform-shell" : "",
     isPublicPage || isAccountPage ? "public-site-v2" : "",
+    isPublicPage ? "cine-shell" : "",
     isAccountPage ? "account-shell" : "",
   ]
     .filter(Boolean)

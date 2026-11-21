@@ -1,9 +1,4 @@
 import {Link} from "react-router-dom";
-import "../styles/scientific-public.css";
-import "../styles/home-redesign.css";
-import "../styles/contact-figure.css";
-import "../styles/premium-public.css";
-import "../styles/stage2-landing.css";
 import {AccessIntentPanel} from "../components/AccessIntentPanel";
 import {LandingEvidenceCard, LandingMaturityLabel} from "../components/landing/LandingPrimitives";
 import {signInHref,signUpHref} from "../lib/researchContext";
@@ -35,14 +30,16 @@ const ACCESS_TIERS=[
 /** Contact: research access. Browser draft always; server delivery only when the deployment is configured. */
 export function ContactPublicPage(){
   return (
-    <div className="sp-page fg-page ct-page pg-page pg-sub s2-landing">
-      <header className="pg-phero">
-        <h1>Contact HSI and start from your research question.</h1>
+    <div className="cine">
+      <header className="cine-section">
+        <h1>Request a design-partner pilot.</h1>
         <div>
-          <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>
-          <div className="pg-cta">
-            <Link className="pg-btn" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
-            <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>
+          <p className="cine-lead">Tell us the research question. This page keeps a browser draft. An account is not research access.</p>
+          <p className="cine-note">Researcher, source and scientific-review permissions are provisioned independently. The page never claims operator receipt unless the server reports provider acceptance.</p>
+          <div className="cine-cta" style={{justifyContent:"flex-start"}}>
+            <a className="cine-btn" href="#pilot-request">Start a pilot request</a>
+            <Link className="cine-btn cine-btn-line" to={signUpHref()}>Create an account</Link>
+            <Link className="cine-btn cine-btn-line" to={signInHref()}>Sign in</Link>
           </div>
         </div>
       </header>
@@ -76,8 +73,8 @@ export function ContactPublicPage(){
         <figcaption id="ct-cap" className="fg-cap"><b>Figure 5.</b> The access path. Each step is separate: an account does not grant research access, and an administrator's grant does not enable research writes. An access request, when delivery is configured, notifies the operator only — it does not provision permissions.</figcaption>
       </figure>
 
-      <section className="fg-block ct-draft pg-block" aria-labelledby="ct-draft">
-        <h2 id="ct-draft">Keep your question while you sign up</h2>
+      <section className="fg-block ct-draft pg-block" id="pilot-request" aria-labelledby="ct-draft">
+        <h2 id="ct-draft">Start a pilot request</h2>
         <div>
           <AccessIntentPanel />
           <p className="ct-scope" role="note">Browser drafts are optional. Create an account, then an administrator grants research access. Check status on your research account after sign-in.</p>

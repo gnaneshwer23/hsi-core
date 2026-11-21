@@ -56,6 +56,11 @@ const SHORT_LABELS: Record<string, string> = {
   "comparative-disease-mechanisms": "Comparative",
 };
 
+/** Public landing copy says Example. Fixture records keep their technical labels. */
+function exampleCopy(text: string): string {
+  return text.replace(/Synthetic Study/g, "Example study").replace(/\bsynthetic\b/gi, "example");
+}
+
 function cardFromScenario(scenarioId: string): DemoLandingPreviewCard {
   const view = buildDemoComparisonView(scenarioId);
   const supportingCount = view.claims.filter((c) => c.polarity === "supports").length;
@@ -66,12 +71,12 @@ function cardFromScenario(scenarioId: string): DemoLandingPreviewCard {
     scenarioId: view.scenarioId,
     investigationId: view.investigationId,
     shortLabel: SHORT_LABELS[view.scenarioId] ?? view.title.slice(0, 24),
-    title: view.title,
-    question: view.question,
+    title: exampleCopy(view.title),
+    question: exampleCopy(view.question),
     domain: view.domain,
-    conflictLeft: view.left.summary,
-    conflictRight: view.right.summary,
-    abstention: view.comparison.abstention,
+    conflictLeft: exampleCopy(view.left.summary),
+    conflictRight: exampleCopy(view.right.summary),
+    abstention: exampleCopy(view.comparison.abstention),
     supportingCount,
     conflictingCount,
     gapCount: view.gaps.length,

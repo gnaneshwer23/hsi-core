@@ -17,16 +17,15 @@ export const INVESTIGATION_FLOW: readonly FlowStep[] = [
   {id: "brief", label: "Brief", line: "Export a reviewable brief — not an approval."},
 ] as const;
 
-/** Eight-step platform path on How it works. */
+/**
+ * Visitor-facing path on How it works.
+ * Groups the existing investigation machinery. It does not add agents or products.
+ */
 export const PLATFORM_PATH: readonly FlowStep[] = [
-  {id: "question", label: "Research question", line: "Define scope and decision."},
-  {id: "evidence", label: "Source evidence", line: "Query public sources; retain failures."},
-  {id: "context", label: "Experimental context", line: "Model, tissue, dose, endpoint — including Not stated."},
-  {id: "conflict", label: "Conflicting findings", line: "Compare before contradiction; abstain when contexts differ."},
-  {id: "graph", label: "Mechanism graph", line: "Candidate relationships on the published snapshot."},
-  {id: "uncertainty", label: "Uncertainty", line: "Missing extraction, weak support, unresolved disagreement."},
-  {id: "gaps", label: "Candidate gaps", line: "Unconnected areas; priority stays human."},
-  {id: "brief", label: "Reviewable brief", line: "Structured brief with limitations — not an approval."},
+  {id: "connect", label: "Connect", line: "Sources, claims, rights, provenance and graph context."},
+  {id: "verify", label: "Verify", line: "Structured comparison, missingness and abstention. Directional checks only where configured."},
+  {id: "reason", label: "Reason", line: "Disagreement versus context, gaps, and a reviewable brief that is not an approval."},
+  {id: "collaborate", label: "Collaborate", line: "Recorded review and a versioned investigation. Sharing is not yet enabled."},
 ] as const;
 
 export type AudienceFlowVariant =
@@ -62,7 +61,7 @@ export const AUDIENCE_FLOWS: Record<AudienceFlowVariant, readonly FlowStep[]> = 
     {id: "literature", label: "Literature", line: "Permitted evidence on the scientific plane."},
     {id: "context", label: "Context", line: "Compare experimental context before disagreement."},
     {id: "boundary", label: "Boundary", line: "Patient work stays on a separate plane."},
-    {id: "synthetic", label: "Synthetic only", line: "Synthetic patients only; no live CDS."},
+    {id: "records", label: "No patient data", line: "Patient records stay off this site. No live clinical decision support."},
   ],
   laboratories: [
     {id: "assay", label: "Assay context", line: "Assay and endpoint stay visible, including absence."},

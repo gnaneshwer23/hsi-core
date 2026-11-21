@@ -50,7 +50,6 @@ describe("site route catalog (WB-07 soft-land)", () => {
   test("retired marketing list matches App Navigate destinations", () => {
     const parsed = parseAppRoutes(appSource);
     for (const [from, to] of RETIRED_MARKETING_REDIRECTS) {
-      if (from.startsWith("/intelligence/") && from !== "/intelligence/nexus") continue;
       const row = parsed.find((r) => r.path === from);
       expect(row?.isRedirect, from).toBe(true);
       expect(row?.destination, from).toBe(to);
