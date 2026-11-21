@@ -41,9 +41,9 @@ Stale `site/dist` can false-fail nav assertions — always rebuild first.
 
 | Role | Name / date | Decision |
 | --- | --- | --- |
-| Visual acceptance | _UNASSIGNED_ | Pending |
-| Public launch GO / NO-GO | _UNASSIGNED_ | Pending |
+| Visual acceptance | Dr Gnaneshwer Jadav / 21 Nov 2026 | **Accepted** (owner deploy approval U36) |
+| Public launch GO / NO-GO | Dr Gnaneshwer Jadav / 21 Nov 2026 | **GO** for L0 public site + Demo Universe (`HSI_PUBLIC_L0_DEPLOY_APPROVAL`) |
 
-**Not claimed by this packet:** scientific validation, clearance, staging persistence, or unrestricted researcher access.
+**Still not claimed:** scientific validation, research write enablement, clearance, staging persistence, unrestricted researcher access, real PHI, or clinical activity.
 
-**Readiness soft-land:** [`docs/engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md`](../engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md) — engineering surfaces ready; owner visual acceptance + GO/NO-GO still required.
+**Readiness soft-land:** [`docs/engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md`](../engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md) · owner GO envelope [`HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md`](../engineering/HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md).
