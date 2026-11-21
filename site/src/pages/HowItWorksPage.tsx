@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import {FigurePath} from "../components/cinematic/Figures";
 import {RelationshipDiagram} from "../components/landing/RelationshipDiagram";
 
 const STEPS=[
@@ -30,11 +31,7 @@ export function HowItWorksPage(){
    <section className="cine-section" aria-labelledby="hw-journey">
     <div className="cine-wrap">
      <h2 id="hw-journey">The investigation journey</h2>
-     <ol className="cine-steps" aria-label="Investigation journey">
-      {STEPS.map(([n,title,text])=>(
-       <li key={n}><b>{n}</b><div><h3>{title}</h3><p>{text}</p></div></li>
-      ))}
-     </ol>
+     <FigurePath label="Investigation journey" steps={STEPS.map(([n,title,text])=>({n,title,text}))}/>
     </div>
    </section>
    <section className="cine-section" aria-labelledby="hw-context-title">
@@ -57,12 +54,12 @@ export function HowItWorksPage(){
     <div className="cine-wrap">
      <h2 id="hw-review-title">Built for scientific scrutiny</h2>
      <p>HSI distinguishes source evidence, extracted claims, model interpretations, candidate hypotheses and scientifically reviewed knowledge.</p>
-     <ol className="cine-steps" aria-label="Scientific review boundaries">
-      <li><b>01</b><div><h3>Extracted claim</h3><p>A source-reported statement to inspect.</p></div></li>
-      <li><b>02</b><div><h3>Evidence check</h3><p>Assess support, missing context and uncertainty.</p></div></li>
-      <li><b>03</b><div><h3>Human review</h3><p>An authorised reviewer records a decision.</p></div></li>
-      <li><b>04</b><div><h3>Versioned record</h3><p>Retain the source, decision and history.</p></div></li>
-     </ol>
+     <FigurePath label="Scientific review boundaries" steps={[
+      {n:"01",title:"Extracted claim",text:"A source-reported statement to inspect."},
+      {n:"02",title:"Evidence check",text:"Assess support, missing context and uncertainty."},
+      {n:"03",title:"Human review",text:"An authorised reviewer records a decision."},
+      {n:"04",title:"Versioned record",text:"Retain the source, decision and history."},
+     ]}/>
      <p className="cine-note">Published graph relationships are currently unreviewed. Model checks require configuration. <Link to="/validation">Validation methodology</Link></p>
     </div>
    </section>

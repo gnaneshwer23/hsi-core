@@ -1,4 +1,5 @@
 import {Link} from "react-router-dom";
+import {FigureBoard} from "../components/cinematic/Figures";
 import {GraphSnapshotProvider} from "../components/home/useGraphSnapshot";
 import {HomeResearchGraph as Explorer} from "../components/HomeResearchGraph";
 import {RelationshipDiagram} from "../components/landing/RelationshipDiagram";
@@ -34,14 +35,10 @@ export function KnowledgeGraphPublicPage(){
      </div>
     </header>
     <section className="cine-section" aria-labelledby="kg-connect">
-     <div className="cine-wrap cine-split">
-      <div>
-       <h2 id="kg-connect">What can the graph connect?</h2>
-       <p>Genes. Proteins. Cells. Pathways. Organs. Tissues. Diseases. Microbial processes. Metabolic signals. Experimental findings.</p>
-      </div>
-      <ul className="cine-list">
-       {QUALITIES.map(([t,d])=><li key={t}><h3 style={{margin:0}}>{t}</h3><p style={{margin:".25rem 0 0"}}>{d}</p></li>)}
-      </ul>
+     <div className="cine-wrap">
+      <h2 id="kg-connect">What can the graph connect?</h2>
+      <p>Genes. Proteins. Cells. Pathways. Organs. Tissues. Diseases. Microbial processes. Metabolic signals. Experimental findings.</p>
+      <FigureBoard label="What the graph keeps with a relationship" cells={QUALITIES.map(([title,text],i)=>({n:String(i+1).padStart(2,"0"),title,text}))}/>
      </div>
     </section>
     <section className="cine-section" aria-labelledby="kg-walk-h">

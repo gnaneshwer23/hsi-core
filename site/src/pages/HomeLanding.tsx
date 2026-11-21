@@ -1,6 +1,7 @@
 import {Link} from "react-router-dom";
 import {DemoLandingPreviewPanel} from "../components/demo/DemoLandingPreviewPanel";
 import {CellLattice} from "../components/cinematic/CellLattice";
+import {FigureBoard,FigurePath} from "../components/cinematic/Figures";
 import {MicroTiles} from "../components/cinematic/MicroTiles";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
@@ -16,12 +17,12 @@ const DOMAINS=[
 ] as const;
 
 const CHALLENGES=[
- "Evidence is scattered across databases and disciplines.",
- "Experimental conditions are easily lost when findings are summarised.",
- "Contradictory results are difficult to interpret.",
- "Important research gaps remain difficult to identify.",
- "Researchers spend valuable time connecting information rather than investigating the next question.",
-];
+ {n:"01",title:"Scattered evidence",text:"Evidence is scattered across databases and disciplines."},
+ {n:"02",title:"Lost conditions",text:"Experimental conditions are easily lost when findings are summarised."},
+ {n:"03",title:"Hard contradictions",text:"Contradictory results are difficult to interpret."},
+ {n:"04",title:"Hidden gaps",text:"Important research gaps remain difficult to identify."},
+ {n:"05",title:"Time on connecting",text:"Researchers spend valuable time connecting information rather than investigating the next question."},
+] as const;
 
 const CAPABILITIES=[
  ["Explore the evidence","Discover relevant publications and inspect the scientific basis behind findings."],
@@ -33,10 +34,6 @@ const CAPABILITIES=[
 ] as const;
 
 const JOURNEY=["Ask a question","Explore evidence","Compare findings","Investigate mechanisms","Identify gaps","Develop hypotheses","Generate a research brief"];
-
-function Icon(){
- return <span className="cine-ico" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="2.2" stroke="currentColor"/><path d="M7 1.5v2M7 10.5v2M1.5 7h2M10.5 7h2" stroke="currentColor"/></svg></span>;
-}
 
 function Status(){
  const {snapshot:s,failed}=useGraphSnapshot();
@@ -79,18 +76,12 @@ export function HomeLanding(){
     </section>
 
     <section className="cine-sheet" aria-labelledby="cine-challenge">
-     <div className="cine-wrap cine-split">
-      <div>
-       <p className="cine-eye">— The challenge</p>
-       <h2 id="cine-challenge">Research is advancing. Knowledge remains fragmented.</h2>
-      </div>
-      <div>
-       <p>A single scientific question can span thousands of publications, multiple biological systems and years of experimental findings. Yet the connections between those findings are often difficult to discover.</p>
-       <ul className="cine-list">
-        {CHALLENGES.map(item=><li key={item} className="cine-cap"><Icon/>{item}</li>)}
-       </ul>
-       <p>What if scientific knowledge could be explored as a connected system?</p>
-      </div>
+     <div className="cine-wrap">
+      <p className="cine-eye">— The challenge</p>
+      <h2 id="cine-challenge">Research is advancing. Knowledge remains fragmented.</h2>
+      <p>A single scientific question can span thousands of publications, multiple biological systems and years of experimental findings.</p>
+      <FigurePath label="Why knowledge stays fragmented" onSheet steps={CHALLENGES}/>
+      <p>What if scientific knowledge could be explored as a connected system?</p>
      </div>
     </section>
 
@@ -114,29 +105,21 @@ export function HomeLanding(){
     </section>
 
     <section className="cine-section" aria-labelledby="cine-platform">
-     <div className="cine-wrap cine-split">
-      <div>
-       <p className="cine-eye">— The platform</p>
-       <h2 id="cine-platform">One intelligence platform. Connected scientific understanding.</h2>
-       <p>HSI combines six capabilities. Some are in the research preview. Others are still being built, and the pages say which.</p>
-      </div>
-      <ul className="cine-list">
-       {CAPABILITIES.map(([title,text])=>(
-        <li key={title}><h3 style={{margin:"0 0 .2rem",fontSize:"1.05rem"}}>{title}</h3><p style={{margin:0}}>{text}</p></li>
-       ))}
-      </ul>
+     <div className="cine-wrap">
+      <p className="cine-eye">— The platform</p>
+      <h2 id="cine-platform">One intelligence platform. Connected scientific understanding.</h2>
+      <p>HSI combines six capabilities. Some are in the research preview. Others are still being built, and the pages say which.</p>
+      <FigureBoard label="Six capabilities" cells={CAPABILITIES.map(([title,text],i)=>({n:String(i+1).padStart(2,"0"),title,text}))}/>
      </div>
     </section>
 
     <section className="cine-section" aria-labelledby="pg-domains-h">
-     <div className="cine-wrap cine-split">
-      <div>
-       <p className="cine-eye">— Cross-domain intelligence</p>
-       <h2 id="pg-domains-h">Six scientific domains. One connected view.</h2>
-       <p>Explore questions that cross conventional disciplinary boundaries without losing the context that makes scientific evidence meaningful.</p>
-      </div>
-      <ul className="cine-list pg-domain-list" aria-label="Scientific domains in scope">
-       {DOMAINS.map(d=><li key={d.label}><Link to={d.to}><Icon/>{d.label}</Link></li>)}
+     <div className="cine-wrap">
+      <p className="cine-eye">— Cross-domain intelligence</p>
+      <h2 id="pg-domains-h">Six scientific domains. One connected view.</h2>
+      <p>Explore questions that cross conventional disciplinary boundaries without losing the context that makes scientific evidence meaningful.</p>
+      <ul className="fig-hub pg-domain-list" aria-label="Scientific domains in scope">
+       {DOMAINS.map((d,i)=><li key={d.label}><Link to={d.to}><span className="fig-node">{String(i+1).padStart(2,"0")}</span>{d.label}</Link></li>)}
       </ul>
      </div>
      <div className="cine-wrap">
@@ -149,9 +132,7 @@ export function HomeLanding(){
      <div className="cine-wrap">
       <p className="cine-eye">— Scientific investigation</p>
       <h2>Go beyond finding papers.</h2>
-      <ol className="cine-steps" aria-label="Question to research brief">
-       {JOURNEY.map((step,i)=><li key={step}><b>0{i+1}</b><div><h3>{step}</h3></div></li>)}
-      </ol>
+      <FigurePath label="Question to research brief" steps={JOURNEY.map((title,i)=>({n:String(i+1).padStart(2,"0"),title}))}/>
       <p>HSI is being developed to connect the scientific investigation process into one traceable workflow.</p>
       <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
       <p>Labelled Example studies. Not an approval.</p>
@@ -211,7 +192,12 @@ export function HomeLanding(){
     <section className="cine-section" aria-labelledby="pg-close-h">
      <div className="cine-wrap">
       <p className="cine-eye">— Trust</p>
-      <p className="cine-promise">Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.</p>
+      <FigurePath label="Scientific commitment" steps={[
+       {n:"01",title:"Understand the mechanism"},
+       {n:"02",title:"Preserve the evidence"},
+       {n:"03",title:"Explain the uncertainty"},
+       {n:"04",title:"Inform the next decision"},
+      ]}/>
       <h2 id="pg-close-h">Better questions. Clearer evidence. More informed research.</h2>
       <p>From scientific questions to scientific progress. Explore the scientific intelligence already taking shape inside HSI.</p>
       <div className="cine-cta" style={{justifyContent:"flex-start"}}>
