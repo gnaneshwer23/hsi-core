@@ -60,5 +60,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U24 Agent checkpoint resume + reconciliation apply | Done — see `HSI_U24_AGENT_CHECKPOINT_RESUME_2026-11-21.md` (live agent workloads still not approved) |
 | U25 Agent tool fence + orphan RUNNING refuse | Done — see `HSI_U25_AGENT_TOOL_FENCE_2026-11-21.md` (live agent workloads still not approved) |
 | U26 Agent fingerprint versioning + revision-round contract | Done — see `HSI_U26_AGENT_FINGERPRINT_VERSIONING_2026-11-21.md` (no hash rewrite; DB revisions still open) |
+| U27 Agent fenced tool caller host wiring | Done — see `HSI_U27_AGENT_FENCED_TOOL_CALLER_2026-11-21.md` (retrieval + mechanism stages; live agents still not approved) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U26 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U27 soft-landed; owner evidence still required.
