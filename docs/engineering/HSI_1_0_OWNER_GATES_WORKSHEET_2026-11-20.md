@@ -36,10 +36,11 @@ Acceptance matrix: [`HSI_1_0_ACCEPTANCE_STATUS_2026-11-20.md`](./HSI_1_0_ACCEPTA
 
 ## Owner next steps (not this PR)
 
-1. Close Human #5 staging write packet on disposable HSI Neon without inventing hosts.  
-2. Name Human #3 isolation signer; retain two-user staging HTTP evidence.  
-3. Populate Human #4 SME gold vault — never invent expert labels in git.  
-4. Accept Human #8 / NEXT-F operational soak; **then** invite 3–5 researchers for checklist #8.
+1. Work the U6 owner-packets scaffold ([`HSI_10_OWNER_PACKETS_U6_SOFT_LAND.md`](./HSI_10_OWNER_PACKETS_U6_SOFT_LAND.md)): Human #2 clearance, Human #3 isolation, Human #5 staging persistence.  
+2. Close Human #5 staging write packet on disposable HSI Neon without inventing hosts.  
+3. Name Human #3 isolation signer; retain two-user staging HTTP evidence.  
+4. Populate Human #4 SME gold vault — never invent expert labels in git.  
+5. Accept Human #8 / NEXT-F operational soak; **then** invite 3–5 researchers for checklist #8.
 
 ## Explicit non-goals
 

@@ -154,6 +154,8 @@ const GATES: readonly Hsi10OwnerGateRow[] = [
 ];
 
 const REUSE_MODULES: readonly string[] = [
+  "src/operations/hsi10OwnerPacketsScaffold.ts",
+  "src/operations/e2e03SourceClearanceComposition.ts",
   "src/operations/e2e05StagingSaveResume.ts",
   "src/operations/nextBIsolationSoftLand.ts",
   "src/operations/e2eIsolationAcceptancePacket.ts",
@@ -164,6 +166,7 @@ const REUSE_MODULES: readonly string[] = [
 ];
 
 const OWNER_PRECONDITIONS: readonly string[] = [
+  "Close Human #2 clearance via U6 owner-packets scaffold without inventing MoUs or authorities.",
   "Close Human #5 staging write packet without lifting held migrations 022–033 unless explicitly authorised.",
   "Name Human #3 isolation signer and retain two-user staging HTTP evidence.",
   "Populate Human #4 SME gold vault with expert-adjudicated labels — never invent gold in git.",

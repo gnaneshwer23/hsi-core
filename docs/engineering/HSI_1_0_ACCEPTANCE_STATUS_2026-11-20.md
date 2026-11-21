@@ -56,4 +56,4 @@ Business pre-mortem (#579) is **internal strategy only** — not a technical rel
 
 1. Run the public launch QA packet (`docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md`).  
 2. Fill continuous-journey + staging save evidence soft-lands (checklist #1 / #5) with real staging grant evidence.  
-3. Work the owner-gate worksheet ([`HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md`](./HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md)): close Human #2 / #3 / #4 / #5; close Human #8 / NEXT-F; **then** invite 3–5 researchers for checklist #8.  
+3. Work the U6 owner-packets scaffold ([`HSI_10_OWNER_PACKETS_U6_SOFT_LAND.md`](./HSI_10_OWNER_PACKETS_U6_SOFT_LAND.md)) for Human #2 / #3 / #5; then Human #4 SME gold and Human #8 / NEXT-F; **then** invite 3–5 researchers for checklist #8.  
