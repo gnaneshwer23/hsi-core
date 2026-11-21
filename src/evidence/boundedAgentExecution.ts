@@ -139,6 +139,8 @@ export type InvestigationPlanArtifact = {
     timeoutMsPerStage: number;
     maxStages: number;
     pageSize: number;
+    /** Wall-clock bound across all stages (U29). */
+    maxOrchestrationMs: number;
   };
   reviewControls: {
     curationReview: "draft";
@@ -762,6 +764,7 @@ export async function runBoundedAgentExecution(input: {
     maxToolCallsPerStage?: number;
     timeoutMsPerStage?: number;
     pageSize?: number;
+    maxOrchestrationMs?: number;
   };
   /**
    * Explicit human-authorised recovery for a previously failed/blocked stage.
@@ -795,12 +798,18 @@ export async function runBoundedAgentExecution(input: {
     maxToolCallsPerStage: input.budgets?.maxToolCallsPerStage ?? 4,
     timeoutMsPerStage: input.budgets?.timeoutMsPerStage ?? 8_000,
     pageSize: input.budgets?.pageSize ?? 5,
+    maxOrchestrationMs:
+      input.budgets?.maxOrchestrationMs ??
+      (input.budgets?.timeoutMsPerStage ?? 8_000) * BOUNDED_STAGE_IDS.length,
   };
   if (budgets.maxToolCallsPerStage < 1 || budgets.maxToolCallsPerStage > 20) {
     fail("Invalid tool budget");
   }
   if (budgets.timeoutMsPerStage < 100 || budgets.timeoutMsPerStage > 120_000) {
     fail("Invalid stage timeout budget");
+  }
+  if (budgets.maxOrchestrationMs < 100 || budgets.maxOrchestrationMs > 600_000) {
+    fail("Invalid orchestration wall-clock budget");
   }
 
   const checkpointStore = input.checkpointStore ?? createMemoryCheckpointStore();
@@ -1066,6 +1075,7 @@ export async function runBoundedAgentExecution(input: {
           timeoutMsPerStage: budgets.timeoutMsPerStage,
           maxStages: BOUNDED_STAGE_IDS.length,
           pageSize: budgets.pageSize,
+          maxOrchestrationMs: budgets.maxOrchestrationMs,
         },
         reviewControls: {
           curationReview: "draft",
@@ -1686,6 +1696,7 @@ export async function runBoundedAgentExecution(input: {
     dataClass: "public_biomedical",
     now,
     signal: input.signal,
+    maxOrchestrationMs: budgets.maxOrchestrationMs,
   });
 
   const stages: BoundedStageTrace[] = [];

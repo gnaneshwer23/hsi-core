@@ -2,6 +2,7 @@
  * No external tools, network calls, DB writes, LLM calls or scientific approvals.
  */
 import {assertHsiToolPermission,validateHsiAgentManifest,validateHsiAgentRunEnvelope,HSI_TOOL_IDS,type HsiAgentManifest,type HsiAgentRole,type HsiAgentRunEnvelope,type HsiToolId} from "./hsiAgentIntelligenceContracts";
+import {createHsiOrchestrationDeadline} from "./hsiAgentOrchestrationBudget";
 export type HsiAgentTask={id:string;manifest:HsiAgentManifest;dependsOn:readonly string[]};
 export type HsiAgentStepResult={status:"completed"|"blocked";outputRef:string|null;reason:string|null};
 export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
@@ -12,6 +13,8 @@ export async function runHsiAgentOrchestration(input:{
  graphRelease:{id:string;version:string;manifestHash:string};
  dataClass:"public_biomedical"|"licensed_partner"|"synthetic_demo";
  now?:()=>string;signal?:AbortSignal;
+ /** Optional wall-clock bound across all tasks (distinct from per-task timeoutMs). */
+ maxOrchestrationMs?:number;
 }):Promise<HsiOrchestrationResult>{
  // Executor code cannot widen permissions, alter dependencies or change release provenance through caller-owned objects.
  input={...input,tasks:structuredClone(input.tasks),graphRelease:structuredClone(input.graphRelease),executors:{...input.executors}};
@@ -33,8 +36,13 @@ export async function runHsiAgentOrchestration(input:{
  const results:Record<string,HsiAgentStepResult>=Object.create(null);
  const runs:HsiAgentRunEnvelope[]=[];
  let status:HsiOrchestrationResult["status"]="completed";
+ const deadline=input.maxOrchestrationMs===undefined
+  ? null
+  : createHsiOrchestrationDeadline({maxOrchestrationMs:input.maxOrchestrationMs,parent:input.signal});
+ const signal=deadline?.signal??input.signal;
+ try{
  for(const task of order){
-  if(input.signal?.aborted){status="cancelled";break}
+  if(signal?.aborted){status="cancelled";break}
   const startedAt=now();
   const blockedDependency=task.dependsOn.some(d=>results[d]?.status!=="completed");
   const executor=input.executors[task.manifest.role];
@@ -52,7 +60,7 @@ export async function runHsiAgentOrchestration(input:{
    try{
     result=await Promise.race([
      Promise.resolve().then(()=>{
-      if(input.signal?.aborted)throw Error("Cancelled before dispatch");
+      if(signal?.aborted)throw Error("Cancelled before dispatch");
       return executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:structuredClone(Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!]))),assertTool:(tool)=>{
       if(!acceptingCalls||controller.signal.aborted)throw Error("Agent invocation already closed");
       const invocationId=task.id+"-tool-"+(calls.length+1);
@@ -62,8 +70,8 @@ export async function runHsiAgentOrchestration(input:{
      }});}),
      new Promise<never>((_,reject)=>{
       rejectCancellation=reject;
-      input.signal?.addEventListener("abort",onAbort,{once:true});
-      if(input.signal?.aborted)onAbort();
+      signal?.addEventListener("abort",onAbort,{once:true});
+      if(signal?.aborted)onAbort();
       timeout=setTimeout(()=>{controller.abort();reject(Error("Agent timeout"))},task.manifest.timeoutMs);timeout.unref?.();
      })
     ]);
@@ -71,14 +79,26 @@ export async function runHsiAgentOrchestration(input:{
     result=structuredClone(result);
     if(!result||!["completed","blocked"].includes(result.status)|| (result.status==="completed"&&!result.outputRef?.trim()))throw Error("Invalid executor result");
     runStatus=result.status;
-   }catch{controller.abort();result={status:"blocked",outputRef:null,reason:"Executor failed, cancelled or tool permission denied"};runStatus=input.signal?.aborted?"cancelled":"failed"}
-   finally{acceptingCalls=false;if(timeout)clearTimeout(timeout);input.signal?.removeEventListener("abort",onAbort)}
+   }catch{controller.abort();result={status:"blocked",outputRef:null,reason:"Executor failed, cancelled or tool permission denied"};runStatus=signal?.aborted?"cancelled":"failed"}
+   finally{acceptingCalls=false;if(timeout)clearTimeout(timeout);signal?.removeEventListener("abort",onAbort)}
   }
   results[task.id]=result;
   const run:HsiAgentRunEnvelope={schemaVersion:"hsi-agent-run-1",investigationId:input.investigationId,runId:input.investigationId+":"+task.id,manifest:task.manifest,graphRelease:input.graphRelease,dataClass:input.dataClass,status:runStatus,toolCallEvidence:"authorization_checks_only",toolCalls:structuredClone(calls),startedAt,completedAt:now()};
   validateHsiAgentRunEnvelope(run);runs.push(run);
   if(runStatus==="failed")status="failed";else if(runStatus==="blocked"&&status==="completed")status="blocked";
-  if(input.signal?.aborted){status="cancelled";break}
+  if(signal?.aborted){status="cancelled";break}
  }
- return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations:["In-process deterministic orchestration only; no persisted trace or live agent execution guarantee","Tool receipts record authorization checks only, not external dispatch or completion","Cancellation signals do not undo external side effects; hosts must provide cooperative tools and durable execution fences","No scientific approval, graph publication or patient-level reasoning"]};
+ }finally{
+  deadline?.dispose();
+ }
+ const limitations=[
+  "In-process deterministic orchestration only; no persisted trace or live agent execution guarantee",
+  "Tool receipts record authorization checks only, not external dispatch or completion",
+  "Cancellation signals do not undo external side effects; hosts must provide cooperative tools and durable execution fences",
+  "No scientific approval, graph publication or patient-level reasoning",
+ ];
+ if(deadline?.budgetExceeded()){
+  limitations.push("Orchestration wall-clock budget exceeded; remaining tasks were not started or were cancelled cooperatively");
+ }
+ return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations};
 }
