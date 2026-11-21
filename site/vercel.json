@@ -333,6 +333,10 @@
       "destination": "/_pages/research--workspace.html"
     },
     {
+      "source": "/research/companion",
+      "destination": "/_pages/research--companion.html"
+    },
+    {
       "source": "/research/community-feed",
       "destination": "/_pages/research--community-feed.html"
     },
