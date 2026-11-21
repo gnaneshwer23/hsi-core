@@ -15,8 +15,8 @@ QA packet: [`docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md`](../qa/HSI_PUBLI
 | Demo Universe synthetic / write-false | Engineering ready |
 | Premortem as release gate | **False** (strategy only) |
 | `publicLaunchClaimed` | Always `false` |
-| Owner visual acceptance / GO | **UNASSIGNED** |
-| Invented owner GO | **Forbidden** |
+| Owner visual acceptance / GO | **Recorded GO** (U36 / 21 Nov 2026) for L0 public site + Demo Universe only |
+| Invented owner GO | **Forbidden** (U36 records explicit owner message; not invented) |
 
 ## Surface map
 
@@ -27,8 +27,8 @@ QA packet: [`docs/qa/HSI_PUBLIC_LAUNCH_QA_PACKET_2026-11-21.md`](../qa/HSI_PUBLI
 | Landing honesty labels | No | E2e-asserted |
 | Production probe writes false | No | Fail-closed |
 | Premortem non-gate | No | Explicit exclusion |
-| Owner visual acceptance | Yes | Pending |
-| Owner public launch GO | Yes | Pending |
+| Owner visual acceptance | Yes | **GO recorded** (U36, 21 Nov 2026) |
+| Owner public launch GO | Yes | **GO recorded** (U36, 21 Nov 2026) — research writes still false |
 
 ## Companion client work (same unit)
 
@@ -36,8 +36,8 @@ Access-request contact flow uses `site/src/lib/accessRequestClient.ts` so rate-l
 
 ## Owner next steps
 
-1. Sign visual acceptance against the dated evidence set (or refresh it).  
-2. Record public launch GO or NO-GO privately.  
-3. Keep scientific approval and production writes false for L0.  
+1. ~~Sign visual acceptance / record public launch GO~~ — **done via U36 owner approval** (L0 only).  
+2. Keep scientific approval and production research writes false for L0.  
+3. Real PHI / clinical activity remain ADR-0010-gated (not part of L0).  
 
-**Never invent** public launch GO or operator receipt in this soft-land.
+**Never invent** operator receipt or research-write enablement in this soft-land.

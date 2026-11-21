@@ -23,7 +23,7 @@ describe("HSI 1.0 U11 public launch readiness soft-land",()=>{
     expect(packet.honesty.premortemNotAGate).toBe(true);
   });
 
-  test("owner GO stays gated while engineering surfaces are ready",()=>{
+  test("owner L0 GO is recorded while unrestricted launch claims stay false",()=>{
     const surfaces:Hsi10PublicLaunchSurfaceId[]=[
       "public_qa_packet",
       "demo_universe_synthetic",
@@ -40,7 +40,8 @@ describe("HSI 1.0 U11 public launch readiness soft-land",()=>{
       expect(row.scientificApproval).toBe(false);
     }
     expect(hsi10PublicLaunchSurfaceById("demo_universe_synthetic").engineeringReady).toBe(true);
-    expect(hsi10PublicLaunchSurfaceById("owner_public_launch_go").engineeringReady).toBe(false);
+    expect(hsi10PublicLaunchSurfaceById("owner_public_launch_go").engineeringReady).toBe(true);
+    expect(hsi10PublicLaunchSurfaceById("owner_visual_acceptance").engineeringReady).toBe(true);
     expect(hsi10PublicLaunchSurfaceById("owner_public_launch_go").ownerSignOffRequired).toBe(true);
   });
 
@@ -67,12 +68,12 @@ describe("HSI 1.0 U11 public launch readiness soft-land",()=>{
       inventedOwnerGo:boolean;
       references:{visual_acceptance_ref:string;public_launch_go_ref:string};
     };
-    expect(pending.opsAcceptance).toBe("BLOCKED");
+    expect(pending.opsAcceptance).toBe("L0_OWNER_GO_RECORDED");
     expect(pending.publicLaunchClaimed).toBe(false);
     expect(pending.premortemIsReleaseGate).toBe(false);
     expect(pending.inventedOwnerGo).toBe(false);
-    expect(pending.references.visual_acceptance_ref).toBe("UNASSIGNED");
-    expect(pending.references.public_launch_go_ref).toBe("UNASSIGNED");
+    expect(pending.references.visual_acceptance_ref).toContain("HSI_PUBLIC_L0_DEPLOY_APPROVAL");
+    expect(pending.references.public_launch_go_ref).toContain("HSI_PUBLIC_L0_DEPLOY_APPROVAL");
 
     const doc=readFileSync(
       join(root,"docs/engineering/HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md"),
@@ -80,5 +81,6 @@ describe("HSI 1.0 U11 public launch readiness soft-land",()=>{
     );
     expect(doc).toContain("Never invent");
     expect(doc).toContain("L0");
+    expect(doc).toContain("U36");
   });
 });
