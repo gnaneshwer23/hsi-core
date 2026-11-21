@@ -181,3 +181,20 @@ test("SSc graph API does not leak database errors",async()=>{
  const r=await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=ssc:tfh",{headers:{cookie}}),{...services,graph:async()=>{throw Error("private database secret")}});
  expect(r.status).toBe(403);expect(await r.text()).not.toContain("private database");
 });
+
+test("interrogative envelope errors expose stable machine codes without leaking internals",async()=>{
+ const auth=await handleInterrogativeApi(new Request(base),services);
+ expect(auth.status).toBe(401);expect(await auth.json()).toEqual({code:"AUTH_REQUIRED",error:"Authentication required"});
+ const method=await handleInterrogativeApi(new Request(base+"/submit-review",{headers:{cookie}}),services);
+ expect(method.status).toBe(405);expect(await method.json()).toEqual({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"});
+ const origin=await handleInterrogativeApi(new Request(base+"/submit-review",{method:"POST",headers:{cookie,origin:"https://attacker.example","content-type":"application/json"},body:"{}"}),services);
+ expect(origin.status).toBe(403);expect(await origin.json()).toEqual({code:"ORIGIN_NOT_ALLOWED",error:"Origin verification failed"});
+ const mismatch=await handleInterrogativeApi(new Request(base+"/decision",{method:"POST",headers:{cookie,origin:"https://hsi.example","content-type":"application/json"},body:JSON.stringify({investigationId:"hsi-interrogative-other-12345678"})}),services);
+ expect(mismatch.status).toBe(400);expect(await mismatch.json()).toEqual({code:"INVESTIGATION_MISMATCH",error:"Investigation mismatch"});
+ const denied=await handleInterrogativeApi(new Request(base,{headers:{cookie}}),{...services,load:async()=>{throw Error("secret database url")}});
+ expect(denied.status).toBe(403);expect(await denied.json()).toEqual({code:"RESEARCH_RECORD_DENIED",error:"Research record unavailable or operation denied"});
+ const node=await handleInterrogativeApi(new Request("https://hsi.example/api/research/graph/ssc?node=bad%20node",{headers:{cookie}}),services);
+ expect(node.status).toBe(400);expect(await node.json()).toEqual({code:"INVALID_GRAPH_NODE",error:"Valid graph node required"});
+ const live=await handleInterrogativeApi(new Request("https://hsi.example/api/research/live-investigations"),services);
+ expect(live.status).toBe(503);expect(await live.json()).toEqual({code:"LIVE_EVIDENCE_DISABLED",error:"Live evidence persistence disabled"});
+});

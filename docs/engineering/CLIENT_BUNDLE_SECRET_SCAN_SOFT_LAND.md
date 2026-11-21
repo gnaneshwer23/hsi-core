@@ -20,7 +20,7 @@ Pending: [`operations/staging/client-bundle-secret-scan.pending.json`](../../ope
 
 ```bash
 cd site && bun run build
-bun --no-env-file scripts/scan-client-bundle-secrets.ts
+bun run scan:client-bundle
 ```
 
 ## Owner next steps
