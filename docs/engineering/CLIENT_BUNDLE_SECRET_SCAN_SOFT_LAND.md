@@ -23,6 +23,8 @@ cd site && bun run build
 bun run scan:client-bundle
 ```
 
+CI runs the same command after `site:build` in `.github/workflows/research-foundation.yml`. A clean CI scan is still **not** AppSec acceptance.
+
 ## Owner next steps
 
 1. Run after public builds before L0 GO.  

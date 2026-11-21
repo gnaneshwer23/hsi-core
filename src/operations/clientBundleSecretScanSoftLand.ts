@@ -22,6 +22,7 @@ export type ClientBundleSecretScanPacket = {
     missingDistIsSkipNotPass: true;
     cleanScanIsNotAppSecAcceptance: true;
     gitleaksHistoryStillRequired: true;
+    ciScanIsNotAppSecAcceptance: true;
     noInventedFindings: true;
   };
 };
@@ -42,6 +43,7 @@ export function clientBundleSecretScanPacket(): ClientBundleSecretScanPacket {
       missingDistIsSkipNotPass: true,
       cleanScanIsNotAppSecAcceptance: true,
       gitleaksHistoryStillRequired: true,
+      ciScanIsNotAppSecAcceptance: true,
       noInventedFindings: true,
     },
   };

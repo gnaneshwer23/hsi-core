@@ -49,5 +49,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U13 Interrogative API stable codes + `scan:client-bundle` script | Done — see `HSI_U13_INTERROGATIVE_API_CODES_2026-11-21.md` |
 | U14 Live evidence + scientific site API codes | Done — see `HSI_U14_LIVE_AND_SCIENTIFIC_API_CODES_2026-11-21.md` |
 | U15 Gateway envelope wave 3 (onboarding / graph / router / snapshot) | Done — see `HSI_U15_GATEWAY_ENVELOPE_WAVE3_2026-11-21.md` |
+| U16 Client-bundle secret scan in CI (PROD-QA-003) | Done — see `HSI_U16_CLIENT_BUNDLE_SCAN_CI_2026-11-21.md` (AppSec still open) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U15 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U16 soft-landed; owner evidence still required.
