@@ -4,6 +4,7 @@ import {
   fetchAccessRequestStatus,
   submitAccessRequest,
 } from "../lib/accessRequestClient";
+import {formatRetryAfterHint} from "../lib/retryAfter";
 import {
   clearAccessIntent,
   readAccessIntent,
@@ -15,6 +16,7 @@ import {
 } from "../lib/researchContext";
 
 type DeliveryStatus="loading"|"configured"|"unavailable"|"unknown";
+type StatusTone="status"|"alert";
 
 /**
  * Research access intent: browser draft always available; optional server delivery when configured.
@@ -29,8 +31,14 @@ export function AccessIntentPanel(){
   const [honeypot,setHoneypot]=useState("");
   const [draft,setDraft]=useState<AccessIntentDraft|null>(null);
   const [status,setStatus]=useState("");
+  const [statusTone,setStatusTone]=useState<StatusTone>("status");
   const [deliveryStatus,setDeliveryStatus]=useState<DeliveryStatus>("loading");
   const [busy,setBusy]=useState(false);
+
+  function announce(message:string,tone:StatusTone="status"){
+    setStatusTone(tone);
+    setStatus(message);
+  }
 
   useEffect(()=>{
     const existing=readAccessIntent();
@@ -60,7 +68,7 @@ export function AccessIntentPanel(){
     e?.preventDefault();
     const trimmed=question.trim();
     if(trimmed.length<12){
-      setStatus("Describe your research question in at least 12 characters.");
+      announce("Describe your research question in at least 12 characters.","alert");
       return;
     }
     try{
@@ -71,9 +79,9 @@ export function AccessIntentPanel(){
         emailHint:emailHint||undefined,
       });
       setDraft(saved);
-      setStatus("Saved in this browser only. No access request was sent to HSI servers.");
+      announce("Saved in this browser only. No access request was sent to HSI servers.");
     }catch{
-      setStatus("Could not save a browser draft in this session. Your question was not sent.");
+      announce("Could not save a browser draft in this session. Your question was not sent.","alert");
     }
   }
 
@@ -83,7 +91,7 @@ export function AccessIntentPanel(){
     const emailSnapshot=emailHint;
     const honeypotSnapshot=honeypot;
     if(trimmed.length<12){
-      setStatus("Describe your research question in at least 12 characters.");
+      announce("Describe your research question in at least 12 characters.","alert");
       return;
     }
     if(!deliveryConfigured){
@@ -103,7 +111,7 @@ export function AccessIntentPanel(){
         case"quiet_accept":
           setQuestion(trimmed);
           setEmailHint(emailSnapshot);
-          setStatus(result.note);
+          announce(result.note);
           break;
         case"accepted":
           try{
@@ -119,23 +127,26 @@ export function AccessIntentPanel(){
           }
           setQuestion(trimmed);
           setEmailHint(emailSnapshot);
-          setStatus(result.note);
+          announce(result.note);
           break;
         case"not_configured":
           setDeliveryStatus("unavailable");
           saveDraft();
-          setStatus("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.");
+          announce("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.","alert");
           break;
-        case"rate_limited":
-          setStatus(result.error);
+        case"rate_limited":{
+          const hint=formatRetryAfterHint(result.retryAfterSeconds,"");
+          const base=result.error.replace(/\.\s*$/,"");
+          announce(hint&&!base.includes("Try again in about")?`${base}. ${hint}`:result.error,"alert");
           break;
+        }
         case"refused":
         case"error":
-          setStatus(result.error);
+          announce(result.error,"alert");
           break;
         default:{
           const _exhaustive:never=result;
-          setStatus("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
+          announce("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.","alert");
           void _exhaustive;
         }
       }
@@ -147,7 +158,7 @@ export function AccessIntentPanel(){
     setDraft(null);
     setQuestion("");
     setEmailHint("");
-    setStatus("Browser draft cleared.");
+    announce("Browser draft cleared.");
   }
 
   async function retryStatus(){
@@ -233,7 +244,7 @@ export function AccessIntentPanel(){
         {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear} disabled={busy}>Clear draft</button>:null}
       </div>
     </form>
-    {status?<p role="status">{status}</p>:null}
+    {status?<p role={statusTone}>{status}</p>:null}
     {draft?<p className="ed-scope-line">Draft saved {new Date(draft.savedAt).toLocaleString()} · persistence=browser_only</p>:null}
     <div className="xp-actions">
       <Link to={continueSignUp}>Continue to create account</Link>

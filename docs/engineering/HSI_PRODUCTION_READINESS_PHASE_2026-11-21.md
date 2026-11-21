@@ -52,5 +52,7 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U16 Client-bundle secret scan in CI (PROD-QA-003) | Done — see `HSI_U16_CLIENT_BUNDLE_SCAN_CI_2026-11-21.md` (AppSec still open) |
 | U17 Restricted-preview client envelopes (`code` + Retry-After) | Done — see `HSI_U17_RESTRICTED_PREVIEW_CLIENT_ENVELOPES_2026-11-21.md` |
 | U18 Auth Retry-After + graph / researcher workspace envelopes | Done — see `HSI_U18_AUTH_AND_GRAPH_CLIENT_ENVELOPES_2026-11-21.md` |
+| U19 Interrogative delivery client envelopes | Done — see `HSI_U19_INTERROGATIVE_DELIVERY_CLIENT_ENVELOPES_2026-11-21.md` |
+| U20 Access-request alert + Retry-After polish | Done — see `HSI_U20_ACCESS_REQUEST_ALERT_RETRY_2026-11-21.md` |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U18 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U20 soft-landed; owner evidence still required.

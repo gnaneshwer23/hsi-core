@@ -6,6 +6,13 @@ export type ResearchApiErrorContext=
  |"workspace_load"
  |"workspace_create"
  |"live_run"
+ |"delivery_load"
+ |"delivery_submit"
+ |"delivery_revise"
+ |"brief_download"
+ |"outcome_load"
+ |"review_queue"
+ |"evidence_context"
  |"generic";
 
 /** Read a fail-closed research JSON envelope without throwing on non-JSON. */
@@ -30,16 +37,25 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "AUTH_REQUIRED":
   case "BACKEND_PROVIDER_SESSION_REQUIRED":
   case "BACKEND_DATABASE_SESSION_REQUIRED":
-   return context==="workspace_create"
-    ?"Your session needs attention. Sign in again before saving."
-    :"Sign in with a verified research account to open your investigations.";
+   if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+    return "Your session needs attention. Sign in again before continuing.";
+   }
+   if(context==="review_queue"){
+    return "Sign in with an independently authorised scientific reviewer account to open this queue.";
+   }
+   if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"){
+    return "Sign in with a verified research account to open this evidence brief.";
+   }
+   return "Sign in with a verified research account to open your investigations.";
   case "EMAIL_NOT_VERIFIED":
    return "Verify your email address before using the research workspace.";
   case "RESEARCH_ACCESS_DENIED":
   case "RESEARCH_ACCESS_REQUIRED":
-   return "Research access has not been confirmed. Check your research account or contact the research administrator.";
+   return context==="review_queue"
+    ?"The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required."
+    :"Research access has not been confirmed. Check your research account or contact the research administrator.";
   case "RESEARCH_WRITES_DISABLED":
-   return context==="workspace_create"
+   return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"||context==="evidence_context"
     ?"Saving is not available for your account on this deployment. Your question has been kept here."
     :"Research writes are not enabled or authorized.";
   case "PUBLISHED_RELEASE_REQUIRED":
@@ -55,9 +71,32 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
   case "WORKSPACE_UNAVAILABLE":
   case "WORKSPACE_DENIED":
   case "RESEARCH_RECORD_DENIED":
-   return context==="workspace_create"
+   return context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"
     ?"Save could not be confirmed. Retry to check the same request without creating a duplicate."
     :"Your investigations could not be loaded. Please retry.";
+  case "DELIVERY_UNAVAILABLE":
+  case "DELIVERY_DENIED":
+   return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
+  case "BRIEF_UNAVAILABLE":
+  case "INVALID_BRIEF_FORMAT":
+  case "INVALID_EXPORT_QUERY":
+   return "Brief unavailable. Refresh the package and verify access before retrying.";
+  case "OUTCOME_UNAVAILABLE":
+  case "OUTCOME_DENIED":
+  case "OUTCOME_RECEIPT_UNAVAILABLE":
+  case "INVALID_OUTCOME_FORMAT":
+   return "The research outcome could not be verified. Refresh to check current evidence and access.";
+  case "REVISION_UNAVAILABLE":
+   return "Revision creation could not be confirmed. Your response is kept here. Retry the same request or refresh to find an existing linked revision.";
+  case "REVIEW_QUEUE_UNAVAILABLE":
+  case "REVIEW_QUEUE_DENIED":
+  case "INVALID_REVIEW_QUEUE_CURSOR":
+  case "REVIEW_HISTORY_UNAVAILABLE":
+  case "REVIEW_HISTORY_DENIED":
+   return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
+  case "EVIDENCE_CONTEXT_UNAVAILABLE":
+  case "EVIDENCE_CONTEXT_DENIED":
+   return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";
   case "METHOD_NOT_ALLOWED":
    return "This research action is not available with the current request method.";
   case "ORIGIN_NOT_ALLOWED":
@@ -97,18 +136,38 @@ export function messageForResearchCode(code:string|undefined,context:ResearchApi
 /** Status honesty when a stable `code` is absent (older envelopes / test doubles). */
 export function messageForResearchStatus(status:number,context:ResearchApiErrorContext):string|undefined{
  if(status===401){
-  return context==="workspace_create"
-   ?"Your session needs attention. Sign in again before saving."
-   :context==="live_run"
-   ?"Sign in is required before a live investigation can run."
-   :"Sign in with a verified research account to open your investigations.";
+  if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+   return "Your session needs attention. Sign in again before continuing.";
+  }
+  if(context==="live_run")return "Sign in is required before a live investigation can run.";
+  if(context==="review_queue"){
+   return "Sign in with an independently authorised scientific reviewer account to open this queue.";
+  }
+  if(context==="delivery_load"||context==="brief_download"||context==="outcome_load"||context==="evidence_context"){
+   return "Sign in with a verified research account to open this evidence brief.";
+  }
+  return "Sign in with a verified research account to open your investigations.";
  }
  if(status===403){
-  return context==="workspace_create"
-   ?"Saving is not available for your account on this deployment. Your question has been kept here."
-   :context==="workspace_load"
-   ?"Research access has not been confirmed. Check your research account or contact the research administrator."
-   :undefined;
+  if(context==="workspace_create"||context==="delivery_submit"||context==="delivery_revise"){
+   return "Saving is not available for your account on this deployment. Your question has been kept here.";
+  }
+  if(context==="workspace_load"){
+   return "Research access has not been confirmed. Check your research account or contact the research administrator.";
+  }
+  if(context==="review_queue"){
+   return "The independent reviewer queue could not be verified. Active SSc reviewer authority and a working research session are required.";
+  }
+  if(context==="delivery_load"||context==="brief_download"){
+   return "The evidence brief could not be verified. Check research access, source permissions and deployment readiness.";
+  }
+  if(context==="outcome_load"){
+   return "The research outcome could not be verified. Refresh to check current evidence and access.";
+  }
+  if(context==="evidence_context"){
+   return "The release-bound evidence context could not be verified. Check ownership, draft state and staging write readiness.";
+  }
+  return undefined;
  }
  if(status===409&&context==="workspace_create"){
   return "The selected release or save request is no longer available. Refresh the workspace before trying again.";
@@ -120,7 +179,7 @@ export function messageForResearchStatus(status:number,context:ResearchApiErrorC
 }
 
 /**
- * Prefer stable `code` honesty, then HTTP-status honesty for workspace surfaces,
+ * Prefer stable `code` honesty, then HTTP-status honesty for research surfaces,
  * then server `error` text, then context fallback.
  * On 429 / RATE_LIMITED, append a Retry-After wait hint when present.
  */
