@@ -77,7 +77,7 @@ test("unwrapHsiFencedToolSuccess returns value or throws stable labels", () => {
       {status: "success", idempotencyKey: "k", resultRef: "r", value: {ok: true}},
       "Graph query",
     ),
-  ).toEqual({ok: true});
+  ).toEqual({value: {ok: true}, resultRef: "r"});
   expect(() =>
     unwrapHsiFencedToolSuccess(
       {status: "late_commit_refused", idempotencyKey: "k", reason: "late"},

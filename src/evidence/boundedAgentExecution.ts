@@ -1106,7 +1106,7 @@ export async function runBoundedAgentExecution(input: {
       });
       let retrieval;
       try {
-        retrieval = unwrapHsiFencedToolSuccess(fenced, "Literature search");
+        retrieval = unwrapHsiFencedToolSuccess(fenced, "Literature search").value;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Literature search failed");
       }
@@ -1174,8 +1174,11 @@ export async function runBoundedAgentExecution(input: {
         return {resultRef, value: pack};
       });
       let pack;
+      let packResultRef: string;
       try {
-        pack = unwrapHsiFencedToolSuccess(graphFence, "Graph query");
+        const unwrapped = unwrapHsiFencedToolSuccess(graphFence, "Graph query");
+        pack = unwrapped.value;
+        packResultRef = unwrapped.resultRef;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Graph query failed");
       }
@@ -1183,10 +1186,10 @@ export async function runBoundedAgentExecution(input: {
         resultRef:
           "hsi-tool:evidence.get:" +
           createHash("sha256")
-            .update(canonicalEvidenceJson({pack: graphFence.resultRef}))
+            .update(canonicalEvidenceJson({pack: packResultRef}))
             .digest("hex")
             .slice(0, 24),
-        value: {candidatePackId: graphFence.resultRef},
+        value: {candidatePackId: packResultRef},
       }));
       try {
         unwrapHsiFencedToolSuccess(evidenceFence, "Evidence get");
@@ -1261,8 +1264,11 @@ export async function runBoundedAgentExecution(input: {
         return {resultRef, value: report};
       });
       let report;
+      let opposingResultRef: string;
       try {
-        report = unwrapHsiFencedToolSuccess(searchFence, "Opposing literature search");
+        const unwrapped = unwrapHsiFencedToolSuccess(searchFence, "Opposing literature search");
+        report = unwrapped.value;
+        opposingResultRef = unwrapped.resultRef;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Opposing literature search failed");
       }
@@ -1270,10 +1276,10 @@ export async function runBoundedAgentExecution(input: {
         resultRef:
           "hsi-tool:evidence.get:" +
           createHash("sha256")
-            .update(canonicalEvidenceJson({opposing: searchFence.resultRef}))
+            .update(canonicalEvidenceJson({opposing: opposingResultRef}))
             .digest("hex")
             .slice(0, 24),
-        value: {opposingRef: searchFence.resultRef},
+        value: {opposingRef: opposingResultRef},
       }));
       try {
         unwrapHsiFencedToolSuccess(evidenceFence, "Opposing evidence get");
@@ -1491,7 +1497,7 @@ export async function runBoundedAgentExecution(input: {
       });
       let artifact;
       try {
-        artifact = unwrapHsiFencedToolSuccess(gapFence, "Gap evidence get");
+        artifact = unwrapHsiFencedToolSuccess(gapFence, "Gap evidence get").value;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Gap evidence get failed");
       }
@@ -1545,8 +1551,11 @@ export async function runBoundedAgentExecution(input: {
         return {resultRef, value: artifact};
       });
       let artifact;
+      let hypoResultRef: string;
       try {
-        artifact = unwrapHsiFencedToolSuccess(hypoFence, "Hypothesis create");
+        const unwrapped = unwrapHsiFencedToolSuccess(hypoFence, "Hypothesis create");
+        artifact = unwrapped.value;
+        hypoResultRef = unwrapped.resultRef;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Hypothesis create failed");
       }
@@ -1554,10 +1563,10 @@ export async function runBoundedAgentExecution(input: {
         resultRef:
           "hsi-tool:evidence.get:" +
           createHash("sha256")
-            .update(canonicalEvidenceJson({hypotheses: hypoFence.resultRef}))
+            .update(canonicalEvidenceJson({hypotheses: hypoResultRef}))
             .digest("hex")
             .slice(0, 24),
-        value: {hypothesisRef: hypoFence.resultRef},
+        value: {hypothesisRef: hypoResultRef},
       }));
       try {
         unwrapHsiFencedToolSuccess(evidenceFence, "Hypothesis evidence get");
@@ -1603,7 +1612,7 @@ export async function runBoundedAgentExecution(input: {
       });
       let draftClaims;
       try {
-        draftClaims = unwrapHsiFencedToolSuccess(evidenceFence, "Brief evidence get").draftClaims;
+        draftClaims = unwrapHsiFencedToolSuccess(evidenceFence, "Brief evidence get").value.draftClaims;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Brief evidence get failed");
       }
@@ -1660,7 +1669,7 @@ export async function runBoundedAgentExecution(input: {
       });
       let artifact;
       try {
-        artifact = unwrapHsiFencedToolSuccess(graphFence, "Brief graph query");
+        artifact = unwrapHsiFencedToolSuccess(graphFence, "Brief graph query").value;
       } catch (error) {
         fail(error instanceof Error ? error.message : "Brief graph query failed");
       }

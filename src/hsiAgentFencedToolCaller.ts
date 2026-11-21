@@ -48,10 +48,10 @@ export function buildHsiToolIdempotencyKey(input: {
 export function unwrapHsiFencedToolSuccess<T>(
   outcome: HsiToolFenceOutcome & {value?: T},
   toolLabel: string,
-): T {
+): {value: T; resultRef: string} {
   if (outcome.status === "success") {
     if (outcome.value === undefined) throw Error(`${toolLabel} succeeded without value`);
-    return outcome.value;
+    return {value: outcome.value, resultRef: outcome.resultRef};
   }
   switch (outcome.status) {
     case "late_commit_refused":
