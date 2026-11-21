@@ -759,6 +759,11 @@
       "permanent": true
     },
     {
+      "source": "/validation",
+      "destination": "/trust#validation",
+      "permanent": true
+    },
+    {
       "source": "/evidence-safety",
       "destination": "/trust",
       "permanent": true

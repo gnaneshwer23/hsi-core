@@ -33,6 +33,7 @@ export const RETIRED_MARKETING_REDIRECTS = [
   ["/community", "/research/home"],
   ["/demo", "/research/journey"],
   ["/pricing", "/contact"],
+  ["/validation", "/trust#validation"],
   ["/evidence-safety", "/trust"],
 ] as const;
 
@@ -62,7 +63,6 @@ const PUBLIC_MARKETING = new Set([
   "/clinical",
   "/laboratories",
   "/research-community",
-  "/validation",
   "/trust",
   "/about",
   "/contact",

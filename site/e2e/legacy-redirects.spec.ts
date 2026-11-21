@@ -13,7 +13,7 @@ for(const [from,to] of retired){
 test('platform and science redirects land on honest destination copy',async({page})=>{
  await page.goto('/platform');
  await expect(page).toHaveURL(/\/how-it-works$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('Follow a question through the evidence');
+ await expect(page.getByRole('heading',{level:1})).toContainText('decision you can reopen');
  await expect(page.locator('.pg-micro').first()).toContainText('Research preview');
  await page.goto('/science');
  await expect(page).toHaveURL(/\/knowledge-graph$/);

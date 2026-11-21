@@ -1,5 +1,6 @@
 import {Link} from "react-router-dom";
 import {DemoLandingPreviewPanel} from "../components/demo/DemoLandingPreviewPanel";
+import {PRODUCT_TAGLINE} from "../lib/brand";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {RelationshipDiagram} from "../components/landing/RelationshipDiagram";
@@ -43,30 +44,31 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-platform pg-hero-spine" aria-labelledby="home-title">
      <div className="pg-hero-copy">
+      <p className="pg-vision">{PRODUCT_TAGLINE}</p>
       <h1 id="home-title">
        <span className="pg-brand">Human Super Intelligence </span>
-       See how the evidence connects.
+       See what the evidence actually supports.
       </h1>
       <p className="pg-lead">
-       Explore biological relationships. Inspect the studies. Compare the conditions behind each finding.
+       HSI helps scientists determine what biomedical evidence actually supports, why findings disagree, and what to investigate next — with a traceable explanation you can reopen.
       </p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/how-it-works">
-        Explore the platform <span aria-hidden="true">→</span>
+        Follow an example investigation <span aria-hidden="true">→</span>
        </Link>
-       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Scientific workbench
+       <Link className="pg-link" to="/contact">
+        Request a pilot conversation
        </Link>
       </div>
       <p className="pg-micro">
-       Research preview · candidate-only · unreviewed · no clinical advice · synthetic patients only
+       Research preview · candidate relationships only · nothing scientifically approved · no clinical advice · no patient data on this site
       </p>
      </div>
 
      <div className="pg-hero-figure" role="region" aria-labelledby="pg-flow-h">
       <h2 id="pg-flow-h">From a question to a research brief.</h2>
       <p className="pg-flow-lead">
-       Follow the evidence through one investigation.
+       Connect, verify, reason and collaborate. One path, grouped from the question through to a brief you can reopen.
       </p>
       <InvestigationFlowDiagram emphasizeId="graph"/>
       <p className="pg-flow-note">
@@ -95,7 +97,7 @@ export function HomeLanding(){
     <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
      <div className="pg-demo-universe-head">
       <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
-      <p>Choose a demonstration scenario and inspect both sides.</p>
+      <p>An example investigation. The studies are labelled Example, and they are not an approval.</p>
      </div>
      <DemoLandingPreviewPanel/>
     </section>
@@ -106,6 +108,23 @@ export function HomeLanding(){
       <p>Six areas of investigation. Published evidence coverage varies by area.</p>
       <ul className="pg-domain-list" aria-label="Scientific domains in scope">
        {DOMAINS.map(d=><li key={d.label}><Link to={d.to}>{d.label}</Link></li>)}
+      </ul>
+     </div>
+    </section>
+
+    <section className="pg-links" aria-labelledby="pg-who-h">
+     <div className="pg-links-row">
+      <h2 id="pg-who-h">Who it is for.</h2>
+      <p>Two paths. Other audiences stay in the footer.</p>
+      <ul className="pg-usp-row pg-who">
+       <li>
+        <Link to="/biotech">Biotech teams</Link>
+        <span>Small R&amp;D and funded translational groups can inspect evidence, see why findings disagree, and request a pilot conversation.</span>
+       </li>
+       <li>
+        <Link to="/researchers">Researchers</Link>
+        <span>Academic scientists can join as design partners and run a labelled example investigation.</span>
+       </li>
       </ul>
      </div>
     </section>
@@ -157,17 +176,14 @@ export function HomeLanding(){
     <section className="pg-close" aria-labelledby="pg-close-h">
      <div>
       <h2 id="pg-close-h">Start with one research question.</h2>
-      <p>Explore a demonstration, or open the scientific workbench.</p>
+      <p>Open the example, or request a pilot conversation.</p>
      </div>
      <div className="pg-cta">
-      <Link className="pg-btn pg-btn-light" to={LIVE_INVESTIGATION_PATH}>
-       Scientific workbench <span aria-hidden="true">→</span>
+      <Link className="pg-btn pg-btn-light" to="/how-it-works">
+       Follow an example investigation <span aria-hidden="true">→</span>
       </Link>
-      <Link className="pg-link pg-link-light" to="/how-it-works">
-       Explore the platform
-      </Link>
-      <Link className="pg-link pg-link-light" to="/welcome">
-       Set up research home
+      <Link className="pg-link pg-link-light" to="/contact">
+       Request a pilot conversation
       </Link>
      </div>
     </section>

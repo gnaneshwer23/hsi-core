@@ -30,8 +30,8 @@ export function ResearchersPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        title="Researchers: personal scientific intelligence with context, not just citations."
-        description="Published evidence, experimental context and uncertainty — without treating a model answer as approved biology."
+        title="Be a design partner in the investigation, not another reader of citations."
+        description="Published evidence, experimental context and uncertainty, in one path you can reopen. A model answer is never treated as approved biology."
         proof={
           <AudienceFlowDiagram
             variant="researchers"
@@ -40,8 +40,8 @@ export function ResearchersPublicPage() {
           />
         }
       >
-        <LandingPrimaryCta to="/welcome">Apply for the research preview</LandingPrimaryCta>
-        <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
+        <LandingPrimaryCta to="/contact">Join as a design partner</LandingPrimaryCta>
+        <LandingSecondaryCta to="/how-it-works">Open an example investigation</LandingSecondaryCta>
       </LandingHero>
 
       <LandingSection
@@ -64,14 +64,15 @@ export function ResearchersPublicPage() {
 
       <LandingSection
         title="What this preview is not."
-        description="Registration does not grant research writes. Graph edges remain candidates. Nothing here is clinical advice."
+        description="Registration does not grant research writes. Private work stays private until sharing is explicitly enabled. Graph edges remain candidates. Nothing here is clinical advice."
       >
         <ul className="s2-boundary-list">
           <li>Many saved runs stay on this device until a server store is enabled.</li>
+          <li>Supervisors do not receive automatic access to private student work.</li>
           <li>Dual-provider verification and gold sets require separate acceptance.</li>
         </ul>
         <div className="s2-cta-row">
-          <LandingPrimaryCta to="/contact">Request research access</LandingPrimaryCta>
+          <LandingPrimaryCta to="/contact">Join as a design partner</LandingPrimaryCta>
           <LandingSecondaryCta to="/trust">Read governance boundaries</LandingSecondaryCta>
         </div>
       </LandingSection>
@@ -92,12 +93,12 @@ export function BiotechPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        title="Biotech and pharma: assess R&D evidence with provenance you can inspect."
-        description="Source, experimental context and review status stay attached — so disagreement can be checked before it becomes a narrative."
+        title="A reproducible investigation for a small R&D team."
+        description="For biotech and funded translational groups who need to see what the evidence supports, why two studies disagree, and which question is worth testing next — with the source and context still attached."
         proof={<AudienceFlowDiagram variant="biotech" capabilities={BIOTECH_CAPS} ariaLabel="Biotech R&D flow" />}
       >
-        <LandingPrimaryCta to="/contact">Discuss a research pilot</LandingPrimaryCta>
-        <LandingSecondaryCta to="/evidence-intelligence">Inspect Evidence Intelligence</LandingSecondaryCta>
+        <LandingPrimaryCta to="/contact">Request a pilot conversation</LandingPrimaryCta>
+        <LandingSecondaryCta to="/how-it-works">Inspect an example investigation</LandingSecondaryCta>
       </LandingHero>
 
       <LandingSection
@@ -131,7 +132,7 @@ export function ClinicalPublicPage() {
     <LandingPage>
       <LandingHero
         title="Clinical research: evidence-grounded translation — not clinical decision support."
-        description="Literature-linked mechanism investigation on the scientific plane. Synthetic patients only; no live CDS or clinical advice."
+        description="Literature-linked mechanism investigation on the scientific plane. No patient data on this site, no live clinical decision support, and no clinical advice."
         proof={
           <AudienceFlowDiagram variant="clinical" capabilities={CLINICAL_CAPS} ariaLabel="Clinical research flow" />
         }
@@ -142,24 +143,24 @@ export function ClinicalPublicPage() {
 
       <LandingSection
         title="Scientific plane, clinical boundary."
-        description="Patient work stays separate. This preview refuses non-synthetic clinical data."
+        description="Patient work stays separate. Real patient records are not accepted on this site."
       >
         <ul className="s2-boundary-list">
           <li>No PHI and no live clinical decision support on this scientific plane.</li>
-          <li>Synthetic patients only; the release gate refuses non-synthetic clinical data.</li>
+          <li>No patient data on this site. The release gate refuses clinical records.</li>
           <li>Do not submit patient data or credentials through a public form.</li>
         </ul>
         <p className="s2-section-note">
           Related:{" "}
           <Link to="/trust">Trust and governance</Link>
           {" · "}
-          <Link to="/validation">Validation methodology</Link>
+          <Link to="/trust#validation">Validation methodology</Link>
           {" · "}
-          <Link to="/research/prescreen">Trial pre-screen (synthetic)</Link>
+          <Link to="/research/prescreen">Trial pre-screen</Link>
         </p>
         <div className="s2-cta-row">
           <LandingPrimaryCta to="/enterprise/clinical">Open clinical demo shell</LandingPrimaryCta>
-          <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
+          <LandingSecondaryCta to="/how-it-works">Open an example investigation</LandingSecondaryCta>
         </div>
       </LandingSection>
 
@@ -252,7 +253,7 @@ export function CommunityPublicPage() {
           <li>Gate C remains human for collaborative scientific reviews.</li>
         </ul>
         <div className="s2-cta-row">
-          <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>
+          <LandingPrimaryCta to="/contact">Request a pilot conversation</LandingPrimaryCta>
           <LandingSecondaryCta to="/enterprise">Research Groups landing</LandingSecondaryCta>
         </div>
       </LandingSection>
@@ -262,53 +263,3 @@ export function CommunityPublicPage() {
   );
 }
 
-const VALIDATION_CAPS: { title: string; maturity: LandingMaturityLevel }[] = [
-  { title: "States stay separate", maturity: "available" },
-  { title: "Context before contradiction", maturity: "available" },
-  { title: "Gold sets are human-gated", maturity: "restricted" },
-  { title: "Provenance on every candidate", maturity: "available" },
-];
-
-export function ValidationPublicPage() {
-  return (
-    <LandingPage>
-      <LandingHero
-        title="Validation: how evidence quality is separated from approval."
-        description="Methodology and governance — not a claim of superiority, and not that gold standards are complete."
-        proof={
-          <AudienceFlowDiagram
-            variant="validation"
-            capabilities={VALIDATION_CAPS}
-            ariaLabel="Validation methodology flow"
-          />
-        }
-      >
-        <LandingPrimaryCta to="/validation#methodology">View methodology</LandingPrimaryCta>
-        <LandingSecondaryCta to="/trust">Full trust and governance</LandingSecondaryCta>
-      </LandingHero>
-
-      <LandingSection
-        id="methodology"
-        title="Methodology, not scoreboard."
-        description="Benchmarks and evaluation harnesses exist as frameworks. Public pages never invent accuracy percentages."
-      >
-        <div className="s2-cta-row">
-          <LandingPrimaryCta to="/how-it-works">See what runs today</LandingPrimaryCta>
-          <LandingSecondaryCta to="/context-conflict-audit">Open Context-Conflict Audit</LandingSecondaryCta>
-        </div>
-      </LandingSection>
-
-      <LandingSection
-        title="Synthetic lab is a different surface."
-        description="/research/validation holds synthetic fixtures for workflow rehearsal — not this methodology page, and not clinical validation."
-      >
-        <div className="s2-cta-row">
-          <LandingPrimaryCta to="/trust">Governance model</LandingPrimaryCta>
-          <LandingSecondaryCta to="/contact">Ask about evaluation scope</LandingSecondaryCta>
-        </div>
-      </LandingSection>
-
-      <PublicNotices />
-    </LandingPage>
-  );
-}

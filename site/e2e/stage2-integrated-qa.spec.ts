@@ -34,11 +34,11 @@ test("Stage 2 audience menu lists the six indexed destinations", async ({ page }
   await expect(menu).toBeVisible();
   for (const [href, name] of [
     ["/researchers", "Researchers"],
-    ["/enterprise", "Research Groups"],
-    ["/biotech", "Biotech & Pharma"],
-    ["/clinical", "Clinical Research"],
+    ["/enterprise", "Research groups"],
+    ["/biotech", "Biotech teams"],
+    ["/clinical", "Clinical research"],
     ["/laboratories", "Laboratories"],
-    ["/research-community", "Research Community"],
+    ["/research-community", "Research community"],
   ] as const) {
     // NavLink uses role="menuitem"; accessible name includes the <small> note.
     await expect(menu.getByRole("link", { name: new RegExp(`^${name}`) })).toHaveAttribute(

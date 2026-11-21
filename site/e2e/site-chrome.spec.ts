@@ -11,10 +11,10 @@ test('shared header stays usable without overlap across mobile and desktop width
 test('desktop header has Stage 2 navigation links and an Audiences control',async({page})=>{
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
- await expect(nav.getByRole('link')).toHaveText(['Home','How it works','Knowledge graph']);
- await expect(nav.getByRole('button')).toHaveCount(0);
- await nav.getByRole('link',{name:'How it works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
- await page.getByRole('navigation',{name:'Footer trust'}).getByRole('link',{name:'Governance',exact:true}).click();await expect(page).toHaveURL(/trust$/);
+  await expect(nav.getByRole('link')).toHaveText(['Home','How it works','Knowledge graph','Trust']);
+  await expect(nav.getByRole('button')).toHaveCount(0);
+  await nav.getByRole('link',{name:'How it works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+  await page.getByRole('navigation',{name:'Footer trust'}).getByRole('link',{name:'Trust and validation',exact:true}).click();await expect(page).toHaveURL(/trust$/);
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
  await page.setViewportSize({width:320,height:800});await page.goto('/science/graph');const toggle=page.getByRole('button',{name:'Open menu',exact:true});await expect(toggle.locator('svg')).toBeVisible();const box=(await toggle.boundingBox())!;expect(box.width).toBeGreaterThanOrEqual(44);expect(box.height).toBeGreaterThanOrEqual(44);await toggle.click();

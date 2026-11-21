@@ -18,18 +18,18 @@ describe("Stage 2 landing design system + nav", () => {
       marketingHeadline: string;
     };
     expect(tokens.schemaVersion).toBe("hsi-stage2-landing-tokens-1");
-    expect(tokens.palette.primaryBackground.hex).toBe("#F4F5F8");
-    expect(tokens.palette.indigo.hex).toBe("#3C1FFA");
-    expect(tokens.palette.ink.hex).toBe("#101F33");
-    expect(tokens.marketingHeadline).toContain("Connect the Science");
+    expect(tokens.palette.primaryBackground.hex).toBe("#EBEBEA");
+    expect(tokens.palette.indigo.hex).toBe("#BD1C1D");
+    expect(tokens.palette.ink.hex).toBe("#190505");
+    expect(tokens.marketingHeadline).toContain("See what the evidence actually supports");
     const css = root("site/src/styles/stage2-landing.css");
-    expect(css).toContain("--s2-bg: #f4f5f8");
-    expect(css).toContain("--s2-indigo: #3c1ffa");
+    expect(css).toContain("--s2-bg: #EBEBEA");
+    expect(css).toContain("--s2-indigo: #BD1C1D");
     expect(root("site/src/main.tsx")).toContain("stage2-landing.css");
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
-    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How it works", "Knowledge graph"]);
+    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How it works", "Knowledge graph", "Trust"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
       "/researchers",
@@ -56,8 +56,8 @@ describe("Stage 2 landing design system + nav", () => {
     expect(nav).not.toContain("audience-pages");
     const footer = root("site/src/components/Footer.tsx");
     expect(footer).toContain("/researchers");
-    expect(footer).toContain("/validation");
-    expect(footer).toContain("Pricing & Access");
+    expect(footer).toContain("/trust#validation");
+    expect(footer).not.toContain("Pricing & Access");
     const primitives = root("site/src/components/landing/LandingPrimitives.tsx");
     expect(primitives).toContain("LandingMaturityLabel");
     expect(primitives).toContain("LandingHero");

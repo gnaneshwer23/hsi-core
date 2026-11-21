@@ -3,6 +3,7 @@ export const PRIMARY_NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/how-it-works", label: "How it works" },
   { to: "/knowledge-graph", label: "Knowledge graph" },
+  { to: "/trust", label: "Trust" },
 ] as const;
 
 /**
@@ -11,7 +12,7 @@ export const PRIMARY_NAV_LINKS = [
 export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
   { to: "/enterprise", label: "Research Groups", note: "Audience page" },
-  { to: "/biotech", label: "Biotech & Pharma", note: "Audience page" },
+  { to: "/biotech", label: "Biotech teams", note: "Audience page" },
   { to: "/clinical", label: "Clinical Research", note: "Audience page" },
   { to: "/laboratories", label: "Laboratories", note: "Audience page" },
   { to: "/research-community", label: "Research Community", note: "Audience page" },
@@ -34,7 +35,6 @@ export const PUBLIC_MARKETING_PATHS = [
   "/clinical",
   "/laboratories",
   "/research-community",
-  "/validation",
   "/trust",
   "/about",
   "/contact",

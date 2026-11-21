@@ -30,8 +30,8 @@ export function EnterpriseLandingPage() {
         title="Research groups: connected work for principal investigators and teams."
         description="Questions, evidence, gaps and briefs on one path — private work stays private until sharing is explicitly enabled."
       >
-        <LandingPrimaryCta to="/contact">Get Access</LandingPrimaryCta>
-        <LandingSecondaryCta to="/research/workspace">Open live investigation</LandingSecondaryCta>
+        <LandingPrimaryCta to="/researchers">Researchers and design partners</LandingPrimaryCta>
+        <LandingSecondaryCta to="/biotech">Biotech teams</LandingSecondaryCta>
       </LandingHero>
 
       <LandingSection title="What a research group needs from HSI.">
@@ -46,7 +46,7 @@ export function EnterpriseLandingPage() {
           <li>
             <Link to="/enterprise/student">
               <span>Student / researcher workspace</span>
-              <small>Demonstration — links into live investigation tools</small>
+              <small>Demonstration — links into the investigation tools</small>
             </Link>
           </li>
         </ul>
@@ -56,7 +56,7 @@ export function EnterpriseLandingPage() {
         </p>
         <ul className="s2-boundary-list">
           <li>No production organisation writes or durable group tables in this preview.</li>
-          <li>No automatic IP bleed; Gate C remains human for collaborative reviews.</li>
+          <li>No automatic IP bleed. Collaborative scientific review stays with a person.</li>
           <li>No PHI and no live clinical decision support on this scientific plane.</li>
         </ul>
         <p className="s2-section-note">
@@ -72,8 +72,8 @@ export function EnterpriseLandingPage() {
           <Link to="/workspaces">Multi-workspace hub</Link>
         </p>
         <div className="s2-cta-row">
-          <LandingPrimaryCta to="/contact">Discuss a group pilot</LandingPrimaryCta>
-          <LandingSecondaryCta to="/how-it-works">Explore Platform</LandingSecondaryCta>
+          <LandingPrimaryCta to="/contact">Request a pilot conversation</LandingPrimaryCta>
+          <LandingSecondaryCta to="/how-it-works">Open an example investigation</LandingSecondaryCta>
         </div>
       </LandingSection>
     </LandingPage>

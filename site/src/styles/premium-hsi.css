@@ -1,23 +1,23 @@
 /* Premium layer for Trust / About / related public components.
    Causaly / Benchling craft bar: cool ground, navy ink, electric indigo. */
 .hsi-public{
-  --pm-ink:#101f33;
-  --pm-body:#2b3a50;
-  --pm-muted:#556b84;
-  --pm-line:#d4dfe4;
-  --pm-accent:#3c1ffa;
-  --pm-accent-ink:#2a14c9;
-  --pm-wash:#f6f5fc;
-  --pm-mint:#eef1ff;
-  --pm-lav:#eeebff;
-  --pm-peach:#f5f0e0;
-  --pm-sky:#e8eef3;
-  background:#f4f5f8;
+  --pm-ink:#190505;
+  --pm-body:#190505;
+  --pm-muted:#5E0808;
+  --pm-line:#D1AEAD;
+  --pm-accent:#BD1C1D;
+  --pm-accent-ink:#5E0808;
+  --pm-wash:#EBEBEA;
+  --pm-mint:#65CEE6;
+  --pm-lav:#D1AEAD;
+  --pm-peach:#D1AEAD;
+  --pm-sky:#65CEE6;
+  background:#EBEBEA;
   color:var(--pm-ink);
   -webkit-font-smoothing:antialiased;
 }
-.hsi-public ::selection{background:#c5ccf5;color:var(--pm-ink)}
-.hsi-public :is(h1,h2,h3){font-family:'Host Grotesk Variable',system-ui,sans-serif;font-weight:650;letter-spacing:-.03em;text-wrap:balance}
+.hsi-public ::selection{background:#D1AEAD;color:var(--pm-ink)}
+.hsi-public :is(h1,h2,h3){font-family:"Red Hat Display Variable","Red Hat Display",sans-serif;font-weight:650;letter-spacing:-.03em;text-wrap:balance}
 .hsi-public h1{font-size:clamp(2.5rem,5vw,3.8rem);line-height:1.04}
 .hsi-public h2{font-size:clamp(1.9rem,3vw,2.7rem);line-height:1.08}
 .hsi-public p{color:var(--pm-body)}
@@ -27,7 +27,7 @@
   padding:clamp(4.5rem,9vw,7rem) 0 clamp(3rem,5vw,4.25rem);
   border-radius:0;
   background:
-    radial-gradient(920px 420px at 88% -10%,#eeebff 0%,transparent 62%),
+    radial-gradient(920px 420px at 88% -10%,#D1AEAD 0%,transparent 62%),
     transparent;
   border:0;
   border-bottom:1px solid var(--pm-line);
@@ -86,7 +86,7 @@
   width:min(1120px,calc(100% - 64px));
   margin:24px auto;
   border-radius:20px;
-  background:#101f33;
+  background:#190505;
   border:0;
   padding-block:64px;
 }

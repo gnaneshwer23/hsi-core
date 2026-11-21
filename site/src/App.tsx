@@ -26,7 +26,6 @@ import {
   ClinicalPublicPage,
   LaboratoriesPublicPage,
   CommunityPublicPage,
-  ValidationPublicPage,
 } from "./pages/AudiencePublicPages";
 import {HomeLanding as Home} from "./pages/HomeLanding";
 import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
@@ -168,7 +167,7 @@ export default function App() {
         <Route path="clinical" element={<ClinicalPublicPage />} />
         <Route path="laboratories" element={<LaboratoriesPublicPage />} />
         <Route path="research-community" element={<CommunityPublicPage />} />
-        <Route path="validation" element={<ValidationPublicPage />} />
+        <Route path="validation" element={<Navigate to="/trust#validation" replace />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="explore" element={<Explore />} />

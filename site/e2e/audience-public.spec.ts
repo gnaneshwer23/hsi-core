@@ -3,8 +3,8 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('researchers page states preview limits and real CTAs',async({page})=>{
  await page.goto('/researchers');
- await expect(page.getByRole('heading',{level:1})).toContainText('context, not just citations');
- await expect(page.getByRole('link',{name:/Apply for the research preview/})).toHaveAttribute('href','/welcome');
+ await expect(page.getByRole('heading',{level:1})).toContainText('design partner');
+ await expect(page.getByRole('link',{name:/Join as a design partner/}).first()).toHaveAttribute('href','/contact');
  await expect(page.getByRole('heading',{name:'What this preview is not.'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Continue the investigation.'})).toBeVisible();
  await expect(page.getByRole('list',{name:'Researcher investigation path',exact:true}).locator(':scope > li')).toHaveCount(4);
@@ -26,8 +26,8 @@ test('research groups page is marketing with labelled demo shells',async({page})
 
 test('biotech page discusses pilots without inventing MoUs',async({page})=>{
  await page.goto('/biotech');
- await expect(page.getByRole('heading',{level:1})).toContainText('R&D evidence');
- await expect(page.getByRole('link',{name:/Discuss a research pilot/})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('heading',{level:1})).toContainText('small R&D team');
+ await expect(page.getByRole('link',{name:/Request a pilot conversation/}).first()).toHaveAttribute('href','/contact');
  await expect(page.getByRole('heading',{name:'Pilot discussions stay honest.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('No MoU');
  await expect(page.getByRole('link',{name:/Open R&D dashboard preview/})).toHaveAttribute('href','/enterprise/biotech');
@@ -39,7 +39,8 @@ test('clinical research landing forbids CDS and PHI claims',async({page})=>{
  await expect(page.getByRole('link',{name:/Discuss clinical research access/})).toHaveAttribute('href','/contact');
  await expect(page.getByRole('link',{name:/Open clinical demo shell/})).toHaveAttribute('href','/enterprise/clinical');
  await expect(page.locator('#main-content')).toContainText('No PHI');
- await expect(page.locator('#main-content')).toContainText('Synthetic patients only');
+ await expect(page.locator('#main-content')).toContainText('No patient data on this site');
+ await expect(page.locator('#main-content')).not.toContainText(/synthetic/i);
  await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
  await expect(page.getByRole('navigation',{name:'Primary'})).toBeVisible();
 });
@@ -53,12 +54,13 @@ test('laboratories landing forbids live instruments and invented QC',async({page
  await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
 });
 
-test('validation methodology page is distinct from synthetic lab',async({page})=>{
+test('validation methodology page is distinct from the workflow-rehearsal surface',async({page})=>{
  await page.goto('/validation');
- await expect(page.getByRole('heading',{level:1})).toContainText('separated from approval');
- await expect(page.getByRole('link',{name:/View methodology/})).toHaveAttribute('href','/validation#methodology');
- await expect(page.getByRole('heading',{name:'Synthetic lab is a different surface.'})).toBeVisible();
+ await expect(page).toHaveURL(/\/trust#validation$/);
+ await expect(page.getByRole('heading',{level:1})).toContainText('separates evidence from approval');
+ await expect(page.getByRole('heading',{name:'Validation is a methodology, not a scoreboard.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('/research/validation');
+ await expect(page.locator('#validation')).not.toContainText(/synthetic/i);
  await expect(page.locator('#main-content')).not.toContainText(/\d{2,}% accuracy|120 expert-adjudicated results/i);
  const axe=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa']).analyze();
  expect(axe.violations.map(v=>v.id+': '+v.nodes.length)).toEqual([]);
@@ -77,7 +79,7 @@ test('research community landing keeps Circles held and /community redirect hone
 
 test('pricing and access page lists planned tiers without inventing prices',async({page})=>{
  await page.goto('/contact');
- await expect(page.getByRole('heading',{level:1})).toContainText('Contact HSI');
+ await expect(page.getByRole('heading',{level:1})).toContainText('design-partner pilot');
  await expect(page.getByRole('heading',{name:'Access shapes (planned labels only).'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('No prices');
  await expect(page.locator('#main-content')).toContainText('Individual researcher');

@@ -9,10 +9,10 @@ export function HowItWorksPage(){
  return <div className="pg-page pg-sub">
   <header className="pg-phero pg-phero-spine" data-hero-style="b" aria-labelledby="hw-title">
    <div className="pg-phero-intro">
-    <h1 id="hw-title">Follow a question through the evidence.</h1>
-    <p className="pg-lead">From the first source to a brief you can inspect.</p>
-    <div className="pg-cta"><Link className="pg-btn" to="/demo/universe">Explore a demonstration</Link><Link className="pg-link" to="/research/journey">Explore Workflow</Link></div>
-    <p className="pg-micro">Research preview · demonstration findings are labelled · no clinical advice</p>
+    <h1 id="hw-title">From a research question to a decision you can reopen.</h1>
+    <p className="pg-lead">Follow one example investigation from the first source to a brief: what the evidence supports, why findings disagree, and what to look at next.</p>
+    <div className="pg-cta"><Link className="pg-btn" to="/demo/universe">Open an example investigation</Link><Link className="pg-link" to="/trust">Read how approval stays separate</Link></div>
+    <p className="pg-micro">Research preview · example findings are labelled · no clinical advice · no patient data on this site</p>
    </div>
    <div className="pg-phero-figure"><PlatformPathFlow/></div>
   </header>
@@ -37,11 +37,11 @@ export function HowItWorksPage(){
     {id:"review",label:"Human review",line:"An authorised reviewer records a decision."},
     {id:"version",label:"Versioned record",line:"Retain the source, decision and history."},
    ]}/>
-   <p className="pg-micro">Published graph relationships are currently unreviewed. Model checks require configuration; many saves remain on-device. <Link to="/validation">Validation status</Link></p>
+   <p className="pg-micro">Published graph relationships are currently unreviewed. Model checks require configuration; many saves remain on-device. <Link to="/trust#validation">Validation methodology</Link></p>
   </section>
   <section className="pg-close" aria-labelledby="hw-close-h">
-   <div><h2 id="hw-close-h">Inspect an investigation.</h2><p>Choose a scenario. Follow its evidence and open the brief.</p></div>
-   <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/demo/universe">Explore a demonstration</Link><Link className="pg-link pg-link-light" to="/knowledge-graph">Explore the graph</Link></div>
+   <div><h2 id="hw-close-h">Inspect an example investigation.</h2><p>Choose a labelled example. Follow its evidence and open the brief.</p></div>
+   <div className="pg-cta"><Link className="pg-btn pg-btn-light" to="/demo/universe">Open an example investigation</Link><Link className="pg-link pg-link-light" to="/trust">Read how approval stays separate</Link></div>
   </section>
  </div>;
 }

@@ -42,14 +42,14 @@ describe("Public HSI site honesty", () => {
     expect(app).toContain('path="gateway"');
 
     const primaryNav = site("src/lib/primaryNav.ts");
-    for(const route of ["/how-it-works","/knowledge-graph","/researchers","/biotech","/validation","/trust","/about","/contact"])expect(primaryNav).toContain(route);
+    for(const route of ["/how-it-works","/knowledge-graph","/researchers","/biotech","/trust","/about","/contact"])expect(primaryNav).toContain(route);
     for(const route of ["/platform","/science","/applications","/intelligence","/departments","/connected-intelligence"])expect(primaryNav).not.toContain(route); // retired; they redirect
     for(const route of ["/technology","/solutions","/pricing","/evidence-safety"])expect(primaryNav).not.toContain(route); // retired; they redirect
     expect(primaryNav).not.toContain("/modules"); // the product pages now redirect to /connected-intelligence
     expect(primaryNav).toContain('label: "Create account"');
     expect(primaryNav).toContain("AUDIENCE_NAV_LINKS");
     const primaryLinksBlock=primaryNav.match(/export const PRIMARY_NAV_LINKS = \[[\s\S]*?\] as const/)?.[0]??"";
-    for(const route of ["/","/how-it-works","/knowledge-graph"])expect(primaryLinksBlock).toContain(route);
+    for(const route of ["/","/how-it-works","/knowledge-graph","/trust"])expect(primaryLinksBlock).toContain(route);
     for(const route of ["/research","/evidence-intelligence","/applications","/platform","/science"])expect(primaryLinksBlock).not.toContain(route);
     for(const route of ["/curator","/gateway","/clinical-timeline","/trials-criteria","/status"])expect(primaryLinksBlock).not.toContain(route);
     // product module paths are no longer in the public path list

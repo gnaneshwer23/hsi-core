@@ -13,7 +13,10 @@ export function TrustPublicPage() {
         title="How HSI separates evidence from approval."
         description="A statement extracted from a paper is not an approved fact, and a relationship proposed by a model is not a validated mechanism. Each moves through separate, recorded steps."
       >
-        <PublicAction to="/trust#scientific-governance">Read the governance model</PublicAction>
+        <PublicAction to="/trust#validation">Read the methodology</PublicAction>
+        <PublicAction to="/contact" secondary>
+          Request a pilot conversation
+        </PublicAction>
       </PublicHero>
       <PublicSection
         id="scientific-governance"
@@ -51,6 +54,26 @@ export function TrustPublicPage() {
               <p>{s.text}</p>
             </article>
           ))}
+        </div>
+      </PublicSection>
+      <PublicSection
+        id="validation"
+        title="Validation is a methodology, not a scoreboard."
+        description="Former /validation addresses land here. Benchmarks and evaluation harnesses exist as frameworks. Public pages do not invent accuracy percentages, and expert-labelled gold cases are not claimed."
+      >
+        <p>
+          The workflow-rehearsal surface at /research/validation is a different page. It is not this methodology,
+          and it is not clinical validation.
+        </p>
+        <p>
+          HSI is not an NHS service, not a medical device, and not clinical decision support. UK research context
+          does not imply an institutional partnership.
+        </p>
+        <div className="hsi-actions">
+          <PublicAction to="/how-it-works">See what runs today</PublicAction>
+          <PublicAction to="/contact" secondary>
+            Request a pilot conversation
+          </PublicAction>
         </div>
       </PublicSection>
       <PublicSection

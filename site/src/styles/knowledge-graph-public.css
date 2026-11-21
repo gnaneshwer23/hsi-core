@@ -1,5 +1,5 @@
-/* Knowledge graph landing. Extends the existing sp-* tokens (ink #202638, muted #647080, violet #6753a1); no new fonts. */
-.kg-page{--kg-ink:#202638;--kg-body:#3d4756;--kg-muted:#566274;--kg-line:#d6dce2;--kg-violet:#6753a1;--kg-tint:#f4f2f9;--kg-surface:#fafbfc}
+/* Knowledge graph landing. Extends the existing sp-* tokens (ink #190505, muted #5E0808, violet #BD1C1D); no new fonts. */
+.kg-page{--kg-ink:#190505;--kg-body:#190505;--kg-muted:#5E0808;--kg-line:#D1AEAD;--kg-violet:#BD1C1D;--kg-tint:#f4f2f9;--kg-surface:#fafbfc}
 .kg-page :is(a,button):focus-visible{outline:3px solid var(--kg-violet);outline-offset:3px;border-radius:4px}
 .kg-hero,.kg-section{width:min(1180px,calc(100% - 112px));margin:0 auto}
 .kg-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:center;padding:64px 0 56px}
@@ -13,7 +13,7 @@
 .kg-figure figcaption{font-size:14px;line-height:1.5;color:var(--kg-muted);margin-top:14px}
 .kg-edge line,.kg-edge path{stroke:var(--kg-violet);stroke-width:2}
 .kg-node{fill:#fff;stroke:var(--kg-ink);stroke-width:2}
-.kg-label{font:600 19px 'Host Grotesk Variable',system-ui,sans-serif;fill:var(--kg-ink)}
+.kg-label{font:600 19px 'Inter Variable',system-ui,sans-serif;fill:var(--kg-ink)}
 .kg-label-mid{fill:var(--kg-violet);font-weight:500;font-size:18px}
 .kg-attach{margin:6px 0 10px;font-size:14px;font-weight:600;color:var(--kg-muted)}
 .kg-chips{list-style:none;margin:0;padding:0;display:grid;gap:8px}
@@ -68,23 +68,23 @@
 .kg-fig-body{padding:24px 28px}
 .kg-net{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:32px;align-items:start}
 .kg-net svg{display:block;width:100%;height:auto}
-.kg-line{stroke:#6753a1;stroke-width:2.2;fill:none}
+.kg-line{stroke:#BD1C1D;stroke-width:2.2;fill:none}
 .kg-neg{stroke:#8b95a3;stroke-dasharray:6 5}
-.kg-arrow{fill:#6753a1}
-.kg-nd{fill:#fff;stroke:#202638;stroke-width:2.2}
-.kg-nd-c{fill:#6753a1;stroke:#49405e}
-.kg-nl{font:600 16px 'Host Grotesk Variable',system-ui,sans-serif;fill:#202638;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
+.kg-arrow{fill:#BD1C1D}
+.kg-nd{fill:#fff;stroke:#190505;stroke-width:2.2}
+.kg-nd-c{fill:#BD1C1D;stroke:#49405e}
+.kg-nl{font:600 16px 'Inter Variable',system-ui,sans-serif;fill:#190505;paint-order:stroke;stroke:#fff;stroke-width:5px;stroke-linejoin:round}
 .kg-nl-c{fill:#fff;stroke:none;font-size:15px}
 .kg-legend{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:8px}
 .kg-legend li{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;align-items:center;margin:0;font-size:15px;line-height:1.5;color:var(--kg-body)}
 .kg-legend i{display:block;height:3px;width:40px}
-.kg-k-solid{background:#6753a1}
+.kg-k-solid{background:#BD1C1D}
 .kg-k-dash{background:repeating-linear-gradient(90deg,#8b95a3 0 7px,transparent 7px 12px)}
-.kg-legend .kg-k-node{width:18px;height:18px;border-radius:50%;background:#6753a1;margin-left:11px}
+.kg-legend .kg-k-node{width:18px;height:18px;border-radius:50%;background:#BD1C1D;margin-left:11px}
 .kg-net-key h3{font-size:16px;font-weight:600;color:var(--kg-ink);margin:0 0 8px;letter-spacing:0}
 .kg-conn{list-style:none;margin:0;padding:0;border-top:1px solid var(--kg-line)}
 .kg-conn li{margin:0;padding:8px 0;border-bottom:1px solid var(--kg-line);font-size:15px;line-height:1.5;color:var(--kg-ink)}
-.kg-conn span{color:#6753a1}
+.kg-conn span{color:#BD1C1D}
 .kg-wait{font-size:16px;color:var(--kg-muted)}
 .kg-charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px}
 .kg-charts h3{font-size:18px;font-weight:600;margin:0 0 14px;color:var(--kg-ink);letter-spacing:-.02em}
@@ -92,7 +92,7 @@
 .kg-bars li{display:grid;grid-template-columns:minmax(90px,.9fr) minmax(0,1.6fr) 64px;gap:12px;align-items:center;margin:0;min-height:40px}
 .kg-bl{font-size:15px;color:var(--kg-ink)}
 .kg-bar{display:block;height:12px;background:#eceef2;border-radius:2px;overflow:hidden}
-.kg-bar i{display:block;height:100%;background:#6753a1}
+.kg-bar i{display:block;height:100%;background:#BD1C1D}
 .kg-bv{font-size:15px;color:var(--kg-body);text-align:right;font-variant-numeric:tabular-nums}
 .kg-chart-note{font-size:14px;line-height:1.55;color:var(--kg-muted);margin:12px 0 0}
 @media(max-width:1000px){.kg-net{grid-template-columns:1fr}.kg-charts{grid-template-columns:1fr}}

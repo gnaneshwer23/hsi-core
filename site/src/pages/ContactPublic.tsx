@@ -37,11 +37,12 @@ export function ContactPublicPage(){
   return (
     <div className="sp-page fg-page ct-page pg-page pg-sub s2-landing">
       <header className="pg-phero">
-        <h1>Contact HSI and start from your research question.</h1>
+        <h1>Request a design-partner pilot.</h1>
         <div>
-          <p className="pg-lead">Create an HSI account if you need one. You can keep a browser draft of your question, and — only when this deployment has delivery configured — send an access request through the configured notification provider. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently.</p>
+          <p className="pg-lead">Tell us the research question you want to test with HSI. This page prepares a local draft. An access request is sent only when notification delivery is configured, and it does not grant research access or scientific-review rights. The page never claims operator receipt unless the server reports provider acceptance, and grants remain administrator-provisioned. Researcher, source and scientific-review permissions are provisioned independently. An account is not research access.</p>
           <div className="pg-cta">
-            <Link className="pg-btn" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
+            <a className="pg-btn" href="#pilot-request">Start a pilot request <span aria-hidden="true">→</span></a>
+            <Link className="pg-link" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
             <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>
           </div>
         </div>
@@ -76,8 +77,8 @@ export function ContactPublicPage(){
         <figcaption id="ct-cap" className="fg-cap"><b>Figure 5.</b> The access path. Each step is separate: an account does not grant research access, and an administrator's grant does not enable research writes. An access request, when delivery is configured, notifies the operator only — it does not provision permissions.</figcaption>
       </figure>
 
-      <section className="fg-block ct-draft pg-block" aria-labelledby="ct-draft">
-        <h2 id="ct-draft">Keep your question while you sign up</h2>
+      <section className="fg-block ct-draft pg-block" id="pilot-request" aria-labelledby="ct-draft">
+        <h2 id="ct-draft">Start a pilot request</h2>
         <div>
           <AccessIntentPanel />
           <p className="ct-scope" role="note">Browser drafts are optional. Create an account, then an administrator grants research access. Check status on your research account after sign-in.</p>

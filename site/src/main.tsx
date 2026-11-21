@@ -3,6 +3,7 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "@fontsource-variable/red-hat-display/wght.css";
+import "@fontsource-variable/inter/wght.css";
 import "@fontsource-variable/host-grotesk/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght.css";
 import "./styles/global.css";

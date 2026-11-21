@@ -15,6 +15,7 @@ export const RETIRED_MARKETING_REDIRECTS = {
   "/departments": "/knowledge-graph",
   "/evidence-safety": "/trust",
   "/pricing": "/contact",
+  "/validation": "/trust#validation",
   "/demo": "/research/journey",
   "/community": "/research/home",
 } as const;

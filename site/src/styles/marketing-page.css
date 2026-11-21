@@ -5,7 +5,7 @@
 .site-shell.home-shell .mp-page.xp-page {
   background: var(--cl-bg, var(--hsi-page, #faf8f5));
   color: var(--cl-ink, var(--hsi-ink, #162331));
-  font-family: var(--font-display), "Host Grotesk Variable", sans-serif;
+  font-family: var(--font-display), "Inter Variable", sans-serif;
 }
 
 .mp-wrap {
