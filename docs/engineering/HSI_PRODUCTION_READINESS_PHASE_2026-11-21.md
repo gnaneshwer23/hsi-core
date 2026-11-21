@@ -65,6 +65,7 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U29 Orchestration wall-clock budget | Done — see `HSI_U29_ORCHESTRATION_WALL_CLOCK_BUDGET_2026-11-21.md` (cooperative cancel; live agents still not approved) |
 | U30 Orchestration cancel / termination taxonomy | Done — see `HSI_U30_ORCHESTRATION_CANCEL_TAXONOMY_2026-11-21.md` (classified stops; side effects not undone) |
 | U31 Recovery decision trail + bounded termination surface | Done — see `HSI_U31_RECOVERY_DECISION_TRAIL_2026-11-21.md` (research_admin live E2E still open) |
+| U32 External tool adapter cancel/idempotency audit | Done — see `HSI_U32_EXTERNAL_TOOL_ADAPTER_AUDIT_2026-11-21.md` (live multi-process adapter E2E still open) |
 | U33 Exclusive checkpoint ownership race | Done — see `HSI_U33_EXCLUSIVE_CHECKPOINT_OWNERSHIP_2026-11-21.md` (live OS multi-process E2E still open) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U31 and U33 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U33 soft-landed; owner evidence still required.
