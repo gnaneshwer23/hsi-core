@@ -3,13 +3,13 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('researchers page states preview limits and real CTAs',async({page})=>{
  await page.goto('/researchers');
- await expect(page.getByRole('heading',{level:1})).toContainText('design partner');
- await expect(page.getByRole('link',{name:/Join as a design partner/}).first()).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Spend less time connecting the literature');
+ await expect(page.getByRole('link',{name:/Explore the Research Workbench/}).first()).toHaveAttribute('href','/research/workspace');
  await expect(page.getByRole('heading',{name:'What this preview is not.'})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Continue the investigation.'})).toBeVisible();
  await expect(page.getByRole('list',{name:'Researcher investigation path',exact:true}).locator(':scope > li')).toHaveCount(4);
  await expect(page.locator('#main-content')).toContainText('Live public literature retrieval');
- await expect(page.locator('#main-content')).toContainText('not grant research writes');
+ await expect(page.locator('#main-content')).toContainText('does not automatically grant access');
  await expect(page.locator('#main-content')).not.toContainText(/clinically validated|outperforms|better than/i);
 });
 
@@ -56,8 +56,8 @@ test('laboratories landing forbids live instruments and invented QC',async({page
 
 test('validation methodology page is distinct from the workflow-rehearsal surface',async({page})=>{
  await page.goto('/validation');
- await expect(page).toHaveURL(/\/trust#validation$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('separates evidence from approval');
+ await expect(page).toHaveURL(/\/validation$/);
+ await expect(page.getByRole('heading',{level:1})).toContainText('accountable to evidence');
  await expect(page.getByRole('heading',{name:'Validation is a methodology, not a scoreboard.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('/research/validation');
  await expect(page.locator('#validation')).not.toContainText(/synthetic/i);
@@ -68,7 +68,7 @@ test('validation methodology page is distinct from the workflow-rehearsal surfac
 
 test('research community landing keeps Circles held and /community redirect honest',async({page})=>{
  await page.goto('/research-community');
- await expect(page.getByRole('heading',{level:1})).toContainText('without automatic IP bleed');
+ await expect(page.getByRole('heading',{level:1})).toContainText('rarely happens in isolation');
  await expect(page.getByRole('link',{name:/Discuss community access/})).toHaveAttribute('href','/contact');
  await expect(page.getByRole('link',{name:/Open community demo shell/})).toHaveAttribute('href','/enterprise/community');
  await expect(page.locator('#main-content')).toContainText('/community');

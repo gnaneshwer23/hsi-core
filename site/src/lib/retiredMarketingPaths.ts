@@ -11,11 +11,9 @@ export const RETIRED_MARKETING_REDIRECTS = {
   "/applications": "/how-it-works",
   "/research": "/how-it-works",
   "/connected-intelligence": "/how-it-works",
-  "/intelligence": "/how-it-works",
   "/departments": "/knowledge-graph",
   "/evidence-safety": "/trust",
   "/pricing": "/contact",
-  "/validation": "/trust#validation",
   "/demo": "/research/journey",
   "/community": "/research/home",
 } as const;

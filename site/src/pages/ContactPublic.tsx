@@ -1,9 +1,4 @@
 import {Link} from "react-router-dom";
-import "../styles/scientific-public.css";
-import "../styles/home-redesign.css";
-import "../styles/contact-figure.css";
-import "../styles/premium-public.css";
-import "../styles/stage2-landing.css";
 import {AccessIntentPanel} from "../components/AccessIntentPanel";
 import {LandingEvidenceCard, LandingMaturityLabel} from "../components/landing/LandingPrimitives";
 import {signInHref,signUpHref} from "../lib/researchContext";
@@ -35,16 +30,16 @@ const ACCESS_TIERS=[
 /** Contact: research access. Browser draft always; server delivery only when the deployment is configured. */
 export function ContactPublicPage(){
   return (
-    <div className="sp-page fg-page ct-page pg-page pg-sub s2-landing">
-      <header className="pg-phero">
+    <div className="cine">
+      <header className="cine-section">
         <h1>Request a design-partner pilot.</h1>
         <div>
-          <p className="pg-lead">Tell us the research question. This page keeps a browser draft. An account is not research access.</p>
-          <p className="pg-micro">Researcher, source and scientific-review permissions are provisioned independently. The page never claims operator receipt unless the server reports provider acceptance.</p>
-          <div className="pg-cta">
-            <a className="pg-btn" href="#pilot-request">Start a pilot request <span aria-hidden="true">→</span></a>
-            <Link className="pg-link" to={signUpHref()}>Create an account <span aria-hidden="true">→</span></Link>
-            <Link className="pg-link" to={signInHref()}>Sign in <span aria-hidden="true">→</span></Link>
+          <p className="cine-lead">Tell us the research question. This page keeps a browser draft. An account is not research access.</p>
+          <p className="cine-note">Researcher, source and scientific-review permissions are provisioned independently. The page never claims operator receipt unless the server reports provider acceptance.</p>
+          <div className="cine-cta" style={{justifyContent:"flex-start"}}>
+            <a className="cine-btn" href="#pilot-request">Start a pilot request</a>
+            <Link className="cine-btn cine-btn-line" to={signUpHref()}>Create an account</Link>
+            <Link className="cine-btn cine-btn-line" to={signInHref()}>Sign in</Link>
           </div>
         </div>
       </header>

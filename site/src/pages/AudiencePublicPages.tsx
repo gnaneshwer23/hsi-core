@@ -14,7 +14,6 @@ import {
   type LandingMaturityLevel,
 } from "../components/landing/LandingPrimitives";
 import "../styles/stage2-landing.css";
-import "../styles/premium-public.css";
 
 const RESEARCHER_CAPS: { title: string; maturity: LandingMaturityLevel }[] = [
   { title: "Live public literature retrieval", maturity: "available" },
@@ -29,8 +28,8 @@ export function ResearchersPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        title="Be a design partner in the investigation, not another reader of citations."
-        description="One path you can reopen. A model answer is not approved biology."
+        title="Spend less time connecting the literature. More time investigating the question."
+        description="Whether you are a doctoral researcher, postdoctoral fellow, principal investigator or computational scientist, complex questions often require evidence from multiple scientific fields. HSI aims to bring that evidence and biological context into one research experience."
         proof={
           <AudienceFlowDiagram
             variant="researchers"
@@ -39,14 +38,20 @@ export function ResearchersPublicPage() {
           />
         }
       >
-        <LandingPrimaryCta to="/contact">Join as a design partner</LandingPrimaryCta>
+        <LandingPrimaryCta to="/research/workspace">Explore the Research Workbench</LandingPrimaryCta>
         <LandingSecondaryCta to="/how-it-works">Open an example investigation</LandingSecondaryCta>
       </LandingHero>
 
       <LandingSection
         title="Continue the investigation."
-        description="Open the workspace, graph or audit surfaces that back the path above."
+        description="One question. Multiple scientific perspectives. Explore source-linked evidence, candidate biological relationships, contradictions and research briefs."
       >
+        <ul className="s2-boundary-list">
+          <li>Doctoral researchers: explore the scientific landscape, understand mechanisms and identify potential gaps.</li>
+          <li>Postdoctoral fellows: investigate competing findings, develop hypotheses and explore complementary expertise.</li>
+          <li>Principal investigators: assess research directions, examine unresolved questions and support evidence-informed project planning.</li>
+          <li>Computational and omics researchers: connect molecular findings with biological pathways, experimental context and relevant literature.</li>
+        </ul>
         <div className="s2-cta-row">
           <LandingPrimaryCta to="/research/workspace">Open the investigation workspace</LandingPrimaryCta>
           <LandingSecondaryCta to="/knowledge-graph">Explore the knowledge graph</LandingSecondaryCta>
@@ -63,7 +68,7 @@ export function ResearchersPublicPage() {
 
       <LandingSection
         title="What this preview is not."
-        description="Registration does not grant research writes. Private work stays private until sharing is explicitly enabled. Graph edges remain candidates. Nothing here is clinical advice."
+        description="Research access is provisioned separately; creating an account does not automatically grant access. Registration does not grant research writes. Graph edges remain candidates. Nothing here is clinical advice."
       >
         <ul className="s2-boundary-list">
           <li>Many saved runs stay on this device until a server store is enabled.</li>
@@ -220,8 +225,8 @@ export function CommunityPublicPage() {
   return (
     <LandingPage>
       <LandingHero
-        title="Research community: evidence-grounded discussion without automatic IP bleed."
-        description="Discussion stays attached to a source. Public posting is not enabled."
+        title="Great science rarely happens in isolation."
+        description="The next useful perspective may come from another discipline, institution or laboratory. HSI’s future Research Network aims to connect scientific questions with relevant people, expertise, organisations and verified opportunities. Discussion stays attached to a source. Public posting is not enabled."
         proof={
           <AudienceFlowDiagram
             variant="community"

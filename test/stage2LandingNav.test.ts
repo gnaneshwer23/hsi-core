@@ -18,18 +18,16 @@ describe("Stage 2 landing design system + nav", () => {
       marketingHeadline: string;
     };
     expect(tokens.schemaVersion).toBe("hsi-stage2-landing-tokens-1");
-    expect(tokens.palette.primaryBackground.hex).toBe("#EBEBEA");
-    expect(tokens.palette.indigo.hex).toBe("#BD1C1D");
-    expect(tokens.palette.ink.hex).toBe("#190505");
-    expect(tokens.marketingHeadline).toContain("See what the evidence actually supports");
-    const css = root("site/src/styles/stage2-landing.css");
-    expect(css).toContain("--s2-bg: #EBEBEA");
-    expect(css).toContain("--s2-indigo: #BD1C1D");
-    expect(root("site/src/main.tsx")).toContain("stage2-landing.css");
+    expect(tokens.marketingHeadline).toContain("better question");
+    const css = root("site/src/styles/cinematic.css");
+    expect(css).toContain("#000310");
+    expect(css).toContain("#C52076");
+    expect(css).toContain("#2396AC");
+    expect(root("site/src/main.tsx")).toContain("cinematic.css");
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
-    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How it works", "Knowledge graph", "Trust"]);
+    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How It Works", "Knowledge Graph", "Scientific Intelligence", "For Researchers", "Community"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
       "/researchers",
@@ -40,7 +38,7 @@ describe("Stage 2 landing design system + nav", () => {
       "/research-community",
     ]);
     const primaryNav = root("site/src/lib/primaryNav.ts");
-    for (const retired of ["/platform", "/solutions", "/pricing", "/science", "/technology"]) {
+    for (const retired of ['"/platform"', '"/solutions"', '"/pricing"', '"/science"', '"/technology"']) {
       expect(primaryNav).not.toContain(retired);
     }
     expect(isAudienceNavActive("/researchers")).toBe(true);

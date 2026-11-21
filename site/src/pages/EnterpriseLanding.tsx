@@ -9,7 +9,6 @@ import {
   type LandingMaturityLevel,
 } from "../components/landing/LandingPrimitives";
 import "../styles/stage2-landing.css";
-import "../styles/premium-public.css";
 
 const GROUP_CAPS: { title: string; maturity: LandingMaturityLevel }[] = [
   { title: "Shared investigation path", maturity: "available" },

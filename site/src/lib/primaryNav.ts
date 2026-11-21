@@ -1,9 +1,11 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/knowledge-graph", label: "Knowledge graph" },
-  { to: "/trust", label: "Trust" },
+  { to: "/how-it-works", label: "How It Works" },
+  { to: "/knowledge-graph", label: "Knowledge Graph" },
+  { to: "/intelligence", label: "Scientific Intelligence" },
+  { to: "/researchers", label: "For Researchers" },
+  { to: "/research-community", label: "Community" },
 ] as const;
 
 /**
@@ -29,12 +31,16 @@ export const PUBLIC_MARKETING_PATHS = [
   "/",
   "/how-it-works",
   "/knowledge-graph",
+  "/intelligence",
+  "/research-gaps",
+  "/scientific-companion",
   "/researchers",
   "/enterprise",
   "/biotech",
   "/clinical",
   "/laboratories",
   "/research-community",
+  "/validation",
   "/trust",
   "/about",
   "/contact",

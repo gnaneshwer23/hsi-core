@@ -7,10 +7,11 @@ const groups = [
     name: "Product",
     links: [
       { to: "/", label: "Home" },
-      { to: "/how-it-works", label: "How it works" },
-      { to: "/knowledge-graph", label: "Knowledge graph" },
-      { to: "/biotech", label: "Biotech teams" },
-      { to: "/researchers", label: "Researchers" },
+      { to: "/how-it-works", label: "How It Works" },
+      { to: "/knowledge-graph", label: "Knowledge Graph" },
+      { to: "/intelligence", label: "Scientific Intelligence" },
+      { to: "/researchers", label: "For Researchers" },
+      { to: "/research-community", label: "Community" },
       { to: "/demo/universe", label: "Example investigation" },
       { to: "/research/home", label: "Research app" },
     ],
@@ -18,26 +19,27 @@ const groups = [
   {
     name: "Audiences",
     links: [
-      { to: "/researchers", label: "Researchers" },
-      { to: "/enterprise", label: "Research groups" },
-      { to: "/biotech", label: "Biotech teams" },
-      { to: "/clinical", label: "Clinical research" },
+      { to: "/research-gaps", label: "Research Gaps" },
+      { to: "/scientific-companion", label: "Scientific Companion" },
+      { to: "/biotech", label: "Biotech" },
+      { to: "/enterprise", label: "Research Organisations" },
       { to: "/laboratories", label: "Laboratories" },
-      { to: "/research-community", label: "Research community" },
+      { to: "/clinical", label: "Clinical research" },
     ],
   },
   {
     name: "Company",
     links: [
       { to: "/about", label: "About" },
-      { to: "/contact", label: "Pilot request" },
+      { to: "/contact", label: "Contact" },
       { to: "/about#collaboration", label: "Collaboration" },
     ],
   },
   {
     name: "Trust",
     links: [
-      { to: "/trust", label: "Trust and validation" },
+      { to: "/validation", label: "Validation" },
+      { to: "/trust", label: "Trust" },
       { to: "/trust#validation", label: "Validation methodology" },
       { to: "/trust#privacy", label: "Privacy information" },
       { to: "/trust#terms", label: "Research use information" },
@@ -60,9 +62,10 @@ export function Footer() {
           <Link className="hsi-wordmark" to="/">
             <HsiIdentity />
           </Link>
-          <p>Trace the evidence. Choose the next question.</p>
+          <p>Human Super Intelligence is developing evidence-grounded scientific intelligence for exploring biological mechanisms, evaluating research findings and identifying questions worth investigating.</p>
+          <p>Research preview. Not clinical decision support. AI-generated interpretations and candidate relationships are not automatically scientifically validated.</p>
           <Link className="hsi-text-link" to="/contact">
-            Request a pilot conversation
+            Request Research Access
           </Link>
         </div>
         {groups.map((g) => (
