@@ -86,7 +86,7 @@ export function HomeLanding(){
 
     <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
      <div className="pg-demo-universe-head">
-      <h2 id="pg-demo-universe-h">Compare two findings.</h2>
+      <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
       <p>Labelled Example studies. Not an approval.</p>
      </div>
      <DemoLandingPreviewPanel/>
