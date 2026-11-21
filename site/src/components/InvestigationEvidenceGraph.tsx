@@ -18,7 +18,12 @@ export function InvestigationEvidenceGraph({investigation}:{investigation:Interr
    const raw=await response.text();if(raw.length>1_500_000)throw Error("The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.");const result=JSON.parse(raw);
    if(result.status==="not_captured"&&result.context===null&&typeof result.canCapture==="boolean"&&!capture){if(!c.signal.aborted)setCanCapture(result.canCapture);return}
    if(result.status!=="saved"||result.canCapture!==false)throw Error("The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.");
-   const verified=await verifyInvestigationGraphContext(result.context,investigation,digest);
+   let verified:InvestigationGraphContext;
+   try{
+    verified=await verifyInvestigationGraphContext(result.context,investigation,digest);
+   }catch{
+    throw Error("The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown.");
+   }
    if(!c.signal.aborted){setContext(verified);setSelected(null);setFocus(null)}
   }catch(e){if(active.current===c)setError(c.signal.aborted?"The evidence request timed out. Refresh to check whether a capture completed.":(e instanceof Error&&e.message?e.message:"The evidence view could not be verified. Access, current source permissions and the pinned release must all remain valid. No graph evidence is shown."))}
   finally{clearTimeout(timer);if(active.current===c){pending.current=false;setBusy(false)}}

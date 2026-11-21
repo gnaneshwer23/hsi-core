@@ -8,11 +8,13 @@
 
 1. Extended `researchApiErrors` contexts/codes for delivery, brief, outcome, review queue, evidence context.  
 2. Wired `investigationDeliveryClient`, `researchOutcomeClient`, `InvestigationDelivery`, `IndependentReviewQueue`, `InvestigationEvidenceGraph`.  
+3. Client-side digest/binding failures are re-wrapped into honesty copy (never surface raw “hash mismatch” / binding text).  
 
 ## Acceptance
 
 - `bun test test/researchApiErrors.test.ts`  
 - Fail-closed copy preserved in substance when codes are present or status honesty applies  
+- Delivery / outcome / evidence-graph E2E keep “could not be verified” honesty on forged packages  
 - No migration / write / owner-gate changes  
 
 ## Follow-ons
