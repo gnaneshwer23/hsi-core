@@ -26,6 +26,6 @@ Status: Implemented, staging SQL smoke passed, latest CI pending.
 - [x] Tool-output idempotency design implemented.
 - [x] AbortSignal propagated to executor interface.
 - [ ] Latest full CI green.
-- [ ] Two independent processes demonstrate exactly one checkpoint owner.
-- [ ] Server crash/restart and stale-worker recovery E2E.
+- [x] Two independent processes demonstrate exactly one checkpoint owner (**U33 soft-land**, 21 Nov 2026 — concurrent in-process CAS race + stale finish refusal; live OS multi-process E2E still open).
+- [ ] Server crash/restart and stale-worker recovery E2E (U33 soft-lands stale finish refusal in-process; live restart E2E still open).
 - [x] External tool adapter cancellation and idempotency audit (**U32 soft-land**, 21 Nov 2026 — in-process catalog + late-side-effect refuse records; live multi-process adapter E2E still open).
