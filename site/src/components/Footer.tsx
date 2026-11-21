@@ -19,12 +19,14 @@ const groups = [
   {
     name: "Audiences",
     links: [
+      { to: "/researchers", label: "Researchers" },
+      { to: "/enterprise", label: "Research groups" },
+      { to: "/biotech", label: "Biotech teams" },
+      { to: "/clinical", label: "Clinical research" },
+      { to: "/laboratories", label: "Laboratories" },
+      { to: "/research-community", label: "Research community" },
       { to: "/research-gaps", label: "Research Gaps" },
       { to: "/scientific-companion", label: "Scientific Companion" },
-      { to: "/biotech", label: "Biotech" },
-      { to: "/enterprise", label: "Research Organisations" },
-      { to: "/laboratories", label: "Laboratories" },
-      { to: "/clinical", label: "Clinical research" },
     ],
   },
   {
