@@ -43,22 +43,22 @@ export function HomeLanding(){
    <GraphSnapshotProvider>
     <section className="pg-hero pg-hero-platform pg-hero-spine" aria-labelledby="home-title">
      <div className="pg-hero-copy">
-      <p className="pg-vision">{PRODUCT_TAGLINE}</p>
       <h1 id="home-title">See what the evidence actually supports.</h1>
       <p className="pg-lead">
-       Trace a finding, see why studies disagree, and leave with the next question — source still attached.
+       Trace a finding, see why studies disagree, and leave with the next question.
       </p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/how-it-works">
         Follow an example investigation <span aria-hidden="true">→</span>
        </Link>
-       <Link className="pg-link" to="/contact">
+       <Link className="pg-btn pg-btn-light" to="/contact">
         Request a pilot conversation
        </Link>
       </div>
       <p className="pg-micro">
-       Research preview · candidate relationships only · nothing scientifically approved · no clinical advice · no patient data on this site
+       Research preview · candidate relationships only · nothing approved · no clinical advice · no patient data
       </p>
+      <p className="pg-vision">{PRODUCT_TAGLINE}</p>
      </div>
 
      <div className="pg-hero-figure" role="region" aria-labelledby="pg-flow-h">

@@ -169,8 +169,8 @@
 .pg-promise p{margin:0;font-size:1.05rem;line-height:1.7;color:#38455a}
 .pg-domains,.pg-audiences{width:min(1240px,calc(100% - 64px));margin:64px auto 0}
 .pg-domains h2,.pg-audiences h2{font-size:clamp(1.75rem,3vw,2.4rem);line-height:1.12;letter-spacing:-.03em;font-weight:650;margin:0 0 12px;max-width:22ch}
-.pg-domain-list,.pg-audience-list{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.pg-domain-list a,.pg-audience-list a{display:flex;align-items:center;min-height:48px;padding:12px 16px;border:1px solid #d9e1e8;border-radius:8px;background:#fff;color:#182433;text-decoration:none;font-weight:550}
+.pg-domain-list,.pg-audience-list{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;border-top:1px solid var(--line)}
+.pg-domain-list a,.pg-audience-list a{display:flex;align-items:center;min-height:52px;padding:0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent;color:var(--ink);text-decoration:none;font-family:"Red Hat Display Variable","Red Hat Display",sans-serif;font-size:1.2rem;font-weight:550;letter-spacing:-.02em}
 .pg-domain-list a:hover,.pg-audience-list a:hover{border-color:var(--accent);color:var(--accent-ink)}
 .pg-eyebrow{margin:0 0 12px;font:650 12px/1.4 "Inter Variable",system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#5a6b7a}
 @media(max-width:900px){.pg-domain-list,.pg-audience-list{grid-template-columns:1fr}.pg-promise{width:calc(100% - 40px)}}
@@ -393,8 +393,8 @@
 .pg-hero-dark .lg .og,
 .pg-proof .lg .og{
   height:clamp(340px,46vh,520px);border-radius:12px;
-  background:radial-gradient(ellipse at 50% 45%,#1a2744 0%,#0c1428 78%);
-  border-color:#24324d;
+  background:radial-gradient(ellipse at 50% 42%,#5E0808 0%,#190505 58%);
+  border-color:#5E0808;
 }
 .pg-hero-platform .lg-search label,
 .pg-hero-dark .lg-search label,
@@ -722,8 +722,8 @@
   display:grid;gap:0;max-width:42rem;
 }
 .pg-hero-spine h1{
-  max-width:18ch;font-size:clamp(2.2rem,4.4vw,3.35rem);
-  letter-spacing:-.038em;line-height:1.02;
+  max-width:11ch;font-size:clamp(2.75rem,5.4vw,4.75rem);
+  letter-spacing:-.04em;line-height:.98;
 }
 .pg-page .pg-hero.pg-hero-spine h1 .pg-brand,
 .pg-hero-spine h1 .pg-brand{
@@ -731,9 +731,12 @@
   font-weight:650!important;letter-spacing:-.03em;max-width:none;line-height:1.05;
   color:var(--ink);/* Brand is a hero-level signal — not an eyebrow. */
 }
-.pg-hero-spine .pg-lead{margin-top:.85rem;font-size:1.05rem;line-height:1.55;max-width:46ch}
+.pg-hero-spine .pg-lead{margin-top:.85rem;font-size:1.15rem;line-height:1.5;max-width:36ch}
+.pg-hero-spine .pg-btn-light{background:#fff;color:var(--ink)!important;border:1px solid var(--ink)}
+.pg-hero-spine .pg-btn-light:hover{background:#fff;border-color:var(--accent);color:var(--accent)!important}
 .pg-hero-spine .pg-cta{margin-top:1.15rem}
-.pg-hero-spine .pg-micro{margin-top:.7rem;max-width:50ch;font-size:13px;line-height:1.5}
+.pg-hero-spine .pg-micro{margin-top:.7rem;max-width:42ch;font-size:13px;line-height:1.45}
+.pg-hero-spine .pg-vision{margin:.85rem 0 0;max-width:36ch;color:var(--ink);font-size:13px;line-height:1.45}
 .pg-hero-figure{
   display:grid;gap:12px;min-width:0;
   padding:clamp(1.5rem,3vw,2.25rem) 0 .25rem;
