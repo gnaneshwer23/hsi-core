@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "hsi-e2e-09-premium-public-pages-pending-1",
+  "purpose": "pr_e2e_09_premium_public_pages_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "priority": "P2",
+  "fakeMetricsClaimed": false,
+  "clinicalValidationClaimed": false,
+  "pilotPerformanceClaimed": false,
+  "goldStandardCountsClaimed": false,
+  "scientificApproval": false,
+  "brandDoctrineAccepted": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "honesty": {
+    "noFakeMetrics": true,
+    "noInventedPilots": true,
+    "noGoldStandardScoreboard": true,
+    "validationMeansMethodologyNotCds": true,
+    "fixtureIsNotBrandAcceptance": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/e2e09PremiumPublicPagesSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/collectivePublicSite.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "implementation_pr_ref": "#474",
+    "brand_doctrine_pr_ref": "#465",
+    "brand_acceptance_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "eight_page_ia_catalog": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "researchers_audience_route": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "biotech_audience_route": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "validation_methodology_route": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "premium_public_styling": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "seo_honesty_copy": { "status": "REUSE", "fakeMetricsClaimed": false },
+    "no_fake_metrics_gate": { "status": "HONESTY", "fakeMetricsClaimed": false }
+  },
+  "notes": "Implementation wiring landed in #474. Soft-land never invents metrics, pilots, gold counts, or clinical validation."
+}
