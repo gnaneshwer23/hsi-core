@@ -70,5 +70,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U34 Crash/restart recovery soft-land | Done — see `HSI_U34_CRASH_RESTART_RECOVERY_2026-11-21.md` (live OS multi-process E2E still open) |
 | U35 Owner-authorized research agent runtime | Done — see `HSI_U35_RESEARCH_AGENT_RUNTIME_2026-11-21.md` (owner approved engineering build; GA / Gate C / PHI still closed) |
 | U36 Public L0 GO + clinical synthetic approvals | Done — see `HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md` (real PHI / ADR-0010 gates still open) |
+| U37 Owner-authorized live scientific platform | Done — see `HSI_U37_LIVE_SCIENTIFIC_PLATFORM_2026-11-21.md` (L1 engineering composition; staging grant / preview GO / writes still open) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U36 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U37 soft-landed; owner evidence still required.

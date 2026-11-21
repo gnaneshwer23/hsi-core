@@ -67,13 +67,22 @@ describe("HSI 1.0 U12 restricted-preview readiness soft-land",()=>{
       opsAcceptance:string;
       restrictedPreviewClaimed:boolean;
       inventedStagingUrl:boolean;
-      references:{staging_target_ref:string;restricted_preview_go_ref:string};
+      references:{
+        staging_target_ref:string;
+        restricted_preview_go_ref:string;
+        live_scientific_platform_engineering_ref:string;
+      };
     };
-    expect(pending.opsAcceptance).toBe("BLOCKED");
+    expect(pending.opsAcceptance).toBe("L1_ENGINEERING_AUTHORIZED_AWAITING_STAGING");
     expect(pending.restrictedPreviewClaimed).toBe(false);
     expect(pending.inventedStagingUrl).toBe(false);
     expect(pending.references.staging_target_ref).toBe("NOT_APPROVED");
-    expect(pending.references.restricted_preview_go_ref).toBe("UNASSIGNED");
+    expect(pending.references.restricted_preview_go_ref).toBe(
+      "ENGINEERING_AUTHORIZED_AWAITING_STAGING",
+    );
+    expect(pending.references.live_scientific_platform_engineering_ref).toContain(
+      "HSI_LIVE_SCIENTIFIC_PLATFORM_OWNER_APPROVAL",
+    );
 
     const doc=readFileSync(
       join(root,"docs/engineering/HSI_10_RESTRICTED_PREVIEW_READINESS_U12_SOFT_LAND.md"),
@@ -81,5 +90,6 @@ describe("HSI 1.0 U12 restricted-preview readiness soft-land",()=>{
     );
     expect(doc).toContain("Never invent");
     expect(doc).toContain("L1");
+    expect(doc).toContain("U37");
   });
 });

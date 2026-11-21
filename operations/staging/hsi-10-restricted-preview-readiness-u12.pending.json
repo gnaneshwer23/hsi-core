@@ -2,7 +2,7 @@
   "schemaVersion": "hsi-1-0-restricted-preview-readiness-u12-pending-1",
   "purpose": "hsi_1_0_restricted_preview_readiness_u12_soft_land",
   "engineeringSoftLand": "DOCUMENTED",
-  "opsAcceptance": "BLOCKED",
+  "opsAcceptance": "L1_ENGINEERING_AUTHORIZED_AWAITING_STAGING",
   "stage": "L1_restricted_preview",
   "restrictedPreviewClaimed": false,
   "acceptedForScope": false,
@@ -37,7 +37,8 @@
     "staging_target_ref": "NOT_APPROVED",
     "preview_grant_ref": "UNASSIGNED",
     "staging_grant_run_ref": "NOT_STARTED",
-    "restricted_preview_go_ref": "UNASSIGNED"
+    "restricted_preview_go_ref": "ENGINEERING_AUTHORIZED_AWAITING_STAGING",
+    "live_scientific_platform_engineering_ref": "HSI_LIVE_SCIENTIFIC_PLATFORM_OWNER_APPROVAL@2026-11-21"
   },
   "surfaces": {
     "continuous_journey_local_e2e": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
@@ -46,9 +47,9 @@
     "auth_grant_fail_closed": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
     "production_writes_refused": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
     "staging_grant_continuous_run": { "status": "OWNER_GATED", "restrictedPreviewClaimed": false },
-    "owner_preview_go": { "status": "OWNER_GATED", "restrictedPreviewClaimed": false }
+    "owner_preview_go": { "status": "ENGINEERING_AUTHORIZED_AWAITING_STAGING", "restrictedPreviewClaimed": false }
   },
-  "notes": "U12 scaffold only. Staging grant continuous run and restricted-preview GO remain UNASSIGNED. Soft-land never invents hosts, grants, or write enablement.",
+  "notes": "U37 authorized L1 engineering composition (live investigation + research agents). Staging grant continuous run and restricted-preview GO remain open. Soft-land never invents hosts, grants, or write enablement.",
   "relatedSoftLands": [
     "operations/staging/hsi-10-continuous-journey-evidence.pending.json",
     "operations/staging/hsi-10-public-launch-readiness-u11.pending.json",
