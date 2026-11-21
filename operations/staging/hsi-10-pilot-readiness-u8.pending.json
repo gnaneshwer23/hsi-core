@@ -1,0 +1,61 @@
+{
+  "schemaVersion": "hsi-1-0-pilot-readiness-u8-pending-1",
+  "purpose": "hsi_1_0_pilot_readiness_u8_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "humanGate": 8,
+  "checklistItem": 8,
+  "soakAccepted": false,
+  "pilotReleaseSigned": false,
+  "pilotInviteAllowed": false,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedOnCallOwners": false,
+  "inventedAlertDestinations": false,
+  "inventedFourteenDayEvidence": false,
+  "inventedPilotInvite": false,
+  "autoGraphPromotion": false,
+  "honesty": {
+    "catalogsExistPilotBlocked": true,
+    "noInventedOnCall": true,
+    "noInventedAlertDestinations": true,
+    "noInventedSoakEvidence": true,
+    "noInventedPilotInvite": true,
+    "noAutoGraphPromotion": true,
+    "fixtureIsNotPilotRelease": true,
+    "checklist8BlockedUntilHuman8": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10PilotReadinessU8SoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/nextFSoakPilotReleaseSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "human_8_next_f_ops_acceptance_ref": "NOT_STARTED",
+    "on_call_owner_ref": "UNASSIGNED",
+    "alert_destination_ref": "UNASSIGNED",
+    "fourteen_day_soak_ref": "NOT_STARTED",
+    "signed_pilot_packet_ref": "NOT_STARTED",
+    "checklist_8_pilot_invite_ref": "BLOCKED_UNTIL_HUMAN_8"
+  },
+  "surfaces": {
+    "next_f_soak_pilot_release": { "status": "REUSE", "pilotInviteAllowed": false },
+    "ops_alert_and_kill_switch": { "status": "REUSE", "pilotInviteAllowed": false },
+    "brief_usefulness_panel": { "status": "ENGINEERING_READY", "pilotInviteAllowed": false },
+    "checklist_8_researcher_invite": { "status": "BLOCKED_UNTIL_HUMAN_8", "pilotInviteAllowed": false },
+    "auto_graph_promotion": { "status": "REFUSED", "pilotInviteAllowed": false }
+  },
+  "notes": "U8 scaffold only. Checklist #8 researcher invites stay blocked until Human #8 / NEXT-F. Soft-land never invents on-call, soak evidence, signed pilot, or invites. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/next-f-soak-pilot-release.pending.json",
+    "operations/staging/hsi-10-owner-gates.pending.json"
+  ]
+}

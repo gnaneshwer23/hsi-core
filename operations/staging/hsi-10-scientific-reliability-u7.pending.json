@@ -1,0 +1,58 @@
+{
+  "schemaVersion": "hsi-1-0-scientific-reliability-u7-pending-1",
+  "purpose": "hsi_1_0_scientific_reliability_u7_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "humanGate": 4,
+  "smeGoldFilled": false,
+  "frozenHeldOut": false,
+  "adjudicatedCases": 0,
+  "scientificApproval": false,
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "inventedSmeLabels": false,
+  "inventedAdjudications": false,
+  "goldCommittedInGit": false,
+  "honesty": {
+    "catalogsExistAcceptanceBlocked": true,
+    "draftBankIsNotGold": true,
+    "noInventedLabels": true,
+    "noInventedAdjudications": true,
+    "noScientificApproval": true,
+    "vaultStaysGitignored": true,
+    "fixtureIsNotAdjudication": true,
+    "uiHonestyIsNotScientificGo": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10ScientificReliabilityU7SoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun test test/e2e10SmeGoldVault.test.ts test/nextDExpertVaultFreezeSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "human_4_sme_a_ref": "UNASSIGNED",
+    "human_4_sme_b_ref": "UNASSIGNED",
+    "human_4_adjudicator_ref": "UNASSIGNED",
+    "human_4_private_vault_ref": ".hsi-private-benchmark",
+    "human_4_adjudicated_cases_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "e2e10_sme_gold_vault": { "status": "REUSE", "smeGoldFilled": false },
+    "next_d_expert_vault_freeze": { "status": "REUSE", "smeGoldFilled": false },
+    "comparability_honesty_ui": { "status": "ENGINEERING_READY", "smeGoldFilled": false },
+    "provisional_hypothesis_honesty_ui": { "status": "ENGINEERING_READY", "smeGoldFilled": false },
+    "scientific_approval_public_claim": { "status": "REFUSED", "smeGoldFilled": false }
+  },
+  "notes": "U7 scaffold only. Fill SME/adjudicator refs only after real humans are recruited. Soft-land never invents labels, adjudications, freezes, or scientific approval. Premortem is not a release gate.",
+  "relatedSoftLands": [
+    "operations/staging/e2e-10-sme-gold-vault.pending.json",
+    "operations/staging/next-d-expert-vault-freeze.pending.json",
+    "operations/staging/hsi-10-owner-gates.pending.json"
+  ]
+}

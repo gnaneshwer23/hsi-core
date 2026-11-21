@@ -40,6 +40,7 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U4 Continuous journey evidence soft-land | Done (owner fills staging refs) |
 | U5 API reliability (Ask / live investigation envelopes) | Done — see `HSI_U5_API_RELIABILITY_HARDENING_2026-11-21.md` |
 | U6 Owner packets Human #2/#3/#5 scaffold | Done — see `HSI_10_OWNER_PACKETS_U6_SOFT_LAND.md` (owner still fills refs) |
-| U7–U8 | Owner-gated / follow-on PRs |
+| U7 Scientific reliability / Human #4 scaffold | Done — see `HSI_10_SCIENTIFIC_RELIABILITY_U7_SOFT_LAND.md` (no gold invented) |
+| U8 Pilot readiness / Human #8 scaffold | Done — see `HSI_10_PILOT_READINESS_U8_SOFT_LAND.md` (invites still blocked) |
 
-Verified acceptance remains **0 / 8**.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U8 soft-landed; owner evidence still required.
