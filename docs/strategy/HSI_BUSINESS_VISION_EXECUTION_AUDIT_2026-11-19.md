@@ -34,6 +34,8 @@ Dashboard concepts (`/enterprise/*`, `/workspaces/*`) stay **demonstration / lat
 
 Held migrations **022–033** remain held (`docs/STATUS.md`).
 
+**Cross-ref (21 Nov 2026):** Product-facing 12-step narrative and Phases 1–7 live in [`HSI_END_TO_END_VISION_AND_USER_JOURNEY.md`](./HSI_END_TO_END_VISION_AND_USER_JOURNEY.md). This section remains the engineering truth matrix.
+
 ### Core 13-step researcher journey vs repository
 
 | # | Journey step | Primary surfaces | Engineering | Live / pilot acceptance |

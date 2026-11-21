@@ -4,7 +4,7 @@
 **Formal name:** Human Super Intelligence (HSI)  
 **Public descriptor:** Scientific Intelligence for Human Biology  
 **Do not adopt yet:** “Human Systems Intelligence” (legally unverified)  
-**Governing file:** This document freezes the north-star product vision. [`HSI_VISION.md`](./HSI_VISION.md) remains the operational doctrine wrapper (public positioning, honesty, CDS/PHI, Neon, Gate C). Where product-purpose wording conflicts, **this freeze wins**.  
+**Governing file:** This document freezes the north-star product vision. [`HSI_VISION.md`](./HSI_VISION.md) remains the operational doctrine wrapper (public positioning, honesty, CDS/PHI, Neon, Gate C). End-to-end journey and build sequence: [`HSI_END_TO_END_VISION_AND_USER_JOURNEY.md`](./HSI_END_TO_END_VISION_AND_USER_JOURNEY.md). Where product-purpose wording conflicts, **this freeze wins**; journey phases refine sequencing without replacing the freeze.  
 **Technology foundation:** [`../architecture/HSI_TECHNOLOGY_ARCHITECTURE_TEN_SYSTEMS.md`](../architecture/HSI_TECHNOLOGY_ARCHITECTURE_TEN_SYSTEMS.md) · code map [`../architecture/hsi-ten-systems-capability-map.v1.json`](../architecture/hsi-ten-systems-capability-map.v1.json).
 
 **Honesty:** Long-term capabilities below are progressive ambitions to develop and validate — **not** claims that HSI already performs all of them. Competitive advantage must be established through independent evaluation.
