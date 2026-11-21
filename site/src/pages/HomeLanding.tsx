@@ -114,7 +114,7 @@ export function HomeLanding(){
      <div className="pg-product-copy">
       <h2 id="pg-product-h">Your research home</h2>
       <p>Choose your topics. Explore the graph. Keep your investigation and brief together.</p>
-      <p className="pg-micro">Many saved records remain on this device.</p>
+      <p className="pg-micro">Many saved records remain on this device. Product screens below are illustrative previews, not a live tenant session.</p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/welcome">
         Set up your research home <span aria-hidden="true">→</span>
@@ -130,12 +130,12 @@ export function HomeLanding(){
         src="/images/product/dashboard-v2.webp"
         width={1440}
         height={1120}
-        alt="Researcher home showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
+        alt="Illustrative researcher home preview showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
         loading="lazy"
         decoding="async"
        />
        <figcaption>
-        <b>Your home.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
+        <b>Your home · illustrative.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
        </figcaption>
       </figure>
       <figure className="pg-shot">
@@ -143,12 +143,12 @@ export function HomeLanding(){
         src="/images/product/explorer-v2.webp"
         width={1440}
         height={900}
-        alt="Knowledge graph explorer with department colouring, gap markers and an evidence panel by experimental model."
+        alt="Illustrative knowledge graph explorer preview with department colouring, gap markers and an evidence panel by experimental model."
         loading="lazy"
         decoding="async"
        />
        <figcaption>
-        <b>The explorer.</b> Filter, select, trace routes and open research gaps with their evidence.
+        <b>The explorer · illustrative.</b> Filter, select, trace routes and open research gaps with their evidence.
        </figcaption>
       </figure>
      </div>

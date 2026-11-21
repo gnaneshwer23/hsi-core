@@ -23,10 +23,10 @@ export function HowItWorksPage(){
   </section>
   <section className="pg-block" aria-labelledby="hw-steps-h">
    <h2 id="hw-steps-h">The workflow on screen.</h2>
-   <p className="pg-sub-p">Product previews. Simulated and local-only steps remain labelled.</p>
+   <p className="pg-sub-p">Illustrative product previews. Simulated and local-only steps remain labelled.</p>
    <div className="pg-shots">
-    <figure className="pg-shot"><img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="Graph explorer with a selected relationship and evidence context" loading="lazy"/><figcaption>Explore a relationship and inspect its evidence.</figcaption></figure>
-    <figure className="pg-shot"><img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="Research home with topic metrics and a graph panel" loading="lazy"/><figcaption>Return to your topics and continue the investigation.</figcaption></figure>
+    <figure className="pg-shot"><img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="Illustrative graph explorer preview with a selected relationship and evidence context" loading="lazy"/><figcaption>Illustrative. Explore a relationship and inspect its evidence.</figcaption></figure>
+    <figure className="pg-shot"><img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="Illustrative research home preview with topic metrics and a graph panel" loading="lazy"/><figcaption>Illustrative. Return to your topics and continue the investigation.</figcaption></figure>
    </div>
   </section>
   <section className="pg-block" aria-labelledby="hw-review-title">

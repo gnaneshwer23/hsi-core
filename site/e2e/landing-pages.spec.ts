@@ -27,6 +27,8 @@ test('home leads with the graph, context diagram and working scenario choices',a
  await expect(page.locator('#product-demo').getByRole('tab')).toHaveCount(6);
  await expect(page.locator('.pg-domain-list').getByRole('link')).toHaveCount(6);
  await expect(page.locator('.pg-status')).toContainText('candidate relationships');
+ await expect(page.locator('.pg-product')).toContainText('illustrative');
+ await expect(page.locator('.pg-shots figcaption').first()).toContainText(/illustrative/i);
 });
 
 test('how it works shows the research flow and separates checks from approval',async({page})=>{
@@ -34,6 +36,7 @@ test('how it works shows the research flow and separates checks from approval',a
  await expect(page.getByRole('list',{name:'Platform workflow stages',exact:true}).getByRole('listitem')).toHaveCount(8);
  await expect(page.getByRole('list',{name:'Scientific review boundaries',exact:true}).getByRole('listitem')).toHaveCount(4);
  await expect(page.locator('.pg-shots img')).toHaveCount(2);
+ await expect(page.locator('.pg-shots figcaption').first()).toContainText(/illustrative/i);
  await expect(page.getByRole('link',{name:'Explore a demonstration',exact:true}).first()).toHaveAttribute('href','/demo/universe');
 });
 
