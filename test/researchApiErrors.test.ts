@@ -38,6 +38,8 @@ describe("researchApiErrors",()=>{
   expect(messageForResearchCode("INVALID_SEED","scientific_retrieval")).toContain("inputs");
   expect(messageForResearchCode("REVIEW_HISTORY_DENIED","review_history")).toContain("Review history");
   expect(messageForResearchCode("RESEARCH_RECORD_DENIED","investigation_load")).toContain("authorised investigation");
+  expect(messageForResearchCode("RESEARCH_RECORD_DENIED","delivery_decide")).toContain("decision could not be confirmed");
+  expect(messageForResearchCode("INVESTIGATION_MISMATCH","delivery_decide")).toContain("decision could not be confirmed");
   expect(messageForResearchCode("MADE_UP_CODE","generic")).toBeUndefined();
  });
 
