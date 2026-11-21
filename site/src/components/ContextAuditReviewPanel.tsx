@@ -5,6 +5,17 @@ import { canonicalGraphContext } from '../../../src/investigationGraphContext';
 import type { ContextConflictAudit } from '../../../src/evidence/contextConflictAudit';
 import type { ContextAuditReviewRequest } from '../../../src/evidence/contextAuditReview';
 
+/** Prefer API honesty copy; never surface raw transport failures (e.g. Failed to fetch). */
+function researchHonestyMessage(err: unknown, fallback: string): string {
+  if (!(err instanceof Error)) return fallback;
+  const message = err.message.trim();
+  if (!message) return fallback;
+  if (/^failed to fetch$/i.test(message) || /networkerror/i.test(message) || err.name === 'AbortError')
+    return fallback;
+  if (/^abort(ed)?$/i.test(message) || /timed?\s*out/i.test(message)) return fallback;
+  return message;
+}
+
 /** Capabilities come from the authenticated backend; identities and scopes are never posted. */
 export function ContextAuditReviewPanel({
   investigationId,
@@ -65,9 +76,10 @@ export function ContextAuditReviewPanel({
       .catch((e) => {
         if (!c.signal.aborted)
           setMessage(
-            e instanceof Error && e.message
-              ? e.message
-              : 'Audit-review access is unavailable or has changed. No review authority is inferred.',
+            researchHonestyMessage(
+              e,
+              'Audit-review access is unavailable or has changed. No review authority is inferred.',
+            ),
           );
       })
       .finally(() => clearTimeout(timer));
@@ -130,9 +142,10 @@ export function ContextAuditReviewPanel({
       onReviewed();
     } catch (err) {
       setMessage(
-        err instanceof Error && err.message
-          ? err.message
-          : 'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        researchHonestyMessage(
+          err,
+          'The assessment could not be confirmed. Retry unchanged inputs to retain the same request ID, or refresh to check the current audit.',
+        ),
       );
     } finally {
       setBusy(false);
