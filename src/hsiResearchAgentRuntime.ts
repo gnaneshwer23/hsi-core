@@ -197,22 +197,32 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
       })
     : null;
 
-  const contradictionDependsOn = includeEvidence ? "retrieve" : "plan";
+  /** Task id that owns the current interrogative draft (plan, or retrieve when present). */
+  const draftTaskId = includeEvidence ? "retrieve" : "plan";
+  const resolveDraftRef = (context: {
+    dependencies: Readonly<Record<string, {outputRef: string | null}>>;
+  }): string => {
+    const fromDeps =
+      context.dependencies[draftTaskId]?.outputRef?.trim() ||
+      context.dependencies.plan?.outputRef?.trim() ||
+      draftRef;
+    if (!fromDeps) throw Error("Planner draft reference missing");
+    return fromDeps;
+  };
+
   const contradiction = checkpointHsiExecutor({
     store: checkpointStore,
     inputHash: hashHsiCheckpointInput({
       investigationId: input.investigationId,
       role: "contradiction_analyst",
-      dependsOn: contradictionDependsOn,
+      dependsOn: draftTaskId,
     }),
     now,
     executor: async (context) => {
-      const fromDeps =
-        context.dependencies[contradictionDependsOn]?.outputRef?.trim() ||
-        context.dependencies.plan?.outputRef?.trim() ||
-        draftRef;
-      if (!fromDeps) throw Error("Planner draft reference missing");
-      return createSscContradictionExecutor({sink: input.sink, draftRef: fromDeps})(context);
+      return createSscContradictionExecutor({
+        sink: input.sink,
+        draftRef: resolveDraftRef(context),
+      })(context);
     },
   });
 
@@ -239,7 +249,7 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
   tasks.push({
     id: "contradict",
     manifest: roleManifest("contradiction_analyst", timeoutMs, input.plan.dataClass),
-    dependsOn: [includeEvidence ? "retrieve" : "plan"],
+    dependsOn: [draftTaskId],
   });
 
   const rolesExecuted: HsiAgentRole[] = includeEvidence
@@ -252,13 +262,11 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
       inputHash: hashHsiCheckpointInput({
         investigationId: input.investigationId,
         role: "claim_verifier",
-        dependsOn: "contradict",
+        dependsOn: ["contradict", draftTaskId],
       }),
       now,
       executor: async (context) => {
-        const fromDeps = draftRef || context.dependencies.plan?.outputRef?.trim();
-        if (!fromDeps) throw Error("Draft reference missing for gap verification");
-        const draft = await input.sink.loadDraft(fromDeps);
+        const draft = await input.sink.loadDraft(resolveDraftRef(context));
         return createGapVerificationExecutor({
           sink: input.sink,
           gapInput: gapInputFromDraft(draft, now()),
@@ -271,15 +279,13 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
       inputHash: hashHsiCheckpointInput({
         investigationId: input.investigationId,
         role: "hypothesis_generator",
-        dependsOn: "verify",
+        dependsOn: ["verify", draftTaskId],
       }),
       now,
       executor: async (context) => {
-        const fromDeps = draftRef || context.dependencies.plan?.outputRef?.trim();
-        if (!fromDeps) throw Error("Draft reference missing for hypothesis generation");
         return createSscHypothesisGeneratorExecutor({
           sink: input.sink,
-          draftRef: fromDeps,
+          draftRef: resolveDraftRef(context),
           investigationId: input.investigationId,
           now,
         })(context);
@@ -305,12 +311,13 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
       {
         id: "verify",
         manifest: roleManifest("claim_verifier", timeoutMs, input.plan.dataClass),
-        dependsOn: ["contradict"],
+        // Draft edge is required: contradict emits a falsification ref, not the draft.
+        dependsOn: ["contradict", draftTaskId],
       },
       {
         id: "hypothesize",
         manifest: roleManifest("hypothesis_generator", timeoutMs, input.plan.dataClass),
-        dependsOn: ["verify"],
+        dependsOn: ["verify", draftTaskId],
       },
       {
         id: "policy",

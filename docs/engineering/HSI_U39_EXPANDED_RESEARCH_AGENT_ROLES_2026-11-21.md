@@ -10,7 +10,8 @@
 1. New ARCH-003 adapters: evidence retriever (optional curated release), hypothesis generator (draft-only), safety policy gate.  
 2. `runHsiAuthorizedResearchAgentRuntime` accepts `pipeline: "planner_contradiction" | "expanded_ssc"`.  
 3. Expanded path: `question_planner` → (`evidence_retriever`) → `contradiction_analyst` → `claim_verifier` → `hypothesis_generator` → `safety_policy_gate`.  
-4. Default remains `planner_contradiction` for U35/U37 backward compatibility.
+4. Default remains `planner_contradiction` for U35/U37 backward compatibility.  
+5. Draft resolution: `claim_verifier` / `hypothesis_generator` depend on the draft-owning task (`plan` or `retrieve`) as well as prior roles — contradict emits a falsification ref, not a draft.
 
 ## Roles
 

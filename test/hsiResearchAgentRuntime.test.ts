@@ -119,6 +119,12 @@ test("authorized runtime runs planner then contradiction behind checkpoints", as
 
 test("expanded SSc pipeline checkpoints verifier, hypothesis, and safety gate", async () => {
   const sink = memorySink();
+  const loadedDraftRefs: string[] = [];
+  const originalLoad = sink.loadDraft.bind(sink);
+  sink.loadDraft = async (ref) => {
+    loadedDraftRefs.push(ref);
+    return originalLoad(ref);
+  };
   const store = createMemoryCheckpointStore();
   const result = await runHsiAuthorizedResearchAgentRuntime({
     authorization: HSI_RESEARCH_AGENT_OWNER_APPROVAL,
@@ -155,6 +161,11 @@ test("expanded SSc pipeline checkpoints verifier, hypothesis, and safety gate", 
   expect(result.checkpoints.verify?.state).toBe("completed");
   expect(result.checkpoints.hypothesize?.state).toBe("completed");
   expect(result.checkpoints.policy?.state).toBe("completed");
+  // Verify/hypothesize must load the draft ref from the draft-owning task, never the
+  // falsification output that contradict emits.
+  expect(loadedDraftRefs.length).toBeGreaterThanOrEqual(2);
+  expect(loadedDraftRefs.every((ref) => ref === "draft-ref")).toBe(true);
+  expect(loadedDraftRefs.includes("falsification-ref")).toBe(false);
   expect(sink.gaps?.honesty.scientificallyValidated).toBe(false);
   expect(sink.hypotheses?.records.every((r) => r.lifecycle === "proposed")).toBe(true);
   expect(result.scientificApproval).toBe(false);
