@@ -3,10 +3,23 @@
  */
 import {assertHsiToolPermission,validateHsiAgentManifest,validateHsiAgentRunEnvelope,HSI_TOOL_IDS,type HsiAgentManifest,type HsiAgentRole,type HsiAgentRunEnvelope,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 import {createHsiOrchestrationDeadline} from "./hsiAgentOrchestrationBudget";
+import {
+  classifyHsiOrchestrationCancel,
+  type HsiOrchestrationCancelRecord,
+} from "./hsiAgentOrchestrationCancel";
 export type HsiAgentTask={id:string;manifest:HsiAgentManifest;dependsOn:readonly string[]};
 export type HsiAgentStepResult={status:"completed"|"blocked";outputRef:string|null;reason:string|null};
 export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
-export type HsiOrchestrationResult={schemaVersion:"hsi-agent-orchestration-1";investigationId:string;status:"completed"|"blocked"|"failed"|"cancelled";runs:readonly HsiAgentRunEnvelope[];results:Readonly<Record<string,HsiAgentStepResult>>;limitations:readonly string[]};
+export type HsiOrchestrationResult={
+  schemaVersion:"hsi-agent-orchestration-1";
+  investigationId:string;
+  status:"completed"|"blocked"|"failed"|"cancelled";
+  runs:readonly HsiAgentRunEnvelope[];
+  results:Readonly<Record<string,HsiAgentStepResult>>;
+  limitations:readonly string[];
+  /** Structured stop taxonomy when cancelled or classified failure (U30). */
+  termination:HsiOrchestrationCancelRecord|null;
+};
 const ID=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,99}$/;
 export async function runHsiAgentOrchestration(input:{
  investigationId:string;tasks:readonly HsiAgentTask[];executors:Partial<Record<HsiAgentRole,HsiAgentExecutor>>;
@@ -36,13 +49,28 @@ export async function runHsiAgentOrchestration(input:{
  const results:Record<string,HsiAgentStepResult>=Object.create(null);
  const runs:HsiAgentRunEnvelope[]=[];
  let status:HsiOrchestrationResult["status"]="completed";
+ // Boxed so nested assignments remain visible to TypeScript control-flow analysis.
+ const terminationBox:{current:HsiOrchestrationCancelRecord|null}={current:null};
+ let lastAttemptedTaskId:string|null=null;
+ let taskTimedOut=false;
+ let policyDenied=false;
  const deadline=input.maxOrchestrationMs===undefined
   ? null
   : createHsiOrchestrationDeadline({maxOrchestrationMs:input.maxOrchestrationMs,parent:input.signal});
  const signal=deadline?.signal??input.signal;
+ const markTermination=(taskId:string|null)=>{
+  terminationBox.current=classifyHsiOrchestrationCancel({
+   budgetExceeded:deadline?.budgetExceeded()??false,
+   parentAborted:input.signal?.aborted===true,
+   taskTimedOut,
+   policyDenied,
+   taskId,
+  });
+ };
  try{
  for(const task of order){
-  if(signal?.aborted){status="cancelled";break}
+  if(signal?.aborted){status="cancelled";markTermination(lastAttemptedTaskId);break}
+  lastAttemptedTaskId=task.id;
   const startedAt=now();
   const blockedDependency=task.dependsOn.some(d=>results[d]?.status!=="completed");
   const executor=input.executors[task.manifest.role];
@@ -64,15 +92,15 @@ export async function runHsiAgentOrchestration(input:{
       return executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:structuredClone(Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!]))),assertTool:(tool)=>{
       if(!acceptingCalls||controller.signal.aborted)throw Error("Agent invocation already closed");
       const invocationId=task.id+"-tool-"+(calls.length+1);
-      if(calls.length>=task.manifest.maxToolCalls||!HSI_TOOL_IDS.includes(tool)){policyViolation=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));throw Error("Agent tool budget exceeded or unknown tool")}
+      if(calls.length>=task.manifest.maxToolCalls||!HSI_TOOL_IDS.includes(tool)){policyViolation=true;policyDenied=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));throw Error("Agent tool budget exceeded or unknown tool")}
       try{assertHsiToolPermission(task.manifest,tool,input.dataClass);calls.push({tool,invocationId,status:"authorized"})}
-      catch(e){policyViolation=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));calls.push({tool,invocationId,status:"denied"});throw e}
+      catch(e){policyViolation=true;policyDenied=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));calls.push({tool,invocationId,status:"denied"});throw e}
      }});}),
      new Promise<never>((_,reject)=>{
       rejectCancellation=reject;
       signal?.addEventListener("abort",onAbort,{once:true});
       if(signal?.aborted)onAbort();
-      timeout=setTimeout(()=>{controller.abort();reject(Error("Agent timeout"))},task.manifest.timeoutMs);timeout.unref?.();
+      timeout=setTimeout(()=>{taskTimedOut=true;controller.abort();reject(Error("Agent timeout"))},task.manifest.timeoutMs);timeout.unref?.();
      })
     ]);
     if(controller.signal.aborted||policyViolation)throw Error("Cancelled or policy violation");
@@ -85,8 +113,11 @@ export async function runHsiAgentOrchestration(input:{
   results[task.id]=result;
   const run:HsiAgentRunEnvelope={schemaVersion:"hsi-agent-run-1",investigationId:input.investigationId,runId:input.investigationId+":"+task.id,manifest:task.manifest,graphRelease:input.graphRelease,dataClass:input.dataClass,status:runStatus,toolCallEvidence:"authorization_checks_only",toolCalls:structuredClone(calls),startedAt,completedAt:now()};
   validateHsiAgentRunEnvelope(run);runs.push(run);
-  if(runStatus==="failed")status="failed";else if(runStatus==="blocked"&&status==="completed")status="blocked";
-  if(signal?.aborted){status="cancelled";break}
+  if(runStatus==="failed"){
+   status="failed";
+   if(taskTimedOut||policyDenied)markTermination(task.id);
+  }else if(runStatus==="blocked"&&status==="completed")status="blocked";
+  if(signal?.aborted){status="cancelled";markTermination(task.id);break}
  }
  }finally{
   deadline?.dispose();
@@ -100,5 +131,9 @@ export async function runHsiAgentOrchestration(input:{
  if(deadline?.budgetExceeded()){
   limitations.push("Orchestration wall-clock budget exceeded; remaining tasks were not started or were cancelled cooperatively");
  }
- return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations};
+ const stop=terminationBox.current;
+ if(stop!==null){
+  limitations.push(`Orchestration termination classified as ${stop.reason} (no scientific approval; side effects not undone)`);
+ }
+ return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations,termination:stop};
 }

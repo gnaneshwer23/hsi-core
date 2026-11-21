@@ -73,4 +73,5 @@ test("wall-clock budget cancels remaining tasks after first slow stage", async (
   expect(r.status).toBe("cancelled");
   expect(r.runs.some((run) => run.runId.endsWith(":graph"))).toBe(false);
   expect(r.limitations.some((l) => /wall-clock budget exceeded/i.test(l))).toBe(true);
+  expect(r.termination?.reason).toBe("wall_clock_budget");
 });
