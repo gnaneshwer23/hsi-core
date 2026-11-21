@@ -32,14 +32,18 @@ test("legacy literature handlers answer bad input without any network call",asyn
  const blocked=(()=>{throw Error("network call attempted")}) as unknown as typeof fetch;
  const original=globalThis.fetch;globalThis.fetch=blocked;
  try{
-  for(const [file,badUrl] of [
-   ["scientific-pubmed.ts","https://x.test/api/scientific-pubmed?q=a"],
-   ["scientific-abstract.ts","https://x.test/api/scientific-abstract?pmid=abc"],
-   ["scientific-investigation-trace.ts","https://x.test/api/scientific-investigation-trace?q=a"],
+  for(const [file,badUrl,badCode] of [
+   ["scientific-pubmed.ts","https://x.test/api/scientific-pubmed?q=a","INVALID_SEARCH_TERM"],
+   ["scientific-abstract.ts","https://x.test/api/scientific-abstract?pmid=abc","INVALID_PUBMED_ID"],
+   ["scientific-investigation-trace.ts","https://x.test/api/scientific-investigation-trace?q=a","INVALID_RESEARCH_QUESTION"],
   ] as const){
    const mod=await import(join(API_ROOT,file)) as {default:{fetch:(r:Request)=>Promise<Response>}};
-   expect((await mod.default.fetch(new Request(badUrl))).status).toBe(400);
-   expect((await mod.default.fetch(new Request(badUrl,{method:"POST"}))).status).toBe(405);
+   const bad=await mod.default.fetch(new Request(badUrl));
+   expect(bad.status).toBe(400);
+   expect((await bad.json() as {code:string}).code).toBe(badCode);
+   const method=await mod.default.fetch(new Request(badUrl,{method:"POST"}));
+   expect(method.status).toBe(405);
+   expect((await method.json() as {code:string}).code).toBe("METHOD_NOT_ALLOWED");
   }
  }finally{globalThis.fetch=original}
 });
