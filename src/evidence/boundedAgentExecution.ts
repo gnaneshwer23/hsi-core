@@ -44,6 +44,12 @@ import {
   unwrapHsiFencedToolSuccess,
   type HsiFencedToolCaller,
 } from "../hsiAgentFencedToolCaller";
+import type {HsiOrchestrationCancelRecord} from "../hsiAgentOrchestrationCancel";
+import {
+  buildHsiRecoveryDecision,
+  type HsiRecoveryDecision,
+  type HsiRecoveryReasonCode,
+} from "../hsiAgentRecoveryDecision";
 import {commitHsiFencedArtifact, type HsiFencedArtifactStore} from "../hsiFencedArtifact";
 import {
   buildContextualCandidatePack,
@@ -278,6 +284,10 @@ export type BoundedAgentExecutionResult = {
   status: HsiOrchestrationResult["status"];
   stages: readonly BoundedStageTrace[];
   orchestration: HsiOrchestrationResult;
+  /** Orchestration stop taxonomy (U30/U31) — null when run completed without classified stop. */
+  termination: HsiOrchestrationCancelRecord | null;
+  /** Explicit recovery decision when recoverStage was supplied (U31). */
+  recoveryDecision: HsiRecoveryDecision | null;
   honesty: {
     metadataOnly: true;
     claimSupportNotAssessed: true;
@@ -774,6 +784,9 @@ export async function runBoundedAgentExecution(input: {
     stageId: BoundedStageId;
     approvedBy: string;
     recoveryReason: string;
+    /** Optional U31 reason code; validated against priorTerminationReason when set. */
+    reasonCode?: HsiRecoveryReasonCode;
+    priorTerminationReason?: HsiOrchestrationCancelRecord["reason"] | null;
   };
   /** When true, opposing stage records budget skip instead of stub search. */
   skipOpposingForBudget?: boolean;
@@ -918,9 +931,24 @@ export async function runBoundedAgentExecution(input: {
     version: BOUNDED_AGENT_EXECUTION_VERSION,
   });
 
+  let recoveryDecision: HsiRecoveryDecision | null = null;
   if (input.recoverStage) {
     if (!input.recoverStage.approvedBy.trim() || !input.recoverStage.recoveryReason.trim()) {
       fail("Human recovery authorisation and reason required");
+    }
+    if (input.recoverStage.reasonCode) {
+      try {
+        recoveryDecision = buildHsiRecoveryDecision({
+          investigationId: input.investigationId,
+          stageId: input.recoverStage.stageId,
+          approvedBy: input.recoverStage.approvedBy,
+          reasonCode: input.recoverStage.reasonCode,
+          recoveryReason: input.recoverStage.recoveryReason,
+          priorTerminationReason: input.recoverStage.priorTerminationReason ?? null,
+        });
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Invalid recovery decision");
+      }
     }
     await recoverHsiCheckpoint({
       store: checkpointStore,
@@ -1735,6 +1763,8 @@ export async function runBoundedAgentExecution(input: {
     status: orchestration.status,
     stages,
     orchestration,
+    termination: orchestration.termination,
+    recoveryDecision,
     honesty: {
       metadataOnly: true,
       claimSupportNotAssessed: true,
@@ -1756,6 +1786,7 @@ export async function runBoundedAgentExecution(input: {
       "Research brief is a structured engineering artifact — no scientific validity claim",
       "Neon red-wave writes remain staging-gated via existing persist/checkpoint stores",
       "No Gate C auto-approve, CDS/PHI, or graph promotion",
+      "Recovery decisions remain human-authorised soft-land; research_admin live E2E still open",
       ...orchestration.limitations,
     ],
   };
