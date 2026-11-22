@@ -53,7 +53,7 @@
     "checklist_8_researcher_invite": { "status": "BLOCKED_UNTIL_HUMAN_8", "pilotInviteAllowed": false },
     "auto_graph_promotion": { "status": "REFUSED", "pilotInviteAllowed": false }
   },
-  "notes": "U8 scaffold only. Checklist #8 researcher invites stay blocked until Human #8 / NEXT-F. Soft-land never invents on-call, soak evidence, signed pilot, or invites. Premortem is not a release gate.",
+  "notes": "U8 scaffold only. Checklist #8 researcher invites stay blocked until Human #8 / NEXT-F (U49: staging:pilot-readiness:apply-proposal, dry-run default). Soft-land never invents on-call, soak evidence, signed pilot, or invites. Premortem is not a release gate. soakAccepted and pilotInviteAllowed stay false after fill-apply.",
   "relatedSoftLands": [
     "operations/staging/next-f-soak-pilot-release.pending.json",
     "operations/staging/hsi-10-owner-gates.pending.json"

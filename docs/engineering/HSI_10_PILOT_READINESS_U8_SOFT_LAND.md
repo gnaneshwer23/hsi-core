@@ -5,7 +5,8 @@
 
 Typed catalog: [`src/operations/hsi10PilotReadinessU8SoftLand.ts`](../../src/operations/hsi10PilotReadinessU8SoftLand.ts).  
 Pending worksheet: [`operations/staging/hsi-10-pilot-readiness-u8.pending.json`](../../operations/staging/hsi-10-pilot-readiness-u8.pending.json).  
-Reuse: [`NEXT_F_SOAK_PILOT_RELEASE_SOFT_LAND.md`](./NEXT_F_SOAK_PILOT_RELEASE_SOFT_LAND.md).
+Reuse: [`NEXT_F_SOAK_PILOT_RELEASE_SOFT_LAND.md`](./NEXT_F_SOAK_PILOT_RELEASE_SOFT_LAND.md).  
+**U49 fill-apply:** [`HSI_U49_PILOT_READINESS_FILL_APPLY_2026-11-22.md`](./HSI_U49_PILOT_READINESS_FILL_APPLY_2026-11-22.md) / `staging:pilot-readiness:apply-proposal` (dry-run default; soak / invites stay closed).
 
 ## Honesty
 
