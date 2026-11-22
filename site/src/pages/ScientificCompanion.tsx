@@ -1,5 +1,5 @@
-import {useMemo, useState} from "react";
-import {Link} from "react-router-dom";
+import {useEffect, useMemo, useState} from "react";
+import {Link, useSearchParams} from "react-router-dom";
 import {
   HSI_SCIENTIFIC_COMPANION_OWNER_APPROVAL,
 } from "../../../src/hsiScientificCompanionAuthorization";
@@ -7,13 +7,26 @@ import {
   HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL,
 } from "../../../src/hsiScientificCompanionLiveEvidenceAuthorization";
 import {
+  HSI_COMPANION_WORKSPACE_HANDOFF_OWNER_APPROVAL,
+} from "../../../src/hsiCompanionWorkspaceHandoffAuthorization";
+import {
   runHsiScientificCompanionTurn,
   type HsiScientificCompanionBoundEvidence,
   type HsiScientificCompanionMode,
   type HsiScientificCompanionTurnResult,
 } from "../../../src/hsiScientificCompanionRuntime";
+import {buildCompanionWorkspaceHandoff} from "../../../src/investigation/companionWorkspaceHandoff";
+import {LIVE_SCENARIOS} from "../../../src/investigation/scenarios";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
-import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
+import {
+  COMPANION_HANDOFF_FROM_QUERY_KEY,
+  COMPANION_HANDOFF_FROM_WORKSPACE,
+  LIVE_INVESTIGATION_PATH,
+  LIVE_SCENARIO_QUERY_KEY,
+  liveInvestigationHref,
+  resolveCuratedScenarioId,
+  scientificCompanionHref,
+} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
 
 const SAMPLE_BOUND_EVIDENCE: HsiScientificCompanionBoundEvidence[] = [
@@ -52,13 +65,53 @@ const STARTERS = [
 ] as const;
 
 export function ScientificCompanionPage() {
+  const [params] = useSearchParams();
+  const scenarioId = resolveCuratedScenarioId(params.get(LIVE_SCENARIO_QUERY_KEY));
+  const fromWorkspace =
+    params.get(COMPANION_HANDOFF_FROM_QUERY_KEY) === COMPANION_HANDOFF_FROM_WORKSPACE;
+
   const [mode, setMode] = useState<HsiScientificCompanionMode>("discuss");
   const [question, setQuestion] = useState<string>(STARTERS[0]);
   const [evidenceJson, setEvidenceJson] = useState<string>("");
+  const [handoffNote, setHandoffNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [turn, setTurn] = useState<HsiScientificCompanionTurnResult | null>(null);
 
   const modeMeta = useMemo(() => MODES.find((m) => m.id === mode) ?? MODES[0]!, [mode]);
+
+  useEffect(() => {
+    if (!fromWorkspace || !scenarioId) return;
+    try {
+      const handoff = buildCompanionWorkspaceHandoff({
+        authorization: HSI_COMPANION_WORKSPACE_HANDOFF_OWNER_APPROVAL,
+        scenarioId,
+        useFixtureIfEmpty: true,
+      });
+      if (handoff.question) setQuestion(handoff.question);
+      if (handoff.records.length > 0) {
+        setEvidenceJson(JSON.stringify(handoff.records, null, 2));
+      }
+      setHandoffNote(handoff.note);
+    } catch (e) {
+      setHandoffNote(e instanceof Error ? e.message : "Workspace handoff failed");
+    }
+  }, [fromWorkspace, scenarioId]);
+
+  function applyWorkspaceHandoff(id: string) {
+    setError(null);
+    try {
+      const handoff = buildCompanionWorkspaceHandoff({
+        authorization: HSI_COMPANION_WORKSPACE_HANDOFF_OWNER_APPROVAL,
+        scenarioId: id,
+        useFixtureIfEmpty: true,
+      });
+      if (handoff.question) setQuestion(handoff.question);
+      setEvidenceJson(JSON.stringify(handoff.records, null, 2));
+      setHandoffNote(handoff.note);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Workspace handoff failed");
+    }
+  }
 
   function run() {
     setError(null);
@@ -112,7 +165,8 @@ export function ScientificCompanionPage() {
           <h2 id="sc-ask-h">Ask the companion</h2>
           <p className="rh-note">
             Deterministic SSc planning catalogue for this engineering milestone. Free-text
-            unfenced LLM answers stay closed.
+            unfenced LLM answers stay closed. U45 can hand off curated workspace metadata
+            without the companion retrieving literature itself.
           </p>
           <fieldset className="rh-choices" aria-label="Companion mode">
             {MODES.map((m) => (
@@ -143,7 +197,7 @@ export function ScientificCompanionPage() {
             ))}
           </div>
           <label htmlFor="sc-ev">
-            Optional bound evidence JSON (U42 — caller-supplied metadata only)
+            Optional bound evidence JSON (U42/U45 — caller-supplied or workspace handoff)
           </label>
           <textarea
             id="sc-ev"
@@ -160,16 +214,44 @@ export function ScientificCompanionPage() {
             >
               Load sample bound metadata
             </button>
+            <button
+              type="button"
+              className="rh-ghost"
+              onClick={() => applyWorkspaceHandoff("il21-autoimmune")}
+            >
+              Handoff IL-21 workspace fixture
+            </button>
             <button type="button" className="rh-ghost" onClick={() => setEvidenceJson("")}>
               Clear bound evidence
             </button>
           </div>
+          {handoffNote && (
+            <p className="rh-note" role="status">
+              {handoffNote}
+              {scenarioId ? ` · scenario ${scenarioId}` : ""}
+            </p>
+          )}
           <div className="rh-row">
             <button type="button" className="rh-primary" onClick={run}>
               Run companion turn
             </button>
             <Link className="rh-ghost" to={LIVE_INVESTIGATION_PATH}>
               Open live investigation
+            </Link>
+            <Link
+              className="rh-ghost"
+              to={liveInvestigationHref({scenarioId: "il21-autoimmune"})}
+            >
+              IL-21 workspace
+            </Link>
+            <Link
+              className="rh-ghost"
+              to={scientificCompanionHref({
+                scenarioId: "il21-autoimmune",
+                fromWorkspace: true,
+              })}
+            >
+              Companion handoff link
             </Link>
           </div>
           {error && (
@@ -213,8 +295,9 @@ export function ScientificCompanionPage() {
             <p className="rh-note" role="status">
               Scientific approval: false · Avatar: false · Voice: false · Networking: false ·
               Unfenced LLM: false · Live evidence bound:{" "}
-              {turn.honesty.liveEvidenceBound ? "yes (caller-supplied)" : "no"} · Companion
-              network retrieval: false · Claim verified: false
+              {turn.honesty.liveEvidenceBound ? "yes (caller-supplied / workspace)" : "no"} ·
+              Companion network retrieval: false · Claim verified: false · Curated scenarios:{" "}
+              {Object.keys(LIVE_SCENARIOS).length}
             </p>
           </section>
         )}

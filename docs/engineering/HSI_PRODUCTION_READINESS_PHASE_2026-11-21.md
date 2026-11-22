@@ -78,5 +78,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U42 Scientific Companion live-evidence binding | Done — see `HSI_U42_COMPANION_LIVE_EVIDENCE_2026-11-22.md` (caller-supplied metadata only; companion network retrieval still closed) |
 | U43 U12 evidence fill-apply from U40 proposals | Done — see `HSI_U43_U12_EVIDENCE_FILL_APPLY_2026-11-22.md` (dry-run default; preview GO / checklist #1 still false after apply) |
 | U44 Remaining checkpointed research-agent roles | Done — see `HSI_U44_REMAINING_AGENT_ROLES_2026-11-22.md` (`full_ssc`: entity_resolver / graph_reasoner / interrogator; LLM / Neon live still closed) |
+| U45 Companion ↔ workspace evidence handoff | Done — see `HSI_U45_COMPANION_WORKSPACE_HANDOFF_2026-11-22.md` (workspace-derived metadata only; companion network retrieval still closed) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U44 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U45 soft-landed; owner evidence still required.

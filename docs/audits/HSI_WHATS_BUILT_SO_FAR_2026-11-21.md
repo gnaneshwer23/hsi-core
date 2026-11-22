@@ -75,7 +75,7 @@ A researcher can explore a substantial portion of the intended investigation jou
 
 | Proposed capability | Current position |
 | --- | --- |
-| Conversational Scientific Companion | Text-first U41 soft-land on interrogative KG path; deeper live-evidence conversation + avatar still open |
+| Conversational Scientific Companion | Text-first U41 + live-evidence bind U42 + workspace handoff U45; avatar still open |
 | Real-time Nuance-style avatar | **Not implemented** |
 | Conversational dataset critique | Analysis components exist; integrated experience **not established** |
 | Cross-domain AI discussion | Graph/investigation foundations exist; conversational orchestration **not established** |
@@ -117,7 +117,7 @@ The newest vision adds three significant areas **not** yet fully implemented:
 ### Recommended next milestone (binding build filter)
 
 1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35), live scientific platform (U37), preview-evidence runners (U40), and remaining agent roles (U44 `full_ssc`)** — staging grant / restricted-preview GO and GA still open.  
-2. **Scientific Companion text-first** soft-landed (**U41**, 21 Nov 2026) on KG/interrogative services; **U42** binds caller-supplied live-evidence metadata into turns (no companion network retrieval). Voice/avatar remain Phase 3.  
+2. **Scientific Companion text-first** soft-landed (**U41**, 21 Nov 2026) on KG/interrogative services; **U42** binds caller-supplied live-evidence metadata; **U45** hands off workspace/scenario metadata into Companion (still no companion network retrieval). Voice/avatar remain Phase 3.  
 3. **Then** research networking and opportunity matching using the same scientific context.
 
 Extend what is already built — do **not** start another disconnected platform. Do **not** delay scientific-engine validation to finish avatar or networking (aligns with end-to-end vision Phases 1–2 in PR #596).

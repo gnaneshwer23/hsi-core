@@ -27,6 +27,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 - Scientific Companion live-evidence binding: **OWNER-APPROVED** (22 November 2026) — see U42 `hsiScientificCompanionLiveEvidenceAuthorization` / caller-supplied metadata on companion turns. Still **not** companion network retrieval, claim verification, voice, avatar, networking, scientific approval, Gate C, PHI, or GA.
 - U12 evidence fill-apply from U40 proposals: **OWNER-APPROVED** (22 November 2026) — see U43 `hsiU12EvidenceFillApplyAuthorization` / `staging:preview-evidence:apply-proposal`. Still **not** restricted-preview GO, checklist #1 verified, invented hosts/grants, writes, Gate C, PHI, or GA.
 - Remaining research-agent roles (`entity_resolver` / `graph_reasoner` / `interrogator`) under `full_ssc`: **OWNER-DIRECTED** soft-land (22 November 2026) — see U44. Still **not** LLM execution, Neon live multi-process E2E, Gate C, PHI, scientific approval, or GA.
+- Companion ↔ workspace evidence handoff: **OWNER-DIRECTED** soft-land (22 November 2026) — see U45 `companionWorkspaceHandoff` / `/research/companion?from=workspace`. Still **not** companion network retrieval, claim verification, voice, avatar, networking, Gate C, PHI, or GA.
 - Clinical, patient-level, production and public deployment: NOT APPROVED.
 
 ## Required next actions
