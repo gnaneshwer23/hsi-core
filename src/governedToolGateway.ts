@@ -27,6 +27,7 @@ import {createHash} from "node:crypto";
 import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFileSync,renameSync,writeSync} from "node:fs";
 import {join} from "node:path";
 import {createMemoryLimitStore,type GatewayLimitStore} from "./gatewayLimitStore";
+import {currentCorrelation,type Logger} from "./observability";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
 import {assertHsiToolPermission,HSI_TOOL_IDS,type HsiAgentManifest,type HsiDataClass,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 import {europePmcAdapter,type PublicSourceRecord,type SourceFetcher} from "./researchV2/sourceAdapters";
@@ -59,7 +60,7 @@ export type ToolResult<O=unknown>=
 export type ToolRequest={manifest:HsiAgentManifest;investigationId:string;taskId:string;invocationId:string;tool:string;/** Required when more than one provider is registered for the tool id; ambiguity is refused, never guessed. */provider?:string;input:unknown;signal?:AbortSignal};
 
 /* ---------- audit log ---------- */
-export type AuditRecord={seq:number;at:string;investigationId:string;taskId:string;invocationId:string;role:string;toolId:string;providerId:string|null;outcome:"success"|"replayed"|"refused";code:RefusalCode|null;attempts:number;durationMs:number;requestHash:string|null;responseHash:string|null;flags:number;prevHash:string;hash:string};
+export type AuditRecord={seq:number;at:string;investigationId:string;taskId:string;invocationId:string;role:string;toolId:string;providerId:string|null;outcome:"success"|"replayed"|"refused";code:RefusalCode|null;attempts:number;durationMs:number;requestHash:string|null;responseHash:string|null;flags:number;/** Present only when the call ran inside `runWithCorrelation`. */requestId?:string;traceId?:string;prevHash:string;hash:string};
 const GENESIS="0".repeat(64);
 const recordHash=(r:Omit<AuditRecord,"hash">)=>createHash("sha256").update(JSON.stringify(r)).digest("hex");
 export function verifyAuditChain(records:readonly AuditRecord[]):{ok:boolean;brokenAt:number|null}{
@@ -192,6 +193,8 @@ export type GatewayOptions={
  limits?:GatewayLimitStore;
  /** Total calls one investigation may make across all its task ids, so rotating `taskId` cannot mint fresh budgets. Default 1000. */
  investigationCeiling?:number;
+ /** Optional structured logger. One event per call (`gateway.tool_call`): codes, ids, counts and hashes only, never inputs or output. */
+ logger?:Logger;
  /** Required for any `cleared_only` tool. Absent or false means the call is refused. */
  clearance?:(ctx:{investigationId:string;toolId:HsiToolId;providerId:string})=>boolean|Promise<boolean>;
  now?:()=>number;sleep?:(ms:number)=>Promise<void>;
@@ -215,10 +218,15 @@ export function createToolGateway(opts:GatewayOptions){
   async call(req:ToolRequest):Promise<ToolResult>{
    const started=now();
    const cap=(v:unknown,n=200)=>String(v??"").slice(0,n);
-   const log=(o:{outcome:AuditRecord["outcome"];code:RefusalCode|null;tool?:ToolDefinition;attempts?:number;requestHash?:string|null;responseHash?:string|null;flags?:number})=>opts.audit.append({
+   const corr=currentCorrelation();
+   const log=(o:{outcome:AuditRecord["outcome"];code:RefusalCode|null;tool?:ToolDefinition;attempts?:number;requestHash?:string|null;responseHash?:string|null;flags?:number}):number=>{
+    const seq=opts.audit.append({
     investigationId:cap(req?.investigationId),taskId:cap(req?.taskId),invocationId:cap(req?.invocationId),role:cap(req?.manifest?.role),
     toolId:cap(req?.tool,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),
-    requestHash:o.requestHash??null,responseHash:o.responseHash??null,flags:o.flags??0});
+    requestHash:o.requestHash??null,responseHash:o.responseHash??null,flags:o.flags??0,...(corr?{requestId:corr.requestId,...(corr.traceId?{traceId:corr.traceId}:{})}:{})});
+    opts.logger?.log(o.outcome==="refused"?"warn":"info","gateway.tool_call",{toolId:cap(req?.tool,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),flags:o.flags??0,auditSeq:seq,requestHash:o.requestHash??null,responseHash:o.responseHash??null});
+    return seq;
+   };
    const refuse=(code:RefusalCode,tool?:ToolDefinition,extra:{attempts?:number;requestHash?:string|null}={}):ToolResult=>({ok:false,code,message:MESSAGES[code],auditSeq:log({outcome:"refused",code,tool,...extra})});
    try{
     if(!req||typeof req.investigationId!=="string"||!req.investigationId.trim()||typeof req.taskId!=="string"||!req.taskId.trim()||!INVOCATION.test(String(req.invocationId)))return refuse("invalid_input");
