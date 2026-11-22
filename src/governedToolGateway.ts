@@ -28,16 +28,17 @@ import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFil
 import {join} from "node:path";
 import {createMemoryLimitStore,type GatewayLimitStore} from "./gatewayLimitStore";
 import {currentCorrelation,type Logger} from "./observability";
+import type {GatewayAuthorisation} from "./gatewayCallerAuthority";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
 import {assertHsiToolPermission,HSI_TOOL_IDS,type HsiAgentManifest,type HsiDataClass,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 import {europePmcAdapter,type PublicSourceRecord,type SourceFetcher} from "./researchV2/sourceAdapters";
 
-export type RefusalCode="tool_not_registered"|"permission_denied"|"invalid_input"|"licence_blocked"|"budget_exhausted"|"rate_limited"|"egress_blocked"|"timeout"|"upstream_error"|"response_too_large"|"invalid_output"|"aborted"|"internal_error";
+export type RefusalCode="tool_not_registered"|"permission_denied"|"invalid_input"|"licence_blocked"|"budget_exhausted"|"rate_limited"|"egress_blocked"|"timeout"|"upstream_error"|"response_too_large"|"invalid_output"|"aborted"|"unauthorised"|"internal_error";
 const MESSAGES:Record<RefusalCode,string>={
  tool_not_registered:"Tool is not in the approved catalogue",permission_denied:"Agent is not permitted to use this tool",invalid_input:"Input failed validation",
  licence_blocked:"Source licence or clearance does not permit this call",budget_exhausted:"Investigation tool-call budget is exhausted",rate_limited:"Tool rate limit reached",
  egress_blocked:"Request left the approved host list",timeout:"Tool call timed out",upstream_error:"Upstream provider failed",response_too_large:"Response exceeded the byte limit",
- invalid_output:"Provider response failed validation",aborted:"Call was cancelled",internal_error:"Gateway failed closed",
+ invalid_output:"Provider response failed validation",aborted:"Call was cancelled",unauthorised:"Caller is not authorised for this investigation",internal_error:"Gateway failed closed",
 };
 class GatewayError extends Error{constructor(readonly code:RefusalCode){super(MESSAGES[code])}}
 
@@ -57,10 +58,12 @@ export type InjectionFlag={code:"possible_prompt_injection";path:string};
 export type ToolResult<O=unknown>=
  |{ok:true;data:O;/** Always true: tool output is data, never instructions. */untrusted:true;provenance:ToolProvenance;flags:InjectionFlag[];replayed:boolean;auditSeq:number}
  |{ok:false;code:RefusalCode;message:string;auditSeq:number};
-export type ToolRequest={manifest:HsiAgentManifest;investigationId:string;taskId:string;invocationId:string;tool:string;/** Required when more than one provider is registered for the tool id; ambiguity is refused, never guessed. */provider?:string;input:unknown;signal?:AbortSignal};
+export type ToolRequest={manifest:HsiAgentManifest;investigationId:string;taskId:string;invocationId:string;tool:string;/** Required when more than one provider is registered for the tool id; ambiguity is refused, never guessed. */provider?:string;input:unknown;signal?:AbortSignal;
+ /** Issued by `createGatewayCallerAuthority`. Required when the gateway is built with a `callerAuthority`; ignored otherwise. */
+ authorisation?:unknown};
 
 /* ---------- audit log ---------- */
-export type AuditRecord={seq:number;at:string;investigationId:string;taskId:string;invocationId:string;role:string;toolId:string;providerId:string|null;outcome:"success"|"replayed"|"refused";code:RefusalCode|null;attempts:number;durationMs:number;requestHash:string|null;responseHash:string|null;flags:number;/** Present only when the call ran inside `runWithCorrelation`. */requestId?:string;traceId?:string;prevHash:string;hash:string};
+export type AuditRecord={seq:number;at:string;investigationId:string;taskId:string;invocationId:string;role:string;toolId:string;providerId:string|null;outcome:"success"|"replayed"|"refused";code:RefusalCode|null;attempts:number;durationMs:number;requestHash:string|null;responseHash:string|null;flags:number;/** Present only when the gateway enforces caller authority: domain-separated hashes of the verified principal and organisation. */principalRef?:string;tenantRef?:string;/** Present only when the call ran inside `runWithCorrelation`. */requestId?:string;traceId?:string;prevHash:string;hash:string};
 const GENESIS="0".repeat(64);
 const recordHash=(r:Omit<AuditRecord,"hash">)=>createHash("sha256").update(JSON.stringify(r)).digest("hex");
 export function verifyAuditChain(records:readonly AuditRecord[]):{ok:boolean;brokenAt:number|null}{
@@ -193,6 +196,12 @@ export type GatewayOptions={
  limits?:GatewayLimitStore;
  /** Total calls one investigation may make across all its task ids, so rotating `taskId` cannot mint fresh budgets. Default 1000. */
  investigationCeiling?:number;
+ /** When set, EVERY call must carry an authorisation this authority issued and still accepts. The request's own `manifest` is then ignored:
+  * permissions, call budget, investigation and task come from the authorisation, and limits, idempotency and audit are tenant-scoped.
+  * When absent the gateway is in unauthenticated mode (fixtures and tests only) and trusts the caller's manifest and ids. */
+ callerAuthority?:{check(authorisation:unknown):Promise<GatewayAuthorisation|null>};
+ /** Calls one tenant may make in total (default 5000) and the share of any tool's per-minute window one tenant may use (default 0.5). */
+ tenantCeiling?:number;tenantRateShare?:number;
  /** Optional structured logger. One event per call (`gateway.tool_call`): codes, ids, counts and hashes only, never inputs or output. */
  logger?:Logger;
  /** Required for any `cleared_only` tool. Absent or false means the call is refused. */
@@ -210,41 +219,54 @@ export function createToolGateway(opts:GatewayOptions){
  const now=opts.now??Date.now,sleep=opts.sleep??(ms=>new Promise<void>(r=>setTimeout(r,ms))),base=opts.fetcher??fetch;
  const idem=opts.idempotency??createMemoryIdempotencyStore();
  const limits=opts.limits??createMemoryLimitStore();
- const ceiling=opts.investigationCeiling??1_000;
+ const ceiling=opts.investigationCeiling??1_000,tenantCeiling=opts.tenantCeiling??5_000,tenantShare=opts.tenantRateShare??0.5;
+ if(!Number.isInteger(tenantCeiling)||tenantCeiling<1||!(tenantShare>0&&tenantShare<=1))throw Error("Invalid tenant limits");
  if(!Number.isInteger(ceiling)||ceiling<1)throw Error("Invalid investigation ceiling");
 
  return {
+  /** `authenticated` means every call is verified by a caller authority; `unauthenticated` trusts the caller's manifest and ids. */
+  mode:(opts.callerAuthority?"authenticated":"unauthenticated") as "authenticated"|"unauthenticated",
   catalogue:()=>[...registry.values()].map(t=>({id:t.id,providerId:t.providerId,version:t.version,hosts:[...t.hosts],passageAccess:t.passageAccess,dataClass:t.dataClass})),
   async call(req:ToolRequest):Promise<ToolResult>{
    const started=now();
    const cap=(v:unknown,n=200)=>String(v??"").slice(0,n);
    const corr=currentCorrelation();
+   // In authenticated mode these are replaced by the verified authorisation; until then nothing from the request is trusted.
+   let manifest=req?.manifest,investigationId=req?.investigationId,taskId=req?.taskId,tenantRef:string|null=null,principalRef:string|null=null;
    const log=(o:{outcome:AuditRecord["outcome"];code:RefusalCode|null;tool?:ToolDefinition;attempts?:number;requestHash?:string|null;responseHash?:string|null;flags?:number}):number=>{
     const seq=opts.audit.append({
-    investigationId:cap(req?.investigationId),taskId:cap(req?.taskId),invocationId:cap(req?.invocationId),role:cap(req?.manifest?.role),
+    investigationId:cap(investigationId),taskId:cap(taskId),invocationId:cap(req?.invocationId),role:cap(manifest?.role),
     toolId:cap(req?.tool,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),
-    requestHash:o.requestHash??null,responseHash:o.responseHash??null,flags:o.flags??0,...(corr?{requestId:corr.requestId,...(corr.traceId?{traceId:corr.traceId}:{})}:{})});
+    requestHash:o.requestHash??null,responseHash:o.responseHash??null,flags:o.flags??0,...(tenantRef?{principalRef:principalRef!,tenantRef}:{}),...(corr?{requestId:corr.requestId,...(corr.traceId?{traceId:corr.traceId}:{})}:{})});
     opts.logger?.log(o.outcome==="refused"?"warn":"info","gateway.tool_call",{toolId:cap(req?.tool,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),flags:o.flags??0,auditSeq:seq,requestHash:o.requestHash??null,responseHash:o.responseHash??null});
     return seq;
    };
    const refuse=(code:RefusalCode,tool?:ToolDefinition,extra:{attempts?:number;requestHash?:string|null}={}):ToolResult=>({ok:false,code,message:MESSAGES[code],auditSeq:log({outcome:"refused",code,tool,...extra})});
    try{
     if(!req||typeof req.investigationId!=="string"||!req.investigationId.trim()||typeof req.taskId!=="string"||!req.taskId.trim()||!INVOCATION.test(String(req.invocationId)))return refuse("invalid_input");
+    if(opts.callerAuthority){
+     const auth=await opts.callerAuthority.check(req.authorisation);
+     // The authorisation, not the request, decides who this is. A mismatch between them is a forgery attempt or a bug: refuse.
+     if(!auth||auth.investigationId!==req.investigationId||auth.taskId!==req.taskId)return refuse("unauthorised");
+     manifest=auth.manifest;investigationId=auth.investigationId;taskId=auth.taskId;tenantRef=auth.tenantRef;principalRef=auth.principalRef;
+    }
     const candidates=byId.get(String(req.tool))??[];
     let tool:ToolDefinition|undefined;
     if(req.provider!==undefined)tool=registry.get(keyOf(String(req.tool),String(req.provider)));
     else if(candidates.length===1)tool=candidates[0];
     else if(candidates.length>1)return refuse("invalid_input"); // several providers: the caller must name one
     if(!tool)return refuse("tool_not_registered");
-    try{assertHsiToolPermission(req.manifest,tool.id,tool.dataClass)}catch{return refuse("permission_denied",tool)}
+    try{assertHsiToolPermission(manifest!,tool.id,tool.dataClass)}catch{return refuse("permission_denied",tool)}
     let input:unknown;try{input=tool.parseInput(req.input)}catch{return refuse("invalid_input",tool)}
     const requestHash=hashHsiCheckpointInput({tool:tool.id,provider:tool.providerId,version:tool.version,input});
     if(tool.passageAccess==="cleared_only"){
-     const cleared=opts.clearance?await opts.clearance({investigationId:req.investigationId,toolId:tool.id,providerId:tool.providerId}):false;
+     const cleared=opts.clearance?await opts.clearance({investigationId:investigationId!,toolId:tool.id,providerId:tool.providerId}):false;
      if(cleared!==true)return refuse("licence_blocked",tool,{requestHash});
     }
-    const scope=hashHsiCheckpointInput({investigationId:req.investigationId,taskId:req.taskId});
-    const prior=await idem.get(req.invocationId);
+    const scope=hashHsiCheckpointInput({investigationId,taskId,...(tenantRef?{tenantRef}:{})});
+    // Tenant-scoped store key: two tenants can never collide on, read or block each other's invocation ids.
+    const storeKey=tenantRef?`t-${tenantRef}-${createHash("sha256").update(req.invocationId).digest("hex").slice(0,40)}`:req.invocationId;
+    const prior=await idem.get(storeKey);
     if(prior){
      if(prior.requestHash!==requestHash||prior.scope!==scope)return refuse("invalid_input",tool,{requestHash});
      // A stored result must still match its own recorded hash; an edited file is refused, never replayed to an agent.
@@ -252,11 +274,13 @@ export function createToolGateway(opts:GatewayOptions){
      const seq=log({outcome:"replayed",code:null,tool,requestHash,responseHash:prior.result.provenance.responseHash,flags:prior.result.flags.length});
      return {...prior.result,replayed:true,auditSeq:seq};
     }
-    // Rate first, then budget: a call refused for rate does not spend the investigation's scarce budget.
+    // Tenant share first, then the provider's global window, then budgets: a call refused for rate does not spend scarce budget.
+    if(tenantRef&&!await limits.consumeRate(`tenant\u0000${tenantRef}\u0000${keyOf(tool.id,tool.providerId)}`,Math.max(1,Math.floor(tool.ratePerMinute*tenantShare)),now(),60_000))return refuse("rate_limited",tool,{requestHash});
     if(!await limits.consumeRate(keyOf(tool.id,tool.providerId),tool.ratePerMinute,now(),60_000))return refuse("rate_limited",tool,{requestHash});
-    const budgetKey=req.investigationId+"\u0000"+req.taskId; // each task has its own manifest and its own maxToolCalls
-    if(!await limits.consumeBudget(budgetKey,req.manifest.maxToolCalls))return refuse("budget_exhausted",tool,{requestHash});
-    if(!await limits.consumeBudget("ceiling\u0000"+req.investigationId,ceiling))return refuse("budget_exhausted",tool,{requestHash});
+    const budgetKey=(tenantRef?tenantRef+"\u0000":"")+investigationId+"\u0000"+taskId; // each task has its own manifest and its own maxToolCalls
+    if(!await limits.consumeBudget(budgetKey,manifest!.maxToolCalls))return refuse("budget_exhausted",tool,{requestHash});
+    if(!await limits.consumeBudget("ceiling\u0000"+(tenantRef?tenantRef+"\u0000":"")+investigationId,ceiling))return refuse("budget_exhausted",tool,{requestHash});
+    if(tenantRef&&!await limits.consumeBudget("tenant-ceiling\u0000"+tenantRef,tenantCeiling))return refuse("budget_exhausted",tool,{requestHash});
 
     let attempt=0,raw:unknown,lastCode:RefusalCode="upstream_error";
     for(attempt=1;attempt<=tool.maxAttempts;attempt++){
@@ -293,7 +317,7 @@ export function createToolGateway(opts:GatewayOptions){
     const provenance:ToolProvenance={toolId:tool.id,providerId:tool.providerId,toolVersion:tool.version,retrievedAt:new Date(now()).toISOString(),requestHash,responseHash,attempt,hosts:[...tool.hosts],passageAccess:tool.passageAccess,dataClass:tool.dataClass};
     const seq=log({outcome:"success",code:null,tool,attempts:attempt,requestHash,responseHash,flags:flags.length});
     const result:Extract<ToolResult,{ok:true}>={ok:true,data,untrusted:true,provenance,flags,replayed:false,auditSeq:seq};
-    await idem.put(req.invocationId,{requestHash,scope,result});
+    await idem.put(storeKey,{requestHash,scope,result});
     return result;
    }catch(e){
     const code=e instanceof GatewayError?e.code:"internal_error";

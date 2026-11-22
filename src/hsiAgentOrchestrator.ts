@@ -33,6 +33,8 @@ export async function runHsiAgentOrchestration(input:{
  now?:()=>string;signal?:AbortSignal;
  /** Optional governed tool gateway. Without it, `callTool` refuses. Executors never receive a raw fetch. */
  toolGateway?:ToolGateway;
+ /** Required for a gateway in authenticated mode: yields the verified authorisation for one task (see `authoriseCallsFor`). The task's own manifest is not what the gateway trusts. */
+ authoriseCall?:(task:{taskId:string;role:HsiAgentRole})=>Promise<unknown>;
  /** Optional wall-clock bound across all tasks (distinct from per-task timeoutMs). */
  maxOrchestrationMs?:number;
 }):Promise<HsiOrchestrationResult>{
@@ -109,7 +111,8 @@ export async function runHsiAgentOrchestration(input:{
        ctxBase.assertTool(tool); // same permission, budget and denial semantics as before; a denial aborts the run
        // Content-derived id: the same logical call in a recovered attempt replays instead of repeating its side effect.
        const invocationId="h-"+hashHsiCheckpointInput({investigationId:input.investigationId,taskId:task.id,tool,provider:provider??null,input:toolInput}).slice(0,40);
-       const r=await input.toolGateway.call({manifest:task.manifest,investigationId:input.investigationId,taskId:task.id,invocationId,tool,provider,input:toolInput,signal:controller.signal});
+       const authorisation=input.authoriseCall?await input.authoriseCall({taskId:task.id,role:task.manifest.role}):undefined;
+       const r=await input.toolGateway.call({authorisation,manifest:task.manifest,investigationId:input.investigationId,taskId:task.id,invocationId,tool,provider,input:toolInput,signal:controller.signal});
        gatewayCalls.push({taskId:task.id,tool,invocationId,ok:r.ok,code:r.ok?null:r.code,replayed:r.ok?r.replayed:false,auditSeq:r.auditSeq,responseHash:r.ok?r.provenance.responseHash:null});
        return structuredClone(r);
       };
