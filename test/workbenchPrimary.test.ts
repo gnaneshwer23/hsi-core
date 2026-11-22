@@ -5,7 +5,9 @@ import {
   LEGACY_WORKBENCH_REDIRECTS,
   LIVE_INVESTIGATION_PATH,
   RESEARCH_HOME_PATH,
+  SCIENTIFIC_COMPANION_PATH,
   liveInvestigationHref,
+  scientificCompanionHref,
 } from "../site/src/lib/workbenchPrimary";
 import {RESEARCH_NAV_ITEMS} from "../site/src/lib/researchNavItems";
 
@@ -24,6 +26,11 @@ describe("workbench primary reconnect",()=>{
     );
     expect(authorisedInvestigationHref("hsi-interrogative-demo-12345678")).toBe(
       `${AUTHORISED_INVESTIGATION_PATH}?investigation=hsi-interrogative-demo-12345678`,
+    );
+    expect(SCIENTIFIC_COMPANION_PATH).toBe("/research/companion");
+    expect(scientificCompanionHref()).toBe("/research/companion");
+    expect(scientificCompanionHref({scenarioId:"il21-autoimmune",fromWorkspace:true})).toBe(
+      "/research/companion?from=workspace&scenario=il21-autoimmune",
     );
   });
 
