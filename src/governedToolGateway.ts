@@ -10,8 +10,9 @@
  *   front of it later; no MCP wire protocol is implemented here.
  * - Prompt-injection handling is structural (strict output schema, field caps, control-character stripping, output marked
  *   `untrusted`, never concatenated into instructions) plus a heuristic flag. A flag is a signal for review, not a guarantee.
- * - Rate limits and budgets live in this process and reset on restart. The default idempotency store is in memory;
- *   `createFileIdempotencyStore` survives a restart on one host. Across instances they need a shared store.
+ * - Budgets and rate limits default to memory and reset on restart; pass `createFileLimitStore` (`gatewayLimitStore.ts`) to
+ *   persist them on one host. The default idempotency store is in memory; `createFileIdempotencyStore` survives a restart
+ *   on one host. Several hosts would need a shared store, which does not exist yet.
  * - The host allowlist is by hostname; it does not pin DNS. Public-address pinning exists for model providers in
  *   `researchV2/pinnedProviderTransport.ts` and is not applied here.
  * - The audit log is hash-chained and holds identifiers, hashes and codes only: never inputs, passages or upstream text.
@@ -20,6 +21,7 @@
 import {createHash} from "node:crypto";
 import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFileSync,renameSync,writeSync} from "node:fs";
 import {join} from "node:path";
+import {createMemoryLimitStore,type GatewayLimitStore} from "./gatewayLimitStore";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
 import {assertHsiToolPermission,HSI_TOOL_IDS,type HsiAgentManifest,type HsiDataClass,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 import {europePmcAdapter,type PublicSourceRecord,type SourceFetcher} from "./researchV2/sourceAdapters";
@@ -168,6 +170,8 @@ export function validateToolDefinition(t:ToolDefinition):void{
 }
 export type GatewayOptions={
  tools:readonly ToolDefinition[];audit:ToolAuditLog;fetcher?:SourceFetcher;idempotency?:IdempotencyStore;
+ /** Per-task call budgets and per-provider rate windows. Default is in memory (reset on restart); pass `createFileLimitStore` to persist them. */
+ limits?:GatewayLimitStore;
  /** Required for any `cleared_only` tool. Absent or false means the call is refused. */
  clearance?:(ctx:{investigationId:string;toolId:HsiToolId;providerId:string})=>boolean|Promise<boolean>;
  now?:()=>number;sleep?:(ms:number)=>Promise<void>;
@@ -182,7 +186,7 @@ export function createToolGateway(opts:GatewayOptions){
  }
  const now=opts.now??Date.now,sleep=opts.sleep??(ms=>new Promise<void>(r=>setTimeout(r,ms))),base=opts.fetcher??fetch;
  const idem=opts.idempotency??createMemoryIdempotencyStore();
- const used=new Map<string,number>(),windows=new Map<string,number[]>();
+ const limits=opts.limits??createMemoryLimitStore();
 
  return {
   catalogue:()=>[...registry.values()].map(t=>({id:t.id,providerId:t.providerId,version:t.version,hosts:[...t.hosts],passageAccess:t.passageAccess,dataClass:t.dataClass})),
@@ -214,12 +218,10 @@ export function createToolGateway(opts:GatewayOptions){
      const seq=log({outcome:"replayed",code:null,tool,requestHash,responseHash:prior.result.provenance.responseHash,flags:prior.result.flags.length});
      return {...prior.result,replayed:true,auditSeq:seq};
     }
+    // Rate first, then budget: a call refused for rate does not spend the investigation's scarce budget.
+    if(!await limits.consumeRate(keyOf(tool.id,tool.providerId),tool.ratePerMinute,now(),60_000))return refuse("rate_limited",tool,{requestHash});
     const budgetKey=req.investigationId+"\u0000"+req.taskId; // each task has its own manifest and its own maxToolCalls
-    if((used.get(budgetKey)??0)>=req.manifest.maxToolCalls)return refuse("budget_exhausted",tool,{requestHash});
-    const rateKey=keyOf(tool.id,tool.providerId);
-    const win=(windows.get(rateKey)??[]).filter(t=>now()-t<60_000);
-    if(win.length>=tool.ratePerMinute){windows.set(rateKey,win);return refuse("rate_limited",tool,{requestHash})}
-    win.push(now());windows.set(rateKey,win);used.set(budgetKey,(used.get(budgetKey)??0)+1);
+    if(!await limits.consumeBudget(budgetKey,req.manifest.maxToolCalls))return refuse("budget_exhausted",tool,{requestHash});
 
     let attempt=0,raw:unknown,lastCode:RefusalCode="upstream_error";
     for(attempt=1;attempt<=tool.maxAttempts;attempt++){
