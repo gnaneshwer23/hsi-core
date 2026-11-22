@@ -55,11 +55,11 @@ export function HomeLanding(){
         Explore the platform <span aria-hidden="true">→</span>
        </Link>
        <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Scientific workbench
+        Live investigation
        </Link>
       </div>
       <p className="pg-micro">
-       Research preview · candidate-only · unreviewed · no clinical advice · synthetic patients only
+       Research preview · candidate-only · unreviewed · no clinical advice · synthetic patients only · live investigation uses public literature · server saves need provisioned researcher access
       </p>
      </div>
 
@@ -103,7 +103,7 @@ export function HomeLanding(){
     <section className="pg-links" aria-labelledby="pg-domains-h">
      <div className="pg-links-row">
       <h2 id="pg-domains-h">Connected biological systems.</h2>
-      <p>Six areas of investigation. Published evidence coverage varies by area.</p>
+      <p>Six areas of investigation. Published evidence coverage varies by area. Disease mechanisms opens the full public graph—use Research condition to narrow.</p>
       <ul className="pg-domain-list" aria-label="Scientific domains in scope">
        {DOMAINS.map(d=><li key={d.label}><Link to={d.to}>{d.label}</Link></li>)}
       </ul>
@@ -114,13 +114,13 @@ export function HomeLanding(){
      <div className="pg-product-copy">
       <h2 id="pg-product-h">Your research home</h2>
       <p>Choose your topics. Explore the graph. Keep your investigation and brief together.</p>
-      <p className="pg-micro">Many saved records remain on this device.</p>
+      <p className="pg-micro">Many saved records remain on this device. Product screens below are illustrative previews, not a live tenant session.</p>
       <div className="pg-cta">
        <Link className="pg-btn" to="/welcome">
         Set up your research home <span aria-hidden="true">→</span>
        </Link>
        <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Open scientific workbench <span aria-hidden="true">→</span>
+        Open live investigation <span aria-hidden="true">→</span>
        </Link>
       </div>
      </div>
@@ -130,12 +130,12 @@ export function HomeLanding(){
         src="/images/product/dashboard-v2.webp"
         width={1440}
         height={1120}
-        alt="Researcher home showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
+        alt="Illustrative researcher home preview showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
         loading="lazy"
         decoding="async"
        />
        <figcaption>
-        <b>Your home.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
+        <b>Your home · illustrative.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
        </figcaption>
       </figure>
       <figure className="pg-shot">
@@ -143,12 +143,12 @@ export function HomeLanding(){
         src="/images/product/explorer-v2.webp"
         width={1440}
         height={900}
-        alt="Knowledge graph explorer with department colouring, gap markers and an evidence panel by experimental model."
+        alt="Illustrative knowledge graph explorer preview with department colouring, gap markers and an evidence panel by experimental model."
         loading="lazy"
         decoding="async"
        />
        <figcaption>
-        <b>The explorer.</b> Filter, select, trace routes and open research gaps with their evidence.
+        <b>The explorer · illustrative.</b> Filter, select, trace routes and open research gaps with their evidence.
        </figcaption>
       </figure>
      </div>
@@ -157,11 +157,11 @@ export function HomeLanding(){
     <section className="pg-close" aria-labelledby="pg-close-h">
      <div>
       <h2 id="pg-close-h">Start with one research question.</h2>
-      <p>Explore a demonstration, or open the scientific workbench.</p>
+      <p>Explore a demonstration, or open a live investigation (provisioned server saves).</p>
      </div>
      <div className="pg-cta">
       <Link className="pg-btn pg-btn-light" to={LIVE_INVESTIGATION_PATH}>
-       Scientific workbench <span aria-hidden="true">→</span>
+       Live investigation <span aria-hidden="true">→</span>
       </Link>
       <Link className="pg-link pg-link-light" to="/how-it-works">
        Explore the platform
