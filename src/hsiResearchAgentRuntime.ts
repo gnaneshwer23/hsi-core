@@ -45,6 +45,7 @@ import {
   type HsiOrchestrationResult,
 } from "./hsiAgentOrchestrator";
 import {checkpointHsiExecutor} from "./hsiCheckpointedExecutor";
+import type {ToolGateway} from "./governedToolGateway";
 import {
   assertHsiResearchAgentOwnerAuthorized,
   HSI_RESEARCH_AGENT_OWNER_APPROVAL,
@@ -155,6 +156,8 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
     bindings: readonly BranchGraphBinding[];
   };
   checkpointStore?: HsiCheckpointStore;
+  /** Optional governed tool gateway passed to executors as `callTool`. */
+  toolGateway?: ToolGateway;
   maxOrchestrationMs?: number;
   signal?: AbortSignal;
   now?: () => string;
@@ -438,6 +441,7 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
     dataClass: input.plan.dataClass,
     now,
     signal: input.signal,
+    toolGateway: input.toolGateway,
     maxOrchestrationMs: input.maxOrchestrationMs,
   });
 

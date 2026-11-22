@@ -10,14 +10,15 @@
  *   front of it later; no MCP wire protocol is implemented here.
  * - Prompt-injection handling is structural (strict output schema, field caps, control-character stripping, output marked
  *   `untrusted`, never concatenated into instructions) plus a heuristic flag. A flag is a signal for review, not a guarantee.
- * - Rate limits, budgets and the default idempotency store live in this process. Across instances they need a shared store.
+ * - Rate limits and budgets live in this process and reset on restart. The default idempotency store is in memory;
+ *   `createFileIdempotencyStore` survives a restart on one host. Across instances they need a shared store.
  * - The host allowlist is by hostname; it does not pin DNS. Public-address pinning exists for model providers in
  *   `researchV2/pinnedProviderTransport.ts` and is not applied here.
  * - The audit log is hash-chained and holds identifiers, hashes and codes only: never inputs, passages or upstream text.
  *   The file-backed log assumes a single writer.
  */
 import {createHash} from "node:crypto";
-import {appendFileSync,existsSync,mkdirSync,readFileSync} from "node:fs";
+import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFileSync,renameSync,writeSync} from "node:fs";
 import {join} from "node:path";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
 import {assertHsiToolPermission,HSI_TOOL_IDS,type HsiAgentManifest,type HsiDataClass,type HsiToolId} from "./hsiAgentIntelligenceContracts";
@@ -86,6 +87,22 @@ export type IdempotencyStore={get(invocationId:string):Promise<{requestHash:stri
 export function createMemoryIdempotencyStore():IdempotencyStore{
  const m=new Map<string,{requestHash:string;result:Extract<ToolResult,{ok:true}>}>();
  return {async get(id){const v=m.get(id);return v?structuredClone(v):null},async put(id,v){m.set(id,structuredClone(v))}};
+}
+
+/** Durable idempotency on one host: one file per invocation id, written atomically (temp file, flush, rename).
+ * A replayed result is the recorded sanitised output, so a recovered run sees the same data without a second request.
+ * It stores tool output, so the directory must be treated like the investigation's own data (private, not public). */
+export function createFileIdempotencyStore(dir:string):IdempotencyStore{
+ mkdirSync(dir,{recursive:true});
+ const path=(id:string)=>{if(!INVOCATION.test(id))throw Error("Invalid invocation id");return join(dir,id+".json")};
+ return {
+  async get(id){const f=path(id);if(!existsSync(f))return null;return JSON.parse(readFileSync(f,"utf8"))},
+  async put(id,v){
+   const f=path(id),tmp=`${f}.${process.pid}.${Math.random().toString(36).slice(2)}.tmp`;
+   const fd=openSync(tmp,"wx");try{writeSync(fd,JSON.stringify(v));fsyncSync(fd)}finally{closeSync(fd)}
+   renameSync(tmp,f);
+  },
+ };
 }
 
 /* ---------- output handling ---------- */
@@ -187,7 +204,7 @@ export function createToolGateway(opts:GatewayOptions){
      const seq=log({outcome:"replayed",code:null,tool,requestHash,responseHash:prior.result.provenance.responseHash,flags:prior.result.flags.length});
      return {...prior.result,replayed:true,auditSeq:seq};
     }
-    const budgetKey=req.investigationId;
+    const budgetKey=req.investigationId+"\u0000"+req.taskId; // each task has its own manifest and its own maxToolCalls
     if((used.get(budgetKey)??0)>=req.manifest.maxToolCalls)return refuse("budget_exhausted",tool,{requestHash});
     const win=(windows.get(tool.id)??[]).filter(t=>now()-t<60_000);
     if(win.length>=tool.ratePerMinute){windows.set(tool.id,win);return refuse("rate_limited",tool,{requestHash})}
