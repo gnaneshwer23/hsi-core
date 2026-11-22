@@ -27,10 +27,10 @@ Legend: yes, partial, no, n/a. D, S and V are "no" or "not assessed" in every ro
 | Tenant isolation | `researchOrganisationTenantSecurity`, `stagingIsolationRunner`, `isolationProbeCatalog` and tests | partial | partial | yes | Unit and rehearsal tests only. The repo's own audit records a held owner-GUC weakness and no real-account pooled HTTP evidence | Real two-researcher staging run with protected evidence | P0 | Security signer |
 | Request controls | `researchRequestControls`, `boundedRequestBody`, `askHandler` | yes | yes | yes | Per-user limits are per instance; cross-instance budget needs `HSI_SHARED_ADMISSION_URL` | Shared limiter, request correlation | P1 | Operations owner |
 | Security headers | `site/vercel.json` | yes | yes | no | **CSP is `Content-Security-Policy-Report-Only`, not enforced** | Enforce CSP after report review | P1 | Security signer |
-| Durable jobs | `nexusJobs`, `fileCheckpointStore`, `nexusWorker`, `nexusRunCommand` (#629) | yes | partial | yes | Fixture runs complete once; restart read and 6-process CAS race tested. Single host file store | DB-backed store (needs held migration approval); idempotency keys for side effects; dead-letter; worker health; a host outside the 30 s Vercel function cap | P0 | Owner approval |
-| Agent orchestration and tool fencing | `hsiAgentOrchestrator`, `hsiAgentDurableCheckpoint`, `hsiCheckpointedExecutor`, `assertHsiToolPermission` | yes | partial | yes | Nine tool ids; per-manifest permission; denied calls recorded | Real live execution; checkpoint store not wired into the runtime | P0 | Owner approval |
-| **Governed tool gateway (MCP)** | **None.** Provider calls are made ad hoc in about a dozen modules | **no** | no | no | No registry, catalogue, schema validation, egress allowlist, per-call audit or budget exists | Whole workstream C | **P0, first increment** | Owner approval |
-| External providers | Europe PMC, Open Targets (`researchV2/sourceAdapters.ts`), OpenAlex, Crossref, Reactome, UniProt, registry refresh in `src/evidence/*` | partial | partial | yes | Each module fetches independently; no shared policy layer | Consolidate behind the gateway; current provider terms review | P0 | Source-policy owner |
+| Durable jobs | `nexusJobs`, `fileCheckpointStore`, `nexusWorker`, `nexusRunCommand` (#629), `fileLock`, `gatewayLimitStore` | yes | partial | yes | Fixture runs complete once; restart read and 6-process CAS race tested. Single host file stores. Per-task budgets and rate windows can now persist across restart (`createFileLimitStore`, opt-in, atomic across 6 processes in tests) | DB-backed store (needs held migration approval); dead-letter; worker health; a host outside the 30 s Vercel function cap; a store shared by several hosts; no host selects the file stores by default | P0 | Owner approval |
+| Agent orchestration and tool fencing | `hsiAgentOrchestrator`, `hsiAgentDurableCheckpoint`, `hsiCheckpointedExecutor`, `assertHsiToolPermission` | yes | partial | yes | Nine tool ids; per-manifest permission; denied calls recorded. **Executors now get `ctx.callTool`, which runs the same permission check and then the gateway.** An interrupt, restart and authorised recovery was demonstrated in tests with an injected fetcher: the provider was contacted once across both attempts | Hard process kill is not covered (a `running` checkpoint is refused for recovery by design). No production executor calls a tool yet. The checkpoint store is not wired into the authorised runtime's defaults. Real live execution | P0 | Owner approval |
+| **Governed tool gateway** | `src/governedToolGateway.ts` (#634) | yes | partial | yes | Catalogue, manifest permission, input and output schema, https host allowlist, no redirects, timeout, bounded retry, byte cap, per-provider rate limit, per-task budget, idempotent replay, licence gate, injection flag, provenance, hash-chained audit. Fails closed. 48 gateway, wiring, provider and limit-store tests (17, 7, 12, 12), all with injected fetchers | **Not an MCP server or client.** No production code path calls it. No real provider call was made. Allowlist is by hostname, no DNS pinning. Injection handling is structural plus a heuristic flag. Needs an independent security read before any wiring into a request path | **P0** | Security signer, owner |
+| External providers | Behind the gateway (metadata only): Europe PMC, OpenAlex, Crossref, ClinicalTrials.gov, Open Targets (`governedProviderTools.ts`). Still ad hoc: Reactome, UniProt, registry refresh, `evidence/openAlexRelatedWorks.ts`, others in `src/evidence/*` | partial | partial | yes | Response shapes checked against current docs and a one-time live read (see `HSI_PROVIDER_CONTRACTS_2026-11-22.md`). **OpenAlex keyless use shares a $0.10/day budget per network address; a live response carried a notice addressed to AI agents, which the gateway drops** | Move remaining providers behind the gateway; PubMed/NCBI, ontologies and omics not built; rate limits and terms for ClinicalTrials.gov not found; the repo's Open Targets query and Europe PMC not re-verified; source-policy owner must approve each provider's terms and quota; an OpenAlex key is a human decision | P0 | Source-policy owner |
 | Source clearance (AEGIS) | `sourceClearanceReceipt`, `operationalSourceClearance`, `clearanceAuthority` | yes | partial | yes | Signed-receipt checks exist | A named human signs the policy; independent clearance authority | P0 | Source-policy owner |
 | Evidence extraction and verification | `contextualEvidenceExtraction`, `passageLinkedContext`, `researchV2/scientificVerification`, `dualModelChallenge` | partial | partial | yes | Tested on recorded outputs; real model extraction unverified; model keys are not provisioned | Approved model deployments (two distinct verifiers) | P1 | Owner approval |
 | Knowledge graph | `livingHealthKnowledgeGraph`, `knowledgeGraph/*`, published snapshot | yes | yes | yes | 153 concepts, 95 candidate relationships, 9 gaps, **0 reviewed** (read live in site) | Reviewed slice; reassessment after source corrections | P1 | Scientific reviewer |
@@ -46,7 +46,7 @@ Legend: yes, partial, no, n/a. D, S and V are "no" or "not assessed" in every ro
 
 ```
 authn/session (exists, unaccepted)
-  -> governed tool gateway (ABSENT)          <- first increment
+  -> governed tool gateway (BUILT, tested, not yet called by any production path)
   -> source clearance receipts (exists, human policy needed)
   -> durable job host + DB checkpoint store (file store exists; DB held)
   -> model deployments for extraction and 2 verifiers (human approval)
@@ -58,12 +58,27 @@ Items that coding cannot supply: a signed source policy, an independent security
 
 ## Open PRs inspected
 
-Landing and marketing: #630 (mine), #592 and #591 (recommend close), #596 (docs, conflicts). Infrastructure and acceptance: #618 to #625. #622 (nested research API entries) and #624 (hold an unreviewed staging migration) touch security and database paths; they were not altered. No open PR implements a tool gateway.
+Landing and marketing: #630 (mine), #592 and #591 (recommend close), #596 (docs, conflicts). Infrastructure and acceptance: #618 to #625. #622 (nested research API entries) and #624 (hold an unreviewed staging migration) touch security and database paths; they were not altered. At the time of the audit no open PR implemented a tool gateway; see the ledger below for what has since landed.
 
 ## Implementation ledger
 
-| Phase | Increment | State |
-| --- | --- | --- |
-| 0 | This audit | Written |
-| 2 (partial) | File-backed checkpoint store, worker and fixture run command (#629) | Merged. Not wired to the agent runtime, not deployed |
-| 3 | Governed tool gateway (`src/governedToolGateway.ts`): catalogue, permission via existing manifests, schema validation, host allowlist, timeout, bounded retry, byte cap, rate limit, per-investigation budget, idempotent replay, licence gate, injection flagging, provenance, hash-chained audit. First tool: Europe PMC literature search (metadata only) | Built and tested with injected fetchers only. **No real provider call was made.** Not wired to the agent runtime or any API route. Not an MCP server. Rate limit, budget and default idempotency are per process |
+Updated 22 November 2026 against `main` at `0af9a41ca2d14042f844595979af7f28c459dfe9`. States use the vocabulary above: nothing here is deployed, security accepted or scientifically validated.
+
+| Phase | Increment | PR | State |
+| --- | --- | --- | --- |
+| 0 | This audit | #631 | Merged |
+| 2 (partial) | File-backed checkpoint store, worker and fixture run command | #629 | Merged. Fixture mode only; live execution deliberately unreachable from the worker. Not deployed |
+| 3 | Governed tool gateway: catalogue, manifest permission, schema validation, host allowlist, timeout, bounded retry, byte cap, rate limit, budget, idempotent replay, licence gate, injection flag, provenance, hash-chained audit | #632 (closed, superseded), included in #634 | Merged as part of #634. Injected fetchers only. Not an MCP server |
+| 2/3 | Gateway wired into the orchestrator and authorised runtime (`ctx.callTool`), durable file idempotency store, per-task budget key, interrupt-and-recover demonstration | #633 (closed, superseded), included in #634 | Merged as part of #634. The demonstration passes in tests; breaking the durable store makes it fail. Hard process kill not covered |
+| 3 | Providers behind the gateway: OpenAlex, Crossref, ClinicalTrials.gov, Open Targets (several providers per tool id; caller names one) | #634 | Merged. Metadata only. No real provider contacted by tests. No key or account created |
+| 2/3 | Persisted limit store for per-task budgets and per-provider rate windows; `fileLock` extracted | #635, included in #634 | Merged as part of #634. Opt-in; atomic across 6 processes in tests; fails closed |
+
+### Still open from the audit's dependency path
+
+1. Independent security read of the gateway's egress, idempotency and budget logic, then a wiring PR that lets a real executor call it. Nothing in production code does yet.
+2. Source-policy approval of each provider's terms and quota; an OpenAlex key decision.
+3. Database-backed checkpoint, idempotency and limit stores (needs held-migration approval); a worker host outside the 30 s Vercel function cap.
+4. Real model deployments for extraction and two independent verifiers (human approval).
+5. Persistence, tenant isolation and authentication acceptance (independent security reviewer, real accounts).
+6. Scientific evaluation with independently adjudicated cases.
+7. Enforce the CSP (currently report-only), structured logging and correlation ids, rollback verification.
