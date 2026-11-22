@@ -72,6 +72,7 @@ const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/Authenticated
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
 const InvestigationWorkspaceRoute=lazy(()=>import("./pages/InvestigationWorkspace").then(m=>({default:m.InvestigationWorkspacePage})));
+const ScientificCompanionRoute=lazy(()=>import("./pages/ScientificCompanion").then(m=>({default:m.ScientificCompanionPage})));
 const WelcomeRoute=lazy(()=>import("./pages/Welcome").then(m=>({default:m.WelcomePage})));
 const GapRegisterRoute=lazy(()=>import("./pages/GapRegister").then(m=>({default:m.GapRegisterPage})));
 const HypothesisLedgerRoute=lazy(()=>import("./pages/HypothesisLedger").then(m=>({default:m.HypothesisLedgerPage})));
@@ -195,6 +196,7 @@ export default function App() {
         <Route path="research/discovery-experience" element={<Navigate to="/research/workspace" replace />} />
         <Route path="research/investigate" element={<Suspense fallback={<p role="status">Loading investigation…</p>}><ScientificInvestigationPage/></Suspense>} />
         <Route path="research/workspace" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><InvestigationWorkspaceRoute/></Suspense>} />
+        <Route path="research/companion" element={<Suspense fallback={<p role="status">Loading scientific companion…</p>}><ScientificCompanionRoute/></Suspense>} />
         <Route path="welcome" element={<Suspense fallback={<p role="status">Loading…</p>}><WelcomeRoute/></Suspense>} />
         <Route path="research/gaps" element={<Suspense fallback={<p role="status">Loading gap register…</p>}><GapRegisterRoute/></Suspense>} />
         <Route path="research/ledger" element={<Suspense fallback={<p role="status">Loading ledger…</p>}><HypothesisLedgerRoute/></Suspense>} />
