@@ -55,3 +55,17 @@ test('the public sitemap lists the marketing pages, and the header shows Stage 2
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','Scientific Intelligence','For Researchers','Community']);
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button')).toHaveCount(0);
 });
+
+test('audience flow diagram is styled: bounded page height and readable step labels',async({page})=>{
+ for(const path of ['/researchers','/biotech','/enterprise','/laboratories']){
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto(path);
+  const h=await page.evaluate(()=>document.documentElement.scrollHeight);
+  expect(h,path+' page height').toBeLessThan(8000);
+  const label=page.locator('.ld-flow-label').first();
+  await expect(label).toBeVisible();
+  const [fg,bg]=await label.evaluate(el=>[getComputedStyle(el).color,getComputedStyle(document.body).backgroundColor]);
+  expect(fg,path+' label colour must differ from page ground').not.toBe(bg);
+  expect(fg,path+' label must not be the dark-ink default').not.toBe('rgb(25, 5, 5)');
+ }
+});
