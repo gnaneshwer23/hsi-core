@@ -1,5 +1,5 @@
 import {afterAll,expect,test} from "bun:test";
-import {chmodSync,mkdtempSync,rmSync} from "node:fs";
+import {chmodSync,existsSync,mkdtempSync,readdirSync,rmSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {generateKeyPairSync} from "node:crypto";
@@ -51,12 +51,14 @@ async function setup(net:ReturnType<typeof router>,over:Record<string,unknown>={
  const store=await openStagingOperationStore(join(d,"ops.jsonl")),publisher=createFileReceiptPublisher(join(d,"published"));
  const signer=createInProcessSigner({issuer:"demo:integrity-service",keyId:"demo-signer",privateKey:signerKeys.privateKey});
  const config={environment:"isolated_staging",limits:{maxArticlesPerIntent:2,maxHitsPerIntent:4,maxModelCallsPerRun:40,maxRunsPerDay:5,killSwitchEnv:"HSI_KILL"},extractor:dep("ext","m-ext"),verifiers:[dep("va","m-a"),dep("vb","m-b")]} as never;
- const built=buildLiveRunDeps({config,integrityConfig:{requestedUses:["storage","display","comparison","export","model_transmission"]},env:{HSI_KEY_PROVIDER:"SECRET-PROVIDER-KEY"},
-  policy:buildDemoPolicy({now:NOW,privateKey:approver.privateKey}),policyAuthorities:[demoAuthority(approver.publicKey)],signer,signerPublicKey:signerKeys.publicKey,
-  approvalAuthorities:[{issuer:"approver:sec",keyId:"k",publicKey:approver.publicKey}],resolveApproval:async()=>{throw Error("no approval")},isApprovalRevoked:async()=>true,
-  fetcher:net.f,store,publisher,auditDirectory:join(d,"audit"),runsToday:()=>0,sleep:async()=>{},now:()=>NOW,
-  target:{investigationId:"wired-1",diseaseScope:"gut-immune-metabolic",question:QUESTION,release:{id:"r",version:"1",manifestHash:"0".repeat(64)}},...over});
- return {...built,store,d,publisher};
+ try{
+  const built=buildLiveRunDeps({config,integrityConfig:{requestedUses:["storage","display","comparison","export","model_transmission"]},env:{HSI_KEY_PROVIDER:"SECRET-PROVIDER-KEY"},
+   policy:buildDemoPolicy({now:NOW,privateKey:approver.privateKey}),policyAuthorities:[demoAuthority(approver.publicKey)],signer,signerPublicKey:signerKeys.publicKey,
+   approvalAuthorities:[{issuer:"approver:sec",keyId:"k",publicKey:approver.publicKey}],resolveApproval:async()=>{throw Error("no approval")},isApprovalRevoked:async()=>true,
+   fetcher:net.f,store,publisher,auditDirectory:join(d,"audit"),runsToday:()=>0,sleep:async()=>{},now:()=>NOW,
+   target:{investigationId:"wired-1",diseaseScope:"gut-immune-metabolic",question:QUESTION,release:{id:"r",version:"1",manifestHash:"0".repeat(64)}},...over});
+  return {...built,store,d,publisher};
+ }catch(error){await store.close();throw error}
 }
 const mockOps=(sent:string[])=>({run:async(i:{task?:string;payload:{passage:string}})=>{sent.push(i.payload.passage);const p=i.payload.passage;return {result:i.task==="extraction"?EXTRACTION[p]:{verdict:"supports",evidenceSpan:SPAN[p],reason:"The passage states this directly."}}}}) as never;
 
@@ -92,4 +94,10 @@ test("deployments that disagree on a provider's credential variable are refused 
  const net=router();
  const cfg={environment:"isolated_staging",limits:{maxArticlesPerIntent:2,maxHitsPerIntent:4,maxModelCallsPerRun:40,maxRunsPerDay:5,killSwitchEnv:"HSI_KILL"},extractor:dep("ext","m-ext"),verifiers:[{...dep("va","m-a"),credentialEnv:"HSI_OTHER_KEY"},dep("vb","m-b")]} as never;
  await expect(setup(net,{config:cfg})).rejects.toThrow("one credential variable");
+ // The journal is opened before the credential check. A thrown build must close it;
+ // otherwise Bun reports a FileHandle closed during garbage collection later in the suite.
+ for(const d of dirs){
+  expect(readdirSync(d).some(name=>name.endsWith(".lock"))).toBe(false);
+  expect(existsSync(join(d,"ops.jsonl.lock"))).toBe(false);
+ }
 });
