@@ -1,4 +1,4 @@
-/** Owner-authorized HSI Scientific Companion runtime (U41).
+/** Owner-authorized HSI Scientific Companion runtime (U41 + U42 live-evidence).
  *
  * Text-first conversational turns grounded in existing interrogative /
  * evidence services (Living Knowledge Graph planning path). Deterministic —
@@ -8,6 +8,9 @@
  * - discuss: plan mechanisms + missing evidence
  * - critique: falsification / disagreement surface
  * - experiment_planning: falsification tests as next experiments
+ *
+ * U42: optional caller-supplied public literature metadata may be bound into
+ * the turn. The companion never performs network retrieval itself.
  */
 import {evaluateSscFalsification} from "./interrogativeFalsificationEngine";
 import {
@@ -23,6 +26,11 @@ import {
   HSI_SCIENTIFIC_COMPANION_OWNER_APPROVAL,
   type HsiScientificCompanionOwnerApproval,
 } from "./hsiScientificCompanionAuthorization";
+import {
+  assertHsiScientificCompanionLiveEvidenceOwnerAuthorized,
+  HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL,
+  type HsiScientificCompanionLiveEvidenceOwnerApproval,
+} from "./hsiScientificCompanionLiveEvidenceAuthorization";
 
 export const HSI_SCIENTIFIC_COMPANION_RUNTIME_SCHEMA =
   "hsi-scientific-companion-runtime-1" as const;
@@ -33,9 +41,24 @@ export type HsiScientificCompanionMode =
   | "experiment_planning";
 
 export type HsiScientificCompanionCitation = {
-  kind: "planned_mechanism" | "falsification_test" | "missing_evidence" | "limitation";
+  kind:
+    | "planned_mechanism"
+    | "falsification_test"
+    | "missing_evidence"
+    | "limitation"
+    | "live_evidence";
   label: string;
   detail: string;
+};
+
+/** Caller-supplied public literature metadata (never claim-verified). */
+export type HsiScientificCompanionBoundEvidence = {
+  sourceId: string;
+  title: string;
+  provider: "europe-pmc" | "openalex" | "workspace";
+  sourceUrl: string;
+  verificationState: "metadata_retrieved_not_claim_verified";
+  reviewState: "unreviewed";
 };
 
 export type HsiScientificCompanionHonesty = {
@@ -51,11 +74,20 @@ export type HsiScientificCompanionHonesty = {
   clinicalAdvice: false;
   productionWritesEnabled: false;
   restrictedPreviewClaimed: false;
+  liveEvidenceBound: boolean;
+  companionPerformedNetworkRetrieval: false;
+  claimVerified: false;
 };
+
+export type HsiScientificCompanionService =
+  | "interrogativeQuestionEngine"
+  | "interrogativeFalsificationEngine"
+  | "caller_supplied_live_evidence";
 
 export type HsiScientificCompanionTurnResult = {
   schemaVersion: typeof HSI_SCIENTIFIC_COMPANION_RUNTIME_SCHEMA;
   authorization: HsiScientificCompanionOwnerApproval;
+  liveEvidenceAuthorization: HsiScientificCompanionLiveEvidenceOwnerApproval | null;
   mode: HsiScientificCompanionMode;
   question: string;
   replyMarkdown: string;
@@ -67,10 +99,8 @@ export type HsiScientificCompanionTurnResult = {
     insufficientEvidenceCount: number;
     opposingSignalCount: number;
   } | null;
-  servicesUsed: readonly [
-    "interrogativeQuestionEngine",
-    "interrogativeFalsificationEngine",
-  ];
+  boundEvidence: readonly HsiScientificCompanionBoundEvidence[];
+  servicesUsed: readonly HsiScientificCompanionService[];
   honesty: HsiScientificCompanionHonesty;
 };
 
@@ -100,10 +130,75 @@ function assertHonesty(honesty: HsiScientificCompanionHonesty): void {
     honesty.phiAllowed !== false ||
     honesty.clinicalAdvice !== false ||
     honesty.productionWritesEnabled !== false ||
-    honesty.restrictedPreviewClaimed !== false
+    honesty.restrictedPreviewClaimed !== false ||
+    honesty.companionPerformedNetworkRetrieval !== false ||
+    honesty.claimVerified !== false
   ) {
     throw Error("Scientific companion honesty flags must remain fail-closed");
   }
+}
+
+function normalizeBoundEvidence(
+  records: readonly HsiScientificCompanionBoundEvidence[] | undefined,
+): HsiScientificCompanionBoundEvidence[] {
+  if (!records || records.length === 0) return [];
+  if (records.length > 12) throw Error("Companion live-evidence binding limited to 12 records");
+  const out: HsiScientificCompanionBoundEvidence[] = [];
+  for (const row of records) {
+    const sourceId = row.sourceId?.trim() ?? "";
+    const title = row.title?.trim() ?? "";
+    const sourceUrl = row.sourceUrl?.trim() ?? "";
+    if (!sourceId || sourceId.length > 200) throw Error("Invalid bound evidence sourceId");
+    if (!title || title.length > 500) throw Error("Invalid bound evidence title");
+    if (!sourceUrl || sourceUrl.length > 1000) throw Error("Invalid bound evidence sourceUrl");
+    if (row.verificationState !== "metadata_retrieved_not_claim_verified") {
+      throw Error("Bound evidence must stay metadata_retrieved_not_claim_verified");
+    }
+    if (row.reviewState !== "unreviewed") {
+      throw Error("Bound evidence must stay unreviewed");
+    }
+    switch (row.provider) {
+      case "europe-pmc":
+      case "openalex":
+      case "workspace":
+        break;
+      default: {
+        const _exhaustive: never = row.provider;
+        throw Error(`Unknown bound evidence provider: ${String(_exhaustive)}`);
+      }
+    }
+    out.push({
+      sourceId,
+      title,
+      provider: row.provider,
+      sourceUrl,
+      verificationState: "metadata_retrieved_not_claim_verified",
+      reviewState: "unreviewed",
+    });
+  }
+  return out;
+}
+
+function renderBoundEvidenceSection(
+  records: readonly HsiScientificCompanionBoundEvidence[],
+): {markdown: string; citations: HsiScientificCompanionCitation[]} {
+  if (records.length === 0) return {markdown: "", citations: []};
+  const citations: HsiScientificCompanionCitation[] = records.map((r) => ({
+    kind: "live_evidence" as const,
+    label: r.sourceId,
+    detail: `${r.title} (${r.provider}; metadata only, not claim-verified)`,
+  }));
+  const lines = [
+    ``,
+    `### Bound public literature (caller-supplied)`,
+    ``,
+    `These records were supplied by the caller (for example from the investigation workspace). The companion did **not** retrieve them over the network in this turn. They remain metadata-only and unreviewed.`,
+    ``,
+  ];
+  for (const r of records) {
+    lines.push(`- **${r.title}** — \`${r.sourceId}\` via ${r.provider}`);
+  }
+  return {markdown: lines.join("\n"), citations};
 }
 
 function renderDiscuss(
@@ -225,6 +320,8 @@ function renderExperimentPlanning(
 
 /**
  * Run one owner-authorized text-first Scientific Companion turn.
+ * Optional U42 live-evidence binding requires the live-evidence approval envelope
+ * and caller-supplied records (no network retrieval inside this function).
  */
 export function runHsiScientificCompanionTurn(input: {
   authorization: HsiScientificCompanionOwnerApproval;
@@ -233,12 +330,32 @@ export function runHsiScientificCompanionTurn(input: {
   actorPrincipal?: string;
   createdAt?: string;
   release?: QuestionPlanInput["release"];
+  liveEvidence?: {
+    authorization: HsiScientificCompanionLiveEvidenceOwnerApproval;
+    records: readonly HsiScientificCompanionBoundEvidence[];
+  };
 }): HsiScientificCompanionTurnResult {
   assertHsiScientificCompanionOwnerAuthorized(input.authorization);
   const question = input.question.trim();
   if (!question || question.length > 500) throw Error("Invalid companion question");
   const actor = (input.actorPrincipal ?? "companion-researcher").trim();
   if (!actor || actor.length > 100) throw Error("Invalid companion actor");
+
+  const wantsLiveEvidence =
+    input.liveEvidence !== undefined &&
+    (input.liveEvidence.records?.length ?? 0) > 0;
+  let boundEvidence: HsiScientificCompanionBoundEvidence[] = [];
+  let liveEvidenceAuthorization: HsiScientificCompanionLiveEvidenceOwnerApproval | null = null;
+  if (wantsLiveEvidence) {
+    assertHsiScientificCompanionLiveEvidenceOwnerAuthorized(input.liveEvidence!.authorization);
+    boundEvidence = normalizeBoundEvidence(input.liveEvidence!.records);
+    liveEvidenceAuthorization = HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL;
+  } else if (input.liveEvidence !== undefined) {
+    // Explicit empty binding still requires U42 approval so callers cannot
+    // silently claim a live-evidence path without the envelope.
+    assertHsiScientificCompanionLiveEvidenceOwnerAuthorized(input.liveEvidence.authorization);
+    liveEvidenceAuthorization = HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL;
+  }
 
   const plan = planSscInterrogation({
     question,
@@ -280,12 +397,20 @@ export function runHsiScientificCompanionTurn(input: {
     }
   }
 
+  const evidenceSection = renderBoundEvidenceSection(boundEvidence);
+  const replyMarkdown = rendered.markdown + evidenceSection.markdown;
+  const citations = [...rendered.citations, ...evidenceSection.citations];
+
   const limitations = [
     ...BASE_LIMITATIONS,
+    ...(boundEvidence.length > 0
+      ? [
+          "Caller-supplied literature metadata is bound into this turn; the companion did not retrieve it over the network.",
+          "Bound records remain metadata_retrieved_not_claim_verified and unreviewed.",
+        ]
+      : []),
     ...plan.conclusion.limitations,
-    ...rendered.citations
-      .filter((c) => c.kind === "limitation")
-      .map((c) => c.detail),
+    ...citations.filter((c) => c.kind === "limitation").map((c) => c.detail),
   ];
 
   const honesty: HsiScientificCompanionHonesty = {
@@ -301,20 +426,31 @@ export function runHsiScientificCompanionTurn(input: {
     clinicalAdvice: false,
     productionWritesEnabled: false,
     restrictedPreviewClaimed: false,
+    liveEvidenceBound: boundEvidence.length > 0,
+    companionPerformedNetworkRetrieval: false,
+    claimVerified: false,
   };
   assertHonesty(honesty);
+
+  const servicesUsed: HsiScientificCompanionService[] = [
+    "interrogativeQuestionEngine",
+    "interrogativeFalsificationEngine",
+  ];
+  if (boundEvidence.length > 0) servicesUsed.push("caller_supplied_live_evidence");
 
   return {
     schemaVersion: HSI_SCIENTIFIC_COMPANION_RUNTIME_SCHEMA,
     authorization: HSI_SCIENTIFIC_COMPANION_OWNER_APPROVAL,
+    liveEvidenceAuthorization,
     mode: input.mode,
     question,
-    replyMarkdown: rendered.markdown,
-    citations: rendered.citations,
+    replyMarkdown,
+    citations,
     limitations,
     investigation: plan,
     falsificationSummary,
-    servicesUsed: ["interrogativeQuestionEngine", "interrogativeFalsificationEngine"],
+    boundEvidence,
+    servicesUsed,
     honesty,
   };
 }
