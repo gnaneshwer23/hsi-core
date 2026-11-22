@@ -10,6 +10,8 @@ describe("askClient",()=>{
   expect((await askQuestion(Q,res(403,{code:"EMAIL_NOT_VERIFIED"}))).kind).toBe("unverified");
   expect((await askQuestion(Q,res(403,{code:"ORIGIN_NOT_ALLOWED"}))).kind).toBe("error");
   expect((await askQuestion(Q,res(429,{}))).kind).toBe("limited");
+  const limitedWithRetry=await askQuestion(Q,(async()=>new Response("{}",{status:429,headers:{"content-type":"application/json","Retry-After":"3600"}})) as unknown as typeof fetch);
+  expect(limitedWithRetry).toEqual({kind:"limited",retryAfterSeconds:3600});
   expect((await askQuestion(Q,res(503,{}))).kind).toBe("unavailable");
   expect((await askQuestion(Q,res(500,{}))).kind).toBe("error");
   expect((await askQuestion(Q,(async()=>{throw Error("net")}) as unknown as typeof fetch)).kind).toBe("error");

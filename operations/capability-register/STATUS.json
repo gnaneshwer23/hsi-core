@@ -1,6 +1,6 @@
 {
   "pack": "capability-register",
-  "asOf": "2026-11-08",
+  "asOf": "2026-11-21",
   "executionStep": "04",
   "engineeringCleared": true,
   "scientificallyValidatedClaimed": false,
@@ -8,5 +8,6 @@
   "register": "operations/capability-register/capability-register.v1.json",
   "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
   "step04": "gap_verification_classified_sme_gold_parked",
-  "humanQueueParked": true
+  "humanQueueParked": true,
+  "reconcileNote": "Post-merge register reconcile; scientificallyValidatedClaimed remains false"
 }

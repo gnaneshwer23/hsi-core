@@ -23,7 +23,7 @@ Bun.serve({hostname:"127.0.0.1",port,fetch(request){
  const forwardedProto=request.headers.get("x-forwarded-proto");
  const forwardedHost=request.headers.get("x-forwarded-host");
  if(forwardedProto!=="https"||forwardedHost!==new URL(origin).host)
-  return Response.json({error:"Trusted HTTPS proxy required"},{status:403});
+  return Response.json({code:"TRUSTED_PROXY_REQUIRED",error:"Trusted HTTPS proxy required"},{status:403});
  const publicRequest=new Request(origin+url.pathname+url.search,request);
  return withResearchRequestControls(publicRequest,()=>process.env.HSI_RESEARCH_MAINTENANCE==="true"?Promise.resolve(Response.json({code:"RESEARCH_MAINTENANCE"},{status:503})):handleInterrogativeApi(publicRequest,services),controls);
 }});

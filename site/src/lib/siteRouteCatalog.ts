@@ -74,6 +74,7 @@ const INVESTIGATION_LOOP = new Set([
   "/research/home",
   "/research/investigate",
   "/research/workspace",
+  "/research/companion",
   "/research/knowledge-graph",
   "/research/gaps",
   "/research/ledger",

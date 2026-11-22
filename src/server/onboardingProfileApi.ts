@@ -58,11 +58,11 @@ export async function handleOnboardingProfileApi(
 ):Promise<Response|null>{
   const path=new URL(request.url).pathname;
   if(path===STATUS_PATH){
-    if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
+    if(request.method!=="GET")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
     return gatewayJson(statusBody(config));
   }
   if(path!==PROFILE_PATH)return null;
-  if(request.method!=="GET"&&request.method!=="PUT")return gatewayJson({error:"Method not allowed"},405);
+  if(request.method!=="GET"&&request.method!=="PUT")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
 
   const status=statusBody(config);
   if(!status.enabled||!config.store){
@@ -94,16 +94,16 @@ export async function handleOnboardingProfileApi(
     });
   }
 
-  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return gatewayJson({error:"JSON body required"},415);
-  if(Number(request.headers.get("content-length")??0)>12_000)return gatewayJson({error:"Request too large"},413);
+  if(!/^application\/json/i.test(request.headers.get("content-type")??""))return gatewayJson({code:"JSON_REQUIRED",error:"JSON body required"},415);
+  if(Number(request.headers.get("content-length")??0)>12_000)return gatewayJson({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
   let raw:string;
   try{raw=await boundedRequestText(request,12_000)}
   catch(error){
-    if(error instanceof RequestBodyTooLarge)return gatewayJson({error:"Request too large"},413);
-    if(error instanceof RequestBodyTimeout)return gatewayJson({error:"Request body timed out"},408);
-    return gatewayJson({error:"Invalid JSON"},400);
+    if(error instanceof RequestBodyTooLarge)return gatewayJson({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
+    if(error instanceof RequestBodyTimeout)return gatewayJson({code:"REQUEST_TIMEOUT",error:"Request body timed out"},408);
+    return gatewayJson({code:"INVALID_JSON",error:"Invalid JSON"},400);
   }
-  let body:unknown;try{body=JSON.parse(raw)}catch{return gatewayJson({error:"Invalid JSON"},400)}
+  let body:unknown;try{body=JSON.parse(raw)}catch{return gatewayJson({code:"INVALID_JSON",error:"Invalid JSON"},400)}
   const envelope=body&&typeof body==="object"&&!Array.isArray(body)?body as Record<string,unknown>:{};
   const profile=normalizeProfile(envelope.profile??envelope);
   const phi=rejectPhiPayload({textBlobs:[profile.background,profile.question,profile.role??"",profile.stage??"",...profile.goals,...profile.interests,...profile.papers]});

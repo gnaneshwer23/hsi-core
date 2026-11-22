@@ -1,0 +1,48 @@
+# HSI 1.0 — U12 restricted-preview (L1) readiness soft-land (21 November 2026)
+
+**Status:** Engineering soft-land. CI-safe catalog of L1 restricted-preview readiness vs owner staging-grant GO.  
+**U37 update (21 Nov 2026):** Live scientific platform engineering composition is owner-authorized; staging grant + restricted-preview GO remain open.  
+**U40 update (21 Nov 2026):** Restricted-preview auth + continuous-journey evidence runners are owner-authorized (`staging:preview-evidence:*`). Fill pending refs only with real staging digests; preview GO / checklist #1 remain open.  
+**Not claimed:** Restricted preview acceptance, staging hosts, grants, production writes, or scientific approval.
+
+Typed catalog: [`src/operations/hsi10RestrictedPreviewReadinessU12SoftLand.ts`](../../src/operations/hsi10RestrictedPreviewReadinessU12SoftLand.ts).  
+Pending worksheet: [`operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json`](../../operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json).  
+Depends on: [`HSI_10_CONTINUOUS_JOURNEY_EVIDENCE_SOFT_LAND.md`](./HSI_10_CONTINUOUS_JOURNEY_EVIDENCE_SOFT_LAND.md), [`HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md`](./HSI_10_PUBLIC_LAUNCH_READINESS_U11_SOFT_LAND.md).
+
+## Honesty
+
+| Claim | Soft-land |
+| --- | --- |
+| Local continuous journey e2e | Engineering ready |
+| Ask / live-investigation honesty envelopes | Engineering ready |
+| Device-local save | Engineering ready |
+| Staging grant continuous run | **Owner-gated** |
+| `restrictedPreviewClaimed` | Always `false` |
+| Invented staging URL / grant | **Forbidden** |
+
+## Surface map
+
+| Surface | Owner? | Checklist |
+| --- | --- | --- |
+| Continuous journey local e2e | No | #1 |
+| Ask / live honesty | No | #1 |
+| Device-local save/reopen | No | #5 |
+| Auth grant fail-closed | Partial | — |
+| Production writes refused | No | #5 |
+| Staging grant continuous run | Yes | #1 |
+| Owner preview GO | Yes (engineering authorized via U37; staging GO still required) | — |
+
+## Companion API honesty (same unit)
+
+- `GET /api/health` method rejects use `METHOD_NOT_ALLOWED`.  
+- Research POST while writes disabled returns `RESEARCH_WRITES_DISABLED`.  
+
+## Owner next steps
+
+1. Approve disposable HSI staging target privately.  
+2. Provision a preview grant; capture continuous journey evidence via `bun run staging:preview-evidence:live` (U40).  
+3. Apply non-placeholder digests from the U40 fill proposal to this pending worksheet and the continuous-journey pending worksheet.  
+4. Keep production writes false; Human #5 before durable staging save.  
+5. Record restricted-preview GO/NO-GO privately — U37/U40 engineering authorization is not that GO.
+
+**Never invent** staging hosts, grants, or preview GO in this soft-land.

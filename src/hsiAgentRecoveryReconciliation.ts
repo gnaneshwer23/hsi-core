@@ -1,8 +1,8 @@
 /** ARCH-009 recovery reconciliation: inspect durable artifact for an interrupted
  * RUNNING checkpoint. Never rerun the executor merely because the process died.
- * This module is read-only; reconciliation completion is a separate CAS transition.
+ * Completing a reconciled artifact is an explicit CAS transition (no executor replay).
  */
-import type {HsiCheckpointStore,HsiDurableCheckpoint} from "./hsiAgentDurableCheckpoint";
+import {finishHsiCheckpoint,type HsiCheckpointStore,type HsiDurableCheckpoint} from "./hsiAgentDurableCheckpoint";
 export interface HsiReconciliationArtifact{artifactId:string;outputRef:string;attempt:number;checkpointVersion:number;inputHash:string}
 export interface HsiReconciliationArtifactReader{
  findCurrent(investigationId:string,taskId:string,attempt:number,version:number,inputHash:string):Promise<readonly HsiReconciliationArtifact[]>;
@@ -23,4 +23,25 @@ export async function inspectHsiInterruptedExecution(input:{store:HsiCheckpointS
  const artifact=found[0]!;
  if(artifact.attempt!==checkpoint.attempt||artifact.checkpointVersion!==checkpoint.version||artifact.inputHash!==checkpoint.inputHash||!artifact.outputRef.trim())throw Error("Artifact fence mismatch");
  return {action:"reconcile_committed_artifact",checkpoint,artifact};
+}
+/** Apply a reconcile_committed_artifact decision: complete the RUNNING fence from the
+ * durable artifact without replaying the executor. Does not invent scientific approval.
+ */
+export async function applyHsiCommittedArtifactReconciliation(input:{
+ store:HsiCheckpointStore;
+ decision:Extract<HsiReconciliationDecision,{action:"reconcile_committed_artifact"}>;
+ finishedAt:string;
+}):Promise<HsiDurableCheckpoint>{
+ const {checkpoint,artifact}=input.decision;
+ if(checkpoint.state!=="running")throw Error("Only a running checkpoint may reconcile from a committed artifact");
+ if(artifact.attempt!==checkpoint.attempt||artifact.checkpointVersion!==checkpoint.version||artifact.inputHash!==checkpoint.inputHash||!artifact.outputRef.trim()){
+  throw Error("Artifact fence mismatch");
+ }
+ return finishHsiCheckpoint({
+  store:input.store,
+  checkpoint,
+  state:"completed",
+  outputRef:artifact.outputRef,
+  finishedAt:input.finishedAt,
+ });
 }

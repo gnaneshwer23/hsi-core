@@ -29,6 +29,15 @@ describe("graph workspace write gate (A3.3)",()=>{
   expect(body.holdsUnchanged).toBe(true);
  });
 
+ test("status refuses non-GET with METHOD_NOT_ALLOWED",async()=>{
+  const response=await handleGraphWorkspaceApi(
+   new Request("https://staging.invalid/api/research/graph-workspace/status",{method:"POST"}),
+   {storeEnabled:false,writesEnabled:true,databaseUrl:"postgresql://test:x@ep-hsi-staging.c-2.eu-west-2.aws.neon.tech/neondb?sslmode=require"},
+  );
+  expect(response!.status).toBe(405);
+  expect(await response!.json()).toEqual({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"});
+ });
+
  test("disabled store refuses authenticated investigation list without opening SQL",async()=>{
   let opened=false;
   const response=await handleGraphWorkspaceApi(

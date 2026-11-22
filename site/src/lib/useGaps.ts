@@ -1,9 +1,10 @@
 import {useCallback,useMemo,useState} from "react";
-import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import type {CooccurrenceResult} from "../../../src/investigation/cooccurrence";
+import type {DomainBundle} from "../../../src/knowledgeGraph/domainGraph";
 import {classify,planCounts,recordedGapsFor,type GapRow,type RecordedGap} from "./gapFinder";
-import {radarTopics} from "./useRadar";
 import type {Profile} from "./researchHome";
+import {researchApiErrorMessage} from "./researchApiErrors";
+import {radarTopics} from "./useRadar";
 
 export const GAPS_KEY="hsi-gaps-v1",GAPS_TTL_MS=24*3600_000;
 export type GapsState={status:"idle"|"loading"|"ready"|"error";rows:GapRow[];at:string|null;error:string;fromCache:boolean;note:string};
@@ -20,7 +21,9 @@ export function useGaps(profile:Profile,bundle:DomainBundle|null){
   setSt(s=>({...s,status:"loading",error:""}));
   try{
    const res=await fetch("/api/research/cooccurrence",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(plan)});
-   if(!res.ok){const b=await res.json().catch(()=>null) as {error?:string}|null;throw Error(b?.error??"The counts could not be built (HTTP "+res.status+").")}
+   if(!res.ok){
+    throw Error(await researchApiErrorMessage(res,"scientific_retrieval","The counts could not be built (HTTP "+res.status+")."));
+   }
    const data=await res.json() as CooccurrenceResult;
    try{const prev=JSON.parse(localStorage.getItem(GAPS_KEY)??"null")?.entries??{};const keep=Object.entries({...prev,[key]:{at:Date.now(),data}} as Record<string,{at:number}>).sort((a,b)=>b[1].at-a[1].at).slice(0,3);localStorage.setItem(GAPS_KEY,JSON.stringify({entries:Object.fromEntries(keep)}))}catch{/* cache optional */}
    setSt({status:"ready",rows:classify(data),at:data.generatedAt,error:"",fromCache:false,note:data.note});

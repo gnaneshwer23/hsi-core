@@ -269,7 +269,9 @@ test("outcome Vercel route uses the trusted session bridge with writes disabled"
  const dependencies={transport:transport(async()=>Response.json(identity)),resolveToken:async()=>"alice",services:{load:async()=>({}),submit:async()=>({}),review:async()=>({}),outcome:async(input:{serverSessionToken:string|null;investigationId:string})=>{seen=input.serverSessionToken??"";return f.service.outcome(input.serverSessionToken,input.investigationId)}}};
  const r=await handleVercelResearch(req(path,{headers:{cookie,"x-role":"research_admin","x-principal-id":"bob"}}),env,dependencies);
  expect(r.status).toBe(200);expect(seen).toBe("alice");expect((await r.json()).scope.clinicalAdvice).toBe(false);
- expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(403);
+ const writesOff=await handleVercelResearch(post(path),env,{transport:noCalls});
+ expect(writesOff.status).toBe(403);
+ expect(await writesOff.json()).toMatchObject({code:"RESEARCH_WRITES_DISABLED"});
  expect((await handleVercelResearch(req(path),env,{transport:noCalls})).status).toBe(401);
 });
 
@@ -280,4 +282,13 @@ test("separate liveness survives shared-admission outage without claiming databa
 test("pilot job routes are unavailable by default and injected handlers still require configured same-origin deployment",async()=>{
  const path="/api/research/jobs";expect((await handleVercelResearch(post(path),env,{transport:noCalls})).status).toBe(404);let calls=0;const pilotJobApi=async()=>{calls++;return Response.json({id:"TEST_JOB"},{status:202})};
  expect((await handleVercelResearch(post(path),env,{transport:noCalls,pilotJobApi})).status).toBe(202);expect(calls).toBe(1);expect((await handleVercelResearch(new Request("https://attacker.test"+path,{method:"POST"}),env,{transport:noCalls,pilotJobApi})).status).toBe(403);expect(calls).toBe(1);
+});
+
+test("router fallthrough and health method errors expose stable codes",async()=>{
+ const missing=await handleVercelResearch(req("/api/unknown"),env,{transport:noCalls});
+ expect(missing.status).toBe(404);
+ expect(await missing.json()).toEqual({code:"NOT_FOUND",error:"Not found"});
+ const healthMethod=await handleVercelResearch(post("/api/research/health"),env,{transport:noCalls});
+ expect(healthMethod.status).toBe(405);
+ expect(await healthMethod.json()).toEqual({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"});
 });

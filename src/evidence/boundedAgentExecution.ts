@@ -39,6 +39,17 @@ import {
   type HsiAgentTask,
   type HsiOrchestrationResult,
 } from "../hsiAgentOrchestrator";
+import {
+  createHsiFencedToolCaller,
+  unwrapHsiFencedToolSuccess,
+  type HsiFencedToolCaller,
+} from "../hsiAgentFencedToolCaller";
+import type {HsiOrchestrationCancelRecord} from "../hsiAgentOrchestrationCancel";
+import {
+  buildHsiRecoveryDecision,
+  type HsiRecoveryDecision,
+  type HsiRecoveryReasonCode,
+} from "../hsiAgentRecoveryDecision";
 import {commitHsiFencedArtifact, type HsiFencedArtifactStore} from "../hsiFencedArtifact";
 import {
   buildContextualCandidatePack,
@@ -134,6 +145,8 @@ export type InvestigationPlanArtifact = {
     timeoutMsPerStage: number;
     maxStages: number;
     pageSize: number;
+    /** Wall-clock bound across all stages (U29). */
+    maxOrchestrationMs: number;
   };
   reviewControls: {
     curationReview: "draft";
@@ -271,6 +284,10 @@ export type BoundedAgentExecutionResult = {
   status: HsiOrchestrationResult["status"];
   stages: readonly BoundedStageTrace[];
   orchestration: HsiOrchestrationResult;
+  /** Orchestration stop taxonomy (U30/U31) — null when run completed without classified stop. */
+  termination: HsiOrchestrationCancelRecord | null;
+  /** Explicit recovery decision when recoverStage was supplied (U31). */
+  recoveryDecision: HsiRecoveryDecision | null;
   honesty: {
     metadataOnly: true;
     claimSupportNotAssessed: true;
@@ -757,6 +774,7 @@ export async function runBoundedAgentExecution(input: {
     maxToolCallsPerStage?: number;
     timeoutMsPerStage?: number;
     pageSize?: number;
+    maxOrchestrationMs?: number;
   };
   /**
    * Explicit human-authorised recovery for a previously failed/blocked stage.
@@ -766,6 +784,9 @@ export async function runBoundedAgentExecution(input: {
     stageId: BoundedStageId;
     approvedBy: string;
     recoveryReason: string;
+    /** Optional U31 reason code; validated against priorTerminationReason when set. */
+    reasonCode?: HsiRecoveryReasonCode;
+    priorTerminationReason?: HsiOrchestrationCancelRecord["reason"] | null;
   };
   /** When true, opposing stage records budget skip instead of stub search. */
   skipOpposingForBudget?: boolean;
@@ -790,12 +811,18 @@ export async function runBoundedAgentExecution(input: {
     maxToolCallsPerStage: input.budgets?.maxToolCallsPerStage ?? 4,
     timeoutMsPerStage: input.budgets?.timeoutMsPerStage ?? 8_000,
     pageSize: input.budgets?.pageSize ?? 5,
+    maxOrchestrationMs:
+      input.budgets?.maxOrchestrationMs ??
+      (input.budgets?.timeoutMsPerStage ?? 8_000) * BOUNDED_STAGE_IDS.length,
   };
   if (budgets.maxToolCallsPerStage < 1 || budgets.maxToolCallsPerStage > 20) {
     fail("Invalid tool budget");
   }
   if (budgets.timeoutMsPerStage < 100 || budgets.timeoutMsPerStage > 120_000) {
     fail("Invalid stage timeout budget");
+  }
+  if (budgets.maxOrchestrationMs < 100 || budgets.maxOrchestrationMs > 600_000) {
+    fail("Invalid orchestration wall-clock budget");
   }
 
   const checkpointStore = input.checkpointStore ?? createMemoryCheckpointStore();
@@ -904,9 +931,24 @@ export async function runBoundedAgentExecution(input: {
     version: BOUNDED_AGENT_EXECUTION_VERSION,
   });
 
+  let recoveryDecision: HsiRecoveryDecision | null = null;
   if (input.recoverStage) {
     if (!input.recoverStage.approvedBy.trim() || !input.recoverStage.recoveryReason.trim()) {
       fail("Human recovery authorisation and reason required");
+    }
+    if (input.recoverStage.reasonCode) {
+      try {
+        recoveryDecision = buildHsiRecoveryDecision({
+          investigationId: input.investigationId,
+          stageId: input.recoverStage.stageId,
+          approvedBy: input.recoverStage.approvedBy,
+          reasonCode: input.recoverStage.reasonCode,
+          recoveryReason: input.recoverStage.recoveryReason,
+          priorTerminationReason: input.recoverStage.priorTerminationReason ?? null,
+        });
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Invalid recovery decision");
+      }
     }
     await recoverHsiCheckpoint({
       store: checkpointStore,
@@ -937,6 +979,7 @@ export async function runBoundedAgentExecution(input: {
     stageId: BoundedStageId,
     body: (ctx: {
       assertTool: (tool: HsiToolId) => void;
+      invokeFencedTool: HsiFencedToolCaller["invoke"];
       signal: AbortSignal;
     }) => Promise<{status: "completed" | "blocked"; artifact: BoundedStageArtifact; reason: string | null}>,
   ): HsiAgentExecutor => {
@@ -957,20 +1000,39 @@ export async function runBoundedAgentExecution(input: {
           reason: "Reused completed durable checkpoint",
         };
       }
-      const started =
-        existing?.state === "running"
-          ? existing
-          : await startHsiCheckpoint({
-              store: checkpointStore,
-              investigationId: input.investigationId,
-              taskId: stageId,
-              inputHash,
-              startedAt: now(),
-            });
+      let started: HsiDurableCheckpoint;
+      if (existing?.state === "running") {
+        // Orphan RUNNING fences require explicit recoverStage — never silent continue.
+        if (input.recoverStage?.stageId !== stageId) {
+          fail(
+            "Interrupted running checkpoint requires explicit human recovery before continue",
+          );
+        }
+        if (existing.inputHash !== inputHash) fail("Checkpoint input mismatch");
+        started = existing;
+      } else {
+        started = await startHsiCheckpoint({
+          store: checkpointStore,
+          investigationId: input.investigationId,
+          taskId: stageId,
+          inputHash,
+          startedAt: now(),
+        });
+      }
       stageCheckpoints.set(stageId, started);
       try {
         if (context.signal.aborted) fail("Execution cancelled before stage body");
-        const result = await body({assertTool: context.assertTool, signal: context.signal});
+        const toolCaller = createHsiFencedToolCaller({
+          investigationId: input.investigationId,
+          taskId: stageId,
+          assertTool: context.assertTool,
+          signal: context.signal,
+        });
+        const result = await body({
+          assertTool: context.assertTool,
+          invokeFencedTool: toolCaller.invoke,
+          signal: context.signal,
+        });
         if (context.signal.aborted) fail("Execution cancelled before checkpoint commit");
         const outputRef = await persistStageArtifact({
           store: artifactStore,
@@ -1041,6 +1103,7 @@ export async function runBoundedAgentExecution(input: {
           timeoutMsPerStage: budgets.timeoutMsPerStage,
           maxStages: BOUNDED_STAGE_IDS.length,
           pageSize: budgets.pageSize,
+          maxOrchestrationMs: budgets.maxOrchestrationMs,
         },
         reviewControls: {
           curationReview: "draft",
@@ -1053,21 +1116,38 @@ export async function runBoundedAgentExecution(input: {
       return {status: "completed", artifact: plan, reason: null};
     }),
 
-    evidence_retriever: wrapStage("evidence-retrieval", async ({assertTool, signal}) => {
-      assertTool("literature.search");
-      const retrieval = await runDynamicEvidenceRetrieval({
-        query: {
-          question,
-          entities: input.entities,
-          pageSize: budgets.pageSize,
-          contentAccess: "metadata",
-        },
-        fetcher: input.fetcher,
-        now: () => new Date(now()),
-        rateLimitMs: 0,
-        cache,
-        signal,
+    evidence_retriever: wrapStage("evidence-retrieval", async ({invokeFencedTool, signal}) => {
+      const fenced = await invokeFencedTool("literature.search", async ({signal: toolSignal}) => {
+        const retrieval = await runDynamicEvidenceRetrieval({
+          query: {
+            question,
+            entities: input.entities,
+            pageSize: budgets.pageSize,
+            contentAccess: "metadata",
+          },
+          fetcher: input.fetcher,
+          now: () => new Date(now()),
+          rateLimitMs: 0,
+          cache,
+          signal: toolSignal.aborted ? toolSignal : signal,
+        });
+        const resultRef =
+          "hsi-tool:literature.search:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({
+              searchRecordHash: retrieval.record.searchRecordHash,
+              bibliographic: retrieval.record.retrievedBibliographic.length,
+            }))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: retrieval};
       });
+      let retrieval;
+      try {
+        retrieval = unwrapHsiFencedToolSuccess(fenced, "Literature search").value;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Literature search failed");
+      }
       scratch.searchRecord = retrieval.record;
 
       // Treat retrieved titles as untrusted — never escalate permissions from text.
@@ -1113,17 +1193,47 @@ export async function runBoundedAgentExecution(input: {
       return {status: "completed", artifact, reason: null};
     }),
 
-    graph_reasoner: wrapStage("mechanism-analysis", async ({assertTool}) => {
-      assertTool("graph.query");
-      assertTool("evidence.get");
+    graph_reasoner: wrapStage("mechanism-analysis", async ({invokeFencedTool}) => {
       if (!scratch.persistencePlan) fail("Mechanism analysis requires persistence plan");
-      const pack = buildContextualCandidatePack({
-        plan: scratch.persistencePlan,
-        openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
-        surfaceLabel: "candidate",
-        generatedAt: now(),
-        opposingSearchStatus: "not_executed",
+      const graphFence = await invokeFencedTool("graph.query", async () => {
+        const pack = buildContextualCandidatePack({
+          plan: scratch.persistencePlan!,
+          openTargetsRecords: openTargetsRecordsFromSearch(scratch.searchRecord),
+          surfaceLabel: "candidate",
+          generatedAt: now(),
+          opposingSearchStatus: "not_executed",
+        });
+        const resultRef =
+          "hsi-tool:graph.query:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({id: pack.searchRecordId, n: pack.relationships.length}))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: pack};
       });
+      let pack;
+      let packResultRef: string;
+      try {
+        const unwrapped = unwrapHsiFencedToolSuccess(graphFence, "Graph query");
+        pack = unwrapped.value;
+        packResultRef = unwrapped.resultRef;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Graph query failed");
+      }
+      const evidenceFence = await invokeFencedTool("evidence.get", async () => ({
+        resultRef:
+          "hsi-tool:evidence.get:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({pack: packResultRef}))
+            .digest("hex")
+            .slice(0, 24),
+        value: {candidatePackId: packResultRef},
+      }));
+      try {
+        unwrapHsiFencedToolSuccess(evidenceFence, "Evidence get");
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Evidence get failed");
+      }
       scratch.candidatePack = pack;
       const artifact: MechanismAssessmentArtifact = {
         schemaVersion: "hsi-mechanism-assessment-1",
@@ -1152,32 +1262,68 @@ export async function runBoundedAgentExecution(input: {
       return {status: "completed", artifact, reason: null};
     }),
 
-    contradiction_analyst: wrapStage("opposing-evidence", async ({assertTool}) => {
-      assertTool("literature.search");
-      assertTool("evidence.get");
+    contradiction_analyst: wrapStage("opposing-evidence", async ({invokeFencedTool, signal}) => {
       const pack = scratch.candidatePack;
       const recordedOpposing = (pack?.relationships ?? [])
         .filter((r) => r.findingPolarity === "opposing")
         .map((r) => r.id);
 
-      const baseReport = await runOpposingEvidenceSearch({
-        question,
-        entities: input.entities,
-        recordedOpposingCandidateIds: recordedOpposing,
-        now,
-        fetcher: input.fetcher,
-        cache,
-        signal: input.signal,
-        pageSize: budgets.pageSize,
-        skipForBudget: input.skipOpposingForBudget === true,
+      const searchFence = await invokeFencedTool("literature.search", async ({signal: toolSignal}) => {
+        const baseReport = await runOpposingEvidenceSearch({
+          question,
+          entities: input.entities,
+          recordedOpposingCandidateIds: recordedOpposing,
+          now,
+          fetcher: input.fetcher,
+          cache,
+          signal: toolSignal.aborted ? toolSignal : signal,
+          pageSize: budgets.pageSize,
+          skipForBudget: input.skipOpposingForBudget === true,
+        });
+        // M2 deepen: comparable candidates × oppose hits → investigation categories.
+        const report = attachStructuredComparisonToOpposingSearch({
+          report: baseReport,
+          candidates: pack?.relationships ?? [],
+          generatedAt: now(),
+          maxPairs: Math.min(25, budgets.pageSize * 5),
+        });
+        const resultRef =
+          "hsi-tool:literature.search:" +
+          createHash("sha256")
+            .update(
+              canonicalEvidenceJson({
+                status: report.status,
+                findings: report.findings.length,
+                searchPerformed: report.searchPerformed,
+              }),
+            )
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: report};
       });
-      // M2 deepen: comparable candidates × oppose hits → investigation categories.
-      const report = attachStructuredComparisonToOpposingSearch({
-        report: baseReport,
-        candidates: pack?.relationships ?? [],
-        generatedAt: now(),
-        maxPairs: Math.min(25, budgets.pageSize * 5),
-      });
+      let report;
+      let opposingResultRef: string;
+      try {
+        const unwrapped = unwrapHsiFencedToolSuccess(searchFence, "Opposing literature search");
+        report = unwrapped.value;
+        opposingResultRef = unwrapped.resultRef;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Opposing literature search failed");
+      }
+      const evidenceFence = await invokeFencedTool("evidence.get", async () => ({
+        resultRef:
+          "hsi-tool:evidence.get:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({opposing: opposingResultRef}))
+            .digest("hex")
+            .slice(0, 24),
+        value: {opposingRef: opposingResultRef},
+      }));
+      try {
+        unwrapHsiFencedToolSuccess(evidenceFence, "Opposing evidence get");
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Opposing evidence get failed");
+      }
       scratch.opposingReport = report;
 
       const titleFindings = report.findings.map((f, idx) => ({
@@ -1278,210 +1424,292 @@ export async function runBoundedAgentExecution(input: {
       };
     }),
 
-    claim_verifier: wrapStage("gap-assessment", async ({assertTool}) => {
-      assertTool("evidence.get");
-      const asOf = now();
-      const localPmids =
-        scratch.searchRecord?.retrievedBibliographic.map((r) => r.pmid).filter(Boolean) ?? [];
-      const oppose = scratch.opposing;
-      const opposeReport = scratch.opposingReport;
-      const missingEvidence: string[] = [];
-      if (
-        oppose?.status === "skipped_budget" ||
-        oppose?.status === "stubbed_incomplete" ||
-        !oppose?.searchPerformed
-      ) {
-        missingEvidence.push("Opposing-evidence search incomplete for unpinned question");
-      }
-      if (
-        oppose?.status === "successful_empty" ||
-        (opposeReport?.searchPerformed &&
-          opposeReport.findings.length === 0 &&
-          !opposeReport.coverage.providerUnavailable)
-      ) {
-        missingEvidence.push(
-          "no relevant study retrieved under bounded opposing-evidence literature coverage",
-        );
-      }
-      if (oppose?.status === "provider_unavailable") {
-        missingEvidence.push(
-          "Opposing-evidence provider unavailable — incomplete literature coverage (provider fail ≠ empty evidence)",
-        );
-      }
-      if ((scratch.mechanism?.candidateRelationships ?? []).some((c) => /mechanism|pathway/i.test(c.predicate))) {
-        missingEvidence.push("Approved source-linked claims for the biological mechanism");
-      }
-      if (missingEvidence.length === 0) {
-        missingEvidence.push("Passage-backed entailment unavailable without rights clearance");
-      }
-      if (
-        (opposeReport?.contradictionInvestigation?.summary.genuineConflictCandidates ?? 0) > 0 ||
-        (oppose?.contradictionInvestigation?.potentialContradictionCount ?? 0) > 0
-      ) {
-        missingEvidence.push(
-          "Independent contradictory or null findings — structured comparison recorded potential contradiction investigation categories (not predetermined conclusions)",
-        );
-      }
-      const gaps = projectGapVerificationForOutcome({
-        asOf,
-        branches: [
-          {
-            id: "bounded-primary",
-            assessment: "insufficient_evidence",
-            supportingClaimIds: (scratch.mechanism?.candidateRelationships ?? [])
-              .filter((c) => c.findingPolarity === "supporting")
-              .map((c) => c.id),
-            opposingClaimIds: (scratch.mechanism?.candidateRelationships ?? [])
-              .filter((c) => c.findingPolarity === "opposing")
-              .map((c) => c.id),
-            missingEvidence,
-            uncertainty: [
-              "Candidate relationships remain draft / claimSupport not assessed",
-              "Computational or model-derived edges remain unverified computational hypotheses until expert review",
-            ],
+    claim_verifier: wrapStage("gap-assessment", async ({invokeFencedTool}) => {
+      const gapFence = await invokeFencedTool("evidence.get", async () => {
+        const asOf = now();
+        const localPmids =
+          scratch.searchRecord?.retrievedBibliographic.map((r) => r.pmid).filter(Boolean) ?? [];
+        const oppose = scratch.opposing;
+        const opposeReport = scratch.opposingReport;
+        const missingEvidence: string[] = [];
+        if (
+          oppose?.status === "skipped_budget" ||
+          oppose?.status === "stubbed_incomplete" ||
+          !oppose?.searchPerformed
+        ) {
+          missingEvidence.push("Opposing-evidence search incomplete for unpinned question");
+        }
+        if (
+          oppose?.status === "successful_empty" ||
+          (opposeReport?.searchPerformed &&
+            opposeReport.findings.length === 0 &&
+            !opposeReport.coverage.providerUnavailable)
+        ) {
+          missingEvidence.push(
+            "no relevant study retrieved under bounded opposing-evidence literature coverage",
+          );
+        }
+        if (oppose?.status === "provider_unavailable") {
+          missingEvidence.push(
+            "Opposing-evidence provider unavailable — incomplete literature coverage (provider fail ≠ empty evidence)",
+          );
+        }
+        if ((scratch.mechanism?.candidateRelationships ?? []).some((c) => /mechanism|pathway/i.test(c.predicate))) {
+          missingEvidence.push("Approved source-linked claims for the biological mechanism");
+        }
+        if (missingEvidence.length === 0) {
+          missingEvidence.push("Passage-backed entailment unavailable without rights clearance");
+        }
+        if (
+          (opposeReport?.contradictionInvestigation?.summary.genuineConflictCandidates ?? 0) > 0 ||
+          (oppose?.contradictionInvestigation?.potentialContradictionCount ?? 0) > 0
+        ) {
+          missingEvidence.push(
+            "Independent contradictory or null findings — structured comparison recorded potential contradiction investigation categories (not predetermined conclusions)",
+          );
+        }
+        const gaps = projectGapVerificationForOutcome({
+          asOf,
+          branches: [
+            {
+              id: "bounded-primary",
+              assessment: "insufficient_evidence",
+              supportingClaimIds: (scratch.mechanism?.candidateRelationships ?? [])
+                .filter((c) => c.findingPolarity === "supporting")
+                .map((c) => c.id),
+              opposingClaimIds: (scratch.mechanism?.candidateRelationships ?? [])
+                .filter((c) => c.findingPolarity === "opposing")
+                .map((c) => c.id),
+              missingEvidence,
+              uncertainty: [
+                "Candidate relationships remain draft / claimSupport not assessed",
+                "Computational or model-derived edges remain unverified computational hypotheses until expert review",
+              ],
+            },
+          ],
+          claimContexts: [],
+          localSourcePmids: localPmids,
+          contradictions: {
+            recordedOpposingClaimIds: scratch.opposing?.findings.map((f) => f.candidateId) ?? [],
+            searchStatus: scratch.opposing?.status ?? "not_executed",
           },
-        ],
-        claimContexts: [],
-        localSourcePmids: localPmids,
-        contradictions: {
-          recordedOpposingClaimIds: scratch.opposing?.findings.map((f) => f.candidateId) ?? [],
-          searchStatus: scratch.opposing?.status ?? "not_executed",
-        },
-        livingEvidence: emptyLivingEvidence(asOf),
-        opposingSearch: opposeReport,
-        contradictionInvestigation: opposeReport?.contradictionInvestigation ?? null,
-        semanticSupports: [
-          {
-            matchText: missingEvidence[0]!,
-            reasoningRecord:
-              "Bounded agent gap stage: engineering classification from oppose-search receipt + draft candidate axes. Not passage-entailed.",
-          },
-        ],
+          livingEvidence: emptyLivingEvidence(asOf),
+          opposingSearch: opposeReport,
+          contradictionInvestigation: opposeReport?.contradictionInvestigation ?? null,
+          semanticSupports: [
+            {
+              matchText: missingEvidence[0]!,
+              reasoningRecord:
+                "Bounded agent gap stage: engineering classification from oppose-search receipt + draft candidate axes. Not passage-entailed.",
+            },
+          ],
+        });
+        const artifact: GapAssessmentArtifact = {
+          schemaVersion: "hsi-gap-assessment-1",
+          status: gaps.status,
+          items: gaps.items.map((item) => ({
+            id: item.id,
+            classification: item.kind,
+            rationale: item.rationale,
+            scientificGapStatus: item.scientificGapStatus,
+            searchCompleteness: item.searchCompleteness.status,
+            scientificNovelty: item.scientificNovelty.status,
+            semanticSupportKind: item.semanticSupport.kind,
+            reviewStatus:
+              item.expertReview.status === "expert_reviewed" ? "expert_reviewed" : "unavailable",
+          })),
+          summary: gaps.summary,
+          scientificallyValidated: false,
+          searchCompletenessDistinctFromScientificNovelty: true,
+        };
+        if (artifact.items.some((i) => i.scientificGapStatus === "scientifically_verified")) {
+          fail("Gap assessment refused scientifically_verified without expert acceptance");
+        }
+        const resultRef =
+          "hsi-tool:evidence.get:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({status: artifact.status, items: artifact.items.length}))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: artifact};
       });
-      const artifact: GapAssessmentArtifact = {
-        schemaVersion: "hsi-gap-assessment-1",
-        status: gaps.status,
-        items: gaps.items.map((item) => ({
-          id: item.id,
-          classification: item.kind,
-          rationale: item.rationale,
-          scientificGapStatus: item.scientificGapStatus,
-          searchCompleteness: item.searchCompleteness.status,
-          scientificNovelty: item.scientificNovelty.status,
-          semanticSupportKind: item.semanticSupport.kind,
-          reviewStatus:
-            item.expertReview.status === "expert_reviewed" ? "expert_reviewed" : "unavailable",
-        })),
-        summary: gaps.summary,
-        scientificallyValidated: false,
-        searchCompletenessDistinctFromScientificNovelty: true,
-      };
-      if (artifact.items.some((i) => i.scientificGapStatus === "scientifically_verified")) {
-        fail("Gap assessment refused scientifically_verified without expert acceptance");
+      let artifact;
+      try {
+        artifact = unwrapHsiFencedToolSuccess(gapFence, "Gap evidence get").value;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Gap evidence get failed");
       }
       scratch.gaps = artifact;
       return {status: "completed", artifact, reason: null};
     }),
 
-    hypothesis_generator: wrapStage("hypothesis-comparison", async ({assertTool}) => {
-      assertTool("hypothesis.create");
-      assertTool("evidence.get");
-      const rels = scratch.mechanism?.candidateRelationships ?? [];
-      const support = rels
-        .filter((r) => r.findingPolarity === "supporting")
-        .map((r) => ({candidateId: r.id, note: "Supporting polarity on draft candidate only"}));
-      const opposition = rels
-        .filter((r) => r.findingPolarity === "opposing")
-        .map((r) => ({candidateId: r.id, note: "Opposing polarity on draft candidate only"}));
-      const alternatives = rels
-        .filter((r) => r.findingPolarity === "uncertain")
-        .slice(0, 8)
-        .map((r) => ({
-          candidateId: r.id,
-          note: "Uncertain draft alternative — not ranked scientifically",
-        }));
-      const artifact: HypothesisComparisonArtifact = {
-        schemaVersion: "hsi-hypothesis-comparison-1",
-        support,
-        opposition,
-        alternatives,
-        distinguishingEvidence: [
-          {
-            note:
-              "Distinguishing evidence requires passage-backed review; metadata candidates are not sufficient to decide between hypotheses.",
-            sourceIds: rels.flatMap((r) => r.evidenceSourceIds).slice(0, 12),
-          },
-        ],
-        claimSupportAssessed: false,
-        scientificApproval: false,
-      };
+    hypothesis_generator: wrapStage("hypothesis-comparison", async ({invokeFencedTool}) => {
+      const hypoFence = await invokeFencedTool("hypothesis.create", async () => {
+        const rels = scratch.mechanism?.candidateRelationships ?? [];
+        const support = rels
+          .filter((r) => r.findingPolarity === "supporting")
+          .map((r) => ({candidateId: r.id, note: "Supporting polarity on draft candidate only"}));
+        const opposition = rels
+          .filter((r) => r.findingPolarity === "opposing")
+          .map((r) => ({candidateId: r.id, note: "Opposing polarity on draft candidate only"}));
+        const alternatives = rels
+          .filter((r) => r.findingPolarity === "uncertain")
+          .slice(0, 8)
+          .map((r) => ({
+            candidateId: r.id,
+            note: "Uncertain draft alternative — not ranked scientifically",
+          }));
+        const artifact: HypothesisComparisonArtifact = {
+          schemaVersion: "hsi-hypothesis-comparison-1",
+          support,
+          opposition,
+          alternatives,
+          distinguishingEvidence: [
+            {
+              note:
+                "Distinguishing evidence requires passage-backed review; metadata candidates are not sufficient to decide between hypotheses.",
+              sourceIds: rels.flatMap((r) => r.evidenceSourceIds).slice(0, 12),
+            },
+          ],
+          claimSupportAssessed: false,
+          scientificApproval: false,
+        };
+        const resultRef =
+          "hsi-tool:hypothesis.create:" +
+          createHash("sha256")
+            .update(
+              canonicalEvidenceJson({
+                support: support.length,
+                opposition: opposition.length,
+                alternatives: alternatives.length,
+              }),
+            )
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: artifact};
+      });
+      let artifact;
+      let hypoResultRef: string;
+      try {
+        const unwrapped = unwrapHsiFencedToolSuccess(hypoFence, "Hypothesis create");
+        artifact = unwrapped.value;
+        hypoResultRef = unwrapped.resultRef;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Hypothesis create failed");
+      }
+      const evidenceFence = await invokeFencedTool("evidence.get", async () => ({
+        resultRef:
+          "hsi-tool:evidence.get:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({hypotheses: hypoResultRef}))
+            .digest("hex")
+            .slice(0, 24),
+        value: {hypothesisRef: hypoResultRef},
+      }));
+      try {
+        unwrapHsiFencedToolSuccess(evidenceFence, "Hypothesis evidence get");
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Hypothesis evidence get failed");
+      }
       scratch.hypotheses = artifact;
       return {status: "completed", artifact, reason: null};
     }),
 
-    interrogator: wrapStage("research-brief", async ({assertTool}) => {
-      assertTool("evidence.get");
-      assertTool("graph.query");
+    interrogator: wrapStage("research-brief", async ({invokeFencedTool}) => {
       // Policy / review control surface: brief must not claim validity.
-      const draftClaims: ResearchBriefArtifact["claims"][number][] = (scratch.hypotheses?.alternatives ?? [])
-        .slice(0, 5)
-        .map((alt) => ({
-          text: `Draft candidate ${alt.candidateId} recorded as an uncertain alternative pending human review.`,
-          traceRefs: [
-            scratch.retrieval?.searchRecordId ?? "retrieval:none",
-            alt.candidateId,
-            scratch.gaps?.items[0]?.id ?? "gap:none",
-          ],
-          support: "traceable_candidate_only" as const,
-        }));
-      if (draftClaims.length === 0) {
-        draftClaims.push({
-          text: "No draft candidates were available to summarise; brief abstains from scientific claims.",
-          traceRefs: [scratch.retrieval?.searchRecordId ?? "retrieval:none"],
-          support: "insufficient" as const,
-        });
-      }
-      const sourceLocators = [
-        ...(scratch.retrieval?.searchRecordId
-          ? (scratch.candidatePack?.relationships ?? [])
-              .flatMap((r) => r.evidenceSourceIds)
-              .filter((id) => /^pmid:/i.test(id) || /^\d+$/.test(id))
-              .slice(0, 8)
-              .map((id) => ({
-                kind: "pmid" as const,
-                value: id.replace(/^pmid:/i, ""),
-              }))
-          : []),
-      ];
-      const seedBrief = {
-        claims: draftClaims,
-        limitations: [
-          "Structured engineering brief only — not a scientifically validated conclusion",
-          "Candidate claims remain unapproved (curationReview=draft, hsiGrade=unexplored)",
-          ...(scratch.opposing?.limitations ?? []),
-          ...(scratch.mechanism?.limitations.slice(0, 3) ?? []),
-          "No efficacy, eligibility, or causal benefit inference",
-        ],
-        nextResearchActions: [
-          "Expert-reviewed gap assessment with recorded search scope and date (no Gate C auto-approve)",
-          "Passage-backed semantic entailment when reuse rights clear (human queue #2)",
-        ],
-        scientificValidityClaimed: false as const,
-      };
-      const integrated = integrateResearchBrief({
-        question,
-        boundedBrief: seedBrief,
-        opposingSearch: scratch.opposingReport,
-        translational: input.translational ?? null,
-        releaseAware: input.releaseAware ?? null,
-        sourceLocators,
+      const evidenceFence = await invokeFencedTool("evidence.get", async () => {
+        const draftClaims: ResearchBriefArtifact["claims"][number][] = (
+          scratch.hypotheses?.alternatives ?? []
+        )
+          .slice(0, 5)
+          .map((alt) => ({
+            text: `Draft candidate ${alt.candidateId} recorded as an uncertain alternative pending human review.`,
+            traceRefs: [
+              scratch.retrieval?.searchRecordId ?? "retrieval:none",
+              alt.candidateId,
+              scratch.gaps?.items[0]?.id ?? "gap:none",
+            ],
+            support: "traceable_candidate_only" as const,
+          }));
+        if (draftClaims.length === 0) {
+          draftClaims.push({
+            text: "No draft candidates were available to summarise; brief abstains from scientific claims.",
+            traceRefs: [scratch.retrieval?.searchRecordId ?? "retrieval:none"],
+            support: "insufficient" as const,
+          });
+        }
+        return {
+          resultRef:
+            "hsi-tool:evidence.get:" +
+            createHash("sha256")
+              .update(canonicalEvidenceJson({claims: draftClaims.length}))
+              .digest("hex")
+              .slice(0, 24),
+          value: {draftClaims},
+        };
       });
-      const artifact = toBoundedResearchBriefArtifact(integrated) as ResearchBriefArtifact;
-      if (artifact.cdsPhi !== false || HSI_CDS_PHI_INVARIANTS.containsPhi !== false) {
-        fail("CDS/PHI honesty violated");
+      let draftClaims;
+      try {
+        draftClaims = unwrapHsiFencedToolSuccess(evidenceFence, "Brief evidence get").value.draftClaims;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Brief evidence get failed");
       }
-      if (artifact.scientificValidityClaimed !== false || integrated.efficacyInferred !== false) {
-        fail("Brief must not claim scientific validity or efficacy");
+      const graphFence = await invokeFencedTool("graph.query", async () => {
+        const sourceLocators = [
+          ...(scratch.retrieval?.searchRecordId
+            ? (scratch.candidatePack?.relationships ?? [])
+                .flatMap((r) => r.evidenceSourceIds)
+                .filter((id) => /^pmid:/i.test(id) || /^\d+$/.test(id))
+                .slice(0, 8)
+                .map((id) => ({
+                  kind: "pmid" as const,
+                  value: id.replace(/^pmid:/i, ""),
+                }))
+            : []),
+        ];
+        const seedBrief = {
+          claims: draftClaims,
+          limitations: [
+            "Structured engineering brief only — not a scientifically validated conclusion",
+            "Candidate claims remain unapproved (curationReview=draft, hsiGrade=unexplored)",
+            ...(scratch.opposing?.limitations ?? []),
+            ...(scratch.mechanism?.limitations.slice(0, 3) ?? []),
+            "No efficacy, eligibility, or causal benefit inference",
+          ],
+          nextResearchActions: [
+            "Expert-reviewed gap assessment with recorded search scope and date (no Gate C auto-approve)",
+            "Passage-backed semantic entailment when reuse rights clear (human queue #2)",
+          ],
+          scientificValidityClaimed: false as const,
+        };
+        const integrated = integrateResearchBrief({
+          question,
+          boundedBrief: seedBrief,
+          opposingSearch: scratch.opposingReport,
+          translational: input.translational ?? null,
+          releaseAware: input.releaseAware ?? null,
+          sourceLocators,
+        });
+        const artifact = toBoundedResearchBriefArtifact(integrated) as ResearchBriefArtifact;
+        if (artifact.cdsPhi !== false || HSI_CDS_PHI_INVARIANTS.containsPhi !== false) {
+          fail("CDS/PHI honesty violated");
+        }
+        if (artifact.scientificValidityClaimed !== false || integrated.efficacyInferred !== false) {
+          fail("Brief must not claim scientific validity or efficacy");
+        }
+        const resultRef =
+          "hsi-tool:graph.query:" +
+          createHash("sha256")
+            .update(canonicalEvidenceJson({claims: artifact.claims.length}))
+            .digest("hex")
+            .slice(0, 24);
+        return {resultRef, value: artifact};
+      });
+      let artifact;
+      try {
+        artifact = unwrapHsiFencedToolSuccess(graphFence, "Brief graph query").value;
+      } catch (error) {
+        fail(error instanceof Error ? error.message : "Brief graph query failed");
       }
       scratch.brief = artifact;
       return {status: "completed", artifact, reason: null};
@@ -1496,6 +1724,7 @@ export async function runBoundedAgentExecution(input: {
     dataClass: "public_biomedical",
     now,
     signal: input.signal,
+    maxOrchestrationMs: budgets.maxOrchestrationMs,
   });
 
   const stages: BoundedStageTrace[] = [];
@@ -1534,6 +1763,8 @@ export async function runBoundedAgentExecution(input: {
     status: orchestration.status,
     stages,
     orchestration,
+    termination: orchestration.termination,
+    recoveryDecision,
     honesty: {
       metadataOnly: true,
       claimSupportNotAssessed: true,
@@ -1555,6 +1786,7 @@ export async function runBoundedAgentExecution(input: {
       "Research brief is a structured engineering artifact — no scientific validity claim",
       "Neon red-wave writes remain staging-gated via existing persist/checkpoint stores",
       "No Gate C auto-approve, CDS/PHI, or graph promotion",
+      "Recovery decisions remain human-authorised soft-land; research_admin live E2E still open",
       ...orchestration.limitations,
     ],
   };

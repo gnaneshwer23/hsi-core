@@ -33,14 +33,14 @@ export async function handleAsk(request:Request,env:Env,deps:AskDependencies={})
 }
 
 async function prepareAsk(request:Request,env:Env,deps:AskDependencies):Promise<Response|PreparedAsk>{
- if(request.method!=="POST")return new Response(JSON.stringify({error:"Method not allowed"}),{status:405,headers:{Allow:"POST","Content-Type":"application/json","Cache-Control":"no-store"}});
+ if(request.method!=="POST")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"POST"});
  const publicOrigin=httpsOrigin(env.HSI_PUBLIC_ORIGIN),authBaseUrl=httpsBase(env.HSI_AUTH_BASE_URL);
  if(!publicOrigin||!authBaseUrl)return gatewayJson({code:"ASK_NOT_CONFIGURED",error:"Ask is not available on this deployment"},503);
  if(request.headers.get("origin")!==publicOrigin)return gatewayJson({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
- if(!/^application\/json/i.test(request.headers.get("content-type")??""))return gatewayJson({error:"JSON body required"},415);
+ if(!/^application\/json/i.test(request.headers.get("content-type")??""))return gatewayJson({code:"JSON_REQUIRED",error:"JSON body required"},415);
  const raw=await request.text();
- if(raw.length>2000)return gatewayJson({error:"Request too large"},413);
- let body:any;try{body=JSON.parse(raw)}catch{return gatewayJson({error:"Invalid JSON"},400)}
+ if(raw.length>2000)return gatewayJson({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
+ let body:any;try{body=JSON.parse(raw)}catch{return gatewayJson({code:"INVALID_JSON",error:"Invalid JSON"},400)}
  const question=typeof body?.question==="string"?body.question.trim():"";
  if(question.length<8||question.length>500)return gatewayJson({code:"INVALID_QUESTION",error:"Ask a question between 8 and 500 characters"},400);
 
@@ -57,7 +57,7 @@ async function prepareAsk(request:Request,env:Env,deps:AskDependencies):Promise<
 async function runPreparedAsk(prepared:PreparedAsk,request:Request,env:Env,deps:AskDependencies):Promise<Response>{
  const now=(deps.now??Date.now)();
  const recent=(users.get(prepared.userId)??[]).filter(t=>now-t<3_600_000);
- if(recent.length>=ASK_USER_LIMIT_PER_HOUR)return gatewayJson({code:"RATE_LIMITED",error:"Hourly limit reached. Try again later."},429);
+ if(recent.length>=ASK_USER_LIMIT_PER_HOUR)return gatewayJson({code:"RATE_LIMITED",error:"Hourly limit reached. Try again later."},429,{"Retry-After":"3600"});
  users.set(prepared.userId,[...recent,now]);
  if(users.size>5000)users.clear();
 

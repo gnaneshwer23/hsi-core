@@ -10,16 +10,30 @@ describe("A-01 authenticated live evidence API",()=>{
   const result=await handleInterrogativeApi(new Request(base),{} as Parameters<typeof handleInterrogativeApi>[1]);
   expect(result.status).toBe(503);
  });
- it("rejects anonymous requests",async()=>expect((await handleLiveEvidenceApi(new Request(base),deps)).status).toBe(401));
- it("requires verified research authorization",async()=>expect((await handleLiveEvidenceApi(request(),{...deps,authenticate:async()=>({principalId:"owner-1",roles:[],authenticated:true})})).status).toBe(403));
- it("fails closed when staging writes are not enabled",async()=>expect((await handleLiveEvidenceApi(request(),deps)).status).toBe(503));
+ it("rejects anonymous requests",async()=>{
+  const response=await handleLiveEvidenceApi(new Request(base),deps);
+  expect(response.status).toBe(401);
+  expect(await response.json()).toEqual({code:"AUTH_REQUIRED",error:"authentication_required"});
+ });
+ it("requires verified research authorization",async()=>{
+  const response=await handleLiveEvidenceApi(request(),{...deps,authenticate:async()=>({principalId:"owner-1",roles:[],authenticated:true})});
+  expect(response.status).toBe(403);
+  expect(await response.json()).toEqual({code:"RESEARCH_ACCESS_DENIED",error:"research_access_denied"});
+ });
+ it("fails closed when staging writes are not enabled",async()=>{
+  const response=await handleLiveEvidenceApi(request(),deps);
+  expect(response.status).toBe(503);
+  expect(await response.json()).toEqual({code:"LIVE_PERSISTENCE_DISABLED",error:"live_persistence_disabled"});
+ });
  it("rejects client-provided identity or evidence",async()=>{
   const enabled={...deps,writesEnabled:true};
   const response=await handleLiveEvidenceApi(request("POST",{question:"How do immune cells interact?",requestId:"11111111-1111-4111-8111-111111111111",ownerId:"attacker"}),enabled);
   expect(response.status).toBe(400);
+  expect(await response.json()).toEqual({code:"INVALID_REQUEST",error:"invalid_request"});
  });
  it("requires same origin for cookie-authenticated writes",async()=>{
   const response=await handleLiveEvidenceApi(request("POST",{question:"How do immune cells interact?",requestId:"11111111-1111-4111-8111-111111111111"},{"origin":"https://attacker.example"}),{...deps,writesEnabled:true});
   expect(response.status).toBe(403);
+  expect(await response.json()).toEqual({code:"ORIGIN_NOT_ALLOWED",error:"origin_denied"});
  });
 });

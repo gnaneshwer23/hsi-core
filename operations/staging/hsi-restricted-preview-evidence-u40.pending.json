@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "hsi-restricted-preview-evidence-u40-pending-1",
+  "purpose": "hsi_restricted_preview_evidence_runners_u40",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "ENGINEERING_AUTHORIZED_AWAITING_STAGING",
+  "restrictedPreviewClaimed": false,
+  "acceptedForScope": false,
+  "checklist1Verified": false,
+  "signedPacketClaimed": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "inventedStagingUrl": false,
+  "inventedGrant": false,
+  "gateCAutoApprove": false,
+  "honesty": {
+    "fixtureIsNotStagingGrant": true,
+    "liveRequiresOwnerOrigin": true,
+    "acceptedForScopeStaysFalse": true,
+    "checklist1StaysUnverifiedUntilOwnerRefs": true,
+    "noInventedHosts": true,
+    "noInventedGrants": true,
+    "noGateC": true,
+    "noProductionWrites": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun run staging:preview-evidence:check",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun run staging:preview-evidence:fixture",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "ownerGatedModes": {
+    "live": {
+      "command": "bun run staging:preview-evidence:live",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "staging_target_ref": "NOT_APPROVED",
+    "preview_grant_ref": "UNASSIGNED",
+    "staging_grant_run_ref": "NOT_STARTED",
+    "continuous_journey_evidence_digest": "BLOCKED_UNTIL_STAGING_GRANT",
+    "auth_probe_digest": "NOT_STARTED",
+    "restricted_preview_go_ref": "ENGINEERING_AUTHORIZED_AWAITING_STAGING",
+    "owner_approval_ref": "HSI_RESTRICTED_PREVIEW_EVIDENCE_OWNER_APPROVAL@2026-11-21"
+  },
+  "surfaces": {
+    "auth_grant_fail_closed": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
+    "auth_session_expiry_honesty": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
+    "continuous_journey_local_e2e": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
+    "continuous_journey_staging_grant": { "status": "OWNER_GATED", "restrictedPreviewClaimed": false },
+    "device_local_save_reopen": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
+    "production_writes_refused": { "status": "ENGINEERING_READY", "restrictedPreviewClaimed": false },
+    "u12_worksheet_fill": { "status": "ENGINEERING_READY_OWNER_REFS_REQUIRED", "restrictedPreviewClaimed": false }
+  },
+  "notes": "U40 owner-authorized engineering runners for restricted-preview auth + continuous-journey evidence. Fill U12 / continuous-journey pending refs only with real digests from live mode. Soft-land never invents hosts, grants, preview GO, or checklist #1 verified.",
+  "relatedSoftLands": [
+    "operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json",
+    "operations/staging/hsi-10-continuous-journey-evidence.pending.json",
+    "operations/staging/two-account-auth-prep.v1.json"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "hsi-capability-register-1",
   "registerId": "hsi-capability-register-2026-11-08",
-  "asOf": "2026-11-13",
+  "asOf": "2026-11-21",
   "masterSpec": "docs/product/HSI_DEFINITIVE_PRODUCT_SPEC.md",
   "humanDoc": "docs/STATUS.md",
   "honesty": {
@@ -147,9 +147,13 @@
         "site/src/pages/ResearchDashboard.tsx",
         "site/src/pages/ScientificResearchWorkbench.tsx",
         "site/src/pages/AuthenticatedInterrogativeWorkbench.tsx",
-        "site/src/pages/ResearchMechanismWorkflow.tsx"
+        "site/src/pages/ResearchMechanismWorkflow.tsx",
+        "site/src/pages/HomeLanding.tsx",
+        "site/src/components/landing/InvestigationFlowDiagram.tsx",
+        "site/src/pages/DemoUniversePage.tsx",
+        "src/demoUniverse/index.ts"
       ],
-      "gap": "Specialist pages remain; synthetic profiles demoted from hero",
+      "gap": "Specialist pages remain. Public diagram-first landings + Demo Research Universe merged (#554\u2013#584, #555\u2013#567). Not production acceptance of live science.",
       "nextAction": "Keep specialist views; primary path is decision-workbench + mechanism-workflow"
     },
     {
@@ -363,8 +367,8 @@
         "src/knowledgeGraph/investigationStore.ts",
         "src/ontology/mappingReview.ts"
       ],
-      "gap": "Default path remains device-local localStorage. Server path is fail-closed behind HSI_GRAPH_WORKSPACE_STORE_ENABLED plus staging writes pins (A3.3); migrations 031–033 stay held; never applied to production; acceptedForScope stays false",
-      "nextAction": "Owner applies 031–033 on disposable/staging only; run real-account acceptance; keep production flag off"
+      "gap": "Default path remains device-local localStorage. Server path is fail-closed behind HSI_GRAPH_WORKSPACE_STORE_ENABLED plus staging writes pins (A3.3); migrations 031\u2013033 stay held; never applied to production; acceptedForScope stays false",
+      "nextAction": "Owner applies 031\u2013033 on disposable/staging only; run real-account acceptance; keep production flag off"
     },
     {
       "id": "F-17",
@@ -512,7 +516,7 @@
         "src/investigationDelivery.ts",
         "research/connected-workbench/r3/"
       ],
-      "gap": "Live Ask→export completion needs human #5",
+      "gap": "Live Ask\u2192export completion needs human #5",
       "nextAction": "Keep export path; do not fake completion"
     },
     {
@@ -560,7 +564,7 @@
       "evidence": [
         "src/immuneCellSpine.ts"
       ],
-      "gap": "Vocabulary/spine ≠ autonomous investigator service",
+      "gap": "Vocabulary/spine \u2260 autonomous investigator service",
       "nextAction": "Expand curation"
     },
     {
@@ -737,7 +741,7 @@
         "site/src/components/ResearchOutcomePanel.tsx"
       ],
       "gap": "Reverse trace exposed in outcome sections; not every science surface",
-      "nextAction": "Maintain claim→passage→source in journey UI"
+      "nextAction": "Maintain claim\u2192passage\u2192source in journey UI"
     },
     {
       "id": "E-CONT",
@@ -764,7 +768,7 @@
     {
       "id": "J-R3",
       "group": "research_journey",
-      "name": "R3 Ask→export connected workbench",
+      "name": "R3 Ask\u2192export connected workbench",
       "status": [
         "connected",
         "blocked"
@@ -774,15 +778,19 @@
         "src/evidence/r3ConnectedResearchWorkbench.ts",
         "research/connected-workbench/r3/",
         "site/src/pages/ResearchMechanismWorkflow.tsx",
-        "site/src/components/InvestigationProgress.tsx"
+        "site/src/components/InvestigationProgress.tsx",
+        "site/src/pages/InvestigationWorkspace.tsx",
+        "src/investigation/unifiedJourneyTrail.ts",
+        "site/e2e/workspace-continuous-journey.spec.ts",
+        "docs/engineering/WORKSPACE_CONTINUOUS_TRAIL.md"
       ],
-      "gap": "UI journey 01–06 continuous; researcherJourneyCompleteClaimed=false; needs #5 for live writes",
-      "nextAction": "Keep probe path; live Ask→export parked"
+      "gap": "Continuous unified trail + Playwright journey on /research/workspace shipped (#569\u2013#576). researcherJourneyCompleteClaimed=false; staging grant run and Human #5 durable writes still required for acceptance #1/#5.",
+      "nextAction": "Owner staging continuous-journey evidence packet; keep production writes fail-closed"
     },
     {
       "id": "J-INV",
       "group": "research_journey",
-      "name": "Gut–immune–metabolic–neuroinflammation investigation",
+      "name": "Gut\u2013immune\u2013metabolic\u2013neuroinflammation investigation",
       "status": [
         "implemented",
         "synthetic_only"
@@ -859,6 +867,78 @@
       "acceptance": {
         "deployment": "not_verified",
         "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "J-CONT",
+      "group": "research_journey",
+      "name": "Continuous Stage 2 investigation trail (workspace)",
+      "status": [
+        "implemented",
+        "connected",
+        "blocked"
+      ],
+      "evidence": [
+        "site/src/pages/InvestigationWorkspace.tsx",
+        "src/investigation/unifiedJourneyTrail.ts",
+        "src/investigation/workspaceTrailNavigation.ts",
+        "src/investigation/liveSourceReliabilityHonesty.ts",
+        "src/investigation/provisionalHypothesisHonesty.ts",
+        "site/e2e/workspace-continuous-journey.spec.ts",
+        "docs/engineering/WORKSPACE_CONTINUOUS_TRAIL.md",
+        "docs/engineering/HSI_1_0_ACCEPTANCE_STATUS_2026-11-20.md"
+      ],
+      "gap": "Engineering continuous path + honesty labels shipped. Owner-verified acceptance #1\u2013#8 remain 0/8. Device-local save only; clearance unverified.",
+      "nextAction": "Fill staging journey evidence soft-land; Human #2/#5 before claiming preview acceptance",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "J-DEMO",
+      "group": "research_journey",
+      "name": "Demo Research Universe (synthetic scenarios)",
+      "status": [
+        "implemented",
+        "synthetic_only"
+      ],
+      "evidence": [
+        "src/demoUniverse/index.ts",
+        "src/demoUniverse/manifest.ts",
+        "site/src/pages/DemoUniversePage.tsx",
+        "site/e2e/demo-universe.spec.ts",
+        "test/demoUniverseIntegrity.test.ts",
+        "docs/design/HSI_DEMO_RESEARCH_UNIVERSE_INVENTORY_2026-11-19.md"
+      ],
+      "gap": "Six seeded synthetic scenarios with demonstration labels. canEnableRealData=false; not a substitute for live /research/workspace retrieval.",
+      "nextAction": "Keep synthetic labels; do not route live Ask through demo bundles",
+      "acceptance": {
+        "deployment": "not_assessed",
+        "scientific": "not_accepted"
+      }
+    },
+    {
+      "id": "PUB-LAND",
+      "group": "foundations",
+      "name": "Public diagram-first marketing landings",
+      "status": [
+        "implemented",
+        "connected"
+      ],
+      "evidence": [
+        "site/src/pages/HomeLanding.tsx",
+        "site/src/pages/HowItWorksPage.tsx",
+        "site/src/pages/AudiencePublicPages.tsx",
+        "site/src/lib/primaryNav.ts",
+        "site/e2e/landing-pages.spec.ts",
+        "docs/plans/HSI_PRODUCTION_READINESS_PHASE_2026-11-21.md"
+      ],
+      "gap": "Merged through #584. Visual production acceptance and dated QA packet still required for public launch sign-off. CI green \u2260 craft/owner acceptance.",
+      "nextAction": "Complete public launch QA packet (U2); no further redesign unless owner requests",
+      "acceptance": {
+        "deployment": "not_verified",
+        "scientific": "not_applicable"
       }
     },
     {
@@ -939,17 +1019,25 @@
     {
       "finding": "gapReport mapping gaps vs scientific gaps",
       "disposition": "keep_concepts_distinct"
+    },
+    {
+      "finding": "Demo Universe vs live /research/workspace",
+      "disposition": "keep_separate_demo_synthetic_only"
+    },
+    {
+      "finding": "Business pre-mortem vs technical release gates",
+      "disposition": "strategy_only_not_release_blocker"
     }
   ],
   "step02Plan": {
     "completedInThisPr": [
-      "Map outcome DTO to investigation sections 01–06 in ResearchOutcomePanel",
+      "Map outcome DTO to investigation sections 01\u201306 in ResearchOutcomePanel",
       "Demote synthetic profiles from research dashboard hero",
       "Shared InvestigationProgress chrome on decision-workbench + mechanism-workflow",
-      "Reverse trace claim→passage→source in outcome sections"
+      "Reverse trace claim\u2192passage\u2192source in outcome sections"
     ],
     "parked": [
-      "Live Ask→export production writes (human #5)",
+      "Live Ask\u2192export production writes (human #5)",
       "Gate C / MoU / SME gold / CDS-PHI"
     ],
     "forbidden": [
@@ -960,7 +1048,8 @@
       "gate_c_auto_approve",
       "cds_phi",
       "autumn_snow_for_hsi"
-    ]
+    ],
+    "note20261121": "Historical Step-02 park list. Public landing redesign later shipped under separate PRs (#554\u2013#584); do not interpret forbidden.landing_redesign as current product ban on already-merged pages."
   },
   "governingVision": "docs/strategy/HSI_VISION.md",
   "acceptanceCrosswalk": "docs/audits/HSI_IMPLEMENTATION_TRUTH_AND_NEXT_PRS.md",
@@ -1462,5 +1551,38 @@
         "governedPublicationBy": null
       }
     ]
+  },
+  "postMergeReconcile20261121": {
+    "baseCommit": "321ae53fb4233835db0ac22f07f1bc4aa6bb3a7a",
+    "mergedStacks": {
+      "publicLandings": [
+        "#554",
+        "#580",
+        "#581",
+        "#582",
+        "#583",
+        "#584"
+      ],
+      "demoResearchUniverse": [
+        "#555",
+        "#562",
+        "#564",
+        "#565",
+        "#566",
+        "#567"
+      ],
+      "workspaceHonestyContinuous": [
+        "#569",
+        "#570",
+        "#572",
+        "#573",
+        "#574",
+        "#575",
+        "#576"
+      ]
+    },
+    "hsi10VerifiedAcceptance": "0/8",
+    "premortemIsReleaseBlocker": false,
+    "notes": "Engineering surfaces advanced 20\u201321 Nov 2026. Do not treat merged PRs or CI as scientific/production acceptance."
   }
 }

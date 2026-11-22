@@ -1,0 +1,47 @@
+{
+  "schemaVersion": "hsi-1-0-continuous-journey-evidence-pending-1",
+  "purpose": "hsi_1_0_continuous_journey_evidence_soft_land",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "acceptedForScope": false,
+  "signedPacketClaimed": false,
+  "journeyCompleteClaimed": false,
+  "productionWritesEnabled": false,
+  "scientificApproval": false,
+  "inventedStagingUrl": false,
+  "gateCAutoApprove": false,
+  "honesty": {
+    "catalogsExistAcceptanceBlocked": true,
+    "noInventedStagingUrl": true,
+    "noProductionWrites": true,
+    "noJourneyCompleteClaim": true,
+    "fixtureIsNotOwnerAcceptance": true,
+    "localE2eIsNotStagingGrant": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun test test/hsi10ContinuousJourneyEvidenceSoftLand.test.ts",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "cd site && bun run test:e2e -- e2e/workspace-continuous-journey.spec.ts",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "references": {
+    "staging_grant_run_ref": "NOT_STARTED",
+    "staging_target_ref": "NOT_APPROVED",
+    "checklist_1_evidence_ref": "BLOCKED_UNTIL_STAGING_GRANT",
+    "checklist_5_human_5_ref": "NOT_STARTED"
+  },
+  "surfaces": {
+    "local_playwright_continuous": { "status": "ENGINEERING_READY", "ownerVerified": false },
+    "local_live_investigation": { "status": "ENGINEERING_READY", "ownerVerified": false },
+    "device_local_save_reopen": { "status": "ENGINEERING_READY", "ownerVerified": false },
+    "staging_grant_run": { "status": "OWNER_GATED", "ownerVerified": false },
+    "production_writes": { "status": "REFUSED", "ownerVerified": false }
+  },
+  "notes": "Local Playwright green ≠ checklist #1 verified. Fill private staging grant refs only after a real owner-approved run. Soft-land never invents hosts or acceptance."
+}

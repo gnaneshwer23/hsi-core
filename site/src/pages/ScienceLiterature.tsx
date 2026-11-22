@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { RelatedWorksPanel } from "../components/RelatedWorksPanel";
+import { formatResearchApiError } from "../lib/researchApiErrors";
 import "../styles/science-body.css";
 
 type Publication = {
@@ -39,8 +40,15 @@ export function ScienceLiterature(){
     const p=new URLSearchParams({cursor:search.cursor});
     if(search.query)p.set("term",search.query);
     const response=await fetch(`/api/research/literature-search?${p}`,{signal:controller.signal});
-    const data=await response.json() as Result;
-    if(!response.ok)throw new Error(data.error||`Literature service returned HTTP ${response.status}`);
+    const data=await response.json() as Result&{code?:string};
+    if(!response.ok){
+     throw new Error(formatResearchApiError(
+      response,
+      {code:typeof data.code==="string"?data.code:undefined,error:typeof data.error==="string"?data.error:undefined},
+      "scientific_retrieval",
+      `Literature service returned HTTP ${response.status}`,
+     ));
+    }
     if(!Array.isArray(data.records))throw new Error("Literature service returned an invalid response");
     setRecords(data.records);
     setTotal(typeof data.hitCount==="number"?data.hitCount:null);

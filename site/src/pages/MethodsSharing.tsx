@@ -2,13 +2,18 @@ import {useState} from "react";
 import {Link} from "react-router-dom";
 import {OUTCOMES,createRecord,exportNotebook,summary,type Deviation,type Outcome} from "../../../src/methods/notebook";
 import {compareMethodsApi,type CompareOutcome} from "../lib/methodsCompareClient";
+import {formatRetryAfterHint} from "../lib/retryAfter";
 import {useNotebook} from "../lib/useNotebook";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {Icon} from "../components/home/AppIcons";
 import "../styles/research-home.css";
 
 const OL:Record<Outcome,string>={worked:"Worked",partly:"Partly worked",failed:"Failed",unknown:"Not yet known"};
-const FAIL={limited:"Too many requests. Try again in a few minutes.",invalid:"Describe the technique in 3 to 120 characters using letters, numbers and simple punctuation.",unavailable:"Open-access text could not be read, so nothing is shown. Nothing was generated."};
+const FAIL={invalid:"Describe the technique in 3 to 120 characters using letters, numbers and simple punctuation.",unavailable:"Open-access text could not be read, so nothing is shown. Nothing was generated."};
+function failMessage(out:Exclude<CompareOutcome,{kind:"ok"}>):string{
+ if(out.kind==="limited")return`Too many requests. ${formatRetryAfterHint(out.retryAfterSeconds,"Try again in a few minutes.")}`;
+ return FAIL[out.kind];
+}
 const EMPTY_DEV:Deviation={parameter:"",published:"",mine:"",reason:""};
 const download=(name:string,text:string)=>{const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"application/json"}));a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
 
@@ -46,7 +51,7 @@ export function MethodsSharingPage(){
       <p className="rh-note">Reads up to six papers with a CC BY or CC0 licence from Europe PMC. This can take up to half a minute. No model is used.</p>
      </form>
      <div role="status" aria-live="polite">
-      {out&&out.kind!=="ok"&&<p className="rh-err" role="alert">{FAIL[out.kind]}</p>}
+      {out&&out.kind!=="ok"&&<p className="rh-err" role="alert">{failMessage(out)}</p>}
       {out?.kind==="ok"&&<><p className="rh-note">{out.papers.filter(p=>p.methodsFound).length} papers compared. {out.notes.join(" ")}</p>
        <ul className="ms-papers" aria-label="Papers read">{out.papers.map(p=><li key={p.id}><a href={p.url} target="_blank" rel="noreferrer noopener">{p.title}</a> <small>({p.licence}; {p.methodsFound?`${p.parameters} values found`:"no readable methods"})</small></li>)}</ul></>}
      </div>

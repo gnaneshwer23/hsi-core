@@ -123,10 +123,12 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
           setMessage("");
         }
       })
-      .catch(() => {
+      .catch((e) => {
         if (!controller.signal.aborted) {
           setMessage(
-            "The research outcome could not be verified. Refresh to check current evidence and access.",
+            e instanceof Error && e.message
+              ? e.message
+              : "The research outcome could not be verified. Refresh to check current evidence and access.",
           );
         }
       })
@@ -153,8 +155,12 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
     try {
       await downloadResearchOutcome(brief, outcome, format);
       setMessage("Verified research outcome downloaded.");
-    } catch {
-      setMessage("The download could not be verified. Refresh the outcome before retrying.");
+    } catch (e) {
+      setMessage(
+        e instanceof Error && e.message
+          ? e.message
+          : "The download could not be verified. Refresh the outcome before retrying.",
+      );
     } finally {
       setBusy(false);
     }
@@ -166,13 +172,17 @@ export function ResearchOutcomePanel({brief}: {brief: EvidenceBrief}) {
     setMessage("");
     try {
       const current = await fetchResearchOutcome(brief, AbortSignal.timeout(20000));
-      if (current.outcomeHash !== outcome.outcomeHash) throw Error();
+      if (current.outcomeHash !== outcome.outcomeHash) throw Error("The current brief could not be verified for printing. Refresh and check access.");
       printResearchDocument(
         "Human Super Intelligence — research brief",
         renderResearchOutcome(current, "markdown"),
       );
-    } catch {
-      setMessage("The current brief could not be verified for printing. Refresh and check access.");
+    } catch (e) {
+      setMessage(
+        e instanceof Error && e.message
+          ? e.message
+          : "The current brief could not be verified for printing. Refresh and check access.",
+      );
     } finally {
       setBusy(false);
     }

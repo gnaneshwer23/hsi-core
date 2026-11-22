@@ -31,6 +31,8 @@ HSI is one product with two governed planes joined by one explicit interface.
 | De-identification process (the current identifier scan is pattern-based, not a de-identification engine) | Not started |
 | Intended-purpose statement and MHRA software-as-a-medical-device position | Not started |
 
+**Owner update (21 November 2026 / U36):** Founder authorized *clinical-plane synthetic engineering advance* and *public L0 production deploy*. That authorization does **not** close any gate in this table, does **not** enable `real` dataClass in `releaseGate`, and does **not** flip scientific-plane CDS/PHI invariants. Catalog: `src/clinicalPlane/clinicalPlanePrivateRepoReadiness.ts`.
+
 ## Roles (interim, recorded 15 November 2026)
 The owner named himself, Dr Gnaneshwer Jadav, for both roles for the prototype stage. These entries are **interim and self-appointed** and do not satisfy the gates above.
 

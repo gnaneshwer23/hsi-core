@@ -68,7 +68,11 @@ describe("ask routing",()=>{
   // The live handler also limits per IP (5 per 10 minutes), so vary the IP and keep the clock moving.
   const run=async(user:string,i:number)=>{resetLiveInvestigationLimiter();return handleAsk(new Request(ORIGIN+"/api/ask",{method:"POST",headers:{"content-type":"application/json",origin:ORIGIN,cookie:COOKIE,"x-forwarded-for":"10.0.0."+i},body:JSON.stringify({question:IL21})}),env2,{transport:session({user}),fetcher,now:()=>now,controls})};
   for(let i=0;i<ASK_USER_LIMIT_PER_HOUR;i++)expect((await run("u1",i)).status).toBe(200);
-  expect((await run("u1",99)).status).toBe(429);
+  const limited=await run("u1",99);
+  expect(limited.status).toBe(429);
+  expect(limited.headers.get("Retry-After")).toBe("3600");
+  const limitedBody:any=await limited.json();
+  expect(limitedBody.code).toBe("RATE_LIMITED");
   expect((await run("u2",100)).status).toBe(200);
   now+=3_700_000;expect((await run("u1",101)).status).toBe(200);
  });

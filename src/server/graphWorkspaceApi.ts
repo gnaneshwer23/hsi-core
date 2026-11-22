@@ -75,7 +75,7 @@ export async function handleGraphWorkspaceApi(
  });
 
  if(path==="/api/research/graph-workspace/status"){
-  if(request.method!=="GET")return gatewayJson({error:"Method not allowed"},405);
+  if(request.method!=="GET")return gatewayJson({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405);
   return gatewayJson({
    service:"hsi-graph-workspace",
    enabled:gate.enabled,
@@ -111,12 +111,12 @@ export async function handleGraphWorkspaceApi(
 
   if(path==="/api/research/graph-workspace/investigations"&&request.method==="POST"){
    if((request.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json"){
-    return gatewayJson({error:"JSON required"},415);
+    return gatewayJson({code:"JSON_REQUIRED",error:"JSON required"},415);
    }
    const text=await boundedRequestText(request,200_000);
    let body:unknown;
-   try{body=JSON.parse(text)}catch{return gatewayJson({error:"Invalid JSON"},400)}
-   if(!body||typeof body!=="object"||!("record" in body))return gatewayJson({error:"record required"},400);
+   try{body=JSON.parse(text)}catch{return gatewayJson({code:"INVALID_JSON",error:"Invalid JSON"},400)}
+   if(!body||typeof body!=="object"||!("record" in body))return gatewayJson({code:"RECORD_REQUIRED",error:"record required"},400);
    const record=(body as {record:InvestigationRecord}).record;
    const graph=(dependencies.loadGraph??defaultGraph)();
    const result=await workspace.investigations.save(graph,record);
@@ -126,9 +126,9 @@ export async function handleGraphWorkspaceApi(
   const getMatch=/^\/api\/research\/graph-workspace\/investigations\/([A-Za-z0-9][A-Za-z0-9:_-]{2,80})$/.exec(path);
   if(getMatch&&request.method==="GET"){
    const revision=Number(url.searchParams.get("revision")??"");
-   if(!Number.isInteger(revision)||revision<1)return gatewayJson({error:"revision query required"},400);
+   if(!Number.isInteger(revision)||revision<1)return gatewayJson({code:"REVISION_REQUIRED",error:"revision query required"},400);
    const saved=await workspace.investigations.get(getMatch[1]!,revision);
-   if(!saved)return gatewayJson({error:"not_found"},404);
+   if(!saved)return gatewayJson({code:"NOT_FOUND",error:"not_found"},404);
    return gatewayJson({saved,path:"server",scientificApproval:false});
   }
 
@@ -144,26 +144,26 @@ export async function handleGraphWorkspaceApi(
 
   if(path==="/api/research/graph-workspace/recommendations"&&request.method==="POST"){
    if((request.headers.get("content-type")??"").split(";")[0]?.trim().toLowerCase()!=="application/json"){
-    return gatewayJson({error:"JSON required"},415);
+    return gatewayJson({code:"JSON_REQUIRED",error:"JSON required"},415);
    }
    const text=await boundedRequestText(request,32_000);
    let body:unknown;
-   try{body=JSON.parse(text)}catch{return gatewayJson({error:"Invalid JSON"},400)}
-   if(!body||typeof body!=="object")return gatewayJson({error:"Invalid body"},400);
+   try{body=JSON.parse(text)}catch{return gatewayJson({code:"INVALID_JSON",error:"Invalid JSON"},400)}
+   if(!body||typeof body!=="object")return gatewayJson({code:"INVALID_BODY",error:"Invalid body"},400);
    const input=body as DecisionInput;
    if(typeof input.conceptId!=="string"||typeof input.reason!=="string"||typeof input.reviewerLabel!=="string"){
-    return gatewayJson({error:"Invalid decision input"},400);
+    return gatewayJson({code:"INVALID_DECISION_INPUT",error:"Invalid decision input"},400);
    }
    const mappings=(dependencies.loadMappings??defaultMappings)();
    const result=await workspace.recommendations.record(mappings,input);
    return gatewayJson({...result,path:"server",scientificApproval:false,exactMappingApproved:false});
   }
 
-  return gatewayJson({error:"Not found"},404);
+  return gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
  }catch(error){
-  if(error instanceof RequestBodyTooLarge)return gatewayJson({error:"Payload too large"},413);
-  if(error instanceof RequestBodyTimeout)return gatewayJson({error:"Request body timed out"},408);
-  return gatewayJson({error:"Graph workspace operation denied or unavailable"},403);
+  if(error instanceof RequestBodyTooLarge)return gatewayJson({code:"PAYLOAD_TOO_LARGE",error:"Payload too large"},413);
+  if(error instanceof RequestBodyTimeout)return gatewayJson({code:"REQUEST_TIMEOUT",error:"Request body timed out"},408);
+  return gatewayJson({code:"GRAPH_WORKSPACE_DENIED",error:"Graph workspace operation denied or unavailable"},403);
  }finally{
   if(handle)await handle.close();
  }

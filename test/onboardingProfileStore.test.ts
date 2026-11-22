@@ -63,6 +63,24 @@ describe("onboarding profile API",()=>{
     expect(put!.status).toBe(400);
     expect((await put!.json() as {code:string}).code).toBe("PHI_REFUSED");
   });
+
+  test("PUT validation failures expose stable envelope codes",async()=>{
+    const store=createMemoryOnboardingProfileStore();
+    const cfg={storeEnabled:true,writesEnabled:true,databaseUrl:stagingUrl,store};
+    const method=await handleOnboardingProfileApi(new Request("https://hsi.test/api/research/onboarding-profile",{method:"POST"}),cfg,{id:"user-1",emailVerified:true});
+    expect(method!.status).toBe(405);
+    expect(await method!.json()).toEqual({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"});
+    const ctype=await handleOnboardingProfileApi(new Request("https://hsi.test/api/research/onboarding-profile",{
+      method:"PUT",headers:{"Content-Type":"text/plain"},body:"{}",
+    }),cfg,{id:"user-1",emailVerified:true});
+    expect(ctype!.status).toBe(415);
+    expect(await ctype!.json()).toEqual({code:"JSON_REQUIRED",error:"JSON body required"});
+    const badJson=await handleOnboardingProfileApi(new Request("https://hsi.test/api/research/onboarding-profile",{
+      method:"PUT",headers:{"Content-Type":"application/json"},body:"{",
+    }),cfg,{id:"user-1",emailVerified:true});
+    expect(badJson!.status).toBe(400);
+    expect(await badJson!.json()).toEqual({code:"INVALID_JSON",error:"Invalid JSON"});
+  });
 });
 
 describe("onboarding profile client",()=>{

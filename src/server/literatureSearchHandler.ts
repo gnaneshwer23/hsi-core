@@ -36,25 +36,25 @@ export function buildSscLiteratureQuery(term:string):string{
 }
 
 export async function handleLiteratureSearch(request:Request,env:Env,deps:{fetcher?:FetchLike;now?:()=>Date}={}):Promise<Response>{
- if(request.method!=="GET")return json({error:"Method not allowed"},405,{Allow:"GET"});
+ if(request.method!=="GET")return json({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"GET"});
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
- if(pub&&origin&&origin!==pub)return json({error:"Origin not allowed"},403);
+ if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
  const url=new URL(request.url);
  const refined=refineTerm(url.searchParams.get("term"));
- if(!refined.ok)return json({error:"Invalid search term"},400);
+ if(!refined.ok)return json({code:"INVALID_SEARCH_TERM",error:"Invalid search term"},400);
  const term=refined.term;
  let cursorMark:string;
  try{cursorMark=assertValidEuropePmcCursorMark(url.searchParams.get("cursor")??EUROPE_PMC_CURSOR_MARK_START)}
- catch{return json({error:"Invalid cursor"},400)}
+ catch{return json({code:"INVALID_CURSOR",error:"Invalid cursor"},400)}
  const now=deps.now??(()=>new Date()),ip=(request.headers.get("x-forwarded-for")??"unknown").split(",")[0]!.trim().slice(0,64);
  const recent=(hits.get(ip)??[]).filter(t=>now().getTime()-t<600_000);
- if(recent.length>=20)return json({error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
+ if(recent.length>=20)return json({code:"RATE_LIMITED",error:"Rate limit reached. Try again later."},429,{"Retry-After":"600"});
  rememberHit(ip,now().getTime());
  const query=buildSscLiteratureQuery(term);
  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),10_000);
  try{
   const result=await searchEuropePmcByQuery({query,pageSize:20,cursorMark,fetcher:deps.fetcher,now,signal:controller.signal});
-  if(!result.ok)return json({error:"Literature retrieval unavailable. No claims can be verified while retrieval is unavailable."},502);
+  if(!result.ok)return json({code:"RETRIEVAL_UNAVAILABLE",error:"Literature retrieval unavailable. No claims can be verified while retrieval is unavailable."},502);
   return json({
    schemaVersion:"hsi-literature-search-1",
    hitCount:result.hitCount,

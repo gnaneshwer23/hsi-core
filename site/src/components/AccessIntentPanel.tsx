@@ -1,5 +1,10 @@
-import {useEffect,useRef,useState,type FormEvent} from "react";
+import {useEffect,useState,type FormEvent} from "react";
 import {Link,useSearchParams} from "react-router-dom";
+import {
+  fetchAccessRequestStatus,
+  submitAccessRequest,
+} from "../lib/accessRequestClient";
+import {formatRetryAfterHint} from "../lib/retryAfter";
 import {
   clearAccessIntent,
   readAccessIntent,
@@ -11,6 +16,7 @@ import {
 } from "../lib/researchContext";
 
 type DeliveryStatus="loading"|"configured"|"unavailable"|"unknown";
+type StatusTone="status"|"alert";
 
 /**
  * Research access intent: browser draft always available; optional server delivery when configured.
@@ -25,9 +31,14 @@ export function AccessIntentPanel(){
   const [honeypot,setHoneypot]=useState("");
   const [draft,setDraft]=useState<AccessIntentDraft|null>(null);
   const [status,setStatus]=useState("");
+  const [statusTone,setStatusTone]=useState<StatusTone>("status");
   const [deliveryStatus,setDeliveryStatus]=useState<DeliveryStatus>("loading");
   const [busy,setBusy]=useState(false);
-  const statusAttempts=useRef(0);
+
+  function announce(message:string,tone:StatusTone="status"){
+    setStatusTone(tone);
+    setStatus(message);
+  }
 
   useEffect(()=>{
     const existing=readAccessIntent();
@@ -41,20 +52,12 @@ export function AccessIntentPanel(){
   useEffect(()=>{
     const controller=new AbortController();
     void (async()=>{
-      try{
-        const r=await fetch("/api/access-requests",{signal:controller.signal});
-        const b:unknown=await r.json();
-        if(controller.signal.aborted)return;
-        const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
-        if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
-        else if(r.ok)setDeliveryStatus("unavailable");
-        else setDeliveryStatus("unknown");
-      }catch{
-        if(controller.signal.aborted)return;
-        // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
-        statusAttempts.current+=1;
-        setDeliveryStatus("unavailable");
-      }
+      const result=await fetchAccessRequestStatus(fetch,controller.signal);
+      if(controller.signal.aborted)return;
+      // Fail closed to draft-only so the contact page stays usable without a second identical Save control.
+      if(result.kind==="configured")setDeliveryStatus("configured");
+      else if(result.kind==="unavailable")setDeliveryStatus("unavailable");
+      else setDeliveryStatus("unavailable");
     })();
     return ()=>controller.abort();
   },[]);
@@ -65,7 +68,7 @@ export function AccessIntentPanel(){
     e?.preventDefault();
     const trimmed=question.trim();
     if(trimmed.length<12){
-      setStatus("Describe your research question in at least 12 characters.");
+      announce("Describe your research question in at least 12 characters.","alert");
       return;
     }
     try{
@@ -76,9 +79,9 @@ export function AccessIntentPanel(){
         emailHint:emailHint||undefined,
       });
       setDraft(saved);
-      setStatus("Saved in this browser only. No access request was sent to HSI servers.");
+      announce("Saved in this browser only. No access request was sent to HSI servers.");
     }catch{
-      setStatus("Could not save a browser draft in this session. Your question was not sent.");
+      announce("Could not save a browser draft in this session. Your question was not sent.","alert");
     }
   }
 
@@ -88,7 +91,7 @@ export function AccessIntentPanel(){
     const emailSnapshot=emailHint;
     const honeypotSnapshot=honeypot;
     if(trimmed.length<12){
-      setStatus("Describe your research question in at least 12 characters.");
+      announce("Describe your research question in at least 12 characters.","alert");
       return;
     }
     if(!deliveryConfigured){
@@ -97,52 +100,56 @@ export function AccessIntentPanel(){
     }
     setBusy(true);
     try{
-      const response=await fetch("/api/access-requests",{
-        method:"POST",
-        headers:{"content-type":"application/json"},
-        body:JSON.stringify({
-          question:trimmed,
-          email:emailSnapshot||undefined,
-          domain:domain||undefined,
-          scenarioId:scenario||undefined,
-          company_website:honeypotSnapshot,
-        }),
+      const result=await submitAccessRequest({
+        question:trimmed,
+        email:emailSnapshot||undefined,
+        domain:domain||undefined,
+        scenarioId:scenario||undefined,
+        company_website:honeypotSnapshot,
       });
-      const data:unknown=await response.json().catch(()=>({}));
-      const record=data&&typeof data==="object"&&!Array.isArray(data)?data as Record<string,unknown>:{};
-      if(response.status===202&&record.ok===true&&record.providerAccepted!==true&&record.delivered!==true){
-        // Honeypot / quiet accept: do not claim provider delivery and do not show a failure.
-        setQuestion(trimmed);
-        setEmailHint(emailSnapshot);
-        setStatus("Request recorded. Nothing was claimed as delivered to the operator.");
-        return;
-      }
-      if(response.ok&&(record.providerAccepted===true||record.delivered===true)){
-        try{
-          writeAccessIntent({
-            question:trimmed,
-            domain:domain||undefined,
-            scenarioId:scenario||undefined,
-            emailHint:emailSnapshot||undefined,
-          });
-          setDraft(readAccessIntent());
-        }catch{
-          // Browser draft is optional after provider acceptance.
+      switch(result.kind){
+        case"quiet_accept":
+          setQuestion(trimmed);
+          setEmailHint(emailSnapshot);
+          announce(result.note);
+          break;
+        case"accepted":
+          try{
+            writeAccessIntent({
+              question:trimmed,
+              domain:domain||undefined,
+              scenarioId:scenario||undefined,
+              emailHint:emailSnapshot||undefined,
+            });
+            setDraft(readAccessIntent());
+          }catch{
+            // Browser draft is optional after provider acceptance.
+          }
+          setQuestion(trimmed);
+          setEmailHint(emailSnapshot);
+          announce(result.note);
+          break;
+        case"not_configured":
+          setDeliveryStatus("unavailable");
+          saveDraft();
+          announce("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.","alert");
+          break;
+        case"rate_limited":{
+          const hint=formatRetryAfterHint(result.retryAfterSeconds,"");
+          const base=result.error.replace(/\.\s*$/,"");
+          announce(hint&&!base.includes("Try again in about")?`${base}. ${hint}`:result.error,"alert");
+          break;
         }
-        setQuestion(trimmed);
-        setEmailHint(emailSnapshot);
-        setStatus(typeof record.note==="string"?record.note:"Accepted by the notification provider. Operator receipt is not confirmed. This does not grant research access.");
-        return;
+        case"refused":
+        case"error":
+          announce(result.error,"alert");
+          break;
+        default:{
+          const _exhaustive:never=result;
+          announce("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.","alert");
+          void _exhaustive;
+        }
       }
-      if(response.status===503||record.code==="ACCESS_REQUEST_NOT_CONFIGURED"){
-        setDeliveryStatus("unavailable");
-        saveDraft();
-        setStatus("Delivery is not configured on this deployment. Saved a browser draft instead; nothing was sent.");
-        return;
-      }
-      setStatus(typeof record.error==="string"?record.error:"The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
-    }catch{
-      setStatus("The access request could not be accepted by the notification provider. Nothing was claimed as delivered.");
     }finally{setBusy(false)}
   }
 
@@ -151,21 +158,15 @@ export function AccessIntentPanel(){
     setDraft(null);
     setQuestion("");
     setEmailHint("");
-    setStatus("Browser draft cleared.");
+    announce("Browser draft cleared.");
   }
 
   async function retryStatus(){
     setDeliveryStatus("loading");
-    try{
-      const r=await fetch("/api/access-requests");
-      const b:unknown=await r.json();
-      const record=b&&typeof b==="object"&&!Array.isArray(b)?b as Record<string,unknown>:{};
-      if(r.ok&&record.deliveryConfigured===true)setDeliveryStatus("configured");
-      else if(r.ok)setDeliveryStatus("unavailable");
-      else setDeliveryStatus("unknown");
-    }catch{
-      setDeliveryStatus("unknown");
-    }
+    const result=await fetchAccessRequestStatus();
+    if(result.kind==="configured")setDeliveryStatus("configured");
+    else if(result.kind==="unavailable")setDeliveryStatus("unavailable");
+    else setDeliveryStatus("unknown");
   }
 
   const continueSignUp=signUpHref({
@@ -243,7 +244,7 @@ export function AccessIntentPanel(){
         {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear} disabled={busy}>Clear draft</button>:null}
       </div>
     </form>
-    {status?<p role="status">{status}</p>:null}
+    {status?<p role={statusTone}>{status}</p>:null}
     {draft?<p className="ed-scope-line">Draft saved {new Date(draft.savedAt).toLocaleString()} · persistence=browser_only</p>:null}
     <div className="xp-actions">
       <Link to={continueSignUp}>Continue to create account</Link>

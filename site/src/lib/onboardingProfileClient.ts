@@ -7,6 +7,7 @@ import {
   EMPTY_PROFILE,
   type Profile,
 } from "../../../src/onboarding/researcherProfile";
+import {formatResearchApiError} from "./researchApiErrors";
 import {loadProfile,saveProfile} from "./researchHome";
 
 export type OnboardingProfileClientMode="local"|"server";
@@ -99,11 +100,19 @@ export async function saveOnboardingProfile(
     body:JSON.stringify({profile}),
   });
   if(!response.ok){
-    const body=await response.json().catch(()=>({})) as {error?:string};
+    const body=await response.json().catch(()=>({})) as {error?:string;code?:string};
     return{
       ok:localOk,
       path:"local",
-      error:body.error??"Server profile store unavailable; kept on this device only.",
+      error:formatResearchApiError(
+        response,
+        {
+          code:typeof body.code==="string"?body.code:undefined,
+          error:typeof body.error==="string"?body.error:undefined,
+        },
+        "generic",
+        "Server profile store unavailable; kept on this device only.",
+      ),
     };
   }
   return{ok:true,path:"server"};

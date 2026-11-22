@@ -41,6 +41,9 @@ describe("researcher workspace and community", () => {
     const write = await handleResearcherWorkspaceApi(new Request("https://hsi.test/api/research/community/posts", { method: "POST" }), { writesEnabled: true });
     expect(write?.status).toBe(403);
     expect((await write!.json()).code).toBe("SCHEMA_NOT_APPLIED");
+    const missing = await handleResearcherWorkspaceApi(new Request("https://hsi.test/api/research/workspace/missing"), { writesEnabled: false });
+    expect(missing?.status).toBe(404);
+    expect(await missing!.json()).toEqual({ code: "NOT_FOUND", error: "Not found" });
     expect(handleResearcherWorkspaceApi(new Request("https://hsi.test/api/research/health"), { writesEnabled: false })).toBeNull();
   });
 });

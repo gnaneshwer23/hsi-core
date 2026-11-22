@@ -64,19 +64,19 @@ export async function handleAccessRequest(request:Request,env:Env,deps:{fetcher?
     :"Delivery is not configured on this deployment. Use a browser draft only; nothing is sent.",
   });
  }
- if(request.method!=="POST")return json({error:"Method not allowed"},405,{Allow:"GET, POST"});
+ if(request.method!=="POST")return json({code:"METHOD_NOT_ALLOWED",error:"Method not allowed"},405,{Allow:"GET, POST"});
  const origin=request.headers.get("origin"),pub=env.HSI_PUBLIC_ORIGIN;
  if(pub&&origin&&origin!==pub)return json({code:"ORIGIN_NOT_ALLOWED",error:"Origin not allowed"},403);
- if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({error:"JSON body required"},415);
- if(Number(request.headers.get("content-length")??0)>BODY_LIMIT)return json({error:"Request too large"},413);
+ if(!/^application\/json/i.test(request.headers.get("content-type")??""))return json({code:"JSON_REQUIRED",error:"JSON body required"},415);
+ if(Number(request.headers.get("content-length")??0)>BODY_LIMIT)return json({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
  let raw:string;
  try{raw=await boundedRequestText(request,BODY_LIMIT)}
  catch(error){
-  if(error instanceof RequestBodyTooLarge)return json({error:"Request too large"},413);
-  if(error instanceof RequestBodyTimeout)return json({error:"Request body timed out"},408);
-  return json({error:"Invalid JSON"},400);
+  if(error instanceof RequestBodyTooLarge)return json({code:"PAYLOAD_TOO_LARGE",error:"Request too large"},413);
+  if(error instanceof RequestBodyTimeout)return json({code:"REQUEST_TIMEOUT",error:"Request body timed out"},408);
+  return json({code:"INVALID_JSON",error:"Invalid JSON"},400);
  }
- let body:unknown;try{body=JSON.parse(raw)}catch{return json({error:"Invalid JSON"},400)}
+ let body:unknown;try{body=JSON.parse(raw)}catch{return json({code:"INVALID_JSON",error:"Invalid JSON"},400)}
  const record=body&&typeof body==="object"&&!Array.isArray(body)?body as Record<string,unknown>:{};
  // Honeypot first: never reveal deliveryConfigured via 503 when the trap field is filled.
  if(typeof record.company_website==="string"&&record.company_website.trim()){
