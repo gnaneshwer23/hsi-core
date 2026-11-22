@@ -49,10 +49,9 @@ export function IntelligencePublicPage(){
       {n:"03",title:"LANTERN extracts passage-linked claims"},
       {n:"04",title:"ATLAS, HELIX and PARALLAX map, investigate and compare in context"},
       {n:"05",title:"VANTAGE proposes labelled, unvalidated gaps"},
-      {n:"06",title:"VERITAS checks against original passages"},
-      {n:"07",title:"ARBITER routes to a human reviewer"},
+      {n:"06",title:"VERITAS checks against passages, then ARBITER routes to a human reviewer"},
      ]}/>
-     <p>SENTINEL, CALIBER and WARDEN sit alongside this path: they watch for changed sources, measure output quality and keep runs bounded. No agent approves science or promotes a claim to the graph.</p>
+     <p style={{marginTop:"2rem"}}>SENTINEL, CALIBER and WARDEN sit alongside this path: they watch for changed sources, measure output quality and keep runs bounded. No agent approves science or promotes a claim to the graph.</p>
      <p className="cine-note">Each agent card above states what exists today. None has been shown operating live at scale, and none has independent scientific acceptance.</p>
     </div>
    </section>
