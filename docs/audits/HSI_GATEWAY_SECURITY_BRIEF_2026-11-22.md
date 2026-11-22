@@ -61,3 +61,21 @@ Remaining for this risk, none of which this change claims to solve:
 3. **Licensed data.** Only `public_biomedical` is granted. Licensed-partner data needs an entitlement check.
 4. **Unauthenticated mode remains** for fixtures and tests. Production wiring must construct the gateway with a `callerAuthority`; nothing enforces that yet beyond the `mode` flag. A release check should assert `mode==="authenticated"`.
 5. **Cost.** Two dependency lookups per call, uncached by design.
+
+## Update: delegation grants for background jobs (item 2 above)
+
+`src/jobDelegationGrants.ts` and `delegate` / `authoriseDelegated` in `gatewayCallerAuthority.ts` close the "job outlives its session" gap. Still a self-review; S stays "no".
+
+- **Creation needs a live, verified, owning session** (same checks as a session authorisation); every requested role must be one the server would issue. Nothing is created otherwise.
+- **The grant is the only thing a worker holds:** a grant id and its job id. No session token is stored or queued. A grant id alone does nothing outside the authority.
+- **Tamper-evident:** HMAC-SHA256 under a server-only key of at least 32 bytes; an edited, re-keyed, unsigned or swapped record makes reads throw and the call fail closed. Revocation is a separate signed marker; a grant cannot be un-revoked by rewriting its file, and a forged marker fails closed.
+- **Bounded and scoped:** lifetime at most 24 h by default (hard maximum 7 d), a role list, one job id, one investigation. An issued authorisation never outlives its grant.
+- **Re-checked on every use:** the grant, revocation, expiry, role scope, job id, the account's standing (a server-side lookup, so a disabled user or ended membership stops the job though the session is long gone) and investigation ownership.
+- **Evidence:** `test/jobDelegation.test.ts`, 17 tests; 14 mutations killed (revocation, job id, role scope, expiry, standing, ownership, MAC, id/file mismatch, authorisation lifetime cap, lifetime cap, check-path, owner check, revocation record validation). A restart demonstration shows a fresh authority over the same grant and idempotency stores resumes authenticated with zero duplicate provider calls.
+
+Residual, new and carried:
+1. **Deleting a revocation marker is not detectable** by this store: an attacker with write access to the directory can un-revoke a grant by removing its marker (they cannot forge one without the key). Mitigations present: short lifetimes and the per-use account-standing and ownership checks. A database store with an append-only audit, or an externally anchored revocation log, is the proper fix.
+2. **No key rotation;** losing or changing the key invalidates every grant (fail closed). The key's storage and access belong to the secrets owner.
+3. **`resolveStanding` is an injected dependency with no real implementation wired.** Its quality is the account-level kill switch.
+4. **File store only:** one host or a shared volume with the atomicity limits of `fileLock`; no listing or bulk revocation by subject.
+5. **Nothing here is wired** to the NEXUS worker, a job-submission route or a real session gateway; no real account or database was involved.
