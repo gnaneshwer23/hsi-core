@@ -49,7 +49,7 @@ export type InjectionFlag={code:"possible_prompt_injection";path:string};
 export type ToolResult<O=unknown>=
  |{ok:true;data:O;/** Always true: tool output is data, never instructions. */untrusted:true;provenance:ToolProvenance;flags:InjectionFlag[];replayed:boolean;auditSeq:number}
  |{ok:false;code:RefusalCode;message:string;auditSeq:number};
-export type ToolRequest={manifest:HsiAgentManifest;investigationId:string;taskId:string;invocationId:string;tool:string;input:unknown;signal?:AbortSignal};
+export type ToolRequest={manifest:HsiAgentManifest;investigationId:string;taskId:string;invocationId:string;tool:string;/** Required when more than one provider is registered for the tool id; ambiguity is refused, never guessed. */provider?:string;input:unknown;signal?:AbortSignal};
 
 /* ---------- audit log ---------- */
 export type AuditRecord={seq:number;at:string;investigationId:string;taskId:string;invocationId:string;role:string;toolId:string;providerId:string|null;outcome:"success"|"replayed"|"refused";code:RefusalCode|null;attempts:number;durationMs:number;requestHash:string|null;responseHash:string|null;flags:number;prevHash:string;hash:string};
@@ -173,8 +173,13 @@ export type GatewayOptions={
  now?:()=>number;sleep?:(ms:number)=>Promise<void>;
 };
 export function createToolGateway(opts:GatewayOptions){
- const registry=new Map<string,ToolDefinition>();
- for(const t of opts.tools){validateToolDefinition(t);if(registry.has(t.id))throw Error("Duplicate tool id");registry.set(t.id,t)}
+ const registry=new Map<string,ToolDefinition>(),byId=new Map<string,ToolDefinition[]>();
+ const keyOf=(id:string,provider:string)=>`${id}@${provider}`;
+ for(const t of opts.tools){
+  validateToolDefinition(t);const k=keyOf(t.id,t.providerId);
+  if(registry.has(k))throw Error("Duplicate tool and provider");
+  registry.set(k,t);byId.set(t.id,[...(byId.get(t.id)??[]),t]);
+ }
  const now=opts.now??Date.now,sleep=opts.sleep??(ms=>new Promise<void>(r=>setTimeout(r,ms))),base=opts.fetcher??fetch;
  const idem=opts.idempotency??createMemoryIdempotencyStore();
  const used=new Map<string,number>(),windows=new Map<string,number[]>();
@@ -190,10 +195,15 @@ export function createToolGateway(opts:GatewayOptions){
    const refuse=(code:RefusalCode,tool?:ToolDefinition,extra:{attempts?:number;requestHash?:string|null}={}):ToolResult=>({ok:false,code,message:MESSAGES[code],auditSeq:log({outcome:"refused",code,tool,...extra})});
    try{
     if(!req||typeof req.investigationId!=="string"||!req.investigationId.trim()||typeof req.taskId!=="string"||!req.taskId.trim()||!INVOCATION.test(String(req.invocationId)))return refuse("invalid_input");
-    const tool=registry.get(String(req.tool));if(!tool)return refuse("tool_not_registered");
+    const candidates=byId.get(String(req.tool))??[];
+    let tool:ToolDefinition|undefined;
+    if(req.provider!==undefined)tool=registry.get(keyOf(String(req.tool),String(req.provider)));
+    else if(candidates.length===1)tool=candidates[0];
+    else if(candidates.length>1)return refuse("invalid_input"); // several providers: the caller must name one
+    if(!tool)return refuse("tool_not_registered");
     try{assertHsiToolPermission(req.manifest,tool.id,tool.dataClass)}catch{return refuse("permission_denied",tool)}
     let input:unknown;try{input=tool.parseInput(req.input)}catch{return refuse("invalid_input",tool)}
-    const requestHash=hashHsiCheckpointInput({tool:tool.id,version:tool.version,input});
+    const requestHash=hashHsiCheckpointInput({tool:tool.id,provider:tool.providerId,version:tool.version,input});
     if(tool.passageAccess==="cleared_only"){
      const cleared=opts.clearance?await opts.clearance({investigationId:req.investigationId,toolId:tool.id,providerId:tool.providerId}):false;
      if(cleared!==true)return refuse("licence_blocked",tool,{requestHash});
@@ -206,9 +216,10 @@ export function createToolGateway(opts:GatewayOptions){
     }
     const budgetKey=req.investigationId+"\u0000"+req.taskId; // each task has its own manifest and its own maxToolCalls
     if((used.get(budgetKey)??0)>=req.manifest.maxToolCalls)return refuse("budget_exhausted",tool,{requestHash});
-    const win=(windows.get(tool.id)??[]).filter(t=>now()-t<60_000);
-    if(win.length>=tool.ratePerMinute){windows.set(tool.id,win);return refuse("rate_limited",tool,{requestHash})}
-    win.push(now());windows.set(tool.id,win);used.set(budgetKey,(used.get(budgetKey)??0)+1);
+    const rateKey=keyOf(tool.id,tool.providerId);
+    const win=(windows.get(rateKey)??[]).filter(t=>now()-t<60_000);
+    if(win.length>=tool.ratePerMinute){windows.set(rateKey,win);return refuse("rate_limited",tool,{requestHash})}
+    win.push(now());windows.set(rateKey,win);used.set(budgetKey,(used.get(budgetKey)??0)+1);
 
     let attempt=0,raw:unknown,lastCode:RefusalCode="upstream_error";
     for(attempt=1;attempt<=tool.maxAttempts;attempt++){

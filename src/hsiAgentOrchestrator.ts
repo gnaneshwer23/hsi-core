@@ -11,7 +11,7 @@ import {
 } from "./hsiAgentOrchestrationCancel";
 export type HsiAgentTask={id:string;manifest:HsiAgentManifest;dependsOn:readonly string[]};
 export type HsiAgentStepResult={status:"completed"|"blocked";outputRef:string|null;reason:string|null};
-export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;/** Calls an external tool through the governed gateway only. Always supplied by the orchestrator; it throws when no gateway was configured. Optional in the type so hand-built test contexts still compile. */callTool?:(tool:HsiToolId,input:unknown)=>Promise<ToolResult>;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
+export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;/** Calls an external tool through the governed gateway only. Always supplied by the orchestrator; it throws when no gateway was configured. Optional in the type so hand-built test contexts still compile. */callTool?:(tool:HsiToolId,input:unknown,provider?:string)=>Promise<ToolResult>;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
 export type HsiOrchestrationResult={
   schemaVersion:"hsi-agent-orchestration-1";
   investigationId:string;
@@ -104,12 +104,12 @@ export async function runHsiAgentOrchestration(input:{
       try{assertHsiToolPermission(task.manifest,tool,input.dataClass);calls.push({tool,invocationId,status:"authorized"})}
       catch(e){policyViolation=true;policyDenied=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));calls.push({tool,invocationId,status:"denied"});throw e}
      }};
-      const callTool=async(tool:HsiToolId,toolInput:unknown):Promise<ToolResult>=>{
+      const callTool=async(tool:HsiToolId,toolInput:unknown,provider?:string):Promise<ToolResult>=>{
        if(!input.toolGateway)throw Error("No governed tool gateway configured");
        ctxBase.assertTool(tool); // same permission, budget and denial semantics as before; a denial aborts the run
        // Content-derived id: the same logical call in a recovered attempt replays instead of repeating its side effect.
-       const invocationId="h-"+hashHsiCheckpointInput({investigationId:input.investigationId,taskId:task.id,tool,input:toolInput}).slice(0,40);
-       const r=await input.toolGateway.call({manifest:task.manifest,investigationId:input.investigationId,taskId:task.id,invocationId,tool,input:toolInput,signal:controller.signal});
+       const invocationId="h-"+hashHsiCheckpointInput({investigationId:input.investigationId,taskId:task.id,tool,provider:provider??null,input:toolInput}).slice(0,40);
+       const r=await input.toolGateway.call({manifest:task.manifest,investigationId:input.investigationId,taskId:task.id,invocationId,tool,provider,input:toolInput,signal:controller.signal});
        gatewayCalls.push({taskId:task.id,tool,invocationId,ok:r.ok,code:r.ok?null:r.code,replayed:r.ok?r.replayed:false,auditSeq:r.auditSeq,responseHash:r.ok?r.provenance.responseHash:null});
        return structuredClone(r);
       };
