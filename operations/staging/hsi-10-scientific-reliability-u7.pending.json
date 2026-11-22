@@ -49,7 +49,7 @@
     "provisional_hypothesis_honesty_ui": { "status": "ENGINEERING_READY", "smeGoldFilled": false },
     "scientific_approval_public_claim": { "status": "REFUSED", "smeGoldFilled": false }
   },
-  "notes": "U7 scaffold only. Fill SME/adjudicator refs only after real humans are recruited. Soft-land never invents labels, adjudications, freezes, or scientific approval. Premortem is not a release gate.",
+  "notes": "U7 scaffold only. Fill SME/adjudicator refs only after real humans are recruited (U48: staging:sme-reliability:apply-proposal, dry-run default). Soft-land never invents labels, adjudications, freezes, or scientific approval. Premortem is not a release gate. smeGoldFilled stays false after fill-apply.",
   "relatedSoftLands": [
     "operations/staging/e2e-10-sme-gold-vault.pending.json",
     "operations/staging/next-d-expert-vault-freeze.pending.json",

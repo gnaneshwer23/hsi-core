@@ -4,6 +4,7 @@
 **Not claimed:** `smeGoldFilled`, adjudicated cases, frozen held-out splits, scientific approval, or invented expert identities.
 
 Typed catalog: [`src/operations/hsi10ScientificReliabilityU7SoftLand.ts`](../../src/operations/hsi10ScientificReliabilityU7SoftLand.ts).  
+**U48 fill-apply:** [`HSI_U48_SME_RELIABILITY_FILL_APPLY_2026-11-22.md`](./HSI_U48_SME_RELIABILITY_FILL_APPLY_2026-11-22.md) / `staging:sme-reliability:apply-proposal` (dry-run default; gold stays unfilled).  
 Pending worksheet: [`operations/staging/hsi-10-scientific-reliability-u7.pending.json`](../../operations/staging/hsi-10-scientific-reliability-u7.pending.json).  
 Reuse: [`E2E_10_SME_GOLD_VAULT_SOFT_LAND.md`](./E2E_10_SME_GOLD_VAULT_SOFT_LAND.md), [`NEXT_D_EXPERT_VAULT_FREEZE_SOFT_LAND.md`](./NEXT_D_EXPERT_VAULT_FREEZE_SOFT_LAND.md).
 
