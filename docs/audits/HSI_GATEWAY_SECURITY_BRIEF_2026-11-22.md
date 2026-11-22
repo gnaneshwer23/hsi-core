@@ -43,3 +43,21 @@ Scheme, userinfo, port, suffix and prefix lookalikes, trailing dot, IPv4, IPv6 a
 ## For the reviewer
 
 Run `bun test ./test/gatewayAdversarial.test.ts`, then read the residual list above and decide which items block wiring. Acceptance, if given, should name the scope reviewed and the commit.
+
+## Update: authenticated, tenant-scoped calls (residual risk 1)
+
+Residual risk 1 above (the gateway trusts the caller's manifest and ids) is addressed in code by `src/gatewayCallerAuthority.ts` and an authenticated mode in the gateway. Still a self-review; S stays "no".
+
+- **Issue conditions:** a session token verified by the injected server-side verifier; a researcher or research_admin role; the investigation exists server-side and is owned by that principal in that organisation (not found and not owned look identical); the manifest comes from the server's canonical registry (`canonicalHsiManifest`, which the research runtime now also uses).
+- **Unforgeable:** an authorisation is a deeply frozen object registered in a module-private WeakMap. Literals, spreads, structured clones, JSON round trips and another authority's authorisations are refused. The session token never leaves the closure and is absent from authorisations, audit records and logs.
+- **Re-verified on every call:** expiry, that the session still verifies as the same subject, organisation and session id, and that ownership still holds. Revocation, replacement, expiry, transfer and deletion take effect at the next call. Any dependency error fails closed.
+- **In authenticated mode the gateway ignores the request's manifest, tenant and ids,** requires the request's investigation and task to match the authorisation, and uses the canonical call budget (a request claiming 100 calls gets 3).
+- **Tenant scoping:** idempotency store keys are tenant-prefixed (two tenants cannot collide, read or block each other's invocation ids); budgets, the per-investigation ceiling and audit are tenant-keyed; each tenant is limited to a share (default 0.5) of any tool's per-minute window and to a tenant-wide call ceiling (default 5000). Audit records carry domain-separated hashes (`principalRef`, `tenantRef`), never raw ids.
+- **Evidence:** `test/gatewayTenantAuthority.test.ts`, 22 tests. 13 single-point mutations (mismatch check, trusting the request manifest, session re-check, ownership re-check, expiry, accepting unissued objects, unscoped store key, tenant rate, tenant ceiling, owner check, organisation check, role check, tenant budget key) were each killed.
+
+Remaining for this risk, none of which this change claims to solve:
+1. **No real integration.** The tests use in-memory directories. Nothing connects the authority to the real session gateway, the investigation store or an API route, and no real account or database was involved. That is the staging gate (P0.6).
+2. **Background jobs.** A job that outlives the user's session needs a server-side delegation grant (job id, subject, investigation, expiry, revocation). None exists, so such calls are refused after the session ends. Needed for authenticated durable execution.
+3. **Licensed data.** Only `public_biomedical` is granted. Licensed-partner data needs an entitlement check.
+4. **Unauthenticated mode remains** for fixtures and tests. Production wiring must construct the gateway with a `callerAuthority`; nothing enforces that yet beyond the `mode` flag. A release check should assert `mode==="authenticated"`.
+5. **Cost.** Two dependency lookups per call, uncached by design.
