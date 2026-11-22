@@ -112,7 +112,8 @@ test("if the revocation control fails (the second session is already invalid), t
 });
 test("a denial without a working control proves nothing: if A cannot read their own run, B's refusal is INCONCLUSIVE, not passed",async()=>{
  const g=rehearse();
- const e=await runStagingGate(g.config({transport:async r=>{const res=await g.transport(r);return /jobs\/fl-/.test(r.url)&&(r.headers.get("cookie")??"").includes("token-rehearsal-a-")&&r.method==="GET"?new Response("{}",{status:500}):res}}));
+ // A cannot read the run, so it can never be seen to complete: keep the completion wait short instead of spending the default 5 s
+ const e=await runStagingGate(g.config({waitForCompletionMs:100,transport:async r=>{const res=await g.transport(r);return /jobs\/fl-/.test(r.url)&&(r.headers.get("cookie")??"").includes("token-rehearsal-a-")&&r.method==="GET"?new Response("{}",{status:500}):res}}));
  expect(outcome(e,"a_reopens_before")).toBe("failed");
  for(const id of ["b_cannot_read","b_cannot_export","c_cross_org_denied","revoked_session_denied"])expect([id,outcome(e,id)]).toEqual([id,"inconclusive"]);
  expect(e.verdict).toBe("FAILED");
