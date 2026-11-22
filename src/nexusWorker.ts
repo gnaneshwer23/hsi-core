@@ -15,8 +15,11 @@ import {runDurable,type DurableOutcome,type JobJournal,type JobState} from "./ne
 export type DrainOptions={
  concurrency?:number;maxJobs?:number;dailyCap?:number;retryFailed?:boolean;
  leaseMs?:number;maxAttempts?:number;now?:()=>number;signal?:AbortSignal;
+ /** Called before a due job is claimed. A refusal means the job is NOT claimed: no attempt is consumed, nothing runs, and it stays queued
+  * and is reported in `refused` on every pass. A throw is treated as a refusal (fail closed). */
+ admit?:(jobId:string)=>Promise<{ok:true}|{ok:false;code:string}>;
 };
-export type DrainResult={ran:{jobId:string;outcome:DurableOutcome}[];skipped:number;stoppedBy:"empty"|"max_jobs"|"daily_cap"|"aborted"};
+export type DrainResult={ran:{jobId:string;outcome:DurableOutcome}[];refused:{jobId:string;code:string}[];skipped:number;stoppedBy:"empty"|"max_jobs"|"daily_cap"|"aborted"};
 
 export function dueJobs(journal:JobJournal,opts:Pick<DrainOptions,"retryFailed"|"leaseMs"|"maxAttempts"|"now"> ={}):JobState[]{
  const leaseMs=opts.leaseMs??10*60_000,maxAttempts=opts.maxAttempts??3,now=(opts.now??Date.now)();
@@ -32,18 +35,23 @@ export async function drainJobs(journal:JobJournal,work:(jobId:string,ctx:{signa
  const concurrency=Math.max(1,Math.min(opts.concurrency??1,16)),maxJobs=opts.maxJobs??Infinity;
  const signal=opts.signal??new AbortController().signal;
  const queue=dueJobs(journal,opts).map(j=>j.jobId);
- const ran:DrainResult["ran"]=[];let next=0,started=0,stoppedBy:DrainResult["stoppedBy"]="empty";
+ const ran:DrainResult["ran"]=[],refused:DrainResult["refused"]=[];let next=0,started=0,stoppedBy:DrainResult["stoppedBy"]="empty";
  const worker=async()=>{
   for(;;){
    if(signal.aborted){stoppedBy="aborted";return}
    if(started>=maxJobs){stoppedBy="max_jobs";return}
    if(opts.dailyCap!==undefined&&journal.runsToday()>=opts.dailyCap){stoppedBy="daily_cap";return}
    const jobId=queue[next++];if(jobId===undefined)return;
+   if(opts.admit){
+    let verdict:{ok:true}|{ok:false;code:string};
+    try{verdict=await opts.admit(jobId)}catch{verdict={ok:false,code:"admit_error"}}
+    if(verdict?.ok!==true){refused.push({jobId,code:verdict&&verdict.ok===false&&/^[a-z0-9_]{1,40}$/.test(verdict.code)?verdict.code:"admit_error"});continue}
+   }
    started++;
    const outcome=await runDurable(journal,jobId,()=>runWithCorrelation({requestId:`job:${jobId}`},()=>work(jobId,{signal})),{leaseMs:opts.leaseMs,maxAttempts:opts.maxAttempts,now:opts.now});
    ran.push({jobId,outcome});
   }
  };
  await Promise.all(Array.from({length:concurrency},worker));
- return {ran,skipped:Math.max(0,queue.length-next),stoppedBy};
+ return {ran,refused,skipped:Math.max(0,queue.length-next),stoppedBy};
 }

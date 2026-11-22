@@ -62,6 +62,9 @@ export interface GatewayCallerAuthority{
  delegate(input:{sessionToken:string;investigationId:string;jobId:string;roles:readonly string[];lifetimeMs?:number}):Promise<{ok:true;grantId:string}|{ok:false;code:AuthorisationRefusal}>;
  /** For a worker: turns a grant id and its job id into a gateway authorisation, re-checking the grant, revocation, standing and ownership. */
  authoriseDelegated(input:{grantId:string;jobId:string;taskId:string;role:string}):Promise<{ok:true;authorisation:GatewayAuthorisation}|{ok:false;code:AuthorisationRefusal}>;
+ /** Pre-flight for a worker before it claims a job: the grant exists, verifies, is bound to this job, is unrevoked and unexpired, and the
+  * account and investigation still check out. Returns scope information only; it issues no authorisation and consumes nothing. */
+ verifyJobGrant(input:{grantId:string;jobId:string}):Promise<{ok:true;investigationId:string;roles:readonly string[];tenantRef:string;principalRef:string;expiresAtMs:number}|{ok:false;code:AuthorisationRefusal}>;
 }
 
 const ID=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$/;
@@ -157,6 +160,14 @@ export function createGatewayCallerAuthority(deps:CallerAuthorityDeps):GatewayCa
    const g=v.grant;
    return {ok:true,authorisation:issue({kind:"grant",grantId:g.grantId,jobId:g.jobId,subjectId:g.subjectId,organizationId:g.organizationId,investigationId:g.investigationId,roles:g.roles,expiresAtMs:g.expiresAtMs},role,input.taskId,m.manifest)};
   },
+  async verifyJobGrant(input){
+   if(!deps.grants||!deps.resolveStanding)return {ok:false,code:"unavailable"};
+   if(!input||!isGrantId(input.grantId)||typeof input.jobId!=="string"||!ID.test(input.jobId))return {ok:false,code:"invalid_request"};
+   const v=await validateGrant(input.grantId,input.jobId);
+   if(!v.ok)return v;
+   const g=v.grant;
+   return {ok:true,investigationId:g.investigationId,roles:[...g.roles],tenantRef:ref("tenant",g.organizationId),principalRef:ref("principal",g.subjectId),expiresAtMs:g.expiresAtMs};
+  },
   async check(candidate){
    try{
     if(!candidate||typeof candidate!=="object")return null;
@@ -175,11 +186,11 @@ export function createGatewayCallerAuthority(deps:CallerAuthorityDeps):GatewayCa
   },
  };
  /** Grant state, revocation, expiry, role scope, account standing and ownership: all re-read on every use. */
- async function validateGrant(grantId:string,jobId:string,role:string):Promise<{ok:true;grant:import("./jobDelegationGrants").DelegationGrant}|{ok:false;code:AuthorisationRefusal}>{
+ async function validateGrant(grantId:string,jobId:string,role?:string):Promise<{ok:true;grant:import("./jobDelegationGrants").DelegationGrant}|{ok:false;code:AuthorisationRefusal}>{
   let state;try{state=await deps.grants!.get(grantId)}catch{return {ok:false,code:"unavailable"}}
   if(!state||state.revoked||state.grant.jobId!==jobId)return {ok:false,code:"forbidden"};
   const g=state.grant;
-  if(now()>=g.expiresAtMs||!g.roles.includes(role as HsiAgentRole))return {ok:false,code:"forbidden"};
+  if(now()>=g.expiresAtMs||(role!==undefined&&!g.roles.includes(role as HsiAgentRole)))return {ok:false,code:"forbidden"};
   let standing;try{standing=await deps.resolveStanding!(g.subjectId,g.organizationId)}catch{return {ok:false,code:"unavailable"}}
   if(!standing||!operator(standing.roles))return {ok:false,code:"forbidden"};
   let owner;try{owner=await deps.resolveInvestigation(g.investigationId)}catch{return {ok:false,code:"unavailable"}}

@@ -9,7 +9,11 @@
  */
 import {existsSync,mkdirSync,readFileSync,renameSync,writeFileSync} from "node:fs";
 import {join,resolve} from "node:path";
+import {authoriseJobCallsFor,type GatewayAuthorisation,type GatewayCallerAuthority} from "./gatewayCallerAuthority";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
+import type {HsiAgentRole} from "./hsiAgentIntelligenceContracts";
+import {isGrantId} from "./jobDelegationGrants";
+import {writeFileAtomic} from "./fileLock";
 import {runFixtureInvestigation,validateRunnerFixture,FIXTURE_NOTICE} from "./investigationRunner";
 import {createJobJournal,type JobState} from "./nexusJobs";
 import {drainJobs,type DrainOptions,type DrainResult} from "./nexusWorker";
@@ -17,7 +21,10 @@ import {drainJobs,type DrainOptions,type DrainResult} from "./nexusWorker";
 export {FIXTURE_NOTICE};
 const jobDir=(out:string)=>join(resolve(out),"jobs");
 const queueFile=(out:string,jobId:string)=>join(resolve(out),"queue",`${jobId}.fixture.json`);
-export type FixtureRunner=(fixture:unknown,auditDirectory:string)=>Promise<{auditHash:string}>;
+/** What a runner learns about the authority a job carries. `authoriseCall` is for a live runner that calls tools through the gateway;
+ * the fixture runner makes no tool calls and ignores it. Both are null for a job submitted without a grant. */
+export type JobAuthority={grant:{grantId:string;investigationId:string;roles:readonly string[]}|null;authoriseCall:((task:{taskId:string;role:HsiAgentRole})=>Promise<GatewayAuthorisation>)|null};
+export type FixtureRunner=(fixture:unknown,auditDirectory:string,authority?:JobAuthority)=>Promise<{auditHash:string}>;
 const defaultRunner:FixtureRunner=async(fixture,auditDirectory)=>{
  const r=await runFixtureInvestigation({fixture,storeDirectory:auditDirectory});return {auditHash:r.audit.auditHash};
 };
@@ -31,21 +38,77 @@ export function submitFixture(opts:{out:string;fixture:unknown;now?:()=>number})
  return {jobId,created:createJobJournal(jobDir(opts.out),{now:opts.now}).create(jobId)};
 }
 
+const grantFile=(out:string,jobId:string)=>join(resolve(out),"queue",`${jobId}.grant.json`);
+type GrantRef={state:"none"}|{state:"ok";grantId:string}|{state:"corrupt"};
+/** The grant id a job was submitted with. A file that exists but does not parse is `corrupt`, never treated as "no grant". */
+function readGrantRef(out:string,jobId:string):GrantRef{
+ const f=grantFile(out,jobId);if(!existsSync(f))return {state:"none"};
+ try{const v=JSON.parse(readFileSync(f,"utf8")) as {schemaVersion?:unknown;grantId?:unknown};
+  return v?.schemaVersion==="hsi-job-grant-ref-1"&&isGrantId(v.grantId)?{state:"ok",grantId:v.grantId}:{state:"corrupt"}}catch{return {state:"corrupt"}}
+}
+
+/** Submits a fixture job that carries its own authority. Needs a LIVE verified session that owns `investigationId`; the session is used
+ * once, to mint a grant bound to this job, and is not stored. The job is queued only after the grant and the fixture are in place
+ * (the journal entry is the commit point), so a failure part-way leaves nothing runnable. Job ids include the investigation id, so
+ * two investigations never share a job and a job always has exactly one owner. Roles default to `question_planner` (no tools): the
+ * least a fixture needs. Resubmitting the same fixture for the same investigation is a no-op and mints no second grant. */
+export async function submitAuthenticatedFixture(opts:{out:string;fixture:unknown;authority:GatewayCallerAuthority;sessionToken:string;investigationId:string;roles?:readonly HsiAgentRole[];lifetimeMs?:number;now?:()=>number}):Promise<{ok:true;jobId:string;created:boolean}|{ok:false;code:string}>{
+ const fixture=validateRunnerFixture(opts.fixture);
+ if(typeof opts.investigationId!=="string")return {ok:false,code:"invalid_request"};
+ const jobId="fj-"+hashHsiCheckpointInput({fixture,investigationId:opts.investigationId}).slice(0,16);
+ // Prove the caller owns the investigation before revealing anything about the queue.
+ const who=await opts.authority.authorise({sessionToken:opts.sessionToken,investigationId:opts.investigationId,taskId:"submit",role:"question_planner"});
+ if(!who.ok)return {ok:false,code:who.code};
+ const journal=createJobJournal(jobDir(opts.out),{now:opts.now});
+ if(journal.list().some(j=>j.jobId===jobId))return {ok:true,jobId,created:false};
+ const d=await opts.authority.delegate({sessionToken:opts.sessionToken,investigationId:opts.investigationId,jobId,roles:[...(opts.roles??["question_planner"])],lifetimeMs:opts.lifetimeMs});
+ if(!d.ok)return {ok:false,code:d.code};
+ mkdirSync(join(resolve(opts.out),"queue"),{recursive:true});
+ const fx=queueFile(opts.out,jobId);if(!existsSync(fx))writeFileAtomic(fx,JSON.stringify(fixture));
+ writeFileAtomic(grantFile(opts.out,jobId),JSON.stringify({schemaVersion:"hsi-job-grant-ref-1",grantId:d.grantId}));
+ return {ok:true,jobId,created:journal.create(jobId)};
+}
+
 export function jobStatus(out:string):JobState[]{return createJobJournal(jobDir(out)).list()}
 
 /** One pass over every job that is due. */
-export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner}&DrainOptions):Promise<DrainResult>{
+export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner;
+ /** Supplying an authority makes this an AUTHENTICATED worker: every job must carry a grant that still verifies, or it is not claimed.
+  * Without one the worker is unauthenticated (fixtures only) and refuses any job that carries a grant, so it can never run an
+  * authenticated job while ignoring its authority. */
+ authority?:GatewayCallerAuthority}&DrainOptions):Promise<DrainResult>{
  const journal=createJobJournal(jobDir(opts.out),{now:opts.now});
- const run=opts.runner??defaultRunner;
+ const run=opts.runner??defaultRunner,authority=opts.authority;
+ const verify=async(jobId:string):Promise<{ok:true;grantId:string|null}|{ok:false;code:string}>=>{
+  const g=readGrantRef(opts.out,jobId);
+  if(g.state==="corrupt")return {ok:false,code:"grant_unreadable"};
+  if(!authority)return g.state==="ok"?{ok:false,code:"grant_unverifiable"}:{ok:true,grantId:null};
+  if(g.state==="none")return {ok:false,code:"no_grant"};
+  const v=await authority.verifyJobGrant({grantId:g.grantId,jobId});
+  return v.ok?{ok:true,grantId:g.grantId}:{ok:false,code:`grant_${v.code}`};
+ };
+ const theirs=opts.admit;
+ const admit:NonNullable<DrainOptions["admit"]>=async jobId=>{
+  const v=await verify(jobId);if(!v.ok)return v;
+  return theirs?theirs(jobId):{ok:true};
+ };
  return drainJobs(journal,async(jobId,{signal})=>{
   if(signal.aborted)throw Error("aborted before start");
+  // Re-verified at the moment of running: a grant revoked between admission and claim must not start.
+  const v=await verify(jobId);if(!v.ok)throw Error(`Job authority refused: ${v.code}`);
   const fixture=JSON.parse(readFileSync(queueFile(opts.out,jobId),"utf8"));
-  return run(fixture,join(resolve(opts.out),"audit",jobId));
- },opts);
+  let ctx:JobAuthority={grant:null,authoriseCall:null};
+  if(authority&&v.grantId){
+   const info=await authority.verifyJobGrant({grantId:v.grantId,jobId});
+   if(!info.ok)throw Error(`Job authority refused: grant_${info.code}`);
+   ctx={grant:{grantId:v.grantId,investigationId:info.investigationId,roles:info.roles},authoriseCall:authoriseJobCallsFor(authority,{grantId:v.grantId,jobId})};
+  }
+  return run(fixture,join(resolve(opts.out),"audit",jobId),ctx);
+ },{...opts,admit});
 }
 
 /** Repeated passes until the signal aborts. `sleep` is injectable so tests do not wait. */
-export async function runWorkerLoop(opts:{out:string;runner?:FixtureRunner;intervalMs:number;sleep?:(ms:number,signal:AbortSignal)=>Promise<void>;onPass?:(r:DrainResult)=>void;signal:AbortSignal}&DrainOptions):Promise<void>{
+export async function runWorkerLoop(opts:{out:string;runner?:FixtureRunner;authority?:GatewayCallerAuthority;intervalMs:number;sleep?:(ms:number,signal:AbortSignal)=>Promise<void>;onPass?:(r:DrainResult)=>void;signal:AbortSignal}&DrainOptions):Promise<void>{
  const sleep=opts.sleep??((ms,signal)=>new Promise<void>(res=>{const t=setTimeout(res,ms);signal.addEventListener("abort",()=>{clearTimeout(t);res()},{once:true})}));
  while(!opts.signal.aborted){
   opts.onPass?.(await runWorkerOnce(opts));
