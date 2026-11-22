@@ -16,7 +16,9 @@ import {isGrantId} from "./jobDelegationGrants";
 import {writeFileAtomic} from "./fileLock";
 import {runFixtureInvestigation,validateRunnerFixture,FIXTURE_NOTICE} from "./investigationRunner";
 import {createJobJournal,type JobState} from "./nexusJobs";
+import {rejectPhiPayload} from "./cdsPhiBoundary";
 import {drainJobs,type DrainOptions,type DrainResult} from "./nexusWorker";
+import {parseLiteratureJob,runLiteratureFixtureJob,type LiteratureJob,type LiteratureJobEnv} from "./literatureFixtureJob";
 import {createWorkerHeartbeat} from "./nexusWorkerHealth";
 
 export {FIXTURE_NOTICE};
@@ -24,7 +26,7 @@ const jobDir=(out:string)=>join(resolve(out),"jobs");
 const queueFile=(out:string,jobId:string)=>join(resolve(out),"queue",`${jobId}.fixture.json`);
 /** What a runner learns about the authority a job carries. `authoriseCall` is for a live runner that calls tools through the gateway;
  * the fixture runner makes no tool calls and ignores it. Both are null for a job submitted without a grant. */
-export type JobAuthority={grant:{grantId:string;investigationId:string;roles:readonly string[]}|null;authoriseCall:((task:{taskId:string;role:HsiAgentRole})=>Promise<GatewayAuthorisation>)|null};
+export type JobAuthority={grant:{grantId:string;investigationId:string;roles:readonly string[]}|null;authoriseCall:((task:{taskId:string;role:HsiAgentRole})=>Promise<GatewayAuthorisation>)|null;/** The authority itself, for a runner that builds an authenticated gateway. Null without a grant. */callerAuthority?:GatewayCallerAuthority|null};
 export type FixtureRunner=(fixture:unknown,auditDirectory:string,authority?:JobAuthority)=>Promise<{auditHash:string}>;
 const defaultRunner:FixtureRunner=async(fixture,auditDirectory)=>{
  const r=await runFixtureInvestigation({fixture,storeDirectory:auditDirectory});return {auditHash:r.audit.auditHash};
@@ -55,37 +57,54 @@ function readGrantRef(out:string,jobId:string):GrantRef{
  * least a fixture needs. Resubmitting the same fixture for the same investigation is a no-op and mints no second grant. */
 export async function submitAuthenticatedFixture(opts:{out:string;fixture:unknown;authority:GatewayCallerAuthority;sessionToken:string;investigationId:string;roles?:readonly HsiAgentRole[];lifetimeMs?:number;now?:()=>number}):Promise<{ok:true;jobId:string;created:boolean}|{ok:false;code:string}>{
  const fixture=validateRunnerFixture(opts.fixture);
- if(typeof opts.investigationId!=="string")return {ok:false,code:"invalid_request"};
  const jobId="fj-"+hashHsiCheckpointInput({fixture,investigationId:opts.investigationId}).slice(0,16);
+ return submitGranted(opts,jobId,opts.roles??["question_planner"],()=>{const fx=queueFile(opts.out,jobId);if(!existsSync(fx))writeFileAtomic(fx,JSON.stringify(fixture))});
+}
+/** Submits a recorded-fixture literature job (see `literatureFixtureJob.ts`) with a grant limited to the one role it needs, `evidence_retriever`.
+ * Same guarantees as `submitAuthenticatedFixture`. The search terms are the researcher's; the provider responses are recorded, never live. */
+export async function submitAuthenticatedLiteratureJob(opts:{out:string;terms:unknown;authority:GatewayCallerAuthority;sessionToken:string;investigationId:string;lifetimeMs?:number;now?:()=>number}):Promise<{ok:true;jobId:string;created:boolean}|{ok:false;code:string}>{
+ let job:LiteratureJob;try{job=parseLiteratureJob({schemaVersion:"hsi-nexus-job-1",kind:"literature_fixture",terms:opts.terms})}catch{return {ok:false,code:"invalid_request"}}
+ if(!rejectPhiPayload({textBlobs:job.terms}).ok)return {ok:false,code:"invalid_request"}; // possible personal health information never reaches a queue
+ const jobId="fl-"+hashHsiCheckpointInput({job,investigationId:opts.investigationId}).slice(0,16);
+ return submitGranted(opts,jobId,["evidence_retriever"],()=>{writeFileAtomic(envelopeFile(opts.out,jobId),JSON.stringify(job))});
+}
+async function submitGranted(opts:{out:string;authority:GatewayCallerAuthority;sessionToken:string;investigationId:string;lifetimeMs?:number;now?:()=>number},jobId:string,roles:readonly HsiAgentRole[],writePayload:()=>void):Promise<{ok:true;jobId:string;created:boolean}|{ok:false;code:string}>{
+ if(typeof opts.investigationId!=="string")return {ok:false,code:"invalid_request"};
  // Prove the caller owns the investigation before revealing anything about the queue.
  const who=await opts.authority.authorise({sessionToken:opts.sessionToken,investigationId:opts.investigationId,taskId:"submit",role:"question_planner"});
  if(!who.ok)return {ok:false,code:who.code};
  const journal=createJobJournal(jobDir(opts.out),{now:opts.now});
  if(journal.list().some(j=>j.jobId===jobId))return {ok:true,jobId,created:false};
- const d=await opts.authority.delegate({sessionToken:opts.sessionToken,investigationId:opts.investigationId,jobId,roles:[...(opts.roles??["question_planner"])],lifetimeMs:opts.lifetimeMs});
+ const d=await opts.authority.delegate({sessionToken:opts.sessionToken,investigationId:opts.investigationId,jobId,roles:[...roles],lifetimeMs:opts.lifetimeMs});
  if(!d.ok)return {ok:false,code:d.code};
  mkdirSync(join(resolve(opts.out),"queue"),{recursive:true});
- const fx=queueFile(opts.out,jobId);if(!existsSync(fx))writeFileAtomic(fx,JSON.stringify(fixture));
+ writePayload();
  writeFileAtomic(grantFile(opts.out,jobId),JSON.stringify({schemaVersion:"hsi-job-grant-ref-1",grantId:d.grantId}));
  return {ok:true,jobId,created:journal.create(jobId)};
 }
+const envelopeFile=(out:string,jobId:string)=>join(resolve(out),"queue",`${jobId}.job.json`);
 
 /** Operator cancel (no session): for a person with access to the queue directory. Queued or failed jobs are cancelled at once; a running job
  * is asked to stop (its signal aborts) and ends as cancelled. It does NOT revoke a grant: use `cancelAuthenticatedJob` for that. */
 export function cancelJob(opts:{out:string;jobId:string;reason?:string;now?:()=>number}):ReturnType<ReturnType<typeof createJobJournal>["cancel"]>{
  return createJobJournal(jobDir(opts.out),{now:opts.now}).cancel(opts.jobId,opts.reason??"admin_revoked");
 }
-/** Cancel by the researcher who owns the job. Needs a LIVE verified session that owns the job's investigation (taken from the signed grant,
- * not from the queue files). It revokes the grant first, so in-flight gateway calls stop at their next check, then cancels the job. */
-export async function cancelAuthenticatedJob(opts:{out:string;authority:GatewayCallerAuthority;sessionToken:string;jobId:string;now?:()=>number}):Promise<{ok:true;result:string}|{ok:false;code:string}>{
+/** Proves a live session owns the investigation a job was granted for, WITHOUT trusting the queue files: the investigation comes from the
+ * SIGNED grant, bound to this job id. Used by cancel, status and brief access. Works for expired and revoked grants (an owner can still look). */
+export async function authoriseJobOwner(opts:{out:string;authority:GatewayCallerAuthority;sessionToken:string;jobId:string}):Promise<{ok:true;investigationId:string;grantId:string}|{ok:false;code:string}>{
  if(typeof opts.jobId!=="string")return {ok:false,code:"invalid_request"};
  const g=readGrantRef(opts.out,opts.jobId);
  if(g.state!=="ok")return {ok:false,code:g.state==="none"?"no_grant":"grant_unreadable"};
  const inv=await opts.authority.grantInvestigation({grantId:g.grantId,jobId:opts.jobId});
  if(!inv.ok)return {ok:false,code:inv.code};
- const who=await opts.authority.authorise({sessionToken:opts.sessionToken,investigationId:inv.investigationId,taskId:"cancel",role:"question_planner"});
- if(!who.ok)return {ok:false,code:who.code};
- const rv=await opts.authority.revokeJobGrant({grantId:g.grantId,jobId:opts.jobId,reason:"user_cancelled"});
+ const who=await opts.authority.authorise({sessionToken:opts.sessionToken,investigationId:inv.investigationId,taskId:"owner-check",role:"question_planner"});
+ return who.ok?{ok:true,investigationId:inv.investigationId,grantId:g.grantId}:{ok:false,code:who.code};
+}
+/** Cancel by the researcher who owns the job. Needs a LIVE verified session that owns the job's investigation (taken from the signed grant,
+ * not from the queue files). It revokes the grant first, so in-flight gateway calls stop at their next check, then cancels the job. */
+export async function cancelAuthenticatedJob(opts:{out:string;authority:GatewayCallerAuthority;sessionToken:string;jobId:string;now?:()=>number}):Promise<{ok:true;result:string}|{ok:false;code:string}>{
+ const o=await authoriseJobOwner(opts);if(!o.ok)return o;
+ const rv=await opts.authority.revokeJobGrant({grantId:o.grantId,jobId:opts.jobId,reason:"user_cancelled"});
  if(!rv.ok)return {ok:false,code:rv.code};
  return {ok:true,result:createJobJournal(jobDir(opts.out),{now:opts.now}).cancel(opts.jobId,"user_cancelled")};
 }
@@ -93,7 +112,7 @@ export async function cancelAuthenticatedJob(opts:{out:string;authority:GatewayC
 export function jobStatus(out:string):JobState[]{return createJobJournal(jobDir(out)).list()}
 
 /** One pass over every job that is due. */
-export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner;
+export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner;/** Runs `literature_fixture` jobs. Defaults to the recorded-fixture runner; tests may inject a fetcher. */literatureRunner?:(job:LiteratureJob,env:LiteratureJobEnv)=>Promise<{auditHash:string}>;
  /** Supplying an authority makes this an AUTHENTICATED worker: every job must carry a grant that still verifies, or it is not claimed.
   * Without one the worker is unauthenticated (fixtures only) and refuses any job that carries a grant, so it can never run an
   * authenticated job while ignoring its authority. */
@@ -113,17 +132,24 @@ export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner;
   const v=await verify(jobId);if(!v.ok)return v;
   return theirs?theirs(jobId):{ok:true};
  };
- return drainJobs(journal,async(jobId,{signal})=>{
+ return drainJobs(journal,async(jobId,{signal,progress})=>{
   if(signal.aborted)throw Error("aborted before start");
   // Re-verified at the moment of running: a grant revoked between admission and claim must not start.
   const v=await verify(jobId);if(!v.ok)throw Error(`Job authority refused: ${v.code}`);
-  const fixture=JSON.parse(readFileSync(queueFile(opts.out,jobId),"utf8"));
-  let ctx:JobAuthority={grant:null,authoriseCall:null};
+  let ctx:JobAuthority={grant:null,authoriseCall:null,callerAuthority:null};
   if(authority&&v.grantId){
    const info=await authority.verifyJobGrant({grantId:v.grantId,jobId});
    if(!info.ok)throw Error(`Job authority refused: grant_${info.code}`);
-   ctx={grant:{grantId:v.grantId,investigationId:info.investigationId,roles:info.roles},authoriseCall:authoriseJobCallsFor(authority,{grantId:v.grantId,jobId})};
+   ctx={grant:{grantId:v.grantId,investigationId:info.investigationId,roles:info.roles},authoriseCall:authoriseJobCallsFor(authority,{grantId:v.grantId,jobId}),callerAuthority:authority};
   }
+  const envelope=envelopeFile(opts.out,jobId);
+  if(existsSync(envelope)){
+   // A literature job. It needs a verified grant, an authority and the retrieval role; there is no unauthenticated path for it.
+   if(!ctx.grant||!ctx.authoriseCall||!ctx.callerAuthority)throw Error("Job authority refused: no_grant");
+   const job=parseLiteratureJob(JSON.parse(readFileSync(envelope,"utf8")));
+   return (opts.literatureRunner??runLiteratureFixtureJob)(job,{out:resolve(opts.out),jobId,grant:ctx.grant,authoriseCall:ctx.authoriseCall,callerAuthority:ctx.callerAuthority,signal,progress});
+  }
+  const fixture=JSON.parse(readFileSync(queueFile(opts.out,jobId),"utf8"));
   return run(fixture,join(resolve(opts.out),"audit",jobId),ctx);
  },{...opts,admit});
 }

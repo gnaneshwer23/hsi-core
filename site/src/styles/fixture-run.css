@@ -1,0 +1,18 @@
+.fr-banner{margin:0;padding:12px 14px;border:1px solid #b45309;border-radius:12px;background:#fdf6ee;color:#7a3a05;font-weight:600}
+.fr-chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0;padding:0;list-style:none}
+.fr-chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2,#f6f7fb);font-size:13px;font-weight:600;color:var(--body)}
+.fr-ladder{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 0;padding:0;list-style:none;counter-reset:fr}
+.fr-ladder li{padding:10px 12px;border:1px dashed var(--line);border-radius:12px;color:var(--muted);font-size:13.5px;line-height:1.4}
+.fr-ladder li[aria-current=step]{border:2px solid var(--accent-link);background:#f4f1fb;color:var(--body);font-weight:700}
+.fr-ladder small{display:block;font-weight:500;color:var(--muted)}
+.fr-list{display:grid;gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.fr-item{padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.fr-item h3{margin:0 0 4px;font-size:16px;line-height:1.35}
+.fr-meta{margin:2px 0;font-size:13.5px;color:var(--muted);overflow-wrap:anywhere}
+.fr-mono{font-family:'JetBrains Mono Variable',ui-monospace,monospace;font-size:12.5px;overflow-wrap:anywhere}
+.fr-progress{width:100%;height:14px;accent-color:var(--accent-link)}
+.fr-health[data-s=ok]{border-color:#15803d}.fr-health[data-s=degraded]{border-color:#b45309}.fr-health[data-s=down]{border-color:#b91c1c}
+.fr-verify{margin:0;padding:12px 14px;border:1px solid #15803d;border-radius:12px;background:#f0fbf3;color:#14532d}
+.fr-textarea{min-height:96px;padding:10px 14px;border:1.5px solid var(--line-2);border-radius:12px;font:500 15px/1.5 'Host Grotesk Variable',system-ui,sans-serif;color:var(--body);background:var(--surface);resize:vertical}
+.hl-field input[type=text]{min-height:44px;padding:0 14px;border:1.5px solid var(--line-2);border-radius:12px;font:500 15px 'Host Grotesk Variable',system-ui,sans-serif;color:var(--body);background:var(--surface)}
+@media(prefers-reduced-motion:reduce){.fr-progress{transition:none}}
