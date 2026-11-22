@@ -14,7 +14,7 @@
  *
  * Search terms come from the caller (`terms`); this module does not derive scientific queries. Not wired into
  * `hsiResearchAgentRuntime`: nothing in production selects it yet. */
-import {mkdirSync} from "node:fs";
+import {existsSync,mkdirSync,readFileSync} from "node:fs";
 import {join} from "node:path";
 import {writeFileAtomic} from "./fileLock";
 import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
@@ -26,7 +26,9 @@ export type LiteratureCandidateSet={
  schemaVersion:"hsi-literature-candidates-1";investigationId:string;taskId:string;terms:string[];
  evidenceStatus:"candidate_only";candidates:LiteratureCandidate[];calls:LiteratureCallReceipt[];quarantined:number;limitations:string[];
 };
-export type LiteratureCandidateSink={save(set:LiteratureCandidateSet):Promise<string>};
+/** `load` returns a saved set only if it still hashes to its reference, so a reopened set cannot have been edited. */
+export type LiteratureCandidateSink={save(set:LiteratureCandidateSet):Promise<string>;load?(ref:string):Promise<LiteratureCandidateSet>};
+const SET_REF=/^lit:\/\/([a-f0-9]{40})$/;
 
 export const DEFAULT_LITERATURE_PROVIDERS=["europe-pmc","openalex","crossref"] as const;
 const MAX_CANDIDATES=100;
@@ -36,14 +38,27 @@ const LIMITATIONS=[
  "Nothing here is reviewed, approved or promoted to the graph",
 ];
 
-export function createMemoryLiteratureSink():LiteratureCandidateSink&{sets:()=>readonly LiteratureCandidateSet[]}{
+export function createMemoryLiteratureSink():LiteratureCandidateSink&{load(ref:string):Promise<LiteratureCandidateSet>;sets:()=>readonly LiteratureCandidateSet[]}{
  const saved:LiteratureCandidateSet[]=[];
- return {async save(set){saved.push(structuredClone(set));return `lit://${hashHsiCheckpointInput(set).slice(0,40)}`},sets:()=>saved.map(s=>structuredClone(s))};
+ return {
+  async save(set){saved.push(structuredClone(set));return `lit://${hashHsiCheckpointInput(set).slice(0,40)}`},
+  async load(ref){const m=SET_REF.exec(ref);const s=m&&saved.find(x=>hashHsiCheckpointInput(x).startsWith(m[1]!));if(!s)throw Error("Unknown candidate set");return structuredClone(s)},
+  sets:()=>saved.map(s=>structuredClone(s)),
+ };
 }
 /** Atomic, content-addressed files: the same set always lands at the same path, so a repeated save is harmless. */
-export function createFileLiteratureSink(dir:string):LiteratureCandidateSink{
+export function createFileLiteratureSink(dir:string):LiteratureCandidateSink&{load(ref:string):Promise<LiteratureCandidateSet>}{
  mkdirSync(dir,{recursive:true});
- return {async save(set){const h=hashHsiCheckpointInput(set).slice(0,40);writeFileAtomic(join(dir,`${h}.json`),JSON.stringify(set));return `lit://${h}`}};
+ return {
+  async save(set){const h=hashHsiCheckpointInput(set).slice(0,40);writeFileAtomic(join(dir,`${h}.json`),JSON.stringify(set));return `lit://${h}`},
+  async load(ref){
+   const m=SET_REF.exec(ref);if(!m)throw Error("Invalid candidate set reference");
+   const f=join(dir,`${m[1]}.json`);if(!existsSync(f))throw Error("Unknown candidate set");
+   const set=JSON.parse(readFileSync(f,"utf8")) as LiteratureCandidateSet;
+   if(!hashHsiCheckpointInput(set).startsWith(m[1]!))throw Error("Candidate set does not match its reference");
+   return set;
+  },
+ };
 }
 
 type Rec={canonicalId:unknown;sourceUrl:unknown;sourceId:unknown;metadata?:{title?:unknown;doi?:unknown;pmid?:unknown;publicationYear?:unknown}};
