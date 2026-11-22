@@ -105,6 +105,17 @@ export function BiotechPublicPage() {
       </LandingHero>
 
       <LandingSection
+        title="Questions an R&D team could bring."
+        description="Two example questions, shown with what HSI can do with them today and what it cannot. Illustrative, not a validated result."
+      >
+        <ul className="s2-boundary-list">
+          <li><strong>Mechanism:</strong> why do two studies disagree on the role of a cytokine in a cell population? HSI can place the source passages side by side with species, tissue and assay context, and mark where the studies are not comparable. It does not decide which study is right.</li>
+          <li><strong>Translational:</strong> which candidate mechanism has the thinnest human evidence? HSI can list recorded gaps and the evidence behind each. Gap detection is deterministic and based on a published snapshot, not a live literature search, and nothing here is a target recommendation.</li>
+        </ul>
+        <p className="s2-section-note">Every relationship in the published graph is a candidate and none has been scientifically reviewed.</p>
+      </LandingSection>
+
+      <LandingSection
         title="Pilot discussions stay honest."
         description="Contact prepares a browser draft. No MoU, partnership or performance claim is implied."
       >
@@ -196,6 +207,18 @@ export function LaboratoriesPublicPage() {
       </LandingHero>
 
       <LandingSection
+        title="Where it fits a laboratory workflow."
+        description="Before an experiment, a lab needs to know what has been measured, in which system and with which assay."
+      >
+        <ul className="s2-boundary-list">
+          <li><strong>Check the context first:</strong> compare published findings by species, tissue, cell state and assay before treating a result as a baseline for your own system.</li>
+          <li><strong>Trace a claim to its passage:</strong> follow a candidate relationship back to the source passage and see what the study did and did not test.</li>
+          <li><strong>See what is unreplicated:</strong> recorded gaps show where a relationship rests on few sources or one model.</li>
+        </ul>
+        <p className="s2-section-note">Your own readouts cannot be uploaded in this preview. Private dataset integration is planned, not available.</p>
+      </LandingSection>
+
+      <LandingSection
         title="Boundaries for laboratory work."
         description="Assay context stays visible. Private samples and live instruments are not claimed."
       >
@@ -238,6 +261,19 @@ export function CommunityPublicPage() {
         <LandingPrimaryCta to="/contact">Discuss community access</LandingPrimaryCta>
         <LandingSecondaryCta to="/enterprise/community">Open community demo shell</LandingSecondaryCta>
       </LandingHero>
+
+      <LandingSection
+        title="What a future Research Network could offer."
+        description="Planned, not built. No collaborators, institutions or matches are shown because none exist yet."
+      >
+        <ul className="s2-boundary-list">
+          <li><strong>Planned:</strong> finding people whose published work bears on an open question, starting from the evidence rather than a profile.</li>
+          <li><strong>Planned:</strong> shared investigations that several researchers can inspect, each keeping private notes private.</li>
+          <li><strong>Planned:</strong> verified participant identity, so a contribution can be attributed.</li>
+          <li><strong>Not planned:</strong> automatic sharing of anyone&apos;s unpublished work, or ranking people by activity.</li>
+        </ul>
+        <p className="s2-section-note">Today the Research Network is a design conversation. Joining the conversation does not create an account or a profile.</p>
+      </LandingSection>
 
       <LandingSection
         title="What community collaboration means here."
