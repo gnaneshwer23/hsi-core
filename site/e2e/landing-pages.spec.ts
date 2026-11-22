@@ -85,3 +85,19 @@ test('audience flow diagram is styled: bounded page height and readable step lab
   expect(fg,path+' label must not be the dark-ink default').not.toBe('rgb(25, 5, 5)');
  }
 });
+
+test('intelligence page states each agent’s maturity and boundary and the handoff path',async({page})=>{
+ await page.goto('/intelligence');
+ await expect(page.getByRole('heading',{name:'How the agents hand work to each other'})).toBeVisible();
+ await expect(page.getByText('Status:')).toHaveCount(13);
+ await expect(page.getByText('Boundary:')).toHaveCount(13);
+ await expect(page.getByText(/No agent approves science/)).toBeVisible();
+});
+
+test('scientific companion labels its concept preview as scripted and not live',async({page})=>{
+ await page.goto('/scientific-companion');
+ await expect(page.getByText('Future capability — not a live service')).toBeVisible();
+ await expect(page.getByText('Illustrative concept — scripted, not generated')).toBeVisible();
+ await expect(page.getByText(/No model is running on this page/)).toBeVisible();
+ await expect(page.getByText('Think through an experimental design')).toBeVisible();
+});

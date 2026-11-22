@@ -174,3 +174,9 @@
   .fig-board,.fig-layers,.fig-hub{grid-template-columns:1fr}
 }
 @keyframes cine-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+.cine-agent-status{font-size:.74rem!important;line-height:1.4;margin:.35rem 0 0!important;color:#A8B2C2}
+.cine-agent-status b{color:#D8DBE6;font-weight:600}
+.cine-concept{margin:1.25rem 0;padding:1.1rem 1.25rem;border:1px dashed rgba(16,19,28,.35);border-radius:6px;max-width:44rem}
+.cine-concept p{margin:.5rem 0}
+.cine-concept figcaption{font-size:.82rem;margin-top:.75rem;color:var(--cine-body)}

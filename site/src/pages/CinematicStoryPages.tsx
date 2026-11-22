@@ -32,12 +32,27 @@ export function IntelligencePublicPage(){
         <h3>{g.layer}</h3>
         <ul>
          {g.items.map(c=>(
-          <li key={c.slug}><strong>{c.name}</strong><span>{c.role}</span><p>{c.purpose}</p></li>
+          <li key={c.slug}><strong>{c.name}</strong><span>{c.role}</span><p>{c.purpose}</p><p className="cine-agent-status"><b>Status:</b> {c.maturity}.</p><p className="cine-agent-status"><b>Boundary:</b> {c.boundary}</p></li>
          ))}
         </ul>
        </section>
       ))}
      </div>
+    </div>
+   </section>
+   <section className="cine-section" aria-labelledby="intel-flow">
+    <div className="cine-wrap">
+     <h2 id="intel-flow">How the agents hand work to each other</h2>
+     <FigurePath label="Collective handoff" steps={[
+      {n:"01",title:"NEXUS keeps one question and its budget"},
+      {n:"02",title:"AEGIS and SCOUT decide what may be retrieved"},
+      {n:"03",title:"LANTERN extracts passage-linked claims"},
+      {n:"04",title:"ATLAS, HELIX and PARALLAX map, investigate and compare in context"},
+      {n:"05",title:"VANTAGE proposes labelled, unvalidated gaps"},
+      {n:"06",title:"VERITAS checks against passages, then ARBITER routes to a human reviewer"},
+     ]}/>
+     <p style={{marginTop:"2rem"}}>SENTINEL, CALIBER and WARDEN sit alongside this path: they watch for changed sources, measure output quality and keep runs bounded. No agent approves science or promotes a claim to the graph.</p>
+     <p className="cine-note">Each agent card above states what exists today. None has been shown operating live at scale, and none has independent scientific acceptance.</p>
     </div>
    </section>
    <section className="cine-section">
@@ -133,7 +148,18 @@ export function ScientificCompanionPublicPage(){
       {n:"06",title:"Navigate the graph"},
       {n:"07",title:"Say when evidence is thin"},
       {n:"08",title:"Suggest the next question"},
+      {n:"09",title:"Discuss a candidate hypothesis"},
+      {n:"10",title:"Think through an experimental design"},
      ]}/>
+     <h2>Concept preview</h2>
+     <figure className="cine-concept" aria-label="Illustrative concept: not a live conversation">
+      <p className="cine-future">Illustrative concept — scripted, not generated</p>
+      <p><b>Researcher:</b> Why do two studies disagree on IL-21 and Tfh cells?</p>
+      <p><b>Companion (concept):</b> The two studies use different species and tissues, so they may not be directly comparable. Here are the passages for each. Evidence for a shared mechanism in human tissue is limited.</p>
+      <p><b>Researcher:</b> What would test that?</p>
+      <p><b>Companion (concept):</b> One candidate, unvalidated: compare both conditions in the same human tissue with the same assay. Controls would need your judgement.</p>
+      <figcaption>This exchange is written by hand to show the intended behaviour. No model is running on this page.</figcaption>
+     </figure>
      <h2>From text to voice and audiovisual interaction</h2>
      <p>We envision a companion that researchers can engage with through natural conversation, with optional real-time voice and avatar experiences. The underlying scientific reasoning must remain evidence-grounded regardless of the interface.</p>
      <h2>A research partner that can say “I don’t know.”</h2>
