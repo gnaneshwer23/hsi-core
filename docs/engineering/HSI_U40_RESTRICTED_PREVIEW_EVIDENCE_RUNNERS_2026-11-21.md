@@ -30,7 +30,7 @@
    - `HSI_PREVIEW_EVIDENCE_APPROVED_ORIGIN` (must match origin)  
 4. Optional fill args: `--staging-target-ref` · `--preview-grant-ref` · `--staging-grant-run-ref` (non-placeholder).  
 5. Keep `writesEnabled=false` on the probed origin.  
-6. Apply proposed digests to U12 / continuous-journey pending worksheets only with real evidence.
+6. Apply proposed digests to U12 / continuous-journey pending worksheets only with real evidence via U43 `bun run staging:preview-evidence:apply-proposal` (dry-run default; `--write` owner-flagged).
 
 ## Honesty
 
