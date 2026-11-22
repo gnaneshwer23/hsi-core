@@ -1,7 +1,7 @@
 /**
  * POST /api/csp-report. Receives browser Content-Security-Policy violation reports (report-uri). Logs a reduced, structured
- * record (directive, blocked origin, page path; never query strings, fragments or sample text) so the policy can move from
- * report-only to enforced on evidence. Stores nothing. Per-instance log cap prevents log flooding.
+ * record (directive, blocked origin, page path; never query strings, fragments or sample text) so a policy that is now
+ * enforced can still be monitored for breakage and tightened on evidence. Stores nothing. Per-instance log cap prevents log flooding.
  */
 const TYPES=/^application\/(csp-report|reports\+json|json)/i;
 const MAX_BYTES=8192,LOG_CAP_PER_HOUR=200;
