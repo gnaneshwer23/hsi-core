@@ -4,13 +4,28 @@ import {
   HSI_SCIENTIFIC_COMPANION_OWNER_APPROVAL,
 } from "../../../src/hsiScientificCompanionAuthorization";
 import {
+  HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL,
+} from "../../../src/hsiScientificCompanionLiveEvidenceAuthorization";
+import {
   runHsiScientificCompanionTurn,
+  type HsiScientificCompanionBoundEvidence,
   type HsiScientificCompanionMode,
   type HsiScientificCompanionTurnResult,
 } from "../../../src/hsiScientificCompanionRuntime";
 import {ResearchAppShell} from "../components/home/ResearchAppShell";
 import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
 import "../styles/research-home.css";
+
+const SAMPLE_BOUND_EVIDENCE: HsiScientificCompanionBoundEvidence[] = [
+  {
+    sourceId: "europepmc:MED:example-ssc-1",
+    title: "Example SSc fibrosis mechanism review (illustrative metadata)",
+    provider: "workspace",
+    sourceUrl: "https://europepmc.org/",
+    verificationState: "metadata_retrieved_not_claim_verified",
+    reviewState: "unreviewed",
+  },
+];
 
 const MODES: {id: HsiScientificCompanionMode; label: string; hint: string}[] = [
   {
@@ -39,6 +54,7 @@ const STARTERS = [
 export function ScientificCompanionPage() {
   const [mode, setMode] = useState<HsiScientificCompanionMode>("discuss");
   const [question, setQuestion] = useState<string>(STARTERS[0]);
+  const [evidenceJson, setEvidenceJson] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [turn, setTurn] = useState<HsiScientificCompanionTurnResult | null>(null);
 
@@ -47,11 +63,29 @@ export function ScientificCompanionPage() {
   function run() {
     setError(null);
     try {
+      const trimmed = evidenceJson.trim();
+      let liveEvidence:
+        | {
+            authorization: typeof HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL;
+            records: HsiScientificCompanionBoundEvidence[];
+          }
+        | undefined;
+      if (trimmed) {
+        const parsed = JSON.parse(trimmed) as unknown;
+        if (!Array.isArray(parsed)) {
+          throw Error("Bound evidence must be a JSON array of public literature metadata records");
+        }
+        liveEvidence = {
+          authorization: HSI_SCIENTIFIC_COMPANION_LIVE_EVIDENCE_OWNER_APPROVAL,
+          records: parsed as HsiScientificCompanionBoundEvidence[],
+        };
+      }
       const result = runHsiScientificCompanionTurn({
         authorization: HSI_SCIENTIFIC_COMPANION_OWNER_APPROVAL,
         mode,
         question,
         createdAt: new Date().toISOString(),
+        liveEvidence,
       });
       setTurn(result);
     } catch (e) {
@@ -108,6 +142,28 @@ export function ScientificCompanionPage() {
               </button>
             ))}
           </div>
+          <label htmlFor="sc-ev">
+            Optional bound evidence JSON (U42 — caller-supplied metadata only)
+          </label>
+          <textarea
+            id="sc-ev"
+            rows={4}
+            value={evidenceJson}
+            onChange={(e) => setEvidenceJson(e.target.value)}
+            placeholder='[{"sourceId":"…","title":"…","provider":"workspace","sourceUrl":"https://…","verificationState":"metadata_retrieved_not_claim_verified","reviewState":"unreviewed"}]'
+          />
+          <div className="rh-row" style={{flexWrap: "wrap", gap: "0.5rem"}}>
+            <button
+              type="button"
+              className="rh-ghost"
+              onClick={() => setEvidenceJson(JSON.stringify(SAMPLE_BOUND_EVIDENCE, null, 2))}
+            >
+              Load sample bound metadata
+            </button>
+            <button type="button" className="rh-ghost" onClick={() => setEvidenceJson("")}>
+              Clear bound evidence
+            </button>
+          </div>
           <div className="rh-row">
             <button type="button" className="rh-primary" onClick={run}>
               Run companion turn
@@ -156,7 +212,9 @@ export function ScientificCompanionPage() {
             </details>
             <p className="rh-note" role="status">
               Scientific approval: false · Avatar: false · Voice: false · Networking: false ·
-              Unfenced LLM: false
+              Unfenced LLM: false · Live evidence bound:{" "}
+              {turn.honesty.liveEvidenceBound ? "yes (caller-supplied)" : "no"} · Companion
+              network retrieval: false · Claim verified: false
             </p>
           </section>
         )}

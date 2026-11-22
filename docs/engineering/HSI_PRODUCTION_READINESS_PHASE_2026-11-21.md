@@ -75,5 +75,6 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U39 Expanded checkpointed research-agent roles | Done — see `HSI_U39_EXPANDED_RESEARCH_AGENT_ROLES_2026-11-21.md` (verifier / hypothesis / policy; entity/graph/interrogator still open) |
 | U40 Restricted-preview auth + continuous-journey evidence runners | Done — see `HSI_U40_RESTRICTED_PREVIEW_EVIDENCE_RUNNERS_2026-11-21.md` (fill U12 with owner staging refs; preview GO / checklist #1 still open) |
 | U41 Scientific Companion text-first (KG/evidence) | Done — see `HSI_U41_SCIENTIFIC_COMPANION_TEXT_FIRST_2026-11-21.md` (voice/avatar/networking still Phase 3+) |
+| U42 Scientific Companion live-evidence binding | Done — see `HSI_U42_COMPANION_LIVE_EVIDENCE_2026-11-22.md` (caller-supplied metadata only; companion network retrieval still closed) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U41 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U42 soft-landed; owner evidence still required.
