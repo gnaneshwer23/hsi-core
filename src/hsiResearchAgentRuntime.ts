@@ -1,10 +1,12 @@
-/** Owner-authorized HSI research agent runtime (U35 + U39).
+/** Owner-authorized HSI research agent runtime (U35 + U39 + U44).
  *
  * Checkpointed orchestration under the owner approval envelope.
  * U35: question_planner → contradiction_analyst
  * U39: expanded SSc path also runs claim_verifier, hypothesis_generator,
  *      safety_policy_gate (and optional evidence_retriever when a curated
  *      release snapshot is supplied).
+ * U44: full SSc path also checkpoints entity_resolver, graph_reasoner,
+ *      interrogator (closing the U39 remaining-role gap).
  *
  * Does not call LLMs, publish graph releases, auto-approve Gate C, ingest PHI,
  * enable held Neon migrations, or claim live multi-process staging E2E.
@@ -18,8 +20,11 @@ import {
   createGapVerificationExecutor,
   createSafetyPolicyGateExecutor,
   createSscContradictionExecutor,
+  createSscEntityResolverExecutor,
   createSscEvidenceRetrieverExecutor,
+  createSscGraphReasonerExecutor,
   createSscHypothesisGeneratorExecutor,
+  createSscInterrogatorExecutor,
   createSscPlannerExecutor,
   type HsiInvestigationArtifactSink,
 } from "./hsiArch003AgentAdapters";
@@ -49,11 +54,26 @@ import type {QuestionPlanInput} from "./interrogativeQuestionEngine";
 
 export const HSI_RESEARCH_AGENT_RUNTIME_SCHEMA = "hsi-research-agent-runtime-1" as const;
 
-export type HsiResearchAgentPipeline = "planner_contradiction" | "expanded_ssc";
+export type HsiResearchAgentPipeline =
+  | "planner_contradiction"
+  | "expanded_ssc"
+  | "full_ssc";
 
 export const HSI_EXPANDED_SSC_ROLES = [
   "question_planner",
   "evidence_retriever",
+  "contradiction_analyst",
+  "claim_verifier",
+  "hypothesis_generator",
+  "safety_policy_gate",
+] as const satisfies readonly HsiAgentRole[];
+
+export const HSI_FULL_SSC_ROLES = [
+  "question_planner",
+  "entity_resolver",
+  "evidence_retriever",
+  "graph_reasoner",
+  "interrogator",
   "contradiction_analyst",
   "claim_verifier",
   "hypothesis_generator",
@@ -121,7 +141,8 @@ function gapInputFromDraft(
 /**
  * Run the owner-authorized SSc research-agent path behind durable checkpoints.
  * Default pipeline remains planner → contradiction (U35). Pass
- * `pipeline: "expanded_ssc"` for U39 roles.
+ * `pipeline: "expanded_ssc"` for U39 roles, or `pipeline: "full_ssc"` for U44
+ * remaining roles (entity_resolver / graph_reasoner / interrogator).
  */
 export async function runHsiAuthorizedResearchAgentRuntime(input: {
   authorization: HsiResearchAgentOwnerApproval;
@@ -149,7 +170,9 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
   const checkpointStore = input.checkpointStore ?? createMemoryCheckpointStore();
   const timeoutMs = input.timeoutMsPerTask ?? 5_000;
   const now = input.now ?? (() => new Date().toISOString());
-  const includeEvidence = pipeline === "expanded_ssc" && !!input.evidence;
+  const includeExpanded = pipeline === "expanded_ssc" || pipeline === "full_ssc";
+  const includeFull = pipeline === "full_ssc";
+  const includeEvidence = includeExpanded && !!input.evidence;
 
   let draftRef = "";
 
@@ -210,25 +233,8 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
     return fromDeps;
   };
 
-  const contradiction = checkpointHsiExecutor({
-    store: checkpointStore,
-    inputHash: hashHsiCheckpointInput({
-      investigationId: input.investigationId,
-      role: "contradiction_analyst",
-      dependsOn: draftTaskId,
-    }),
-    now,
-    executor: async (context) => {
-      return createSscContradictionExecutor({
-        sink: input.sink,
-        draftRef: resolveDraftRef(context),
-      })(context);
-    },
-  });
-
   const executors: Partial<Record<HsiAgentRole, HsiAgentExecutor>> = {
     question_planner: planner,
-    contradiction_analyst: contradiction,
   };
   if (evidenceRetriever) executors.evidence_retriever = evidenceRetriever;
 
@@ -246,17 +252,113 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
       dependsOn: ["plan"],
     });
   }
+
+  /** Last task before contradiction; full_ssc inserts resolve → reason → interrogate. */
+  let preContradictDependsOn: string | string[] = draftTaskId;
+  const rolesExecuted: HsiAgentRole[] = includeEvidence
+    ? ["question_planner", "evidence_retriever"]
+    : ["question_planner"];
+
+  if (includeFull) {
+    const resolve = checkpointHsiExecutor({
+      store: checkpointStore,
+      inputHash: hashHsiCheckpointInput({
+        investigationId: input.investigationId,
+        role: "entity_resolver",
+        dependsOn: draftTaskId,
+      }),
+      now,
+      executor: async (context) => {
+        return createSscEntityResolverExecutor({
+          sink: input.sink,
+          draftRef: resolveDraftRef(context),
+          investigationId: input.investigationId,
+        })(context);
+      },
+    });
+    const reason = checkpointHsiExecutor({
+      store: checkpointStore,
+      inputHash: hashHsiCheckpointInput({
+        investigationId: input.investigationId,
+        role: "graph_reasoner",
+        dependsOn: ["resolve", draftTaskId],
+      }),
+      now,
+      executor: async (context) => {
+        return createSscGraphReasonerExecutor({
+          sink: input.sink,
+          draftRef: resolveDraftRef(context),
+          investigationId: input.investigationId,
+        })(context);
+      },
+    });
+    const interrogate = checkpointHsiExecutor({
+      store: checkpointStore,
+      inputHash: hashHsiCheckpointInput({
+        investigationId: input.investigationId,
+        role: "interrogator",
+        dependsOn: ["reason", draftTaskId],
+      }),
+      now,
+      executor: async (context) => {
+        return createSscInterrogatorExecutor({
+          sink: input.sink,
+          draftRef: resolveDraftRef(context),
+          investigationId: input.investigationId,
+        })(context);
+      },
+    });
+    executors.entity_resolver = resolve;
+    executors.graph_reasoner = reason;
+    executors.interrogator = interrogate;
+    tasks.push(
+      {
+        id: "resolve",
+        manifest: roleManifest("entity_resolver", timeoutMs, input.plan.dataClass),
+        dependsOn: [draftTaskId],
+      },
+      {
+        id: "reason",
+        manifest: roleManifest("graph_reasoner", timeoutMs, input.plan.dataClass),
+        dependsOn: ["resolve", draftTaskId],
+      },
+      {
+        id: "interrogate",
+        manifest: roleManifest("interrogator", timeoutMs, input.plan.dataClass),
+        dependsOn: ["reason", draftTaskId],
+      },
+    );
+    rolesExecuted.push("entity_resolver", "graph_reasoner", "interrogator");
+    preContradictDependsOn = ["interrogate", draftTaskId];
+  }
+
+  const contradiction = checkpointHsiExecutor({
+    store: checkpointStore,
+    inputHash: hashHsiCheckpointInput({
+      investigationId: input.investigationId,
+      role: "contradiction_analyst",
+      dependsOn: preContradictDependsOn,
+    }),
+    now,
+    executor: async (context) => {
+      return createSscContradictionExecutor({
+        sink: input.sink,
+        draftRef: resolveDraftRef(context),
+      })(context);
+    },
+  });
+  executors.contradiction_analyst = contradiction;
+
   tasks.push({
     id: "contradict",
     manifest: roleManifest("contradiction_analyst", timeoutMs, input.plan.dataClass),
-    dependsOn: [draftTaskId],
+    dependsOn: Array.isArray(preContradictDependsOn)
+      ? preContradictDependsOn
+      : [preContradictDependsOn],
   });
+  rolesExecuted.push("contradiction_analyst");
 
-  const rolesExecuted: HsiAgentRole[] = includeEvidence
-    ? ["question_planner", "evidence_retriever", "contradiction_analyst"]
-    : ["question_planner", "contradiction_analyst"];
-
-  if (pipeline === "expanded_ssc") {
+  if (includeExpanded) {
     const verifier = checkpointHsiExecutor({
       store: checkpointStore,
       inputHash: hashHsiCheckpointInput({

@@ -9,9 +9,15 @@ import {
 } from "../src/hsiResearchAgentAuthorization";
 import {
   HSI_EXPANDED_SSC_ROLES,
+  HSI_FULL_SSC_ROLES,
   runHsiAuthorizedResearchAgentRuntime,
 } from "../src/hsiResearchAgentRuntime";
-import type {HsiInvestigationArtifactSink} from "../src/hsiArch003AgentAdapters";
+import type {
+  HsiEntityResolutionArtifact,
+  HsiGraphReasoningArtifact,
+  HsiInterrogatorBriefArtifact,
+  HsiInvestigationArtifactSink,
+} from "../src/hsiArch003AgentAdapters";
 import {createMemoryCheckpointStore} from "../src/evidence/boundedAgentExecution";
 
 const release = {
@@ -25,13 +31,27 @@ function memorySink(): HsiInvestigationArtifactSink & {
   report: FalsificationReport | null;
   gaps: GapVerificationOutcomeSection | null;
   hypotheses: HypothesisRegistry | null;
+  entities: HsiEntityResolutionArtifact | null;
+  mechanisms: HsiGraphReasoningArtifact | null;
+  brief: HsiInterrogatorBriefArtifact | null;
 } {
   const state: {
     draft: InterrogativeInvestigation | null;
     report: FalsificationReport | null;
     gaps: GapVerificationOutcomeSection | null;
     hypotheses: HypothesisRegistry | null;
-  } = {draft: null, report: null, gaps: null, hypotheses: null};
+    entities: HsiEntityResolutionArtifact | null;
+    mechanisms: HsiGraphReasoningArtifact | null;
+    brief: HsiInterrogatorBriefArtifact | null;
+  } = {
+    draft: null,
+    report: null,
+    gaps: null,
+    hypotheses: null,
+    entities: null,
+    mechanisms: null,
+    brief: null,
+  };
   return {
     get draft() {
       return state.draft;
@@ -44,6 +64,15 @@ function memorySink(): HsiInvestigationArtifactSink & {
     },
     get hypotheses() {
       return state.hypotheses;
+    },
+    get entities() {
+      return state.entities;
+    },
+    get mechanisms() {
+      return state.mechanisms;
+    },
+    get brief() {
+      return state.brief;
     },
     saveDraft: async (d) => {
       state.draft = d;
@@ -64,6 +93,18 @@ function memorySink(): HsiInvestigationArtifactSink & {
     saveHypothesisRegistry: async (r) => {
       state.hypotheses = r;
       return "hypothesis-ref";
+    },
+    saveEntityResolution: async (r) => {
+      state.entities = r;
+      return "entity-ref";
+    },
+    saveGraphReasoning: async (r) => {
+      state.mechanisms = r;
+      return "reason-ref";
+    },
+    saveInterrogatorBrief: async (r) => {
+      state.brief = r;
+      return "brief-ref";
     },
   };
 }
@@ -171,6 +212,55 @@ test("expanded SSc pipeline checkpoints verifier, hypothesis, and safety gate", 
   expect(result.scientificApproval).toBe(false);
   expect(result.gateCAutoApprove).toBe(false);
   expect(result.phiAllowed).toBe(false);
+});
+
+test("full SSc pipeline checkpoints entity, graph, and interrogator roles", async () => {
+  const sink = memorySink();
+  const store = createMemoryCheckpointStore();
+  const result = await runHsiAuthorizedResearchAgentRuntime({
+    authorization: HSI_RESEARCH_AGENT_OWNER_APPROVAL,
+    investigationId: "inv-research-full-1",
+    pipeline: "full_ssc",
+    plan: {
+      question: "Which SSc mechanisms require investigation?",
+      actorPrincipal: "researcher-1",
+      createdAt: "2026-11-22T08:00:00Z",
+      dataClass: "public_biomedical",
+      focus: "systemic_sclerosis",
+      release,
+    },
+    sink,
+    checkpointStore: store,
+    now: () => "2026-11-22T08:00:00Z",
+  });
+
+  expect(result.pipeline).toBe("full_ssc");
+  expect(result.rolesExecuted).toEqual([
+    "question_planner",
+    "entity_resolver",
+    "graph_reasoner",
+    "interrogator",
+    "contradiction_analyst",
+    "claim_verifier",
+    "hypothesis_generator",
+    "safety_policy_gate",
+  ]);
+  expect(result.rolesExecuted.every((r) => (HSI_FULL_SSC_ROLES as readonly string[]).includes(r))).toBe(
+    true,
+  );
+  expect(result.orchestration.status).toBe("completed");
+  expect(result.orchestration.results.resolve?.outputRef).toBe("entity-ref");
+  expect(result.orchestration.results.reason?.outputRef).toBe("reason-ref");
+  expect(result.orchestration.results.interrogate?.outputRef).toBe("brief-ref");
+  expect(result.checkpoints.resolve?.state).toBe("completed");
+  expect(result.checkpoints.reason?.state).toBe("completed");
+  expect(result.checkpoints.interrogate?.state).toBe("completed");
+  expect(sink.entities?.scientificApproval).toBe(false);
+  expect(sink.mechanisms?.graphPromotable).toBe(false);
+  expect(sink.brief?.clinicalAdvice).toBe(false);
+  expect(sink.brief?.nextQuestions.length).toBeGreaterThan(0);
+  expect(result.scientificApproval).toBe(false);
+  expect(result.implementedAsLiveMultiProcessE2E).toBe(false);
 });
 
 test("runtime refuses without canonical owner approval", async () => {
