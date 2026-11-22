@@ -16,4 +16,42 @@ export const HELD_MIGRATION_IDS = [
   "031_hsi_graph_workspace_storage",
   "032_hsi_graph_workspace_procedures",
   "033_hsi_ontology_import_role",
+  "20261111_p1_4_evidence_review_staging",
 ] as const;
+
+/**
+ * Ids already on the normal migrate path as of the 22 Nov 2026 audit.
+ * 020's earlier hold was released after review of the role split.
+ * A new SQL file must be added here or to HELD_MIGRATION_IDS before migrate can apply it.
+ */
+export const APPROVED_MIGRATION_IDS = [
+  "001_hsi_substrate",
+  "002_hsi_evidence_ownership",
+  "003_hsi_scientific_review_guardrails",
+  "004_hsi_research_investigations",
+  "005_hsi_reviewer_authority",
+  "006_hsi_research_access",
+  "007_hsi_interrogative_contracts",
+  "008_hsi_interrogative_review_audit",
+  "009_hsi_agent_durable_checkpoints",
+  "010_hsi_agent_fenced_artifacts",
+  "011_hsi_lhkg_governed_graph",
+  "012_hsi_lhkg_evidence_dossiers",
+  "013_hsi_lhkg_isolated_security_hardening",
+  "014_hsi_investigation_graph_context",
+  "015_hsi_review_delivery",
+  "016_hsi_evidence_ledger",
+  "017_hsi_experiment_ledger",
+  "018_hsi_dynamic_evidence_persistence",
+  "019_hsi_isi_research_review",
+  "020_hsi_lhkg_rls_policies",
+  "021_hsi_hitl_questions_outbox",
+] as const;
+
+export type MigrationDisposition = "approved" | "held" | "unlisted";
+
+export function migrationDisposition(id: string): MigrationDisposition {
+  if ((HELD_MIGRATION_IDS as readonly string[]).includes(id)) return "held";
+  if ((APPROVED_MIGRATION_IDS as readonly string[]).includes(id)) return "approved";
+  return "unlisted";
+}
