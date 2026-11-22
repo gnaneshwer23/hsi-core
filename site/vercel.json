@@ -497,6 +497,10 @@
       "destination": "/_pages/research--workspace.html"
     },
     {
+      "source": "/research/runs",
+      "destination": "/_pages/research--runs.html"
+    },
+    {
       "source": "/research/companion",
       "destination": "/_pages/research--companion.html"
     },

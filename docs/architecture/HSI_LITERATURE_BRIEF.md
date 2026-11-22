@@ -19,6 +19,11 @@ The brief embeds the candidate set's hash and reference and one receipt per prov
 
 Markdown is inert: imported strings are escaped and URL schemes and `www.` are defanged, because GitHub-flavoured renderers auto-link bare URLs even inside escaped text. The JSON keeps the original strings. Only validated source links appear as links, in code spans.
 
+## Data mode and the browser-safe core (added with the fixture run)
+
+- Every brief carries `dataMode`: `fixture_recorded` or `live`. It is required (never defaulted), is part of the hash, is printed as a banner in the Markdown and the page, and cannot be removed or changed to another value. Anything the recorded-fixture job produces is `fixture_recorded`.
+- The pure parts (types, invariants, canonical JSON, rendering) live in `src/literatureBriefCore.ts`, which imports nothing from Node. The server and the workbench run the SAME `checkBriefInvariants`; only the digest differs (synchronous on the server, `crypto.subtle` in the browser). A test pins the core's canonical form to the server's hash input so they cannot drift.
+
 ## Not provided
 
 - **Authentication of the brief.** The hash detects accidental and naive edits; someone who edits descriptive text and recomputes it passes verification (a test documents this). Signing, a principal, tenant and ownership, and save-and-reopen under ownership belong to the persistence layer, which is held.

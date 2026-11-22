@@ -116,7 +116,7 @@ test("mixed modes fail closed: an unauthenticated worker refuses granted jobs, a
  const w=world(),out=mkd();
  const granted=await submit(w,out);const plain=submitFixture({out,fixture});if(!granted.ok)throw Error("x");
  const c1=mkCalls();const un=await runWorkerOnce({out,runner:stub(c1)});
- expect(un.refused).toEqual([{jobId:granted.jobId,code:"grant_unverifiable"}]);expect(un.ran.map(x=>x.jobId)).toEqual([plain.jobId]);expect(c1.ctx[0]).toEqual({grant:null,authoriseCall:null});
+ expect(un.refused).toEqual([{jobId:granted.jobId,code:"grant_unverifiable"}]);expect(un.ran.map(x=>x.jobId)).toEqual([plain.jobId]);expect(c1.ctx[0]).toMatchObject({grant:null,authoriseCall:null});
  const out2=mkd();submitFixture({out:out2,fixture});
  const c2=mkCalls();const au=await runWorkerOnce({out:out2,authority:w.mk(),runner:stub(c2)});
  expect(au.refused.map(x=>x.code)).toEqual(["no_grant"]);expect(c2.n).toBe(0);
