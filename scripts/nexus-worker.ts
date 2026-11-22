@@ -2,15 +2,18 @@
  *   bun scripts/nexus-worker.ts submit --fixture <name|path> [--out <dir>]
  *   bun scripts/nexus-worker.ts work   [--out <dir>] [--concurrency <n>] [--max-jobs <n>] [--daily-cap <n>] [--retry-failed] [--loop [--interval-ms <n>]]
  *   bun scripts/nexus-worker.ts status [--out <dir>]
+ *   bun scripts/nexus-worker.ts health [--out <dir>] [--stale-ms <n>]   (exit 0 ok, 1 degraded, 2 down)
+ *   bun scripts/nexus-worker.ts cancel --job <jobId> [--out <dir>]      (operator cancel; a running job is asked to stop)
  * Default --out is out/nexus (git-ignored). Ctrl-C or SIGTERM stops new starts and lets a running job finish.
  * Live investigations are not available here; see docs/LIVE_RUN_RUNBOOK.md for the guarded human-confirmed path.
  */
 import {readFileSync} from "node:fs";
 import {resolve} from "node:path";
-import {FIXTURE_NOTICE,jobStatus,runWorkerLoop,runWorkerOnce,submitFixture} from "../src/nexusRunCommand";
+import {FIXTURE_NOTICE,cancelJob,jobStatus,runWorkerLoop,runWorkerOnce,submitFixture} from "../src/nexusRunCommand";
+import {nexusHealth} from "../src/nexusWorkerHealth";
 
 const [command,...args]=process.argv.slice(2);
-const VALUE=new Set(["--fixture","--out","--concurrency","--max-jobs","--daily-cap","--interval-ms"]),BOOL=new Set(["--retry-failed","--loop"]);
+const VALUE=new Set(["--fixture","--out","--concurrency","--max-jobs","--daily-cap","--interval-ms","--job","--stale-ms"]),BOOL=new Set(["--retry-failed","--loop"]);
 const flags=new Map<string,string|true>();
 for(let i=0;i<args.length;i++){
  const a=args[i]!;
@@ -35,6 +38,12 @@ if(command==="submit"){
  else show(await runWorkerOnce(opts));
 }else if(command==="status"){
  console.log(JSON.stringify({notice:FIXTURE_NOTICE,jobs:jobStatus(out)},null,2));
+}else if(command==="health"){
+ const h=nexusHealth({out,staleAfterMs:int("--stale-ms")});
+ console.log(JSON.stringify(h,null,2));process.exit(h.status==="ok"?0:h.status==="degraded"?1:2);
+}else if(command==="cancel"){
+ const id=str("--job");if(!id){console.error("cancel needs --job <jobId>");process.exit(2)}
+ const r=cancelJob({out,jobId:id});console.log(JSON.stringify({jobId:id,result:r}));process.exit(r==="unknown"?1:0);
 }else{
- console.error("Usage: bun scripts/nexus-worker.ts <submit|work|status> [options]; see the file header.");process.exit(2);
+ console.error("Usage: bun scripts/nexus-worker.ts <submit|work|status|health|cancel> [options]; see the file header.");process.exit(2);
 }

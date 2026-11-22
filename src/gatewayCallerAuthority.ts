@@ -64,6 +64,12 @@ export interface GatewayCallerAuthority{
  authoriseDelegated(input:{grantId:string;jobId:string;taskId:string;role:string}):Promise<{ok:true;authorisation:GatewayAuthorisation}|{ok:false;code:AuthorisationRefusal}>;
  /** Pre-flight for a worker before it claims a job: the grant exists, verifies, is bound to this job, is unrevoked and unexpired, and the
   * account and investigation still check out. Returns scope information only; it issues no authorisation and consumes nothing. */
+ /** The investigation a grant was issued for, from the SIGNED record and only if it is bound to `jobId`. Works for expired and revoked
+  * grants (an owner must still be able to cancel), so it proves nothing about the grant being usable: callers must still authorise
+  * the session against that investigation. */
+ grantInvestigation(input:{grantId:string;jobId:string}):Promise<{ok:true;investigationId:string}|{ok:false;code:AuthorisationRefusal}>;
+ /** Revokes a grant (after checking it is bound to `jobId`), so in-flight gateway calls under it stop at their next check. Idempotent. */
+ revokeJobGrant(input:{grantId:string;jobId:string;reason:"user_cancelled"|"admin_revoked"|"job_finished"|"suspected_compromise"}):Promise<{ok:true}|{ok:false;code:AuthorisationRefusal}>;
  verifyJobGrant(input:{grantId:string;jobId:string}):Promise<{ok:true;investigationId:string;roles:readonly string[];tenantRef:string;principalRef:string;expiresAtMs:number}|{ok:false;code:AuthorisationRefusal}>;
 }
 
@@ -159,6 +165,16 @@ export function createGatewayCallerAuthority(deps:CallerAuthorityDeps):GatewayCa
    const role=input.role as HsiAgentRole,m=manifestFor(role);if(!m.ok)return m;
    const g=v.grant;
    return {ok:true,authorisation:issue({kind:"grant",grantId:g.grantId,jobId:g.jobId,subjectId:g.subjectId,organizationId:g.organizationId,investigationId:g.investigationId,roles:g.roles,expiresAtMs:g.expiresAtMs},role,input.taskId,m.manifest)};
+  },
+  async grantInvestigation(input){
+   if(!deps.grants)return {ok:false,code:"unavailable"};
+   if(!input||!isGrantId(input.grantId)||typeof input.jobId!=="string"||!ID.test(input.jobId))return {ok:false,code:"invalid_request"};
+   try{const st=await deps.grants.get(input.grantId);if(!st||st.grant.jobId!==input.jobId)return {ok:false,code:"forbidden"};return {ok:true,investigationId:st.grant.investigationId}}catch{return {ok:false,code:"unavailable"}}
+  },
+  async revokeJobGrant(input){
+   if(!deps.grants)return {ok:false,code:"unavailable"};
+   if(!input||!isGrantId(input.grantId)||typeof input.jobId!=="string"||!ID.test(input.jobId))return {ok:false,code:"invalid_request"};
+   try{const st=await deps.grants.get(input.grantId);if(!st||st.grant.jobId!==input.jobId)return {ok:false,code:"forbidden"};await deps.grants.revoke(input.grantId,input.reason);return {ok:true}}catch{return {ok:false,code:"unavailable"}}
   },
   async verifyJobGrant(input){
    if(!deps.grants||!deps.resolveStanding)return {ok:false,code:"unavailable"};

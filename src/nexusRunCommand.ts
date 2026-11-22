@@ -17,6 +17,7 @@ import {writeFileAtomic} from "./fileLock";
 import {runFixtureInvestigation,validateRunnerFixture,FIXTURE_NOTICE} from "./investigationRunner";
 import {createJobJournal,type JobState} from "./nexusJobs";
 import {drainJobs,type DrainOptions,type DrainResult} from "./nexusWorker";
+import {createWorkerHeartbeat} from "./nexusWorkerHealth";
 
 export {FIXTURE_NOTICE};
 const jobDir=(out:string)=>join(resolve(out),"jobs");
@@ -69,6 +70,26 @@ export async function submitAuthenticatedFixture(opts:{out:string;fixture:unknow
  return {ok:true,jobId,created:journal.create(jobId)};
 }
 
+/** Operator cancel (no session): for a person with access to the queue directory. Queued or failed jobs are cancelled at once; a running job
+ * is asked to stop (its signal aborts) and ends as cancelled. It does NOT revoke a grant: use `cancelAuthenticatedJob` for that. */
+export function cancelJob(opts:{out:string;jobId:string;reason?:string;now?:()=>number}):ReturnType<ReturnType<typeof createJobJournal>["cancel"]>{
+ return createJobJournal(jobDir(opts.out),{now:opts.now}).cancel(opts.jobId,opts.reason??"admin_revoked");
+}
+/** Cancel by the researcher who owns the job. Needs a LIVE verified session that owns the job's investigation (taken from the signed grant,
+ * not from the queue files). It revokes the grant first, so in-flight gateway calls stop at their next check, then cancels the job. */
+export async function cancelAuthenticatedJob(opts:{out:string;authority:GatewayCallerAuthority;sessionToken:string;jobId:string;now?:()=>number}):Promise<{ok:true;result:string}|{ok:false;code:string}>{
+ if(typeof opts.jobId!=="string")return {ok:false,code:"invalid_request"};
+ const g=readGrantRef(opts.out,opts.jobId);
+ if(g.state!=="ok")return {ok:false,code:g.state==="none"?"no_grant":"grant_unreadable"};
+ const inv=await opts.authority.grantInvestigation({grantId:g.grantId,jobId:opts.jobId});
+ if(!inv.ok)return {ok:false,code:inv.code};
+ const who=await opts.authority.authorise({sessionToken:opts.sessionToken,investigationId:inv.investigationId,taskId:"cancel",role:"question_planner"});
+ if(!who.ok)return {ok:false,code:who.code};
+ const rv=await opts.authority.revokeJobGrant({grantId:g.grantId,jobId:opts.jobId,reason:"user_cancelled"});
+ if(!rv.ok)return {ok:false,code:rv.code};
+ return {ok:true,result:createJobJournal(jobDir(opts.out),{now:opts.now}).cancel(opts.jobId,"user_cancelled")};
+}
+
 export function jobStatus(out:string):JobState[]{return createJobJournal(jobDir(out)).list()}
 
 /** One pass over every job that is due. */
@@ -108,11 +129,17 @@ export async function runWorkerOnce(opts:{out:string;runner?:FixtureRunner;
 }
 
 /** Repeated passes until the signal aborts. `sleep` is injectable so tests do not wait. */
-export async function runWorkerLoop(opts:{out:string;runner?:FixtureRunner;authority?:GatewayCallerAuthority;intervalMs:number;sleep?:(ms:number,signal:AbortSignal)=>Promise<void>;onPass?:(r:DrainResult)=>void;signal:AbortSignal}&DrainOptions):Promise<void>{
+export async function runWorkerLoop(opts:{out:string;runner?:FixtureRunner;authority?:GatewayCallerAuthority;intervalMs:number;sleep?:(ms:number,signal:AbortSignal)=>Promise<void>;onPass?:(r:DrainResult)=>void;signal:AbortSignal;/** Optional worker id (`w-` plus hex) for the heartbeat file; random when absent. */workerId?:string}&DrainOptions):Promise<void>{
  const sleep=opts.sleep??((ms,signal)=>new Promise<void>(res=>{const t=setTimeout(res,ms);signal.addEventListener("abort",()=>{clearTimeout(t);res()},{once:true})}));
- while(!opts.signal.aborted){
-  opts.onPass?.(await runWorkerOnce(opts));
-  if(opts.signal.aborted)break;
-  await sleep(opts.intervalMs,opts.signal);
- }
+ const hb=createWorkerHeartbeat({out:opts.out,workerId:opts.workerId,now:opts.now});
+ hb.start();
+ try{
+  while(!opts.signal.aborted){
+   hb.beat("running");
+   const r=await runWorkerOnce(opts);
+   hb.pass(r);opts.onPass?.(r);
+   if(opts.signal.aborted)break;
+   await sleep(opts.intervalMs,opts.signal);
+  }
+ }finally{hb.stop()}
 }

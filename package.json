@@ -107,6 +107,8 @@
     "nexus:submit": "bun scripts/nexus-worker.ts submit",
     "nexus:work": "bun scripts/nexus-worker.ts work",
     "nexus:status": "bun scripts/nexus-worker.ts status",
+    "nexus:health": "bun scripts/nexus-worker.ts health",
+    "nexus:cancel": "bun scripts/nexus-worker.ts cancel",
     "validate": "bun run src/cli/validate.ts",
     "export:isi": "bun run src/cli/export-isi.ts",
     "export:isi-map": "bun run src/cli/export-isi-map.ts",
