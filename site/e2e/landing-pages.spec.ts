@@ -71,3 +71,17 @@ test('research gaps page states the failure and shows no figures when the snapsh
  await expect(page.getByText(/could not be loaded, so no gap figures are shown/)).toBeVisible();
  await expect(page.getByText(/recorded gaps across/)).toHaveCount(0);
 });
+
+test('audience flow diagram is styled: bounded page height and readable step labels',async({page})=>{
+ for(const path of ['/researchers','/biotech','/enterprise','/laboratories']){
+  await page.setViewportSize({width:1440,height:900});
+  await page.goto(path);
+  const h=await page.evaluate(()=>document.documentElement.scrollHeight);
+  expect(h,path+' page height').toBeLessThan(8000);
+  const label=page.locator('.ld-flow-label').first();
+  await expect(label).toBeVisible();
+  const [fg,bg]=await label.evaluate(el=>[getComputedStyle(el).color,getComputedStyle(document.body).backgroundColor]);
+  expect(fg,path+' label colour must differ from page ground').not.toBe(bg);
+  expect(fg,path+' label must not be the dark-ink default').not.toBe('rgb(25, 5, 5)');
+ }
+});
