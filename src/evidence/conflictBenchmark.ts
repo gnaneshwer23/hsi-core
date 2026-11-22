@@ -167,6 +167,45 @@ export function runConflictBenchmark(cases:readonly ConflictCase[],external:read
   floors:{proposed:f,ownerApproved:PROTOCOL.floorsOwnerApproved,hsiMeetsProposed:meets},notes};
 }
 
+export const EXAMPLE_HARNESS_FOCI=["species","tissue","endpoint_or_method","dose","population","true_contradiction","apparent_conflict","no_disagreement"] as const;
+export type ExampleHarnessFocus=(typeof EXAMPLE_HARNESS_FOCI)[number];
+export type ExampleHarnessRow={id:string;focus:ExampleHarnessFocus;expected:ConflictLabel;classifier:ConflictLabel;match:boolean};
+
+/** Local Example rows. Labels are harness expectations, not expert adjudication and not a published score. */
+export function exampleHarnessRows(cases:readonly ConflictCase[],focusById:Readonly<Record<string,string>>):ExampleHarnessRow[]{
+ if(cases.length===0)throw Error("No example cases supplied");
+ if(cases.some(c=>c.provenance!=="synthetic_fixture"))throw Error("Example harness refuses non-synthetic provenance");
+ const rows=cases.map(c=>{
+  const focus=focusById[c.id];
+  if(!EXAMPLE_HARNESS_FOCI.includes(focus as ExampleHarnessFocus))throw Error(`Example case ${c.id} has no harness focus`);
+  if(!c.question.includes("EXAMPLE")||!c.question.includes("harness_only"))throw Error(`Example case ${c.id} must say EXAMPLE and harness_only`);
+  const expected=referenceLabel(c);
+  if(!expected)throw Error(`Example case ${c.id} needs an agreed expected label`);
+  const classifier=classifyWithHsi(c);
+  return {id:c.id,focus:focus as ExampleHarnessFocus,expected,classifier,match:classifier===expected};
+ });
+ const seen=new Set(rows.map(r=>r.focus));
+ for(const focus of EXAMPLE_HARNESS_FOCI)if(!seen.has(focus))throw Error(`Example harness is missing focus ${focus}`);
+ if(new Set(rows.map(r=>r.id)).size!==rows.length)throw Error("Duplicate example case id");
+ return rows;
+}
+
+/** Case listing for a local run. No accuracy figure: this is not a scientific result. */
+export function renderExampleHarnessReport(rows:readonly ExampleHarnessRow[]):string{
+ const body=rows.map(r=>`| ${r.id} | ${r.focus} | ${r.expected} | ${r.classifier} | ${r.match?"yes":"no"} |`);
+ return [
+  "# HSI-BENCH-CONFLICT example harness",
+  "",
+  "Status: **harness_only**. Publishable: **no**. Label: **Example**. Provenance: synthetic_fixture.",
+  "These rows check the harness against agreed Example labels. This listing is not a scientific result.",
+  "",
+  "| Case | Focus | Expected label | Classifier label | Match |",
+  "| --- | --- | --- | --- | --- |",
+  ...body,
+  "",
+ ].join("\n");
+}
+
 const pct=(v:number|null)=>v===null?"n/a":`${(v*100).toFixed(0)}%`;
 export function renderConflictReport(r:ConflictBenchmarkReport):string{
  const rows=r.systems.map(s=>`| ${s.system} | ${s.answered}/${s.scored} | ${pct(s.accuracy)} | ${pct(s.recall.true_contradiction)} | ${pct(s.recall.context_dependent)} | ${pct(s.recall.insufficient_context)} | ${pct(s.recall.no_disagreement)} |`);

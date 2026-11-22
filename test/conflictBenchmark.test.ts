@@ -1,6 +1,6 @@
 import {describe,expect,test} from "bun:test";
 import {readFileSync} from "node:fs";
-import {classifyWithHsi,cohensKappa,parseConflictCase,referenceLabel,renderConflictReport,runConflictBenchmark,type ConflictCase} from "../src/evidence/conflictBenchmark";
+import {classifyWithHsi,cohensKappa,exampleHarnessRows,parseConflictCase,referenceLabel,renderConflictReport,renderExampleHarnessReport,runConflictBenchmark,EXAMPLE_HARNESS_FOCI,type ConflictCase} from "../src/evidence/conflictBenchmark";
 
 const fixtures=(JSON.parse(readFileSync("evaluation/conflict-benchmark/fixtures/synthetic-cases.v1.json","utf8")) as unknown[]).map(parseConflictCase);
 const predictions=JSON.parse(readFileSync("evaluation/conflict-benchmark/fixtures/synthetic-predictions.v1.json","utf8"));
@@ -69,6 +69,18 @@ describe("conflict benchmark: report",()=>{
   const many=Array.from({length:60},(_,i)=>expertCase(`E${i}`,i%2?["true_contradiction","true_contradiction"]:["no_disagreement","no_disagreement"]));
   const e=runConflictBenchmark(many);
   expect(e.status).toBe("ready");expect(e.publishable).toBe(false);expect(e.floors.ownerApproved).toBe(false);
+ });
+ test("example cases cover each harness focus and stay labelled Example",()=>{
+  const cases=(JSON.parse(readFileSync("evaluation/conflict-benchmark/fixtures/example-cases.v1.json","utf8")) as unknown[]).map(parseConflictCase);
+  const focus=JSON.parse(readFileSync("evaluation/conflict-benchmark/fixtures/example-case-focus.v1.json","utf8")) as {label:string;harnessOnly:boolean;provenance:string;focus:Record<string,string>};
+  expect(focus.label).toBe("Example");expect(focus.harnessOnly).toBe(true);expect(focus.provenance).toBe("synthetic_fixture");
+  const rows=exampleHarnessRows(cases,focus.focus);
+  expect(rows.length).toBeGreaterThan(6);
+  expect(new Set(rows.map(r=>r.focus))).toEqual(new Set(EXAMPLE_HARNESS_FOCI));
+  expect(rows.every(r=>r.match)).toBe(true);
+  expect(cases.every(c=>c.provenance==="synthetic_fixture"&&c.question.includes("EXAMPLE")&&c.question.includes("harness_only"))).toBe(true);
+  const md=renderExampleHarnessReport(rows);
+  expect(md).toContain("harness_only");expect(md).toContain("Example");expect(md).not.toContain("%");expect(md.toLowerCase()).not.toContain("accuracy");
  });
  test("the rendered report carries no case content",()=>{
   const md=renderConflictReport(r);
