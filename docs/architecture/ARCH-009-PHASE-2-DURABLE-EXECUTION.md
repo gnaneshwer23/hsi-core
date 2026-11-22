@@ -25,3 +25,8 @@ Status: Implemented in source; latest CI pending; persistence integration NOT de
 - Abort-aware executors with idempotent output sink and fencing.
 - Restart/recovery tests against staging.
 - No PHI exposure or autonomous scientific approval.
+
+## Update 22 Nov 2026: file-backed checkpoint store and job worker
+- `src/fileCheckpointStore.ts` implements `HsiCheckpointStore` on the local file system with cross-process compare-and-swap (lock directory, version check under lock, flushed temp file renamed into place, versions advance by exactly one, stale locks reclaimed). Tests include a restart read and six processes racing one claim.
+- `src/nexusWorker.ts` drains the `nexusJobs` journal with bounded concurrency, a daily cap read from durable state, cooperative abort, and no automatic retry of failed jobs. All claims and leases stay in `runDurable`.
+- **Scope and limits.** Single host or a shared volume with working `mkdir` and `rename`; not a distributed lock service. It does not replace the Trusted Neon staging adapter above (that still needs migration approval; migrations 022 to 033 stay held). It is not wired to a scheduler or deployed, no real live run has been made, and it does not make timeouts kill external work. Records hold identifiers, states, hashes and references only.

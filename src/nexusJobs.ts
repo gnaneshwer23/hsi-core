@@ -19,8 +19,8 @@ export function createJobJournal(dir:string,opts:{now?:()=>number}={}){
  const file=join(dir,"jobs.jsonl");
  const read=():JobEvent[]=>existsSync(file)?readFileSync(file,"utf8").split("\n").filter(Boolean).map(l=>JSON.parse(l) as JobEvent):[];
  const write=(e:Omit<JobEvent,"at">)=>{appendFileSync(file,JSON.stringify({...e,at:new Date(now()).toISOString()})+"\n",{flag:"a"})};
- const fold=(jobId:string):JobState|null=>{
-  const events=read().filter(e=>e.jobId===jobId);if(!events.length)return null;
+ const foldEvents=(jobId:string,events:JobEvent[]):JobState|null=>{
+  if(!events.length)return null;
   let status:JobState["status"]="queued",attempts=0,auditHash:string|null=null;
   for(const e of events){
    if(e.type==="started"){status="running";attempts=Math.max(attempts,e.attempt)}
@@ -29,8 +29,16 @@ export function createJobJournal(dir:string,opts:{now?:()=>number}={}){
   }
   return {jobId,status,attempts,lastAt:events[events.length-1]!.at,auditHash};
  };
+ const fold=(jobId:string):JobState|null=>foldEvents(jobId,read().filter(e=>e.jobId===jobId));
+ /** Every known job with its folded state, from one read of the journal, in order of first appearance. */
+ const list=():JobState[]=>{
+  const by=new Map<string,JobEvent[]>();
+  for(const e of read()){const a=by.get(e.jobId);if(a)a.push(e);else by.set(e.jobId,[e])}
+  return [...by].map(([id,ev])=>foldEvents(id,ev)!);
+ };
  return {
   state:fold,
+  list,
   create(jobId:string){if(!ID.test(jobId))throw Error("Invalid job id");if(fold(jobId))return false;write({jobId,type:"created",attempt:0});return true},
   /** Exclusive claim of the next attempt. Returns the attempt number, or null if another worker holds it. */
   claim(jobId:string,expectedAttempt:number){
