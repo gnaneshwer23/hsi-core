@@ -1,21 +1,39 @@
 import {Link} from "react-router-dom";
 import {DemoLandingPreviewPanel} from "../components/demo/DemoLandingPreviewPanel";
+import {CellLattice} from "../components/cinematic/CellLattice";
+import {FigureBoard,FigurePath} from "../components/cinematic/Figures";
+import {MicroTiles} from "../components/cinematic/MicroTiles";
 import {GraphSnapshotProvider,useGraphSnapshot} from "../components/home/useGraphSnapshot";
 import {LiveGraphHero} from "../components/home/LiveGraphHero";
 import {RelationshipDiagram} from "../components/landing/RelationshipDiagram";
 
-import {InvestigationFlowDiagram} from "../components/landing/InvestigationFlowDiagram";
-import {LIVE_INVESTIGATION_PATH} from "../lib/workbenchPrimary";
-import "../styles/premium-public.css";
-
 const DOMAINS=[
- {label:"Immunology & inflammation",to:"/research/knowledge-graph?netDepartment=immunology"},
+ {label:"Immunology and inflammation",to:"/research/knowledge-graph?netDepartment=immunology"},
  {label:"Neuroscience",to:"/research/knowledge-graph?netDepartment=neuroscience"},
- {label:"Microbiome & metabolism",to:"/research/knowledge-graph?netDepartment=microbiome"},
- {label:"Genomics & multi-omics",to:"/research/knowledge-graph?netDepartment=genomics-multi-omics"},
- {label:"Organ & tissue biology",to:"/research/knowledge-graph?netDepartment=human-physiology"},
+ {label:"Microbiome and metabolism",to:"/research/knowledge-graph?netDepartment=microbiome"},
+ {label:"Genomics and multi-omics",to:"/research/knowledge-graph?netDepartment=genomics-multi-omics"},
+ {label:"Organ and tissue biology",to:"/research/knowledge-graph?netDepartment=human-physiology"},
  {label:"Disease mechanisms",to:"/knowledge-graph"},
 ] as const;
+
+const CHALLENGES=[
+ {n:"01",title:"Scattered evidence",text:"Evidence is scattered across databases and disciplines."},
+ {n:"02",title:"Lost conditions",text:"Experimental conditions are easily lost when findings are summarised."},
+ {n:"03",title:"Hard contradictions",text:"Contradictory results are difficult to interpret."},
+ {n:"04",title:"Hidden gaps",text:"Important research gaps remain difficult to identify."},
+ {n:"05",title:"Time on connecting",text:"Researchers spend valuable time connecting information rather than investigating the next question."},
+] as const;
+
+const CAPABILITIES=[
+ ["Explore the evidence","Discover relevant publications and inspect the scientific basis behind findings."],
+ ["Connect biological mechanisms","Explore relationships across genes, cells, pathways, organs and diseases."],
+ ["Understand disagreements","Compare conflicting findings in their biological and experimental context."],
+ ["Identify research gaps","Investigate missing evidence, unresolved mechanisms and questions worth testing."],
+ ["Develop research hypotheses","Explore provisional explanations, experiments and alternative approaches."],
+ ["Discover scientific expertise","Identify relevant research groups and complementary capabilities."],
+] as const;
+
+const JOURNEY=["Ask a question","Explore evidence","Compare findings","Investigate mechanisms","Identify gaps","Develop hypotheses","Generate a research brief"];
 
 function Status(){
  const {snapshot:s,failed}=useGraphSnapshot();
@@ -25,153 +43,180 @@ function Status(){
     <>
      <b>{s.concepts.toLocaleString("en-GB")}</b> concepts <i aria-hidden="true">·</i>{" "}
      <b>{s.relationships.toLocaleString("en-GB")}</b> candidate relationships <i aria-hidden="true">·</i>{" "}
-     <b>{s.gaps.length}</b> recorded gaps <i aria-hidden="true">·</i> <b>{s.reviewed}</b> scientifically
-     reviewed
+     <b>{s.gaps.length}</b> recorded gaps <i aria-hidden="true">·</i> <b>{s.reviewed}</b> scientifically reviewed
     </>
-   ):failed?(
-    "Snapshot unavailable. No substitute figures are shown."
-   ):(
-    "Verifying the published snapshot…"
-   )}
+   ):failed?"Snapshot unavailable. No substitute figures are shown.":"Verifying the published snapshot…"}
   </p>
  );
 }
 
+function LatticeLabels(){
+ const {snapshot}=useGraphSnapshot();
+ const labels=snapshot?.network.nodes.slice(0,7).map(n=>n.name)??[];
+ return <CellLattice labels={labels}/>;
+}
+
 export function HomeLanding(){
  return (
-  <div className="pg-page">
-   <GraphSnapshotProvider>
-    <section className="pg-hero pg-hero-platform pg-hero-spine" aria-labelledby="home-title">
-     <div className="pg-hero-copy">
-      <h1 id="home-title">
-       <span className="pg-brand">Human Super Intelligence </span>
-       See how the evidence connects.
-      </h1>
-      <p className="pg-lead">
-       Explore biological relationships. Inspect the studies. Compare the conditions behind each finding.
-      </p>
-      <div className="pg-cta">
-       <Link className="pg-btn" to="/how-it-works">
-        Explore the platform <span aria-hidden="true">→</span>
-       </Link>
-       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Scientific workbench
-       </Link>
+  <GraphSnapshotProvider>
+   <div className="cine">
+    <section className="cine-hero pg-hero" aria-labelledby="home-title">
+     <div className="cine-hero-copy">
+      <p className="cine-eye">— Human Super Intelligence · Scientific discovery</p>
+      <h1 id="home-title">Your next scientific discovery starts with a <em>better question.</em></h1>
+      <p className="cine-lead">Scientific knowledge is expanding. Understanding how it connects is the challenge.</p>
+      <p className="cine-copy">Human Super Intelligence brings biomedical evidence, biological mechanisms and scientific context together to help researchers explore complex questions, understand conflicting findings and discover what to investigate next.</p>
+      <div className="cine-cta pg-cta">
+       <Link className="cine-btn" to="/how-it-works">Explore HSI</Link>
+       <Link className="cine-btn cine-btn-line" to="/knowledge-graph">Explore the Knowledge Graph</Link>
       </div>
-      <p className="pg-micro">
-       Research preview · candidate-only · unreviewed · no clinical advice · synthetic patients only
-      </p>
+      <p className="cine-note">Research preview. Scientific findings and AI-generated hypotheses are not automatically validated.</p>
      </div>
+     <div className="cine-stage"><LatticeLabels/></div>
+    </section>
 
-     <div className="pg-hero-figure" role="region" aria-labelledby="pg-flow-h">
-      <h2 id="pg-flow-h">From a question to a research brief.</h2>
-      <p className="pg-flow-lead">
-       Follow the evidence through one investigation.
-      </p>
-      <InvestigationFlowDiagram emphasizeId="graph"/>
-      <p className="pg-flow-note">
-       Research preview. Model interpretation and scientific approval remain separate.
-      </p>
+    <section className="cine-sheet" aria-labelledby="cine-challenge">
+     <div className="cine-wrap">
+      <p className="cine-eye">— The challenge</p>
+      <h2 id="cine-challenge">Research is advancing. Knowledge remains fragmented.</h2>
+      <p>A single scientific question can span thousands of publications, multiple biological systems and years of experimental findings.</p>
+      <FigurePath label="Why knowledge stays fragmented" onSheet steps={CHALLENGES}/>
+      <p>What if scientific knowledge could be explored as a connected system?</p>
      </div>
     </section>
 
-    <section className="pg-proof" aria-labelledby="pg-proof-h">
-     <div className="pg-proof-head">
-      <h2 id="pg-proof-h">Published knowledge graph</h2>
-      <p>Live from the digest-verified snapshot. Every relationship is a candidate.</p>
-     </div>
-     <LiveGraphHero/>
-     <div className="pg-strip pg-strip-inline">
-      <Status/>
+    <section className="cine-section" aria-labelledby="pg-proof-h">
+     <div className="cine-wrap">
+      <p className="cine-eye">— The knowledge graph</p>
+      <div className="cine-split">
+       <h2 id="pg-proof-h">Biology doesn’t operate in silos. Neither should scientific intelligence.</h2>
+       <p>The HSI Living Biomedical Knowledge Graph is designed to connect relationships while preserving their evidence, context, uncertainty and review status. Every relationship on this page is a candidate. Nothing here is approved.</p>
+      </div>
+      <div className="pg-proof">
+       <LiveGraphHero/>
+       <Status/>
+      </div>
+      <div className="cine-section" style={{paddingTop:"3rem"}}>
+       <h2>Open a connection.</h2>
+       <p>Evidence, conditions, then review status.</p>
+       <RelationshipDiagram/>
+      </div>
      </div>
     </section>
 
-    <section className="pg-block" aria-labelledby="context-section-title">
-     <h2 id="context-section-title">A connection is only the beginning.</h2>
-     <p className="pg-sub-p">Inspect its evidence, experimental conditions and review status.</p>
-     <RelationshipDiagram/>
-    </section>
-
-    <section className="pg-demo-universe" id="product-demo" aria-labelledby="pg-demo-universe-h">
-     <div className="pg-demo-universe-head">
-      <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
-      <p>Choose a demonstration scenario and inspect both sides.</p>
+    <section className="cine-section" aria-labelledby="cine-platform">
+     <div className="cine-wrap">
+      <p className="cine-eye">— The platform</p>
+      <h2 id="cine-platform">One intelligence platform. Connected scientific understanding.</h2>
+      <p>HSI combines six capabilities. Some are in the research preview. Others are still being built, and the pages say which.</p>
+      <FigureBoard label="Six capabilities" cells={CAPABILITIES.map(([title,text],i)=>({n:String(i+1).padStart(2,"0"),title,text}))}/>
      </div>
-     <DemoLandingPreviewPanel/>
     </section>
 
-    <section className="pg-links" aria-labelledby="pg-domains-h">
-     <div className="pg-links-row">
-      <h2 id="pg-domains-h">Connected biological systems.</h2>
-      <p>Six areas of investigation. Published evidence coverage varies by area.</p>
-      <ul className="pg-domain-list" aria-label="Scientific domains in scope">
-       {DOMAINS.map(d=><li key={d.label}><Link to={d.to}>{d.label}</Link></li>)}
+    <section className="cine-section" aria-labelledby="pg-domains-h">
+     <div className="cine-wrap">
+      <p className="cine-eye">— Cross-domain intelligence</p>
+      <h2 id="pg-domains-h">Six scientific domains. One connected view.</h2>
+      <p>Explore questions that cross conventional disciplinary boundaries without losing the context that makes scientific evidence meaningful.</p>
+      <ul className="fig-hub pg-domain-list" aria-label="Scientific domains in scope">
+       {DOMAINS.map((d,i)=><li key={d.label}><Link to={d.to}><span className="fig-node">{String(i+1).padStart(2,"0")}</span>{d.label}</Link></li>)}
       </ul>
      </div>
+     <div className="cine-wrap">
+      <MicroTiles/>
+      <p className="cine-note">Abstract renderings generated in the browser. Not experimental images.</p>
+     </div>
     </section>
 
-    <section className="pg-product" aria-labelledby="pg-product-h">
-     <div className="pg-product-copy">
-      <h2 id="pg-product-h">Your research home</h2>
-      <p>Choose your topics. Explore the graph. Keep your investigation and brief together.</p>
-      <p className="pg-micro">Many saved records remain on this device.</p>
-      <div className="pg-cta">
-       <Link className="pg-btn" to="/welcome">
-        Set up your research home <span aria-hidden="true">→</span>
-       </Link>
-       <Link className="pg-link" to={LIVE_INVESTIGATION_PATH}>
-        Open scientific workbench <span aria-hidden="true">→</span>
-       </Link>
+    <section className="cine-section" id="product-demo" aria-labelledby="pg-demo-universe-h">
+     <div className="cine-wrap">
+      <p className="cine-eye">— Scientific investigation</p>
+      <h2>Go beyond finding papers.</h2>
+      <FigurePath label="Question to research brief" steps={JOURNEY.map((title,i)=>({n:String(i+1).padStart(2,"0"),title}))}/>
+      <p>HSI is being developed to connect the scientific investigation process into one traceable workflow.</p>
+      <h2 id="pg-demo-universe-h">Compare findings across contexts.</h2>
+      <p>Labelled Example studies. Not an approval.</p>
+      <DemoLandingPreviewPanel/>
+     </div>
+    </section>
+
+    <section className="cine-section" aria-labelledby="cine-agents">
+     <div className="cine-wrap cine-split">
+      <div>
+       <p className="cine-eye">— The intelligence collective</p>
+       <h2 id="cine-agents">Specialised scientific responsibilities. One connected investigation.</h2>
+      </div>
+      <div>
+       <p>HSI’s agent architecture coordinates evidence discovery, source integrity, biological mapping, mechanism investigation, contradiction analysis, verification and research evaluation. Agents propose and analyse. Scientific evidence and authorised review determine what can be trusted.</p>
+       <div className="cine-cta" style={{justifyContent:"flex-start"}}>
+        <Link className="cine-btn" to="/intelligence">Explore Scientific Intelligence</Link>
+       </div>
       </div>
      </div>
-     <div className="pg-shots">
-      <figure className="pg-shot">
-       <img
-        src="/images/product/dashboard-v2.webp"
-        width={1440}
-        height={1120}
-        alt="Researcher home showing topic metrics and a knowledge graph panel with source-linked relationships for the selected concept."
-        loading="lazy"
-        decoding="async"
-       />
-       <figcaption>
-        <b>Your home.</b> Built from your topics: metrics, graph neighbourhood and evidence behind each line.
-       </figcaption>
-      </figure>
-      <figure className="pg-shot">
-       <img
-        src="/images/product/explorer-v2.webp"
-        width={1440}
-        height={900}
-        alt="Knowledge graph explorer with department colouring, gap markers and an evidence panel by experimental model."
-        loading="lazy"
-        decoding="async"
-       />
-       <figcaption>
-        <b>The explorer.</b> Filter, select, trace routes and open research gaps with their evidence.
-       </figcaption>
-      </figure>
+    </section>
+
+    <section className="cine-section" aria-labelledby="cine-gaps">
+     <div className="cine-wrap">
+      <p className="cine-eye">— Research gaps</p>
+      <h2 id="cine-gaps">The next breakthrough may begin with what’s missing.</h2>
+      <p>Recorded gaps in the published snapshot are shown as they are. A dedicated Gap Navigator is under development.</p>
+      <GapList/>
+      <Link className="cine-btn cine-btn-line" to="/research-gaps">Explore the Research Gap Vision</Link>
      </div>
     </section>
 
-    <section className="pg-close" aria-labelledby="pg-close-h">
-     <div>
-      <h2 id="pg-close-h">Start with one research question.</h2>
-      <p>Explore a demonstration, or open the scientific workbench.</p>
-     </div>
-     <div className="pg-cta">
-      <Link className="pg-btn pg-btn-light" to={LIVE_INVESTIGATION_PATH}>
-       Scientific workbench <span aria-hidden="true">→</span>
-      </Link>
-      <Link className="pg-link pg-link-light" to="/how-it-works">
-       Explore the platform
-      </Link>
-      <Link className="pg-link pg-link-light" to="/welcome">
-       Set up research home
-      </Link>
+    <section className="cine-section" aria-labelledby="cine-companion">
+     <div className="cine-wrap cine-split">
+      <div>
+       <p className="cine-future">Future capability</p>
+       <h2 id="cine-companion">A scientific companion for deeper conversations.</h2>
+      </div>
+      <div>
+       <p>Imagine discussing a complex biological mechanism, challenging an interpretation or exploring alternative experiments through a natural scientific conversation. HSI is developing toward an evidence-grounded Scientific Companion with text, voice and optional audiovisual interaction.</p>
+       <p>Future capability — not currently advertised as a live service.</p>
+       <Link className="cine-btn cine-btn-line" to="/scientific-companion">Explore the Scientific Companion Vision</Link>
+      </div>
      </div>
     </section>
-   </GraphSnapshotProvider>
-  </div>
+
+    <section className="cine-section" aria-labelledby="cine-network">
+     <div className="cine-wrap cine-split">
+      <h2 id="cine-network">Great science rarely happens in isolation.</h2>
+      <div>
+       <p>HSI’s future Research Network aims to connect scientific questions with relevant people, expertise and verified opportunities. Community and matching capabilities are being developed. Interest and opportunity status must be independently verified.</p>
+       <Link className="cine-btn cine-btn-line" to="/research-community">Explore the Research Community</Link>
+      </div>
+     </div>
+    </section>
+
+    <section className="cine-section" aria-labelledby="pg-close-h">
+     <div className="cine-wrap">
+      <p className="cine-eye">— Trust</p>
+      <FigurePath label="Scientific commitment" steps={[
+       {n:"01",title:"Understand the mechanism"},
+       {n:"02",title:"Preserve the evidence"},
+       {n:"03",title:"Explain the uncertainty"},
+       {n:"04",title:"Inform the next decision"},
+      ]}/>
+      <h2 id="pg-close-h">Better questions. Clearer evidence. More informed research.</h2>
+      <p>From scientific questions to scientific progress. Explore the scientific intelligence already taking shape inside HSI.</p>
+      <div className="cine-cta" style={{justifyContent:"flex-start"}}>
+       <Link className="cine-btn" to="/how-it-works">Explore the Research Preview</Link>
+       <Link className="cine-btn cine-btn-line" to="/validation">Read the scientific boundaries</Link>
+      </div>
+     </div>
+    </section>
+   </div>
+  </GraphSnapshotProvider>
+ );
+}
+
+function GapList(){
+ const {snapshot}=useGraphSnapshot();
+ if(!snapshot) return <p className="cine-note">Verifying recorded gaps from the published snapshot…</p>;
+ return (
+  <ul className="cine-list">
+   {snapshot.gaps.slice(0,4).map(g=><li key={g.question}><h3 style={{margin:0,fontSize:"1rem"}}>{g.question}</h3><p style={{margin:".2rem 0 0"}}>{g.missing}</p></li>)}
+  </ul>
  );
 }

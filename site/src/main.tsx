@@ -3,8 +3,10 @@ import { createRoot, hydrateRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App";
 import "@fontsource-variable/red-hat-display/wght.css";
+import "@fontsource-variable/inter/wght.css";
 import "@fontsource-variable/host-grotesk/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght.css";
+import "@fontsource-variable/montserrat/wght.css";
 import "./styles/global.css";
 import "./styles/marketing-v2.css";
 import "./styles/experience.css";
@@ -19,6 +21,7 @@ import "./styles/public-system.css";
 import "./styles/premium-hsi.css";
 import "./styles/collective-system.css";
 import "./styles/stage2-landing.css";
+import "./styles/cinematic.css";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;

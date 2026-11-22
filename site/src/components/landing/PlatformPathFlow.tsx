@@ -5,9 +5,9 @@ type Props = {
   ariaLabel?: string;
 };
 
-/** Eight-step platform path — same process-infographic vocabulary as Home. */
+/** Four-stage example investigation — Connect, Verify, Reason, Collaborate. */
 export function PlatformPathFlow({
-  ariaLabel = "Platform workflow stages",
+  ariaLabel = "Example investigation",
 }: Props) {
   return (
     <InvestigationFlowDiagram

@@ -10,11 +10,11 @@
       "surface": "#FFFFFF",
       "elevated": "#FFFFFF",
       "deep": "#5E0808",
-      "dark": "#162331",
+      "dark": "#190505",
       "instrument": "#0F2428"
     },
     "text": {
-      "primary": "#162331",
+      "primary": "#190505",
       "secondary": "#4A5560",
       "inverse": "#EBEBEA",
       "instrument": "#E7F3EF"

@@ -17,7 +17,7 @@ test('the footer leads to the research app, which opens the app shell',async({pa
 
 test('home leads with the graph, context diagram and working scenario choices',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('See how the evidence connects.');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Your next scientific discovery starts with a better question.');
  await expect(page.locator('.pg-proof')).toBeVisible();
  const diagram=page.locator('.relationship-diagram');
  await diagram.getByRole('button',{name:'Context',exact:true}).click();
@@ -31,10 +31,10 @@ test('home leads with the graph, context diagram and working scenario choices',a
 
 test('how it works shows the research flow and separates checks from approval',async({page})=>{
  await page.goto('/how-it-works');
- await expect(page.getByRole('list',{name:'Platform workflow stages',exact:true}).getByRole('listitem')).toHaveCount(8);
+ await expect(page.getByRole('list',{name:'Investigation journey',exact:true}).getByRole('listitem')).toHaveCount(8);
  await expect(page.getByRole('list',{name:'Scientific review boundaries',exact:true}).getByRole('listitem')).toHaveCount(4);
  await expect(page.locator('.pg-shots img')).toHaveCount(2);
- await expect(page.getByRole('link',{name:'Explore a demonstration',exact:true}).first()).toHaveAttribute('href','/demo/universe');
+ await expect(page.getByRole('link',{name:'Open an example investigation',exact:true}).first()).toHaveAttribute('href','/demo/universe');
 });
 
 test('every public page passes axe, has one h1 and does not overflow at 390px',async({page})=>{
@@ -52,6 +52,6 @@ test('the public sitemap lists the marketing pages, and the header shows Stage 2
  const locs=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>new URL(m[1]!).pathname).sort();
  expect(locs).toEqual([...PUBLIC].sort());
  await page.setViewportSize({width:1440,height:900});await page.goto('/');
- await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How it works','Knowledge graph']);
+ await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','Scientific Intelligence','For Researchers','Community']);
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button')).toHaveCount(0);
 });

@@ -15,7 +15,7 @@
 .ct-page .ct-draft textarea:focus-visible,.ct-page .ct-draft input:focus-visible{outline:3px solid var(--fg-violet);outline-offset:2px}
 .ct-page .ct-draft .xp-small,.ct-page .ct-draft .ed-scope-line,.ct-scope{font-size:15px;line-height:1.6;color:var(--fg-muted)}
 .ct-page .ct-draft .xp-actions{display:flex;flex-wrap:wrap;gap:8px 24px;align-items:center;margin:10px 0}
-.ct-page .ct-draft .xp-button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:6px!important;background:#292d42!important;color:#fff!important;border:1px solid #292d42!important;font:550 15px 'Host Grotesk Variable',system-ui,sans-serif;cursor:pointer}
+.ct-page .ct-draft .xp-button{display:inline-flex;align-items:center;min-height:48px;padding:0 22px;border-radius:6px!important;background:#5E0808!important;color:#fff!important;border:1px solid #5E0808!important;font:550 15px 'Inter Variable',system-ui,sans-serif;cursor:pointer}
 .ct-page .ct-draft .xp-button:hover{background:#49405e!important;border-color:#49405e!important}
 /* Beat `.pg-page.ct-page .ct-draft .xp-button` ink override so secondary stays readable on the white card. */
 .pg-page.ct-page .ct-draft .xp-button.xp-button-secondary{background:#fff!important;color:#1a1f36!important;border:1px solid #1a1f36!important}

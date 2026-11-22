@@ -6,24 +6,27 @@ const groups = [
   {
     name: "Product",
     links: [
-      { to: "/welcome", label: "Set up your research home" },
+      { to: "/", label: "Home" },
+      { to: "/how-it-works", label: "How It Works" },
+      { to: "/knowledge-graph", label: "Knowledge Graph" },
+      { to: "/intelligence", label: "Scientific Intelligence" },
+      { to: "/researchers", label: "For Researchers" },
+      { to: "/research-community", label: "Community" },
+      { to: "/demo/universe", label: "Example investigation" },
       { to: "/research/home", label: "Research app" },
-      { to: "/demo/universe", label: "Demonstration workspace" },
-      { to: "/how-it-works", label: "How it works" },
-      { to: "/knowledge-graph", label: "Knowledge graph" },
-      { to: "/validation", label: "Scientific Validation" },
-      { to: "/contact", label: "Pricing & Access" },
     ],
   },
   {
     name: "Audiences",
     links: [
       { to: "/researchers", label: "Researchers" },
-      { to: "/enterprise", label: "Research Groups" },
-      { to: "/biotech", label: "Biotech & Pharma" },
-      { to: "/clinical", label: "Clinical Research" },
+      { to: "/enterprise", label: "Research groups" },
+      { to: "/biotech", label: "Biotech teams" },
+      { to: "/clinical", label: "Clinical research" },
       { to: "/laboratories", label: "Laboratories" },
-      { to: "/research-community", label: "Research Community" },
+      { to: "/research-community", label: "Research community" },
+      { to: "/research-gaps", label: "Research Gaps" },
+      { to: "/scientific-companion", label: "Scientific Companion" },
     ],
   },
   {
@@ -37,8 +40,9 @@ const groups = [
   {
     name: "Trust",
     links: [
-      { to: "/trust", label: "Governance" },
-      { to: "/validation", label: "Validation methodology" },
+      { to: "/validation", label: "Validation" },
+      { to: "/trust", label: "Trust" },
+      { to: "/trust#validation", label: "Validation methodology" },
       { to: "/trust#privacy", label: "Privacy information" },
       { to: "/trust#terms", label: "Research use information" },
       { to: "/trust#accessibility", label: "Accessibility" },
@@ -53,16 +57,17 @@ export function Footer() {
       <ul className="hsi-footer-status" aria-label="Current status">
         <li>Research preview</li>
         <li>Candidate-only graph, nothing scientifically approved</li>
-        <li>No clinical advice. Patient data in this preview is synthetic</li>
+        <li>No clinical advice. No patient data on this site</li>
       </ul>
       <div className="hsi-footer-grid">
         <div className="hsi-footer-brand">
           <Link className="hsi-wordmark" to="/">
             <HsiIdentity />
           </Link>
-          <p>Biological relationships. Evidence. Experimental context.</p>
+          <p>Human Super Intelligence is developing evidence-grounded scientific intelligence for exploring biological mechanisms, evaluating research findings and identifying questions worth investigating.</p>
+          <p>Research preview. Not clinical decision support. AI-generated interpretations and candidate relationships are not automatically scientifically validated.</p>
           <Link className="hsi-text-link" to="/contact">
-            Request research access
+            Request Research Access
           </Link>
         </div>
         {groups.map((g) => (
@@ -70,7 +75,7 @@ export function Footer() {
             <h2>{g.name}</h2>
             <ul>
               {g.links.map((l) => (
-                <li key={`${g.name}-${l.to}`}>
+                <li key={`${g.name}-${l.to}-${l.label}`}>
                   <Link to={l.to}>{l.label}</Link>
                 </li>
               ))}

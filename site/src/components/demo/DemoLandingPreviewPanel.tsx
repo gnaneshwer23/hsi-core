@@ -19,9 +19,9 @@ export function DemoLandingPreviewPanel() {
   return (
     <div className="pg-demo-preview">
       <p className="pg-conflict-honesty" role="status">
-        Demonstration workspace · scenario data · not independently validated.
+        Example investigation · scenario data · not independently validated.
       </p>
-      <div className="pg-demo-tabs" role="tablist" aria-label="Demo Universe landing scenarios">
+      <div className="pg-demo-tabs" role="tablist" aria-label="Example investigation scenarios">
         {pack.cards.map((card) => (
           <button
             key={card.scenarioId}
@@ -42,11 +42,11 @@ export function DemoLandingPreviewPanel() {
         <p>{active.question}</p>
         <div className="pg-conflict-pair" role="group" aria-label="Conflict pair preview">
           <article>
-            <h3>Finding A</h3>
+            <h3>Example study A</h3>
             <p>{active.conflictLeft}</p>
           </article>
           <article>
-            <h3>Finding B</h3>
+            <h3>Example study B</h3>
             <p>{active.conflictRight}</p>
           </article>
         </div>
@@ -73,7 +73,7 @@ export function DemoLandingPreviewPanel() {
         </dl>
         <div className="pg-cta">
           <Link className="pg-btn" to={active.href}>
-            Explore this scenario <span aria-hidden="true">→</span>
+            Open this example <span aria-hidden="true">→</span>
           </Link>
           <Link className="pg-link" to="/demo/universe">
             All scenarios <span aria-hidden="true">→</span>

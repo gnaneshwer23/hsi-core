@@ -8,7 +8,7 @@
   "descriptor": "Scientific Intelligence for Human Biology",
   "vision": "Building the intelligence layer for understanding human biology.",
   "promise": "Understand the mechanism. Preserve the evidence. Explain the uncertainty. Inform the next decision.",
-  "marketingHeadline": "Connect the Science. Challenge the Evidence. Advance Discovery.",
+  "marketingHeadline": "Your next scientific discovery starts with a better question.",
   "usps": [
     "Context-aware scientific disagreement analysis",
     "Cross-domain biological mechanism investigation",
@@ -16,28 +16,28 @@
   ],
   "forbiddenExpansions": ["Human Systems Intelligence"],
   "palette": {
-    "primaryBackground": { "hex": "#F4F5F8", "role": "page_ground" },
-    "deeperBackground": { "hex": "#ECEEF4", "role": "depth_bands" },
-    "indigo": { "hex": "#3C1FFA", "role": "primary_accent" },
-    "indigoInk": { "hex": "#2A14C9", "role": "accent_pressed_and_links" },
-    "ink": { "hex": "#101F33", "role": "primary_text" },
-    "body": { "hex": "#2B3A50", "role": "body_text" },
-    "muted": { "hex": "#556B84", "role": "secondary_text" },
-    "wash": { "hex": "#F6F5FC", "role": "soft_panels" },
-    "line": { "hex": "#D4DFE4", "role": "dividers" }
+    "primaryBackground": { "hex": "#EBEBEA", "role": "page_ground" },
+    "deeperBackground": { "hex": "#D1AEAD", "role": "depth_bands" },
+    "indigo": { "hex": "#BD1C1D", "role": "primary_accent" },
+    "indigoInk": { "hex": "#5E0808", "role": "accent_pressed_and_links" },
+    "ink": { "hex": "#190505", "role": "primary_text" },
+    "body": { "hex": "#190505", "role": "body_text" },
+    "muted": { "hex": "#5E0808", "role": "secondary_text" },
+    "wash": { "hex": "#EBEBEA", "role": "soft_panels" },
+    "line": { "hex": "#D1AEAD", "role": "dividers" }
   },
   "typography": {
-    "productionInterface": "Host Grotesk Variable",
-    "productionDisplay": "Host Grotesk Variable",
-    "optionalMarketingDisplay": "Instrument Serif — only if integrated without bundle regression",
+    "productionInterface": "Inter Variable",
+    "productionDisplay": "Red Hat Display Variable",
+    "optionalMarketingDisplay": "Red Hat Display Variable",
     "mono": "JetBrains Mono Variable",
-    "avoidDefaultStacks": ["Inter", "Roboto", "Arial"]
+    "avoidDefaultStacks": ["Roboto", "Arial"]
   },
   "cssEntry": "site/src/styles/stage2-landing.css",
   "stage1TokensRemainAuthoritativeFor": "docs/design/hsi-brand-tokens.v1.json midnight/mint suite until owner retires Stage 1 comps",
   "notes": [
     "One HSI scientific intelligence platform — not a marketed product portfolio.",
-    "Causaly/Benchling craft-bar visual world: cool near-white ground, navy ink, one electric indigo accent.",
+    "Owner palette 21 November 2026: #EBEBEA ground, #190505 ink, #BD1C1D accent, #5E0808 pressed, #D1AEAD rose, #106C92 and #65CEE6 scientific.",
     "Demo/preview maturity labels required on illustrative surfaces.",
     "No invented benchmarks, customers, prices, or clinical capabilities."
   ]

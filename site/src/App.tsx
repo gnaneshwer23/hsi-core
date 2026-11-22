@@ -26,12 +26,12 @@ import {
   ClinicalPublicPage,
   LaboratoriesPublicPage,
   CommunityPublicPage,
-  ValidationPublicPage,
 } from "./pages/AudiencePublicPages";
 import {HomeLanding as Home} from "./pages/HomeLanding";
 import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
 import {ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import {KnowledgeGraphPublicPage} from "./pages/KnowledgeGraphPublic";
+import {IntelligencePublicPage,ResearchGapsPublicPage,ScientificCompanionPublicPage,ValidationPublicPage} from "./pages/CinematicStoryPages";
 import {PasswordRecovery} from "./pages/PasswordRecovery";
 import { SignIn } from "./pages/SignIn";
 import { SignUp } from "./pages/SignUp";
@@ -133,7 +133,7 @@ export default function App() {
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Navigate to="/how-it-works" replace />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
-        <Route path="intelligence" element={<Navigate to="/how-it-works" replace />} />
+        <Route path="intelligence" element={<IntelligencePublicPage />} />
         <Route path="connected-intelligence" element={<Navigate to="/how-it-works" replace />} />
         <Route path="departments" element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="departments/immunology" element={<Navigate to="/research/knowledge-graph?netDepartment=immunology" replace />} />
@@ -172,6 +172,8 @@ export default function App() {
         <Route path="validation" element={<ValidationPublicPage />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
         <Route path="how-it-works" element={<HowItWorks />} />
+        <Route path="research-gaps" element={<ResearchGapsPublicPage />} />
+        <Route path="scientific-companion" element={<ScientificCompanionPublicPage />} />
         <Route path="explore" element={<Explore />} />
         <Route path="science" element={<Navigate to="/knowledge-graph" replace />} />
         <Route path="science/literature" element={<ScienceLiterature />} />

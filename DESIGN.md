@@ -8,15 +8,16 @@ A cool light scientific platform site where the **numbered investigation spine**
 ## Tokens
 | Role | Value |
 |---|---|
-| Ground (public) | `#F4F5F8` with soft indigo / cool atmospheric washes in hero corners |
-| Ink / body / muted | `#101F33` / `#2B3A50` / `#556B84` (muted ≥ 4.5:1 on white/ground) |
-| Accent | `#3C1FFA` (ink `#2A14C9`) |
-| Line | `#D4DFE4` |
-| Flow markers | white discs, 2px indigo ring, hairline spine; emphasis fills indigo |
-| Close / open bands | solid navy `#101F33` (no purple gradient) |
+| Ground (public) | `#EBEBEA` with a rose wash `#D1AEAD` in hero corners |
+| Ink / body / muted | `#190505` / `#190505` / `#5E0808` (muted ≥ 4.5:1 on the ground) |
+| Accent | `#BD1C1D` (pressed `#5E0808`) |
+| Scientific | `#106C92` focus rings; `#65CEE6` diagram wash, with `#190505` text on it |
+| Rose | `#D1AEAD` lines and quiet bands |
+| Flow markers | white discs, 2px burgundy ring, hairline spine; emphasis fills burgundy |
+| Close / open bands | solid `#190505` |
 | Radius | 8px CTAs; 10px controls; circular flow markers; avoid pill-everything |
-| Type | Host Grotesk Variable only. Brand line 550 / claim 650, tracking −0.03 to −0.038em. Body ~16–18px, 1.55–1.6 |
-| Shadow | offset + soft blur, navy-tinted; primary CTA soft indigo lift; flow emphasis disc soft indigo lift |
+| Type | Inter Variable for body. Red Hat Display Variable for headings. JetBrains Mono Variable for step numbers and maturity labels. |
+| Shadow | offset + soft blur, ink-tinted; primary CTA uses burgundy |
 
 Files: `site/src/styles/premium-public.css` (`.pg-*`, `.ld-flow`), `premium-hsi.css` (Trust/About), `stage2-landing.css` (audience landings + nav CTA), `research-public.css` (chrome tokens).
 
@@ -29,11 +30,11 @@ Files: `site/src/styles/premium-public.css` (`.pg-*`, `.ld-flow`), `premium-hsi.
 - Maturity chips stay factual (Available / Restricted / Demonstration / Planned); in flow footnotes they render as plain uppercase labels.
 - Honesty labels stay on every surface. Agents are not named on landings. Business pre-mortem never becomes landing copy.
 - Motion: spine draw + staggered node entrance; respect `prefers-reduced-motion`.
-- 44px touch targets, visible focus (3px indigo), readable at 320px.
+- 44px touch targets, visible focus (3px `#106C92`), readable at 320px.
 
 ## Alta craft disciplines (borrowed, not branded)
 - Denser first viewport; product proof follows the spine immediately.
 - Sharper type hierarchy: lighter brand signal, heavier claim line.
 - Stronger CTA geometry: 8px radius, fuller horizontal padding, soft lift on primary.
 - Spacing rhythm: tight groups, generous section separation.
-- Soft indigo corner wash only — no decorative grid fields, spheres or smileys.
+- Soft rose corner wash only — no decorative grid fields, spheres or smileys.

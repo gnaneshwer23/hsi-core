@@ -12,7 +12,7 @@ test("public pages have a single main/title, working navigation and no narrow-sc
  }
 });
 test("the knowledge graph page opens the existing versioned graph and preserves selected context",async({page})=>{
- await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toContainText('Relationships between biological entities');
+ await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toContainText('connections behind complex biology');
  await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
  await page.locator('#home-knowledge-graph').getByRole('button',{name:'Inspect this evidence',exact:true}).click();
  await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
@@ -24,8 +24,8 @@ test("the knowledge graph page opens the existing versioned graph and preserves 
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
  await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
- await menu.click();await page.locator("#public-menu").getByRole("link",{name:"How it works",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
- await expect(page.getByRole("heading",{level:1})).toContainText("Follow a question through the evidence");
+ await menu.click(); await page.locator("#public-menu").getByRole("link",{name:"How It Works",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+ await expect(page.getByRole("heading",{level:1})).toContainText("evidence-linked decisions");
 });
 test("public access paths lead to the real account process without a pretend submission",async({page})=>{
  const posts:string[]=[];page.on("request",r=>{if(r.method()==="POST")posts.push(r.url())});
@@ -38,7 +38,7 @@ test("public access paths lead to the real account process without a pretend sub
  await expect(page.getByRole("main")).toContainText("never claims operator receipt unless the server reports provider acceptance");
  await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
- await page.getByRole("button",{name:/Save browser draft/i}).first().click();
+ await page.getByRole("button",{name:/Start a pilot request/i}).first().click();
  await expect(page.getByRole("status")).toContainText("Saved in this browser only");
  expect(posts).toEqual([]);
  await page.getByRole("link",{name:"Create an account",exact:true}).first().click();await expect(page).toHaveURL(/sign-up/);expect(posts).toEqual([]);

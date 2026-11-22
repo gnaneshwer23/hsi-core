@@ -1,8 +1,11 @@
 /** Canonical public research story. All existing tools and secondary resources retain their routes. */
 export const PRIMARY_NAV_LINKS = [
   { to: "/", label: "Home" },
-  { to: "/how-it-works", label: "How it works" },
-  { to: "/knowledge-graph", label: "Knowledge graph" },
+  { to: "/how-it-works", label: "How It Works" },
+  { to: "/knowledge-graph", label: "Knowledge Graph" },
+  { to: "/intelligence", label: "Scientific Intelligence" },
+  { to: "/researchers", label: "For Researchers" },
+  { to: "/research-community", label: "Community" },
 ] as const;
 
 /**
@@ -11,7 +14,7 @@ export const PRIMARY_NAV_LINKS = [
 export const AUDIENCE_NAV_LINKS = [
   { to: "/researchers", label: "Researchers", note: "Audience page" },
   { to: "/enterprise", label: "Research Groups", note: "Audience page" },
-  { to: "/biotech", label: "Biotech & Pharma", note: "Audience page" },
+  { to: "/biotech", label: "Biotech teams", note: "Audience page" },
   { to: "/clinical", label: "Clinical Research", note: "Audience page" },
   { to: "/laboratories", label: "Laboratories", note: "Audience page" },
   { to: "/research-community", label: "Research Community", note: "Audience page" },
@@ -28,6 +31,9 @@ export const PUBLIC_MARKETING_PATHS = [
   "/",
   "/how-it-works",
   "/knowledge-graph",
+  "/intelligence",
+  "/research-gaps",
+  "/scientific-companion",
   "/researchers",
   "/enterprise",
   "/biotech",
