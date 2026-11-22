@@ -66,7 +66,7 @@
       "reuse": "e2e-05-staging-save-resume"
     }
   },
-  "notes": "U6 scaffold only. Fill private refs after real humans and approved staging evidence exist. Soft-land never invents clearance signatures, isolation signers, MoUs, staging hosts, or hold removals. Premortem is not a release gate.",
+  "notes": "U6 scaffold only. Fill private refs after real humans and approved staging evidence exist (U47: staging:owner-packets:apply-proposal, dry-run default). Soft-land never invents clearance signatures, isolation signers, MoUs, staging hosts, or hold removals. Premortem is not a release gate. Human #2/#3/#5 stay open after fill-apply.",
   "relatedSoftLands": [
     "operations/staging/e2e-03-source-clearance.pending.json",
     "operations/staging/next-b-isolation-soft-land.pending.json",
