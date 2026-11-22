@@ -6,7 +6,7 @@ Date: 22 November 2026. Scope: `src/governedToolGateway.ts`, `src/governedProvid
 
 ## Method
 
-`test/gatewayAdversarial.test.ts` (54 tests) states each attack and the control expected to stop it. It was written before the fixes. 12 failed against the code as merged in #634, 636, so each of those is a confirmed defect, not a guess. After the fixes all 54 pass. Six controls that already passed (hostname match, https only, port, userinfo, redirect mode, byte cap) were then mutated one at a time and each mutation made at least one test fail, so those tests are not vacuous.
+`test/gatewayAdversarial.test.ts` (54 tests) states each attack and the control expected to stop it. It was written before the fixes. 12 tests failed against the gateway as it stood on main (merged via #634 and #636), covering the 11 findings below, so each is a confirmed defect, not a guess. After the fixes all 54 pass. Six controls that already passed (hostname match, https only, port, userinfo, redirect mode, byte cap) were then mutated one at a time and each mutation made at least one test fail, so those tests are not vacuous.
 
 ## Findings fixed
 
