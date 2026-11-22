@@ -17,6 +17,11 @@
  *   `researchV2/pinnedProviderTransport.ts` and is not applied here.
  * - The audit log is hash-chained and holds identifiers, hashes and codes only: never inputs, passages or upstream text.
  *   The file-backed log assumes a single writer.
+ * - Caller identity is trusted. `manifest`, `investigationId` and `taskId` are supplied by the caller; the gateway validates the
+ *   manifest's shape and role allowlist but cannot authenticate who is calling. `investigationCeiling` bounds task-id rotation within
+ *   one investigation id, not rotation of the investigation id itself. Stored idempotent results are bound to (investigation, task)
+ *   and re-verified against their own hash on replay.
+ * - Dropping the tail of the audit log is not detectable from the chain alone; anchor the head hash elsewhere.
  */
 import {createHash} from "node:crypto";
 import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFileSync,renameSync,writeSync} from "node:fs";
@@ -85,9 +90,11 @@ export function createToolAuditLog(opts:{directory?:string;now?:()=>number}={}){
 export type ToolAuditLog=ReturnType<typeof createToolAuditLog>;
 
 /* ---------- idempotency ---------- */
-export type IdempotencyStore={get(invocationId:string):Promise<{requestHash:string;result:Extract<ToolResult,{ok:true}>}|null>;put(invocationId:string,value:{requestHash:string;result:Extract<ToolResult,{ok:true}>}):Promise<void>};
+/** `scope` binds a stored result to the investigation and task that created it; a record without one is never replayed. */
+export type IdempotencyRecord={requestHash:string;scope:string;result:Extract<ToolResult,{ok:true}>};
+export type IdempotencyStore={get(invocationId:string):Promise<IdempotencyRecord|null>;put(invocationId:string,value:IdempotencyRecord):Promise<void>};
 export function createMemoryIdempotencyStore():IdempotencyStore{
- const m=new Map<string,{requestHash:string;result:Extract<ToolResult,{ok:true}>}>();
+ const m=new Map<string,IdempotencyRecord>();
  return {async get(id){const v=m.get(id);return v?structuredClone(v):null},async put(id,v){m.set(id,structuredClone(v))}};
 }
 
@@ -116,36 +123,47 @@ const INJECTION:readonly RegExp[]=[
  /<\/?\s*(system|assistant|tool|function_call|tool_call)\b[^>]*>/i,
  /\[\[?\s*(INST|SYSTEM)\s*\]?\]/i,
 ];
-const MAX_STRING=2_000,MAX_NODES=20_000;
+const MAX_STRING=2_000,MAX_KEY=200,MAX_NODES=20_000,MAX_DEPTH=32;
+// Control characters and every Unicode format character (zero-width, bidi, BOM, soft hyphen, tag characters) are removed.
+// eslint-disable-next-line no-control-regex
+const STRIP=/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F]|\p{Cf}/gu;
 function sanitise(value:unknown):{data:unknown;flags:InjectionFlag[]}{
  const flags:InjectionFlag[]=[];let nodes=0;
- const walk=(v:unknown,path:string):unknown=>{
-  if(++nodes>MAX_NODES)throw new GatewayError("invalid_output");
-  if(typeof v==="string"){
-   // eslint-disable-next-line no-control-regex
-   const clean=v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F‪-‮⁦-⁩]/g,"").slice(0,MAX_STRING);
-   if(INJECTION.some(r=>r.test(clean)))flags.push({code:"possible_prompt_injection",path});
-   return clean;
-  }
-  if(Array.isArray(v))return v.map((x,i)=>walk(x,`${path}[${i}]`));
-  if(v&&typeof v==="object")return Object.fromEntries(Object.entries(v as Record<string,unknown>).map(([k,x])=>[k,walk(x,path?`${path}.${k}`:k)]));
+ // The heuristic runs on a compatibility-normalised copy, so fullwidth and similar forms cannot hide the phrase.
+ const text=(raw:string,max:number,path:string):string=>{
+  const clean=raw.replace(STRIP,"").slice(0,max);
+  const probe=clean.normalize("NFKC");
+  if(INJECTION.some(r=>r.test(probe)))flags.push({code:"possible_prompt_injection",path});
+  return clean;
+ };
+ const walk=(v:unknown,path:string,depth:number):unknown=>{
+  if(++nodes>MAX_NODES||depth>MAX_DEPTH)throw new GatewayError("invalid_output");
+  if(typeof v==="string")return text(v,MAX_STRING,path);
+  if(Array.isArray(v))return v.map((x,i)=>walk(x,`${path}[${i}]`,depth+1));
+  if(v&&typeof v==="object")return Object.fromEntries(Object.entries(v as Record<string,unknown>).map(([k,x])=>{
+   const key=text(k,MAX_KEY,`${path}.<key>`);
+   return [key,walk(x,path?`${path}.${key}`:key,depth+1)];
+  }));
   return v;
  };
- return {data:walk(value,"data"),flags};
+ return {data:walk(value,"data",0),flags};
 }
 
 /* ---------- guarded fetch ---------- */
-async function readCapped(res:Response,max:number):Promise<Uint8Array>{
+async function readCapped(res:Response,max:number,signal:AbortSignal):Promise<Uint8Array>{
  const declared=Number(res.headers.get("content-length"));
  if(Number.isFinite(declared)&&declared>max){await res.body?.cancel();throw new GatewayError("response_too_large")}
  if(!res.body)return new Uint8Array();
  const reader=res.body.getReader(),chunks:Uint8Array[]=[];let total=0;
- for(;;){
+ const onAbort=()=>{reader.cancel().catch(()=>{})};signal.addEventListener("abort",onAbort,{once:true});
+ try{for(;;){
+  if(signal.aborted)throw Error("aborted");
   const {done,value}=await reader.read();if(done)break;
   total+=value.byteLength;
   if(total>max){await reader.cancel();throw new GatewayError("response_too_large")}
   chunks.push(value);
- }
+ }}finally{signal.removeEventListener("abort",onAbort)}
+ if(signal.aborted)throw Error("aborted");
  const out=new Uint8Array(total);let o=0;for(const c of chunks){out.set(c,o);o+=c.byteLength}return out;
 }
 function guardedFetch(tool:ToolDefinition,base:SourceFetcher,signal:AbortSignal):SourceFetcher{
@@ -154,7 +172,7 @@ function guardedFetch(tool:ToolDefinition,base:SourceFetcher,signal:AbortSignal)
   try{u=new URL(typeof input==="string"||input instanceof URL?String(input):input.url)}catch{throw new GatewayError("egress_blocked")}
   if(u.protocol!=="https:"||u.username||u.password||(u.port&&u.port!=="443")||!tool.hosts.includes(u.hostname))throw new GatewayError("egress_blocked");
   const res=await base(u.toString(),{...init,redirect:"error",credentials:"omit",signal:init?.signal?AbortSignal.any([signal,init.signal]):signal});
-  const bytes=await readCapped(res,tool.maxResponseBytes);
+  const bytes=await readCapped(res,tool.maxResponseBytes,signal);
   return new Response(bytes as unknown as BodyInit,{status:res.status,statusText:res.statusText,headers:res.headers});
  };
 }
@@ -164,7 +182,7 @@ const HOST=/^[a-z0-9]([a-z0-9-]*[a-z0-9])?(\.[a-z0-9]([a-z0-9-]*[a-z0-9])?)+$/;
 const INVOCATION=/^[A-Za-z0-9][A-Za-z0-9._:-]{2,120}$/;
 export function validateToolDefinition(t:ToolDefinition):void{
  if(!(HSI_TOOL_IDS as readonly string[]).includes(t.id)||!t.providerId?.trim()||!/^\d+\.\d+\.\d+$/.test(t.version))throw Error("Invalid tool identity");
- if(!Array.isArray(t.hosts)||!t.hosts.length||t.hosts.some(h=>!HOST.test(h)))throw Error("Tool needs an explicit list of lowercase hostnames");
+ if(!Array.isArray(t.hosts)||!t.hosts.length||t.hosts.some(h=>!HOST.test(h)||!/[a-z]/.test(h.slice(h.lastIndexOf(".")+1))))throw Error("Tool needs an explicit list of lowercase hostnames");
  if(!["metadata_only","cleared_only"].includes(t.passageAccess))throw Error("Invalid passage access");
  if(!Number.isInteger(t.timeoutMs)||t.timeoutMs<100||t.timeoutMs>60_000||!Number.isInteger(t.maxAttempts)||t.maxAttempts<1||t.maxAttempts>3||!Number.isInteger(t.maxResponseBytes)||t.maxResponseBytes<1_024||t.maxResponseBytes>10_000_000||!Number.isInteger(t.ratePerMinute)||t.ratePerMinute<1||t.ratePerMinute>600)throw Error("Invalid tool limits");
 }
@@ -172,6 +190,8 @@ export type GatewayOptions={
  tools:readonly ToolDefinition[];audit:ToolAuditLog;fetcher?:SourceFetcher;idempotency?:IdempotencyStore;
  /** Per-task call budgets and per-provider rate windows. Default is in memory (reset on restart); pass `createFileLimitStore` to persist them. */
  limits?:GatewayLimitStore;
+ /** Total calls one investigation may make across all its task ids, so rotating `taskId` cannot mint fresh budgets. Default 1000. */
+ investigationCeiling?:number;
  /** Required for any `cleared_only` tool. Absent or false means the call is refused. */
  clearance?:(ctx:{investigationId:string;toolId:HsiToolId;providerId:string})=>boolean|Promise<boolean>;
  now?:()=>number;sleep?:(ms:number)=>Promise<void>;
@@ -187,14 +207,17 @@ export function createToolGateway(opts:GatewayOptions){
  const now=opts.now??Date.now,sleep=opts.sleep??(ms=>new Promise<void>(r=>setTimeout(r,ms))),base=opts.fetcher??fetch;
  const idem=opts.idempotency??createMemoryIdempotencyStore();
  const limits=opts.limits??createMemoryLimitStore();
+ const ceiling=opts.investigationCeiling??1_000;
+ if(!Number.isInteger(ceiling)||ceiling<1)throw Error("Invalid investigation ceiling");
 
  return {
   catalogue:()=>[...registry.values()].map(t=>({id:t.id,providerId:t.providerId,version:t.version,hosts:[...t.hosts],passageAccess:t.passageAccess,dataClass:t.dataClass})),
   async call(req:ToolRequest):Promise<ToolResult>{
    const started=now();
+   const cap=(v:unknown,n=200)=>String(v??"").slice(0,n);
    const log=(o:{outcome:AuditRecord["outcome"];code:RefusalCode|null;tool?:ToolDefinition;attempts?:number;requestHash?:string|null;responseHash?:string|null;flags?:number})=>opts.audit.append({
-    investigationId:String(req?.investigationId??""),taskId:String(req?.taskId??""),invocationId:String(req?.invocationId??""),role:String(req?.manifest?.role??""),
-    toolId:String(req?.tool??"").slice(0,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),
+    investigationId:cap(req?.investigationId),taskId:cap(req?.taskId),invocationId:cap(req?.invocationId),role:cap(req?.manifest?.role),
+    toolId:cap(req?.tool,60),providerId:o.tool?.providerId??null,outcome:o.outcome,code:o.code,attempts:o.attempts??0,durationMs:Math.max(0,now()-started),
     requestHash:o.requestHash??null,responseHash:o.responseHash??null,flags:o.flags??0});
    const refuse=(code:RefusalCode,tool?:ToolDefinition,extra:{attempts?:number;requestHash?:string|null}={}):ToolResult=>({ok:false,code,message:MESSAGES[code],auditSeq:log({outcome:"refused",code,tool,...extra})});
    try{
@@ -212,9 +235,12 @@ export function createToolGateway(opts:GatewayOptions){
      const cleared=opts.clearance?await opts.clearance({investigationId:req.investigationId,toolId:tool.id,providerId:tool.providerId}):false;
      if(cleared!==true)return refuse("licence_blocked",tool,{requestHash});
     }
+    const scope=hashHsiCheckpointInput({investigationId:req.investigationId,taskId:req.taskId});
     const prior=await idem.get(req.invocationId);
     if(prior){
-     if(prior.requestHash!==requestHash)return refuse("invalid_input",tool,{requestHash});
+     if(prior.requestHash!==requestHash||prior.scope!==scope)return refuse("invalid_input",tool,{requestHash});
+     // A stored result must still match its own recorded hash; an edited file is refused, never replayed to an agent.
+     if(hashHsiCheckpointInput(prior.result.data)!==prior.result.provenance.responseHash)throw new GatewayError("internal_error");
      const seq=log({outcome:"replayed",code:null,tool,requestHash,responseHash:prior.result.provenance.responseHash,flags:prior.result.flags.length});
      return {...prior.result,replayed:true,auditSeq:seq};
     }
@@ -222,6 +248,7 @@ export function createToolGateway(opts:GatewayOptions){
     if(!await limits.consumeRate(keyOf(tool.id,tool.providerId),tool.ratePerMinute,now(),60_000))return refuse("rate_limited",tool,{requestHash});
     const budgetKey=req.investigationId+"\u0000"+req.taskId; // each task has its own manifest and its own maxToolCalls
     if(!await limits.consumeBudget(budgetKey,req.manifest.maxToolCalls))return refuse("budget_exhausted",tool,{requestHash});
+    if(!await limits.consumeBudget("ceiling\u0000"+req.investigationId,ceiling))return refuse("budget_exhausted",tool,{requestHash});
 
     let attempt=0,raw:unknown,lastCode:RefusalCode="upstream_error";
     for(attempt=1;attempt<=tool.maxAttempts;attempt++){
@@ -230,7 +257,9 @@ export function createToolGateway(opts:GatewayOptions){
      const timer=setTimeout(()=>{timedOut=true;ctl.abort()},tool.timeoutMs);
      const onAbort=()=>ctl.abort();req.signal?.addEventListener("abort",onAbort,{once:true});
      try{
-      raw=await tool.execute(input,{fetch:guardedFetch(tool,base,ctl.signal),signal:ctl.signal});
+      // Raced against the abort signal, so a tool or fetcher that ignores `signal` still cannot outlive the timeout.
+      const stopped=new Promise<never>((_,rej)=>ctl.signal.addEventListener("abort",()=>rej(Error("aborted")),{once:true}));
+      raw=await Promise.race([tool.execute(input,{fetch:guardedFetch(tool,base,ctl.signal),signal:ctl.signal}),stopped]);
       lastCode="upstream_error";break;
      }catch(e){
       if(e instanceof GatewayError&&e.code!=="upstream_error"){lastCode=e.code}
@@ -256,10 +285,12 @@ export function createToolGateway(opts:GatewayOptions){
     const provenance:ToolProvenance={toolId:tool.id,providerId:tool.providerId,toolVersion:tool.version,retrievedAt:new Date(now()).toISOString(),requestHash,responseHash,attempt,hosts:[...tool.hosts],passageAccess:tool.passageAccess,dataClass:tool.dataClass};
     const seq=log({outcome:"success",code:null,tool,attempts:attempt,requestHash,responseHash,flags:flags.length});
     const result:Extract<ToolResult,{ok:true}>={ok:true,data,untrusted:true,provenance,flags,replayed:false,auditSeq:seq};
-    await idem.put(req.invocationId,{requestHash,result});
+    await idem.put(req.invocationId,{requestHash,scope,result});
     return result;
    }catch(e){
-    return refuse(e instanceof GatewayError?e.code:"internal_error");
+    const code=e instanceof GatewayError?e.code:"internal_error";
+    // If the audit log itself is unavailable nothing is returned but a refusal: no unaudited data ever leaves the gateway.
+    try{return refuse(code)}catch{return {ok:false,code:"internal_error",message:MESSAGES.internal_error,auditSeq:0}}
    }
   },
  };
