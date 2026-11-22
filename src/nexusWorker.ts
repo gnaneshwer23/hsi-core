@@ -9,6 +9,7 @@
  * - An aborted signal stops new starts. Jobs already running are not killed; the work function receives the signal and must
  *   stop cooperatively.
  */
+import {runWithCorrelation} from "./observability";
 import {runDurable,type DurableOutcome,type JobJournal,type JobState} from "./nexusJobs";
 
 export type DrainOptions={
@@ -39,7 +40,7 @@ export async function drainJobs(journal:JobJournal,work:(jobId:string,ctx:{signa
    if(opts.dailyCap!==undefined&&journal.runsToday()>=opts.dailyCap){stoppedBy="daily_cap";return}
    const jobId=queue[next++];if(jobId===undefined)return;
    started++;
-   const outcome=await runDurable(journal,jobId,()=>work(jobId,{signal}),{leaseMs:opts.leaseMs,maxAttempts:opts.maxAttempts,now:opts.now});
+   const outcome=await runDurable(journal,jobId,()=>runWithCorrelation({requestId:`job:${jobId}`},()=>work(jobId,{signal})),{leaseMs:opts.leaseMs,maxAttempts:opts.maxAttempts,now:opts.now});
    ran.push({jobId,outcome});
   }
  };
