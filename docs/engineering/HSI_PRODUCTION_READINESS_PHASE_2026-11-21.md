@@ -72,10 +72,11 @@ Do **not** enable held migrations, production research writes, or unapproved dep
 | U36 Public L0 GO + clinical synthetic approvals | Done — see `HSI_U36_PUBLIC_CLINICAL_OWNER_APPROVALS_2026-11-21.md` (real PHI / ADR-0010 gates still open) |
 | U37 Owner-authorized live scientific platform | Done — see `HSI_U37_LIVE_SCIENTIFIC_PLATFORM_2026-11-21.md` (L1 engineering composition; staging grant / preview GO / writes still open) |
 | U38 Multi-process crash/restart E2E harness | Done — see `HSI_U38_MULTIPROCESS_CRASH_RESTART_E2E_2026-11-21.md` (fixture OS E2E green; Neon live still owner-gated) |
-| U39 Expanded checkpointed research-agent roles | Done — see `HSI_U39_EXPANDED_RESEARCH_AGENT_ROLES_2026-11-21.md` (verifier / hypothesis / policy; entity/graph/interrogator still open) |
+| U39 Expanded checkpointed research-agent roles | Done — see `HSI_U39_EXPANDED_RESEARCH_AGENT_ROLES_2026-11-21.md` (verifier / hypothesis / policy; entity/graph/interrogator closed by U44) |
 | U40 Restricted-preview auth + continuous-journey evidence runners | Done — see `HSI_U40_RESTRICTED_PREVIEW_EVIDENCE_RUNNERS_2026-11-21.md` (fill U12 with owner staging refs; preview GO / checklist #1 still open) |
 | U41 Scientific Companion text-first (KG/evidence) | Done — see `HSI_U41_SCIENTIFIC_COMPANION_TEXT_FIRST_2026-11-21.md` (voice/avatar/networking still Phase 3+) |
 | U42 Scientific Companion live-evidence binding | Done — see `HSI_U42_COMPANION_LIVE_EVIDENCE_2026-11-22.md` (caller-supplied metadata only; companion network retrieval still closed) |
 | U43 U12 evidence fill-apply from U40 proposals | Done — see `HSI_U43_U12_EVIDENCE_FILL_APPLY_2026-11-22.md` (dry-run default; preview GO / checklist #1 still false after apply) |
+| U44 Remaining checkpointed research-agent roles | Done — see `HSI_U44_REMAINING_AGENT_ROLES_2026-11-22.md` (`full_ssc`: entity_resolver / graph_reasoner / interrogator; LLM / Neon live still closed) |
 
-Verified acceptance remains **0 / 8**. Phase engineering units U1–U43 soft-landed; owner evidence still required.
+Verified acceptance remains **0 / 8**. Phase engineering units U1–U44 soft-landed; owner evidence still required.

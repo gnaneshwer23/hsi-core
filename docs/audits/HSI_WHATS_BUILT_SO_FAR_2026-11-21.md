@@ -116,7 +116,7 @@ The newest vision adds three significant areas **not** yet fully implemented:
 
 ### Recommended next milestone (binding build filter)
 
-1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35), live scientific platform (U37), and preview-evidence runners (U40)** — staging grant / restricted-preview GO and GA still open.  
+1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35), live scientific platform (U37), preview-evidence runners (U40), and remaining agent roles (U44 `full_ssc`)** — staging grant / restricted-preview GO and GA still open.  
 2. **Scientific Companion text-first** soft-landed (**U41**, 21 Nov 2026) on KG/interrogative services; **U42** binds caller-supplied live-evidence metadata into turns (no companion network retrieval). Voice/avatar remain Phase 3.  
 3. **Then** research networking and opportunity matching using the same scientific context.
 

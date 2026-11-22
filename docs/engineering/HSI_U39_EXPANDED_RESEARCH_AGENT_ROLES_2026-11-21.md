@@ -23,7 +23,7 @@
 | hypothesis_generator | **U39** draft-only registry proposals |
 | safety_policy_gate | **U39** refuse clinical/PHI/Gate C |
 | evidence_retriever | **U39** optional when curated snapshot supplied |
-| entity_resolver / graph_reasoner / interrogator | Still not checkpointed hosts (partial assets only) |
+| entity_resolver / graph_reasoner / interrogator | **U44** checkpointed on `pipeline: "full_ssc"` |
 
 ## Honesty
 
