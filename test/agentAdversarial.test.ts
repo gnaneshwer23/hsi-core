@@ -79,13 +79,31 @@ describe("fabricated and misleading model output",()=>{
  });
 });
 
-describe("KNOWN LIMITS (pinned, not endorsed)",()=>{
- test("KNOWN LIMIT: if every verifier is fooled, a polarity-flipped claim is stamped verified; nothing deterministic backs the models up",async()=>{
-  const flip:Planted={id:"o1",negated:true,polarity:"supporting",claimQuote:"Cytokine Beta signalling"};
+ describe("negation backstop (does not depend on the verifier models)",()=>{
+ const flip:Planted={id:"o1",negated:true,polarity:"supporting",claimQuote:"Cytokine Beta signalling"};
+ test("a negated sentence labelled supporting is withheld as uncertain even when every verifier is fooled",async()=>{
   const r=await run("flip-fooled",[S],[flip]);
-  expect(r.audit.verifier.status).toBe("checked_with_limitations");
-  expect(r.audit.units.find(u=>u.id==="o1")!.findingPolarity).toBe("supporting"); // the passage says "was not associated"
+  expect(r.audit.units.find(u=>u.id==="o1")!.findingPolarity).toBe("uncertain");
+  expect(r.rejections).toContainEqual({hitId:"o1",field:"claim",reason:"The quoted sentence contains a negation but the claim is labelled supporting"});
+  expect(classes(r)).not.toContain("consistent");
  });
+ test("an honestly labelled opposing claim is untouched",async()=>{
+  const r=await run("flip-honest-label",[S],[O]);
+  expect(r.rejections).toEqual([]);expect(r.audit.units.find(u=>u.id==="o1")!.findingPolarity).toBe("opposing");
+ });
+ test("a negation in a different sentence does not affect a supporting claim",async()=>{
+  const text=passageFor(BASE,false)+" No adverse events were recorded in this arm.";
+  const r=await run("other-sentence",[{id:"s1",text}],[O]);
+  expect(r.audit.units.find(u=>u.id==="s1")!.findingPolarity).toBe("supporting");expect(r.rejections).toEqual([]);
+ });
+ test("a decimal point does not hide a negation from its sentence",async()=>{
+  const text=passageFor({...BASE,dose:"0.5 nM"},true);
+  const r=await run("decimal",[S],[{id:"o1",negated:true,polarity:"supporting",text,claimQuote:"Cytokine Beta signalling"}]);
+  expect(r.audit.units.find(u=>u.id==="o1")!.findingPolarity).toBe("uncertain");
+ });
+});
+
+describe("KNOWN LIMITS (pinned, not endorsed)",()=>{
  test("KNOWN LIMIT: verifier disagreement does not change the conflict class, only the verifier status",async()=>{
   const r=await run("disagree",[S],[{...O,verdicts:{a:"supports",b:"contradicts"}}]);
   expect(classes(r)).toEqual(["potential_conflict"]);expect(r.audit.verifier.status).toBe("needs_evidence");
