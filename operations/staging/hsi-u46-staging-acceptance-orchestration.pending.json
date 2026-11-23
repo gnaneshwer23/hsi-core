@@ -1,0 +1,68 @@
+{
+  "schemaVersion": "hsi-u46-staging-acceptance-orchestration-pending-1",
+  "purpose": "hsi_staging_acceptance_orchestration_u46",
+  "engineeringSoftLand": "DOCUMENTED",
+  "opsAcceptance": "BLOCKED",
+  "acceptedForScope": false,
+  "restrictedPreviewClaimed": false,
+  "checklist1Verified": false,
+  "scientificApproval": false,
+  "productionWritesEnabled": false,
+  "gateCAutoApprove": false,
+  "inventedStagingUrl": false,
+  "inventedGrant": false,
+  "honesty": {
+    "composesU40U43": true,
+    "fixtureIsNotStagingGrant": true,
+    "noPreviewGo": true,
+    "noChecklist1Verified": true,
+    "noInventedHosts": true,
+    "noInventedGrants": true,
+    "noProductionWrites": true,
+    "noGateCAutoApprove": true
+  },
+  "ciSafeModes": {
+    "check": {
+      "command": "bun run staging:acceptance:check",
+      "lastRunAt": null,
+      "passed": null
+    },
+    "fixture": {
+      "command": "bun run staging:acceptance:fixture",
+      "lastRunAt": null,
+      "passed": null
+    }
+  },
+  "ownerGatedModes": {
+    "dry_apply": {
+      "command": "bun run staging:acceptance:dry-apply -- --proposal <owner-proposal.json>",
+      "requires": [
+        "owner-supplied non-placeholder U12 fill proposal",
+        "U40 live staging grant still separate"
+      ]
+    },
+    "live_staging_grant": {
+      "command": "bun run staging:preview-evidence:live",
+      "requires": [
+        "HSI_PREVIEW_EVIDENCE_ENABLED=1",
+        "HSI_PREVIEW_EVIDENCE_LIVE_AUTHORIZED=1",
+        "owner-approved origin pins"
+      ]
+    }
+  },
+  "references": {
+    "staging_target_ref": "NOT_APPROVED",
+    "preview_grant_ref": "UNASSIGNED",
+    "staging_grant_run_ref": "NOT_STARTED",
+    "continuous_journey_evidence_digest": "BLOCKED",
+    "auth_probe_digest": "BLOCKED",
+    "checklist_1_evidence_ref": "NOT_STARTED"
+  },
+  "notes": "U46 P0 orchestration soft-land only. Composes U40/U43 honesty; does not invent hosts/grants or claim checklist #1 / preview GO.",
+  "relatedSoftLands": [
+    "operations/staging/hsi-10-restricted-preview-readiness-u12.pending.json",
+    "operations/staging/hsi-10-continuous-journey-evidence.pending.json",
+    "docs/engineering/HSI_U40_RESTRICTED_PREVIEW_EVIDENCE_RUNNERS_2026-11-21.md",
+    "docs/engineering/HSI_U43_U12_EVIDENCE_FILL_APPLY_2026-11-22.md"
+  ]
+}
