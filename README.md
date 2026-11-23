@@ -73,9 +73,12 @@ The research implementation includes a source registry at `/sources` and claim c
 The public site (Vite + React) lives in [`site/`](site/). Module routes replace the old product catalogue: `/modules`, `/modules/aksh-health`, `/modules/clinical`, `/modules/isi`, `/modules/trials`. `/products`, `/for-isi`, `/for-aksh`, `/for-trials`, `/akeno` and `/aksh-agents` redirect there.
 
 ```bash
-bun run site:dev      # http://localhost:5173
+bun run site:dev      # http://localhost:5173, the Vite dev server
 bun run site:build    # site/dist
+bun run site:serve    # build, then serve the built site (http://localhost:4173), the way CI and production see it
 ```
+
+The dev server and the built site are different bundles, and CI tests the built one (plus a dev-server smoke spec). When a page misbehaves only in one of them, run both. Neither has an API: account pages say authentication is not configured, and the radar and saved-investigation panels report that the API is unavailable, instead of showing empty results. Real sign-up and sign-in need the Neon Auth provider and a rebuild with its public URL.
 
 Pages: Home, Platform, Modules, Science, How it works. The interactive walkthrough is a later route and is not a claim of live care.
 

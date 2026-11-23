@@ -60,13 +60,12 @@ export function BiotechPharmaDashboard() {
             Not a separate target database — deep-link into live investigation, targets
             tools and Context Passport for evidence-bound fields.
           </p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Targets">
             {demo.targets.map((t) => (
               <button
                 key={t.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedTarget.id === t.id}
                 onClick={() => setSelectedTarget(t)}
               >
@@ -117,13 +116,12 @@ export function BiotechPharmaDashboard() {
               ))}
             </select>
           </label>
-          <div className="ent-tree" role="list" style={{ marginTop: "0.85rem" }}>
+          <div className="ent-tree" role="group" aria-label="Knowledge map nodes" style={{ marginTop: "0.85rem" }}>
             {nodes.map((node) => (
               <button
                 key={node.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedNode.id === node.id}
                 onClick={() => setSelectedNode(node)}
               >

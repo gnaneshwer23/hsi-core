@@ -85,13 +85,12 @@ export function EnterpriseProfessorDashboard() {
               ))}
             </select>
           </label>
-          <div className="ent-tree" role="list" style={{ marginTop: "0.85rem" }}>
+          <div className="ent-tree" role="group" aria-label="Knowledge map nodes" style={{ marginTop: "0.85rem" }}>
             {nodes.map((node) => (
               <button
                 key={node.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selected.id === node.id}
                 onClick={() => setSelected(node)}
               >
