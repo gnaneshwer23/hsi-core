@@ -24,6 +24,7 @@
  * - Dropping the tail of the audit log is not detectable from the chain alone; anchor the head hash elsewhere.
  */
 import {createHash} from "node:crypto";
+import {INJECTION_PATTERNS} from "./promptInjection";
 import {appendFileSync,closeSync,existsSync,fsyncSync,mkdirSync,openSync,readFileSync,renameSync,writeSync} from "node:fs";
 import {join} from "node:path";
 import {createMemoryLimitStore,type GatewayLimitStore} from "./gatewayLimitStore";
@@ -119,14 +120,7 @@ export function createFileIdempotencyStore(dir:string):IdempotencyStore{
 }
 
 /* ---------- output handling ---------- */
-const INJECTION:readonly RegExp[]=[
- /ignore\s+(all\s+|any\s+|the\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)/i,
- /disregard\s+.{0,40}(instructions?|rules?|guidelines?)/i,
- /\b(you\s+are\s+now|new\s+instructions?\s*:|act\s+as\s+(an?\s+)?(system|admin|developer))/i,
- /\b(system|developer)\s+prompt\b/i,
- /<\/?\s*(system|assistant|tool|function_call|tool_call)\b[^>]*>/i,
- /\[\[?\s*(INST|SYSTEM)\s*\]?\]/i,
-];
+const INJECTION=INJECTION_PATTERNS;
 const MAX_STRING=2_000,MAX_KEY=200,MAX_NODES=20_000,MAX_DEPTH=32;
 // Control characters and every Unicode format character (zero-width, bidi, BOM, soft hyphen, tag characters) are removed.
 // eslint-disable-next-line no-control-regex

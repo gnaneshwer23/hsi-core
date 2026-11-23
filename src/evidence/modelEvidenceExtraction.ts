@@ -46,6 +46,7 @@ const quoteStart=(passage:string,quote:unknown,whole=false):number=>{
  return found?-2:-1;
 };
 
+const ANIMAL_HOST=/\b(?:engraft\w*|xenograft\w*|humani[sz]ed|zebrafish|NSG|NOD[-\s]?scid|(?:in|into|to|from)\s+(?:\w+\s+){0,2}(?:mice|mouse|rats?))\b/i;
 const NEGATION=/\b(?:not|no|nor|never|neither|without|fail(?:s|ed|ure)?|unchanged|absent|lack(?:s|ed|ing)?|cannot)\b|n't\b/i;
 /** The sentence of the passage that contains the position, split on . ; ! ? (a decimal point does not end a sentence). */
 function sentenceAround(passage:string,at:number):string{
@@ -88,6 +89,9 @@ export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;
    if(typeof entry==="object"&&entry!==null&&"quote" in entry&&Object.keys(entry).length===1){
     const start=quoteStart(passage,entry.quote,true);
     if(start<0){const why=start===-2?"Quoted text occurs only inside a longer word or number":"Quoted text not found in the passage";reject({hitId:hit.id,field,reason:why});extractions[field]={status:"not_extracted",reason:why};continue}
+    // Human-derived material in an animal host is an animal experiment. Recording only "human" would make it comparable to human participants.
+    if(field==="species"&&/\bhuman\b/i.test(entry.quote as string)&&ANIMAL_HOST.test(sentenceAround(passage,start))){
+     const why="Species is ambiguous: human-derived material in an animal host";reject({hitId:hit.id,field,reason:why});extractions[field]={status:"not_extracted",reason:why};continue}
     extractions[field]={status:"reported",start,end:start+(entry.quote as string).length};continue;
    }
    const status=(entry as {status?:unknown})?.status,reason=(entry as {reason?:unknown})?.reason;
