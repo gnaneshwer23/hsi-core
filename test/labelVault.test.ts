@@ -1,9 +1,10 @@
 import {describe,expect,test} from "bun:test";
-import {mkdtempSync,readFileSync,rmSync,writeFileSync,mkdirSync,existsSync} from "node:fs";
+import {mkdtempSync,readFileSync,rmSync,writeFileSync,mkdirSync,existsSync,symlinkSync,realpathSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
 import {
   LABEL_VAULT_LAYOUT,
+  assertSafeVaultWritePath,
   appendConflictCaseStub,
   freezeConflictLabels,
   initLabelVault,
@@ -90,5 +91,20 @@ describe("label vault (VER-05)",()=>{
       expect(()=>refusePublicWrite(join(root,"evaluation/label-vault/secret.json"),root)).toThrow(/public/);
       expect(()=>refusePublicWrite(join(root,".hsi-private-benchmark/conflict/cases.json"),root)).not.toThrow();
     }finally{rmSync(root,{recursive:true,force:true})}
+  });
+
+  test("a checkout under a symlinked ancestor (macOS /var -> /private/var) is accepted for vault writes, and escapes still are not",()=>{
+    const real=tempRepo(),holder=mkdtempSync(join(tmpdir(),"hsi-label-vault-link-")),ancestor=join(holder,"ancestor");
+    try{
+      const parent=join(real,".."),name=real.slice(parent.length+1);
+      symlinkSync(realpathSync(parent),ancestor,"dir");
+      const viaLink=join(ancestor,name);
+      initLabelVault(viaLink);
+      expect(()=>assertSafeVaultWritePath(viaLink,join(viaLink,".hsi-private-benchmark/conflict/cases.json"))).not.toThrow();
+      expect(()=>assertSafeVaultWritePath(viaLink,join(viaLink,"site/leak.json"))).toThrow(/public|restricted/);
+      rmSync(join(real,".hsi-private-benchmark/conflict"),{recursive:true,force:true});
+      symlinkSync(join(real,"site"),join(real,".hsi-private-benchmark/conflict"),"dir");
+      expect(()=>assertSafeVaultWritePath(viaLink,join(viaLink,".hsi-private-benchmark/conflict/cases.json"))).toThrow();
+    }finally{rmSync(real,{recursive:true,force:true});rmSync(holder,{recursive:true,force:true})}
   });
 });
