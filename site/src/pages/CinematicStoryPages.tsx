@@ -2,6 +2,7 @@ import type {ReactNode} from "react";
 import {Link} from "react-router-dom";
 import {FigureBoard,FigurePath} from "../components/cinematic/Figures";
 import {intelligenceCapabilities,intelligenceLayers} from "../lib/intelligenceCollective";
+import {useGraphSnapshot} from "../components/home/useGraphSnapshot";
 
 function Page({eye,title,lead,children,id}:{eye:string;title:string;lead:string;children:ReactNode;id:string}){
  return (
@@ -31,12 +32,27 @@ export function IntelligencePublicPage(){
         <h3>{g.layer}</h3>
         <ul>
          {g.items.map(c=>(
-          <li key={c.slug}><strong>{c.name}</strong><span>{c.role}</span><p>{c.purpose}</p></li>
+          <li key={c.slug}><strong>{c.name}</strong><span>{c.role}</span><p>{c.purpose}</p><p className="cine-agent-status"><b>Status:</b> {c.maturity}.</p><p className="cine-agent-status"><b>Boundary:</b> {c.boundary}</p></li>
          ))}
         </ul>
        </section>
       ))}
      </div>
+    </div>
+   </section>
+   <section className="cine-section" aria-labelledby="intel-flow">
+    <div className="cine-wrap">
+     <h2 id="intel-flow">How the agents hand work to each other</h2>
+     <FigurePath label="Collective handoff" steps={[
+      {n:"01",title:"NEXUS keeps one question and its budget"},
+      {n:"02",title:"AEGIS and SCOUT decide what may be retrieved"},
+      {n:"03",title:"LANTERN extracts passage-linked claims"},
+      {n:"04",title:"ATLAS, HELIX and PARALLAX map, investigate and compare in context"},
+      {n:"05",title:"VANTAGE proposes labelled, unvalidated gaps"},
+      {n:"06",title:"VERITAS checks against passages, then ARBITER routes to a human reviewer"},
+     ]}/>
+     <p style={{marginTop:"2rem"}}>SENTINEL, CALIBER and WARDEN sit alongside this path: they watch for changed sources, measure output quality and keep runs bounded. No agent approves science or promotes a claim to the graph.</p>
+     <p className="cine-note">Each agent card above states what exists today. None has been shown operating live at scale, and none has independent scientific acceptance.</p>
     </div>
    </section>
    <section className="cine-section">
@@ -60,12 +76,31 @@ const GAP_KINDS=[
  ["Translational gaps","Where laboratory findings have uncertain relevance to human biology or disease."],
 ] as const;
 
+function RecordedGaps(){
+ const {snapshot,failed}=useGraphSnapshot();
+ if(failed)return <p className="cine-note">The published graph snapshot could not be loaded, so no gap figures are shown. Nothing has been substituted.</p>;
+ if(!snapshot)return <p className="cine-note" role="status">Verifying recorded gaps from the published snapshot…</p>;
+ return (
+  <>
+   <p><b>{snapshot.gaps.length}</b> recorded gaps across <b>{snapshot.relationships}</b> source-candidate relationships and <b>{snapshot.sources}</b> sources. <b>{snapshot.reviewed}</b> relationships have been scientifically reviewed. Snapshot version {snapshot.version}.</p>
+   <ul className="cine-list">
+    {snapshot.gaps.slice(0,6).map(g=><li key={g.question}><h3 style={{margin:0,fontSize:"1rem"}}>{g.question}</h3><p style={{margin:".2rem 0 0"}}>{g.missing}</p></li>)}
+   </ul>
+   <p className="cine-note">These are recorded as candidate gaps in the knowledge graph. They are not scientifically reviewed, and a recorded gap may reflect incomplete retrieval rather than missing science.</p>
+  </>
+ );
+}
+
 export function ResearchGapsPublicPage(){
  return (
   <Page id="gaps-title" eye="Research gap intelligence" title="The next breakthrough may begin with what’s missing." lead="Finding scientific evidence is only the beginning. Researchers also need to understand where evidence is weak, where mechanisms remain unresolved and which questions could produce the most informative next result.">
    <section className="cine-section">
     <div className="cine-wrap">
      <p>HSI’s proposed Research Gap Navigator is designed to connect evidence gaps with actionable research directions.</p>
+     <h2>Why gaps are hard to see</h2>
+     <p>Literature grows faster than any group can read it. Studies use different models, tissues and assays, so apparently identical questions are often different questions. A missing result can mean an unexplored question, a paywalled paper, or a different term for the same concept. Telling these apart takes evidence, context and judgement.</p>
+     <h2>What the published snapshot records today</h2>
+     <RecordedGaps/>
      <h2>Discover different kinds of gaps</h2>
      <FigureBoard label="Kinds of research gap" cells={GAP_KINDS.map(([title,text],i)=>({n:String(i+1).padStart(2,"0"),title,text}))}/>
      <h2>From unanswered question to testable next step</h2>
@@ -77,6 +112,14 @@ export function ResearchGapsPublicPage(){
       {n:"05",title:"Which experiment could help"},
       {n:"06",title:"Who has relevant expertise"},
      ]}/>
+     <h2>What researchers could gain</h2>
+     <FigureBoard label="Researcher benefits" cells={[
+      {n:"01",title:"A map of where evidence is thin",text:"See which relationships rest on few sources, one model, or one tissue."},
+      {n:"02",title:"Context-aware comparison",text:"Compare findings by model, tissue and design before calling them contradictory."},
+      {n:"03",title:"A starting point for the next experiment",text:"Candidate gaps come with the evidence behind them for a researcher to judge."},
+     ]}/>
+     <h2>Limits and uncertainty</h2>
+     <p>Gap identification today is deterministic and based on the published snapshot. It does not search the literature in real time, and no gap is presented as a confirmed scientific finding.</p>
      <p>Not every missing paper represents a research gap. HSI should distinguish an actual scientific gap from incomplete retrieval, unavailable full text or differences in terminology.</p>
      <p className="cine-note">Dedicated Gap Navigator experience is under development. Existing HSI gap-analysis foundations are available within research-preview workflows. The published snapshot currently records its gaps inside the knowledge graph, with zero scientifically reviewed relationships.</p>
      <div className="cine-cta" style={{justifyContent:"flex-start"}}>
@@ -105,7 +148,18 @@ export function ScientificCompanionPublicPage(){
       {n:"06",title:"Navigate the graph"},
       {n:"07",title:"Say when evidence is thin"},
       {n:"08",title:"Suggest the next question"},
+      {n:"09",title:"Discuss a candidate hypothesis"},
+      {n:"10",title:"Think through an experimental design"},
      ]}/>
+     <h2>Concept preview</h2>
+     <figure className="cine-concept" aria-label="Illustrative concept: not a live conversation">
+      <p className="cine-future">Illustrative concept — scripted, not generated</p>
+      <p><b>Researcher:</b> Why do two studies disagree on IL-21 and Tfh cells?</p>
+      <p><b>Companion (concept):</b> The two studies use different species and tissues, so they may not be directly comparable. Here are the passages for each. Evidence for a shared mechanism in human tissue is limited.</p>
+      <p><b>Researcher:</b> What would test that?</p>
+      <p><b>Companion (concept):</b> One candidate, unvalidated: compare both conditions in the same human tissue with the same assay. Controls would need your judgement.</p>
+      <figcaption>This exchange is written by hand to show the intended behaviour. No model is running on this page.</figcaption>
+     </figure>
      <h2>From text to voice and audiovisual interaction</h2>
      <p>We envision a companion that researchers can engage with through natural conversation, with optional real-time voice and avatar experiences. The underlying scientific reasoning must remain evidence-grounded regardless of the interface.</p>
      <h2>A research partner that can say “I don’t know.”</h2>

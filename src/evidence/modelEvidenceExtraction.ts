@@ -28,7 +28,32 @@ function entity(value:unknown):EntityRef|null{
  if(e.label!==null&&(typeof e.label!=="string"||!e.label.trim()||e.label.length>200))return null;
  return {system:e.system,value:e.value,label:e.label as string|null};
 }
-const quoteStart=(passage:string,quote:unknown):number=>typeof quote==="string"&&quote.length>=1&&quote.length<=300?passage.indexOf(quote):-1;
+const TOKEN=/[A-Za-z0-9_-]/,ALNUM=/[A-Za-z0-9]/;
+/** Claim quotes are grounding only, so any substring counts. Context field quotes (whole=true) become recorded values, so they must
+ *  occur as a whole token. Returns the start, -1 when absent, -2 when the quote occurs only inside a longer word or number
+ *  ("human" inside "non-human", "n=12" inside "n=120"): a partial match would record a different value than the passage states. */
+const quoteStart=(passage:string,quote:unknown,whole=false):number=>{
+ if(typeof quote!=="string"||quote.length<1||quote.length>300)return -1;
+ if(!whole)return passage.indexOf(quote);
+ let found=false;
+ for(let i=passage.indexOf(quote);i>=0;i=passage.indexOf(quote,i+1)){
+  found=true;
+  const before=passage[i-1],after=passage[i+quote.length],after2=passage[i+quote.length+1];
+  const leftOpen=!ALNUM.test(quote[0]!)||before===undefined||!TOKEN.test(before);
+  const rightOpen=!ALNUM.test(quote[quote.length-1]!)||after===undefined||!(TOKEN.test(after)||((after==="."||after===",")&&after2!==undefined&&/[0-9]/.test(after2)));
+  if(leftOpen&&rightOpen)return i;
+ }
+ return found?-2:-1;
+};
+
+const ANIMAL_HOST=/\b(?:engraft\w*|xenograft\w*|humani[sz]ed|zebrafish|NSG|NOD[-\s]?scid|(?:in|into|to|from)\s+(?:\w+\s+){0,2}(?:mice|mouse|rats?))\b/i;
+const NEGATION=/\b(?:not|no|nor|never|neither|without|fail(?:s|ed|ure)?|unchanged|absent|lack(?:s|ed|ing)?|cannot)\b|n't\b/i;
+/** The sentence of the passage that contains the position, split on . ; ! ? (a decimal point does not end a sentence). */
+function sentenceAround(passage:string,at:number):string{
+ const end=/[.;!?](?=\s|$)/g;let from=0;
+ for(let m=end.exec(passage);m;m=end.exec(passage)){if(m.index>=at)return passage.slice(from,m.index+1);from=m.index+1}
+ return passage.slice(from);
+}
 
 export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;onRejection?:(rejection:ExtractionRejection)=>void}){
  if(typeof deps?.runner!=="function")throw Error("Extraction runner required");
@@ -48,7 +73,13 @@ export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;
    const ok=Object.keys(claimRaw).sort().join(",")==="object,polarity,predicate,quote,subject"&&s&&o&&typeof claimRaw.predicate==="string"&&PREDICATE.test(claimRaw.predicate)&&POLARITY.includes(claimRaw.polarity as FindingPolarity);
    if(!ok)reject({hitId:hit.id,field:"claim",reason:"Claim does not match the schema"});
    else if(quoteStart(passage,claimRaw.quote)<0)reject({hitId:hit.id,field:"claim",reason:"Claim quote not found in the passage"});
-   else{subject=s!;object=o!;predicate=claimRaw.predicate as string;polarity=claimRaw.polarity as FindingPolarity;grounded=true}
+   else{
+    subject=s!;object=o!;predicate=claimRaw.predicate as string;polarity=claimRaw.polarity as FindingPolarity;grounded=true;
+    // Deterministic backstop for a model that labels a negated sentence "supporting". The check cannot prove the label right, only refuse an
+    // obvious contradiction: the claim stays, but its polarity is withheld ("uncertain") and the rejection is recorded for review.
+    if(polarity==="supporting"&&NEGATION.test(sentenceAround(passage,quoteStart(passage,claimRaw.quote))))
+     {reject({hitId:hit.id,field:"claim",reason:"The quoted sentence contains a negation but the claim is labelled supporting"});polarity="uncertain"}
+   }
   }
   const contextRaw=out?.context&&typeof out.context==="object"&&!Array.isArray(out.context)?out.context as Record<string,unknown>:{};
   const extractions:Partial<Record<DetailedContextField,ContextExtraction>>={};
@@ -56,8 +87,11 @@ export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;
    const entry=grounded?contextRaw[field] as Record<string,unknown>|undefined:undefined;
    if(entry===undefined){extractions[field]={status:"not_extracted",reason:grounded?"Model returned no value for this field":"Claim was not grounded"};continue}
    if(typeof entry==="object"&&entry!==null&&"quote" in entry&&Object.keys(entry).length===1){
-    const start=quoteStart(passage,entry.quote);
-    if(start<0){reject({hitId:hit.id,field,reason:"Quoted text not found in the passage"});extractions[field]={status:"not_extracted",reason:"Quoted text not found in the passage"};continue}
+    const start=quoteStart(passage,entry.quote,true);
+    if(start<0){const why=start===-2?"Quoted text occurs only inside a longer word or number":"Quoted text not found in the passage";reject({hitId:hit.id,field,reason:why});extractions[field]={status:"not_extracted",reason:why};continue}
+    // Human-derived material in an animal host is an animal experiment. Recording only "human" would make it comparable to human participants.
+    if(field==="species"&&/\bhuman\b/i.test(entry.quote as string)&&ANIMAL_HOST.test(sentenceAround(passage,start))){
+     const why="Species is ambiguous: human-derived material in an animal host";reject({hitId:hit.id,field,reason:why});extractions[field]={status:"not_extracted",reason:why};continue}
     extractions[field]={status:"reported",start,end:start+(entry.quote as string).length};continue;
    }
    const status=(entry as {status?:unknown})?.status,reason=(entry as {reason?:unknown})?.reason;

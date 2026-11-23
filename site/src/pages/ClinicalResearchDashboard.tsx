@@ -133,13 +133,12 @@ export function ClinicalResearchDashboard() {
         <section className="ent-panel" aria-labelledby="clin-assoc-heading">
           <h2 id="clin-assoc-heading">Molecular–clinical associations</h2>
           <p className="ent-lead">Candidate links only — association ≠ causation.</p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Associations">
             {demo.associations.map((a) => (
               <button
                 key={a.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedAssoc.id === a.id}
                 onClick={() => setSelectedAssoc(a)}
               >

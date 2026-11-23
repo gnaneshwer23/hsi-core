@@ -126,7 +126,9 @@ export function refusePublicWrite(target:string,repoRoot:string){
 export function assertSafeVaultWritePath(repoRoot:string,target:string){
   refusePublicWrite(target,repoRoot);
   const abs=resolve(target);
-  const vault=resolve(repoRoot,LABEL_VAULT_DIRNAME);
+  // A checkout reached through a symlinked directory (macOS /var -> /private/var) must compare real paths with real paths.
+  const realRoot=existsSync(repoRoot)?realpathSync(repoRoot):resolve(repoRoot);
+  const vault=join(realRoot,LABEL_VAULT_DIRNAME);
   let cur=abs;
   for(;;){
     if(existsSync(cur)&&lstatSync(cur).isSymbolicLink()){
@@ -138,7 +140,7 @@ export function assertSafeVaultWritePath(repoRoot:string,target:string){
   }
   if(existsSync(abs)){
     const real=realpathSync(abs);
-    refusePublicWrite(real,repoRoot);
+    refusePublicWrite(real,realRoot);
     if(real!==vault&&!real.startsWith(vault+sep)){
       throw Error("Resolved vault path escapes .hsi-private-benchmark/");
     }
