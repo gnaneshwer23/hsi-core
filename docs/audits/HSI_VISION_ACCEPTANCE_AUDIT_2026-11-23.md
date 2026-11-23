@@ -25,14 +25,14 @@ Level key: **F** = fixture-tested (recorded model output, synthetic passages); *
 | 4 | Restricted/unverified rights | **M** pass | same suites |
 | 5 | DOI/PMID/title mismatch | **M** pass | `liveProviderVerification`, `sscLiteratureVerification`, `evidenceLedger`, `scientificContradictionLedger` (21 pass); logic in `src/researchV2/publicationLinkage.ts` |
 | 6 | Correction/retraction | **M** pass | retraction blocks release/access in the same suites and `clearanceAuthority` |
-| 7 | Mouse offered as human participant evidence | **F**, one KNOWN LIMIT | Species differences → `context_dependent` (`agentAdversarial`). Limit: a humanised-mouse passage ("mice engrafted with human PBMCs") records species `human` if the model quotes "human"; nothing deterministic records the host animal. `visionAcceptance` S7. |
+| 7 | Mouse offered as human participant evidence | **F** pass | Species differences → `context_dependent` (`agentAdversarial`). A species quote of "human" from a humanised-mouse passage is refused and the unit abstains (PR #654; `visionAcceptance` S7). The rule is conservative and also abstains on some legitimate sentences. |
 | 8 | Opposing findings, comparable conditions | **F** pass | `agentAdversarial`: `potential_conflict`, never approved or promotable |
 | 9 | Conflict explained by method/context | **F** pass | species, dose → `context_dependent`; assay/sample size → `methodological_difference` |
 | 10 | Missing context → abstention | **F** pass | missing species → `insufficient_evidence`; no policy → every pair abstains |
 | 11 | Exact quote does not entail claim | **F** pass | verifiers returning `insufficient` leave audit `needs_evidence`, no receipt (`visionAcceptance` S11) |
 | 12 | Model agreement despite failed grounding | **F** pass | both verifiers "supports" with no span, or a span absent from the passage, are downgraded to `insufficient` (S12) |
 | 13 | Timeout, rate limit, cancellation | **M** pass | `boundedAgentExecution`, `askLiveResearchControls`, `hsiAgentOrchestrationCancel`, `nexusTerminalStates` (44 pass); audit runner has deadline and abort. No real provider 429 observed. |
-| 14 | Prompt injection inside a source | **F**, one KNOWN LIMIT | A compromised model cannot record a value absent from the passage (S14). Limit: injected text that itself contains the value is groundable at the extraction layer; the defence is the governed gateway's injection quarantine (`gatewayAdversarial`), which the fixture runner bypasses. |
+| 14 | Prompt injection inside a source | **F** pass | A compromised model cannot record a value absent from the passage; a passage carrying instruction-like text is excluded before extraction and recorded as a gap (PR #654; S14). The detector is a tripwire, not a guarantee. |
 | 15 | Cross-user access | **M** pass | `gatewayTenantAuthority`, `jobDelegation`, `nexusWorkerGrants`, `collaborativeInvestigationContracts`, `contextAuditArchive` (68 pass) |
 | 16 | Researcher self-approval | **M** pass | `authenticatedEvidenceReview`, `contradictionActivationGate` (18 pass incl. 16/17) |
 | 17 | Artifact modified after review | **M** pass | `boundContextAuditOutcome`, audit-hash validation: an edited audit fails `validateContextConflictAudit` (S19) |
@@ -76,12 +76,11 @@ Nothing here is adjudicated. Fixture scores (e.g. conflict classifier 100% on 5 
 
 Fixed: (a) context quote "human" matched inside "non-human"; (b) "n=12" matched inside "n=120" (#651, merged). In review: a negated sentence labelled "supporting" could pass verification if both verifiers were fooled (#652).
 
-Pinned as KNOWN LIMIT tests, not fixed:
-1. Verifier disagreement changes only the verifier status, not the conflict class.
+Fixed in PR #654 (each guard fails its tests when disabled): instruction-like passages are quarantined before extraction; an audit with incomplete verification carries an explicit gap; identical passage text across sources is flagged as one source family; "human" quoted from an animal-host sentence is refused.
+
+Still pinned as KNOWN LIMIT tests:
+1. Verifier disagreement changes only the verifier status and an audit gap, not the conflict class.
 2. Differing but unresolvable optional context (e.g. timing) does not block `potential_conflict`; it is listed as limited.
-3. Two sources with identical passage text count as two units.
-4. Humanised-mouse species can be recorded as human (scenario 7).
-5. Injected text containing the value is groundable at extraction; protection is the gateway quarantine only.
 
 The pasted "scientific agent kit" was not merged: it duplicates existing modules, its quote check and context comparison are weaker, its receipts are unsigned, and its 0–1 evaluation scale differs from the repository's 0–5 rubric.
 
