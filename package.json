@@ -167,6 +167,7 @@
     "staging:preview-evidence:fixture": "bun --no-env-file scripts/staging-restricted-preview-evidence-suite.ts --fixture",
     "staging:preview-evidence:live": "bun --no-env-file scripts/staging-restricted-preview-evidence-suite.ts --live",
     "staging:preview-evidence:apply-proposal": "bun --no-env-file scripts/staging-u12-evidence-fill-apply.ts",
+    "staging:sme-reliability:apply-proposal": "bun --no-env-file scripts/staging-sme-reliability-fill-apply.ts",
     "partner:lock-prep": "bun --no-env-file scripts/partner-lock-prep.ts",
     "partner:lock-prep:check": "bun --no-env-file scripts/partner-lock-prep.ts --check",
     "human-queue:prep": "bun --no-env-file scripts/human-queue-residual-prep.ts",
