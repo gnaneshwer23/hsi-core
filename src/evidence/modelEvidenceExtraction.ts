@@ -28,7 +28,23 @@ function entity(value:unknown):EntityRef|null{
  if(e.label!==null&&(typeof e.label!=="string"||!e.label.trim()||e.label.length>200))return null;
  return {system:e.system,value:e.value,label:e.label as string|null};
 }
-const quoteStart=(passage:string,quote:unknown):number=>typeof quote==="string"&&quote.length>=1&&quote.length<=300?passage.indexOf(quote):-1;
+const TOKEN=/[A-Za-z0-9_-]/,ALNUM=/[A-Za-z0-9]/;
+/** Claim quotes are grounding only, so any substring counts. Context field quotes (whole=true) become recorded values, so they must
+ *  occur as a whole token. Returns the start, -1 when absent, -2 when the quote occurs only inside a longer word or number
+ *  ("human" inside "non-human", "n=12" inside "n=120"): a partial match would record a different value than the passage states. */
+const quoteStart=(passage:string,quote:unknown,whole=false):number=>{
+ if(typeof quote!=="string"||quote.length<1||quote.length>300)return -1;
+ if(!whole)return passage.indexOf(quote);
+ let found=false;
+ for(let i=passage.indexOf(quote);i>=0;i=passage.indexOf(quote,i+1)){
+  found=true;
+  const before=passage[i-1],after=passage[i+quote.length],after2=passage[i+quote.length+1];
+  const leftOpen=!ALNUM.test(quote[0]!)||before===undefined||!TOKEN.test(before);
+  const rightOpen=!ALNUM.test(quote[quote.length-1]!)||after===undefined||!(TOKEN.test(after)||((after==="."||after===",")&&after2!==undefined&&/[0-9]/.test(after2)));
+  if(leftOpen&&rightOpen)return i;
+ }
+ return found?-2:-1;
+};
 
 export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;onRejection?:(rejection:ExtractionRejection)=>void}){
  if(typeof deps?.runner!=="function")throw Error("Extraction runner required");
@@ -56,8 +72,8 @@ export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;
    const entry=grounded?contextRaw[field] as Record<string,unknown>|undefined:undefined;
    if(entry===undefined){extractions[field]={status:"not_extracted",reason:grounded?"Model returned no value for this field":"Claim was not grounded"};continue}
    if(typeof entry==="object"&&entry!==null&&"quote" in entry&&Object.keys(entry).length===1){
-    const start=quoteStart(passage,entry.quote);
-    if(start<0){reject({hitId:hit.id,field,reason:"Quoted text not found in the passage"});extractions[field]={status:"not_extracted",reason:"Quoted text not found in the passage"};continue}
+    const start=quoteStart(passage,entry.quote,true);
+    if(start<0){const why=start===-2?"Quoted text occurs only inside a longer word or number":"Quoted text not found in the passage";reject({hitId:hit.id,field,reason:why});extractions[field]={status:"not_extracted",reason:why};continue}
     extractions[field]={status:"reported",start,end:start+(entry.quote as string).length};continue;
    }
    const status=(entry as {status?:unknown})?.status,reason=(entry as {reason?:unknown})?.reason;
