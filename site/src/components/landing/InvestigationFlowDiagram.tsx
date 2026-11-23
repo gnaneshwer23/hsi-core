@@ -1,3 +1,4 @@
+import "../../styles/ld-flow.css";
 import type {CSSProperties} from "react";
 import type {FlowStep} from "./flowSteps";
 import {INVESTIGATION_FLOW} from "./flowSteps";

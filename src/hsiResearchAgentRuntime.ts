@@ -45,6 +45,8 @@ import {
   type HsiOrchestrationResult,
 } from "./hsiAgentOrchestrator";
 import {checkpointHsiExecutor} from "./hsiCheckpointedExecutor";
+import type {ToolGateway} from "./governedToolGateway";
+import {canonicalHsiManifest} from "./gatewayCallerAuthority";
 import {
   assertHsiResearchAgentOwnerAuthorized,
   HSI_RESEARCH_AGENT_OWNER_APPROVAL,
@@ -100,21 +102,8 @@ function roleManifest(
   timeoutMs: number,
   dataClass: QuestionPlanInput["dataClass"],
 ): HsiAgentManifest {
-  return {
-    schemaVersion: "hsi-agent-manifest-1",
-    role,
-    version: "1.0.0",
-    inputSchemaId: "hsi-research-agent-input-v1",
-    outputSchemaId: "hsi-research-agent-output-v1",
-    promptVersion: "none",
-    modelVersion: "deterministic-arch003-1",
-    allowedTools: [...HSI_ROLE_TOOL_ALLOWLIST[role]],
-    maxToolCalls: 3,
-    maxQuestions: 12,
-    maxDepth: 4,
-    timeoutMs,
-    dataClasses: dataClass === "licensed_partner" ? ["licensed_partner"] : ["public_biomedical"],
-  };
+  // Single source of truth: the same canonical manifests the gateway caller authority issues.
+  return canonicalHsiManifest(role, {timeoutMs, dataClass});
 }
 
 function gapInputFromDraft(
@@ -155,6 +144,10 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
     bindings: readonly BranchGraphBinding[];
   };
   checkpointStore?: HsiCheckpointStore;
+  /** Optional governed tool gateway passed to executors as `callTool`. */
+  toolGateway?: ToolGateway;
+  /** Required when the gateway runs in authenticated mode; see `authoriseCallsFor`. */
+  authoriseCall?: (task: {taskId: string; role: HsiAgentRole}) => Promise<unknown>;
   maxOrchestrationMs?: number;
   signal?: AbortSignal;
   now?: () => string;
@@ -438,6 +431,8 @@ export async function runHsiAuthorizedResearchAgentRuntime(input: {
     dataClass: input.plan.dataClass,
     now,
     signal: input.signal,
+    toolGateway: input.toolGateway,
+    authoriseCall: input.authoriseCall,
     maxOrchestrationMs: input.maxOrchestrationMs,
   });
 

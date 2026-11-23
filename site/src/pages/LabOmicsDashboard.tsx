@@ -57,13 +57,12 @@ export function LabOmicsDashboard() {
           <p className="ent-lead">
             Passport experimental fields and methods honesty — nulls stay visible.
           </p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Assays">
             {demo.assays.map((a) => (
               <button
                 key={a.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedAssay.id === a.id}
                 onClick={() => setSelectedAssay(a)}
               >
@@ -122,13 +121,12 @@ export function LabOmicsDashboard() {
         <p className="ent-lead">
           Domain KG / cross-domain candidates — review status stays unreviewed.
         </p>
-        <div className="ent-tree" role="list">
+        <div className="ent-tree" role="group" aria-label="Omics candidates">
           {demo.omicsCandidates.map((o) => (
             <button
               key={o.id}
               type="button"
               className="ent-node"
-              role="listitem"
               aria-pressed={selectedOmics.id === o.id}
               onClick={() => setSelectedOmics(o)}
             >

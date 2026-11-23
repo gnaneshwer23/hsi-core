@@ -73,13 +73,12 @@ export function WorkspaceDomainMap({
         Selected scientific domain:{" "}
         <strong>{domainFilter === "all" ? "All domains" : domainFilter}</strong>
       </p>
-      <div className="ent-tree" role="list" style={{ marginTop: "0.85rem" }}>
+      <div className="ent-tree" role="group" aria-label="Knowledge map nodes" style={{ marginTop: "0.85rem" }}>
         {visible.map((node) => (
           <button
             key={node.id}
             type="button"
             className="ent-node"
-            role="listitem"
             aria-pressed={selected.id === node.id}
             onClick={() => onSelect(node)}
           >

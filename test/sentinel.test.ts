@@ -1,8 +1,8 @@
-import {afterAll,expect,test} from "bun:test";
+import {afterAll,describe,expect,test} from "bun:test";
 import {mkdtempSync,rmSync,readFileSync} from "node:fs";
 import {tmpdir} from "node:os";
 import {join} from "node:path";
-import {createSentinel,StaleClearanceError} from "../src/sentinel";
+import {createSentinel,StaleClearanceError,assessSentinelHealth,type SentinelRecord} from "../src/sentinel";
 
 const dirs:string[]=[];const dir=()=>{const d=mkdtempSync(join(tmpdir(),"hsi-sent-"));dirs.push(d);return d};
 afterAll(()=>{for(const d of dirs)rmSync(d,{recursive:true,force:true})});
@@ -39,4 +39,36 @@ test("an unreadable kill switch fails closed; bad configuration is rejected",asy
  const s=createSentinel({service:svc({checked:0,revoked:[]}),directory:dir(),intervalMs:H,killed:()=>{throw Error("x")},now:()=>10*H});
  expect((await s.tick()).ran&&s.status().lastOutcome).toBe("skipped_kill_switch");
  expect(()=>createSentinel({service:svc({checked:0,revoked:[]}),directory:dir(),intervalMs:1000})).toThrow();
+});
+
+describe("assessSentinelHealth",()=>{
+ const T=1_000*H;
+ const ok=(slot:number,checked=10,extra:Partial<SentinelRecord>={}):SentinelRecord=>({slot,at:new Date(slot*H).toISOString(),outcome:"ok",checked,revoked:[],...extra});
+ const bad=(slot:number,errorCode="error"):SentinelRecord=>({slot,at:new Date(slot*H).toISOString(),outcome:"failed",errorCode});
+ const codes=(r:SentinelRecord[],now=T)=>assessSentinelHealth(r,now,H).map(a=>a.code);
+ test("healthy journal raises nothing",()=>{expect(codes([ok(995),ok(996),ok(997),ok(998),ok(999)])).toEqual([])});
+ test("empty journal is critical, not healthy",()=>{expect(assessSentinelHealth([],T,H)[0]).toMatchObject({code:"no_successful_run",severity:"critical"})});
+ test("a stale last success is overdue",()=>{expect(codes([ok(990)])).toContain("overdue")});
+ test("failures escalate from warning to critical",()=>{
+  const two=assessSentinelHealth([ok(997),bad(998),bad(999)],T,H).find(a=>a.code==="consecutive_failures");
+  const three=assessSentinelHealth([ok(996),bad(997),bad(998),bad(999)],T,H).find(a=>a.code==="consecutive_failures");
+  expect(two?.severity).toBe("warning");expect(three?.severity).toBe("critical");
+  expect(codes([ok(998),bad(999)])).not.toContain("consecutive_failures");
+ });
+ test("repeated timeouts are flagged",()=>{expect(codes([ok(996),bad(997,"timeout"),ok(998),bad(999,"timeout")])).toContain("repeated_timeouts")});
+ test("a skipped tick from the kill switch is visible",()=>{expect(codes([ok(998),{slot:999,at:new Date(999*H).toISOString(),outcome:"skipped_kill_switch"}])).toContain("kill_switch_active")});
+ test("missing slots mean the scheduler stopped ticking",()=>{expect(codes([ok(990),ok(996),ok(999)])).toContain("missed_slots")});
+ test("a sudden fall in sources checked is flagged as coverage drift",()=>{
+  expect(codes([ok(994,20),ok(995,20),ok(996,22),ok(997,21),ok(998,20),ok(999,4)])).toContain("coverage_drop");
+  expect(codes([ok(994,20),ok(995,20),ok(996,22),ok(997,21),ok(998,20),ok(999,18)])).not.toContain("coverage_drop");
+ });
+ test("revocations in the latest run are surfaced with a count only",()=>{
+  const a=assessSentinelHealth([ok(998),ok(999,10,{revoked:[{receiptId:"r1",sourceId:"europepmc:PMC1",reasonCodes:["RETRACTED"]}]})],T,H).find(x=>x.code==="revocations_in_last_run");
+  expect(a?.detail).toBe("1 clearance(s) revoked in the latest run");expect(JSON.stringify(a)).not.toContain("PMC1");
+ });
+ test("sentinel.health() reads its own journal",async()=>{
+  let t=10*H;const s=createSentinel({service:svc(new Error("x")),directory:dir(),intervalMs:H,now:()=>t});
+  expect(s.health().map(a=>a.code)).toContain("no_successful_run");
+  await s.tick();t+=H;await s.tick();expect(s.health().map(a=>a.code)).toContain("consecutive_failures");
+ });
 });
