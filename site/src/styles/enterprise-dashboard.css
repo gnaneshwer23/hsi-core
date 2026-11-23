@@ -5,7 +5,8 @@
   --ent-crimson: #c45267;
   --ent-teal: #427b79;
   --ent-offwhite: #f7f7f8;
-  --ent-slate: #718096;
+  /* Muted text. Darkened from #718096 (about 4.0:1 on white) to meet the 4.5:1 minimum (about 5.1:1 on the page background). */
+  --ent-slate: #5f6b7c;
   --ent-ink: #182433;
   --ent-line: #d8dee6;
   --ent-surface: #ffffff;
