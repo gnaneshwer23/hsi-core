@@ -46,6 +46,14 @@ const quoteStart=(passage:string,quote:unknown,whole=false):number=>{
  return found?-2:-1;
 };
 
+const NEGATION=/\b(?:not|no|nor|never|neither|without|fail(?:s|ed|ure)?|unchanged|absent|lack(?:s|ed|ing)?|cannot)\b|n't\b/i;
+/** The sentence of the passage that contains the position, split on . ; ! ? (a decimal point does not end a sentence). */
+function sentenceAround(passage:string,at:number):string{
+ const end=/[.;!?](?=\s|$)/g;let from=0;
+ for(let m=end.exec(passage);m;m=end.exec(passage)){if(m.index>=at)return passage.slice(from,m.index+1);from=m.index+1}
+ return passage.slice(from);
+}
+
 export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;onRejection?:(rejection:ExtractionRejection)=>void}){
  if(typeof deps?.runner!=="function")throw Error("Extraction runner required");
  const reject=(r:ExtractionRejection)=>deps.onRejection?.(structuredClone(r));
@@ -64,7 +72,13 @@ export function createModelEvidenceExtractor(deps:{runner:ExtractionModelRunner;
    const ok=Object.keys(claimRaw).sort().join(",")==="object,polarity,predicate,quote,subject"&&s&&o&&typeof claimRaw.predicate==="string"&&PREDICATE.test(claimRaw.predicate)&&POLARITY.includes(claimRaw.polarity as FindingPolarity);
    if(!ok)reject({hitId:hit.id,field:"claim",reason:"Claim does not match the schema"});
    else if(quoteStart(passage,claimRaw.quote)<0)reject({hitId:hit.id,field:"claim",reason:"Claim quote not found in the passage"});
-   else{subject=s!;object=o!;predicate=claimRaw.predicate as string;polarity=claimRaw.polarity as FindingPolarity;grounded=true}
+   else{
+    subject=s!;object=o!;predicate=claimRaw.predicate as string;polarity=claimRaw.polarity as FindingPolarity;grounded=true;
+    // Deterministic backstop for a model that labels a negated sentence "supporting". The check cannot prove the label right, only refuse an
+    // obvious contradiction: the claim stays, but its polarity is withheld ("uncertain") and the rejection is recorded for review.
+    if(polarity==="supporting"&&NEGATION.test(sentenceAround(passage,quoteStart(passage,claimRaw.quote))))
+     {reject({hitId:hit.id,field:"claim",reason:"The quoted sentence contains a negation but the claim is labelled supporting"});polarity="uncertain"}
+   }
   }
   const contextRaw=out?.context&&typeof out.context==="object"&&!Array.isArray(out.context)?out.context as Record<string,unknown>:{};
   const extractions:Partial<Record<DetailedContextField,ContextExtraction>>={};
