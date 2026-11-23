@@ -1,4 +1,5 @@
 /** Versioned audit artifacts over the existing comparison engine. No provider, review or write activation defaults. */
+import {hasInjectionMarkers} from "../promptInjection";
 import {createHash} from "node:crypto";
 import {canonicalEvidenceJson} from "./researchEvidenceCorpus";
 import {compareEvidenceUnits,compareContextualCandidatePairs,assessContradictionInvestigation,type ComparableEvidenceUnit,type StructuredEvidenceComparison} from "./structuredEvidenceComparison";
@@ -72,6 +73,9 @@ export function createContextConflictAuditRunner(deps:{
     if(old&&hash(old)!==hash(hit))throw Error("Conflicting source versions in audit batch");hits.set(key,hit);
    }
    if(hits.size>16)throw Error("Audit evidence budget exceeded");
+   // A passage that carries instructions is excluded before any model sees it, and the exclusion is recorded as a gap.
+   const quarantined:string[]=[];
+   for(const [key,hit] of [...hits]){if(hasInjectionMarkers(hit.passage.text)){hits.delete(key);quarantined.push(hit.id)}}
    // Preauthorize the entire batch before any extraction/model dispatch.
    for(const hit of hits.values()){
     checkpoint();
@@ -94,11 +98,17 @@ export function createContextConflictAuditRunner(deps:{
     catch{verifier={status:"failed",receiptId:null};}
     if(!["checked_with_limitations","needs_evidence","failed","not_executed"].includes(verifier.status)||verifier.status==="checked_with_limitations"&&!verifier.receiptId?.trim())throw Error("Invalid verifier receipt");
    }
+   const byText=new Map<string,string[]>();
+   for(const u of units){const d=u.detailedContext!;byText.set(d.passageSha256,[...(byText.get(d.passageSha256)??[]),d.sourceId])}
+   const gapsFinal=[...new Set([...gaps,
+    ...quarantined.map(id=>`Passage ${id} excluded: it contains instruction-like text (possible prompt injection); it was not sent to any model`),
+    ...[...byText.values()].filter(ids=>new Set(ids).size>1).map(ids=>`Identical passage text appears in ${[...new Set(ids)].join(", ")}; treat as one source family, not independent confirmation`),
+    ...(units.length&&verifier.status!=="checked_with_limitations"?[`Entailment verification is incomplete (${verifier.status}); claim support is not established for this audit`]:[])])];
    if(controller.signal.aborted)throw Error("Audit cancelled");
    for(const hit of blockedReason?[]:hits.values()){
     checkpoint();if(await authorizePassage(structuredClone(hit),["storage","display","comparison","export"],controller.signal)!==true)throw Error("Source clearance changed before artifact storage");
    }
-   const body={schemaVersion:"hsi-context-conflict-audit-1" as const,...target,version:(parent?.version??0)+1,parentAuditHash:parent?.auditHash??null,searches:searches.map(({hits:_,...metadata})=>metadata),units,comparisons,report,gaps,blockedReason,verifier,...(deps.comparabilityPolicy?{comparabilityPolicy:structuredClone(deps.comparabilityPolicy)}:{}),humanReview:{status:"required" as const},consensusEstablished:false as const,scientificApproval:false as const,graphPromotable:false as const};
+   const body={schemaVersion:"hsi-context-conflict-audit-1" as const,...target,version:(parent?.version??0)+1,parentAuditHash:parent?.auditHash??null,searches:searches.map(({hits:_,...metadata})=>metadata),units,comparisons,report,gaps:gapsFinal,blockedReason,verifier,...(deps.comparabilityPolicy?{comparabilityPolicy:structuredClone(deps.comparabilityPolicy)}:{}),humanReview:{status:"required" as const},consensusEstablished:false as const,scientificApproval:false as const,graphPromotable:false as const};
    checkpoint();
    if(new TextEncoder().encode(canonicalEvidenceJson(body)).byteLength>2_000_000)throw Error("Audit artifact budget exceeded");
    const auditHash=hash(body),artifact={...body,id:"context-audit-"+auditHash.slice(0,32),auditHash};
