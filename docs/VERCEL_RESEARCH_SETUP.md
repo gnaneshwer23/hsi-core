@@ -20,6 +20,14 @@ The repository supplies `site/api/auth/[...path].ts` and
 Nested login/registration paths have explicit `site/api/auth/sign-in/email.ts`
 and `sign-up/email.ts` entrypoints. Investigation reads and review writes also
 have explicit nested entrypoints under `site/api/research/interrogative/`.
+The same pattern covers the multi-segment research paths that otherwise return
+Vercel's plain-text `NOT_FOUND` instead of the app JSON envelope:
+
+- `site/api/research/workspace/example.ts`
+- `site/api/research/community/example.ts`
+- `site/api/research/graph-workspace/status.ts`
+- `site/api/research/onboarding-profile/status.ts`
+
 These avoid relying on catch-all discovery for multi-segment routes in the
 deployed Vite project. They all call the same trusted handler and permission gates.
 These are Bun Web-handler functions; `bun run build` still builds the frontend.
