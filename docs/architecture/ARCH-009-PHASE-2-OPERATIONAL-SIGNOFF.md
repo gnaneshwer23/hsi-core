@@ -28,6 +28,7 @@ Decision: CONDITIONAL / NOT SIGNED OFF FOR LIVE AGENT WORKLOADS
 - U12 evidence fill-apply from U40 proposals: **OWNER-APPROVED** (22 November 2026) — see U43 `hsiU12EvidenceFillApplyAuthorization` / `staging:preview-evidence:apply-proposal`. Still **not** restricted-preview GO, checklist #1 verified, invented hosts/grants, writes, Gate C, PHI, or GA.
 - Remaining research-agent roles (`entity_resolver` / `graph_reasoner` / `interrogator`) under `full_ssc`: **OWNER-DIRECTED** soft-land (22 November 2026) — see U44. Still **not** LLM execution, Neon live multi-process E2E, Gate C, PHI, scientific approval, or GA.
 - Companion ↔ workspace evidence handoff: **OWNER-DIRECTED** soft-land (22 November 2026) — see U45 `companionWorkspaceHandoff` / `/research/companion?from=workspace`. Still **not** companion network retrieval, claim verification, voice, avatar, networking, Gate C, PHI, or GA.
+- Pilot readiness fill-apply (Human #8): **OWNER-DIRECTED** soft-land (22 November 2026) — see U49 `hsiPilotReadinessFillApply` / `staging:pilot-readiness:apply-proposal`. Still **not** soak accepted, signed pilot, checklist #8 invites, invented on-call/alerts, Gate C, PHI, or GA.
 - Clinical, patient-level, production and public deployment: NOT APPROVED.
 
 ## Required next actions
