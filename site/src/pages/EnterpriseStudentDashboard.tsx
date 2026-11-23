@@ -75,20 +75,20 @@ export function EnterpriseStudentDashboard() {
           </p>
           <dl className="ent-opp" style={{ display: "grid", gap: "0.35rem" }}>
             <div>
-              <strong>Research title</strong>
-              <p className="ent-lead">{demo.title}</p>
+              <dt>Research title</dt>
+              <dd className="ent-lead">{demo.title}</dd>
             </div>
             <div>
-              <strong>Disease focus</strong>
-              <p className="ent-lead">Systemic sclerosis</p>
+              <dt>Disease focus</dt>
+              <dd className="ent-lead">Systemic sclerosis</dd>
             </div>
             <div>
-              <strong>Methods / models</strong>
-              <p className="ent-lead">Not stated in demonstration fixtures</p>
+              <dt>Methods / models</dt>
+              <dd className="ent-lead">Not stated in demonstration fixtures</dd>
             </div>
             <div>
-              <strong>Profile visibility</strong>
-              <p className="ent-lead">Group-visible pending activation — not live</p>
+              <dt>Profile visibility</dt>
+              <dd className="ent-lead">Group-visible pending activation — not live</dd>
             </div>
           </dl>
           <button type="button" className="ent-btn" disabled>

@@ -8,12 +8,22 @@ export default defineConfig({
     trace: "retain-on-failure",
     launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE, args: ["--no-sandbox"] } : {},
   },
-  webServer: {
-    command: "bun run preview --host 127.0.0.1 --port 4178",
-    url: "http://127.0.0.1:4178",
-    // Preview cold-start on CI / constrained agents often exceeds 30s after homepage asset growth.
-    // Flagship graph e2e expects a fresh `vite build` dist; allow longer cold preview boot.
-    timeout: 240_000,
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: "bun run preview --host 127.0.0.1 --port 4178",
+      url: "http://127.0.0.1:4178",
+      // Preview cold-start on CI / constrained agents often exceeds 30s after homepage asset growth.
+      // Flagship graph e2e expects a fresh `vite build` dist; allow longer cold preview boot.
+      timeout: 240_000,
+      reuseExistingServer: !process.env.CI,
+    },
+    {
+      // The Vite DEV server, used only by e2e/dev-server.spec.ts. Everything else tests the production build above,
+      // which is how the dev server came to render blank pages for weeks without any check noticing.
+      command: "bun run dev --host 127.0.0.1 --port 4179 --strictPort",
+      url: "http://127.0.0.1:4179",
+      timeout: 240_000,
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });

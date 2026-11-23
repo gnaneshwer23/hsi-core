@@ -246,12 +246,11 @@ export function DemoUniversePage() {
           Each scenario reuses the shared catalog. Switching scenarios does not persist or
           write research records.
         </p>
-        <div className="du-scenario-list" role="list">
+        <div className="du-scenario-list" role="group" aria-label="Scenarios">
           {scenarios.map((s) => (
             <button
               key={s.scenarioId}
               type="button"
-              role="listitem"
               aria-pressed={selectedIdResolved === s.scenarioId}
               onClick={() => setSelectedId(s.scenarioId)}
             >

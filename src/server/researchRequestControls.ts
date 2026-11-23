@@ -1,8 +1,8 @@
 /** Request-local correlation and process admission. No identity/IP/token/question logging. */
-import {randomUUID} from "node:crypto";
+import {newRequestId,runWithCorrelation,traceIdFromHeaders,createLogger} from "../observability";
 export type ResearchRouteGroup="health"|"auth"|"diagnostics"|"research_read"|"research_write"|"other";
 export type Admission={allowed:boolean;retryAfterSeconds:number};
-export type ResearchOperationalEvent={schemaVersion:"hsi-research-http-event-1";requestId:string;routeGroup:ResearchRouteGroup;method:"GET"|"POST"|"other";status:number;durationMs:number;admission:"allowed"|"rate_limited"|"over_capacity"|"shared_limiter_required"|"shared_limiter_unavailable";limiterScope:"process_only"|"shared_and_process"};
+export type ResearchOperationalEvent={schemaVersion:"hsi-research-http-event-1";requestId:string;routeGroup:ResearchRouteGroup;method:"GET"|"POST"|"other";status:number;durationMs:number;admission:"allowed"|"rate_limited"|"over_capacity"|"shared_limiter_required"|"shared_limiter_unavailable";limiterScope:"process_only"|"shared_and_process";traceId?:string};
 export type SharedResearchAdmission=(group:ResearchRouteGroup,signal:AbortSignal)=>Promise<Admission>;
 export function researchRouteGroup(request:Request):ResearchRouteGroup{
  const p=new URL(request.url).pathname;
@@ -33,7 +33,7 @@ export type ResearchControls={processAdmission?:ResearchProcessAdmission;sharedA
 function failure(code:string,status:number,retry=0){return Response.json({code,error:status===429?"Request budget exceeded; retry later":"Research service temporarily unavailable"},{status,headers:{...(retry?{"Retry-After":String(retry)}:{}),"Cache-Control":"no-store"}})}
 /** No forced timeout of a write: a timed-out acknowledgement must not imply a transaction was rolled back. */
 export async function withResearchRequestControls(request:Request,handler:()=>Promise<Response>,controls:ResearchControls={}):Promise<Response>{
- const requestId=randomUUID(),routeGroup=researchRouteGroup(request),now=controls.now??performance.now.bind(performance),started=now();let reason:ResearchOperationalEvent["admission"]="allowed",scope:ResearchOperationalEvent["limiterScope"]="process_only",response:Response;
+ const requestId=newRequestId(),traceId=traceIdFromHeaders(request.headers),routeGroup=researchRouteGroup(request),now=controls.now??performance.now.bind(performance),started=now();let reason:ResearchOperationalEvent["admission"]="allowed",scope:ResearchOperationalEvent["limiterScope"]="process_only",response:Response;
  const entry=(controls.processAdmission??defaultAdmission).enter(routeGroup);
  let headerBytes=0;const encoder=new TextEncoder();request.headers.forEach((value,key)=>{headerBytes+=encoder.encode(key+value).byteLength});
  try{
@@ -47,14 +47,15 @@ export async function withResearchRequestControls(request:Request,handler:()=>Pr
     let shared:Admission;
     try{const raw=await Promise.race([controls.sharedAdmission(routeGroup,abort.signal),new Promise<never>((_resolve,reject)=>{timer=setTimeout(()=>{abort.abort();reject(Error("Shared admission deadline"))},1000)})]);shared={allowed:raw?.allowed,retryAfterSeconds:raw?.retryAfterSeconds}}finally{clearTimeout(timer);abort.abort()}if(typeof shared?.allowed!=="boolean"||!Number.isSafeInteger(shared.retryAfterSeconds)||shared.retryAfterSeconds<0||shared.retryAfterSeconds>86400)throw Error();if(!shared.allowed){reason="rate_limited";response=failure("RATE_LIMITED",429,Math.max(1,shared.retryAfterSeconds));permitted=false}}catch{reason="shared_limiter_unavailable";response=failure("SHARED_REQUEST_LIMITER_UNAVAILABLE",503,30);permitted=false}}
    if(permitted){
-    response=await handler();
+    response=await runWithCorrelation({requestId,traceId},handler);
    }
   }
  }catch{response=failure("RESEARCH_SERVICE_UNAVAILABLE",503)}finally{entry.release()}
  const headers=new Headers(response!.headers);headers.set("X-Request-ID",requestId);headers.set("Cache-Control","no-store");headers.set("X-Content-Type-Options","nosniff");headers.set("Referrer-Policy","no-referrer");
  const durationMs=Math.max(0,Math.round(now()-started));headers.set("Server-Timing",`hsi;dur=${durationMs}`);
- const event:ResearchOperationalEvent={schemaVersion:"hsi-research-http-event-1",requestId,routeGroup,method:request.method==="GET"?"GET":request.method==="POST"?"POST":"other",status:response!.status,durationMs,admission:reason,limiterScope:scope};
+ const event:ResearchOperationalEvent={schemaVersion:"hsi-research-http-event-1",requestId,routeGroup,method:request.method==="GET"?"GET":request.method==="POST"?"POST":"other",status:response!.status,durationMs,admission:reason,limiterScope:scope,...(traceId?{traceId}:{})};
  try{controls.emit?.(event)}catch{/* Logging failure cannot change a committed decision or its response. */}
  return new Response(response!.body,{status:response!.status,statusText:response!.statusText,headers});
 }
-export function researchOperationalLogger(allRequests=false){return (event:ResearchOperationalEvent)=>{if(allRequests||event.status>=500||event.admission!=="allowed")console.info(JSON.stringify(event))}}
+const httpLog=createLogger({component:"research.http"});
+export function researchOperationalLogger(allRequests=false){return (event:ResearchOperationalEvent)=>{if(allRequests||event.status>=500||event.admission!=="allowed"){const {requestId,traceId,...rest}=event;httpLog.log(event.status>=500?"error":event.admission!=="allowed"?"warn":"info","http.request",rest,{requestId,...(traceId?{traceId}:{})})}}}
