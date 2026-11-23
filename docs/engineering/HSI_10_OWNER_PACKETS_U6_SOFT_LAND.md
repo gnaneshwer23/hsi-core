@@ -5,7 +5,8 @@
 
 Typed catalog: [`src/operations/hsi10OwnerPacketsScaffold.ts`](../../src/operations/hsi10OwnerPacketsScaffold.ts).  
 Pending worksheet: [`operations/staging/hsi-10-owner-packets.pending.json`](../../operations/staging/hsi-10-owner-packets.pending.json).  
-Parent worksheet: [`HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md`](./HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md).
+Parent worksheet: [`HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md`](./HSI_1_0_OWNER_GATES_WORKSHEET_2026-11-20.md).  
+**U47 fill-apply:** [`HSI_U47_OWNER_PACKET_FILL_APPLY_2026-11-22.md`](./HSI_U47_OWNER_PACKET_FILL_APPLY_2026-11-22.md) / `staging:owner-packets:apply-proposal` (dry-run default; gates stay open).
 
 ## Honesty
 

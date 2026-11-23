@@ -118,6 +118,7 @@ The newest vision adds three significant areas **not** yet fully implemented:
 
 1. **Finish production hardening** of the existing scientific engine (workspace reliability, evidence/KG honesty, ARCH-009 agent durable execution, security, staging acceptance path). **Owner approved research-agent runtime (U35), live scientific platform (U37), preview-evidence runners (U40), and remaining agent roles (U44 `full_ssc`)** — staging grant / restricted-preview GO and GA still open.  
 2. **Scientific Companion text-first** soft-landed (**U41**, 21 Nov 2026) on KG/interrogative services; **U42** binds caller-supplied live-evidence metadata; **U45** hands off workspace/scenario metadata into Companion (still no companion network retrieval). Voice/avatar remain Phase 3.  
+2b. **P0 Human #2/#3/#5 owner-packet fill-apply** soft-landed (**U47**, 22 Nov 2026); gates stay open until owner sign-off.  
 3. **Then** research networking and opportunity matching using the same scientific context.
 
 Extend what is already built — do **not** start another disconnected platform. Do **not** delay scientific-engine validation to finish avatar or networking (aligns with end-to-end vision Phases 1–2 in PR #596).
