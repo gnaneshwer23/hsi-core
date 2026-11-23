@@ -95,6 +95,6 @@ The pasted "scientific agent kit" was not merged: it duplicates existing modules
 | P1 | Deterministic backstop weaker than the verifier models for support/oppose (limits 1, 4) | None | Species host-animal recorded; disagreement downgrades class or is shown beside it |
 | P1 | Extraction depth: ~6 of 17 fields filled in recorded runs, so most live pairs would abstain | Model deployment and prompt evaluation | Field fill rate and abstention rate measured on adjudicated cases |
 | P1 | VANTAGE produces recorded gaps, not hypotheses with predicted observation and falsification criteria | Evaluated hypothesis executor | Proposals carry all brief §6 fields; reviewed by scientists |
-| P1 | SENTINEL has no failure/drift monitoring | Alert delivery | Alerts for failed ticks, provider errors, calibration drift |
+| P1 | SENTINEL failure/drift monitoring: detection added (`assessSentinelHealth`, `sentinel.health()`: no run, overdue, consecutive failures, repeated timeouts, kill switch, missed slots, coverage drop, revocations). Nothing delivers the alerts yet, and calibration drift is not covered | Alert delivery channel and an owner who receives it | A scheduler pages on critical alerts; calibration drift measured against adjudicated cases |
 | P2 | Graph has only candidate and gap edges; no approved edges | Authorised reviewers, publication gate | Reviewed edges exist; paths remain non-causal |
 | P2 | Duplicate-passage independence (limit 3) | None | Identical passage text counted once per source family |
