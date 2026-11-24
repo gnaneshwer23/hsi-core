@@ -1,0 +1,33 @@
+name: SME disposable PostgreSQL validation
+on:
+  pull_request:
+    paths:
+      - 'docs/architecture/sme-02b/**'
+      - '.github/workflows/sme-postgres-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fixture:
+    runs-on: ubuntu-24.04
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: fixture-only
+          POSTGRES_DB: sme_fixture
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Execute disposable database integration fixture
+        env:
+          PGPASSWORD: fixture-only
+        run: psql -X -v ON_ERROR_STOP=1 -h 127.0.0.1 -U postgres -d sme_fixture -f docs/architecture/sme-02b/memory-runtime.fixture.sql
