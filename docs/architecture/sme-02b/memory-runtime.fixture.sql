@@ -15,6 +15,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-retention.candidate.sql
 \ir memory-lexical.candidate.sql
 \ir memory-embeddings.candidate.sql
+\ir memory-semantic.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -32,6 +33,7 @@ CREATE POLICY fixture_owner_versions ON hsi_memory.versions TO sme_fixture_owner
 CREATE POLICY fixture_owner_grants ON hsi_memory.grants TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_events ON hsi_memory.events TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_proposals ON hsi_memory.correction_proposals TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_embeddings ON hsi_memory.embeddings TO sme_fixture_owner USING(true) WITH CHECK(true);
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -42,6 +44,7 @@ REVOKE CREATE ON SCHEMA hsi_memory FROM sme_fixture_owner;
 GRANT EXECUTE ON FUNCTION hsi_memory.create_record(text,text,text,uuid,text,text,jsonb,timestamptz,uuid),hsi_memory.read_current(text,text,text,uuid),hsi_memory.revise(text,text,text,uuid,integer,text,jsonb,uuid),hsi_memory.set_share(text,text,text,uuid,text,timestamptz,boolean,uuid),hsi_memory.delete_record(text,text,text,uuid,uuid) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),hsi_memory.export_current(text,text,text,uuid,uuid),hsi_memory.propose_correction(text,text,text,uuid,integer,text,uuid) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.search_lexical(text,text,text,text,integer) TO sme_fixture_runtime;
+GRANT EXECUTE ON FUNCTION hsi_memory.search_semantic(text,text,text,text,public.vector,integer) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
 -- Test storage independently before restricted runtime operations.
@@ -60,7 +63,25 @@ BEGIN
  DELETE FROM hsi_memory.records WHERE tenant_id='a' AND scope_id='s' AND id=r;
  IF EXISTS(SELECT 1 FROM hsi_memory.embeddings WHERE record_id=r) THEN RAISE EXCEPTION 'embedding cascade failed'; END IF;
 END $embedding$;
+INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until) VALUES('a','s','00000000-0000-4000-8000-000000000089','alice','note','synthetic_demo',1,now()+interval '1 day');
+INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'semantic test');
+INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'synthetic-v1',2,'[1,0]');
 SET ROLE sme_fixture_runtime;
+DO $semantic_test$
+DECLARE r uuid:='00000000-0000-4000-8000-000000000089';
+BEGIN
+ IF (SELECT count(*) FROM hsi_memory.search_semantic('synthetic-token-alice','a','s','synthetic-v1','[1,0]',10))<>1 THEN RAISE EXCEPTION 'owner semantic missing'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_semantic('synthetic-token-carol','a','s','synthetic-v1','[1,0]',10)) THEN RAISE EXCEPTION 'private semantic leak'; END IF;
+ BEGIN PERFORM hsi_memory.search_semantic('synthetic-token-bob','a','s','synthetic-v1','[1,0]',10); RAISE EXCEPTION 'cross tenant semantic accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_semantic('synthetic-token-alice','a','s','other','[1,0]',10)) THEN RAISE EXCEPTION 'model mismatch'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.search_semantic('synthetic-token-carol','a','s','synthetic-v1','[1,0]',10))<>1 THEN RAISE EXCEPTION 'shared semantic missing'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_semantic('synthetic-token-carol','a','s','synthetic-v1','[1,0]',10)) THEN RAISE EXCEPTION 'revoked semantic leak'; END IF;
+ PERFORM hsi_memory.revise('synthetic-token-alice','a','s',r,1,'new version','[]',gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_semantic('synthetic-token-alice','a','s','synthetic-v1','[1,0]',10)) THEN RAISE EXCEPTION 'stale embedding returned'; END IF;
+ PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
+END $semantic_test$;
 DO $embedding_access$ BEGIN
  BEGIN PERFORM 1 FROM hsi_memory.embeddings; RAISE EXCEPTION 'direct embedding read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $embedding_access$;
