@@ -12,6 +12,17 @@ export function createScientificMemoryFixtureAdapter(sql:MemorySql,sessionToken:
  function expiry(value:string){if(typeof value!=="string"||!Number.isFinite(Date.parse(value))||!/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value))throw Error("Invalid expiry");return value;}
  function content(body:string,sources:readonly string[]){if(typeof body!=="string"||new TextEncoder().encode(body).length>65536||!Array.isArray(sources)||sources.length>100||sources.some(s=>typeof s!=="string"||s.length>2048))throw Error("Invalid content");return JSON.stringify(sources);}
  return {
+ async list(tenant:string,scopeId:string,after:string|null,limit:number){
+ if(typeof tenant!=="string"||typeof scopeId!=="string"||!scope.test(tenant)||!scope.test(scopeId)||(after!==null&&(typeof after!=="string"||!uuid.test(after)))||!Number.isInteger(limit)||limit<1||limit>100)throw Error("Invalid pagination");
+ return sql.unsafe("SELECT * FROM hsi_memory.list_current($1::text,$2::text,$3::text,$4::uuid,$5::integer)",[sessionToken,tenant,scopeId,after,limit]);
+ },
+ async exportCurrent(tenant:string,scopeId:string,id:string,requestId:string){
+ return sql.unsafe("SELECT * FROM hsi_memory.export_current($1::text,$2::text,$3::text,$4::uuid,$5::uuid)",[...keys(tenant,scopeId,id),request(requestId)]);
+ },
+ async proposeCorrection(tenant:string,scopeId:string,id:string,expected:number,body:string,requestId:string){
+ if(!Number.isInteger(expected)||expected<1||expected>2147483647||typeof body!=="string"||new TextEncoder().encode(body).length>65536)throw Error("Invalid correction");
+ return sql.unsafe("SELECT hsi_memory.propose_correction($1::text,$2::text,$3::text,$4::uuid,$5::integer,$6::text,$7::uuid) AS proposal_id",[...keys(tenant,scopeId,id),expected,body,request(requestId)]);
+ },
  async create(tenant:string,scopeId:string,id:string,kind:string,body:string,sources:readonly string[],until:string,requestId:string){
  if(!["note","preference","hypothesis","evidence_reference","investigation_reference"].includes(kind))throw Error("Invalid kind");
  return sql.unsafe("SELECT hsi_memory.create_record($1::text,$2::text,$3::text,$4::uuid,$5::text,$6::text,$7::jsonb,$8::timestamptz,$9::uuid) AS id",[...keys(tenant,scopeId,id),kind,body,content(body,sources),expiry(until),request(requestId)]);
