@@ -42,7 +42,7 @@ GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),h
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
 SET ROLE sme_fixture_runtime;
-DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen_random_uuid(); BEGIN
+DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen_random_uuid(); export_id uuid:=gen_random_uuid(); proposal_id uuid:=gen_random_uuid(); BEGIN
  PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',gen_random_uuid());
  IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-alice','a','s',r))<>1 THEN RAISE EXCEPTION 'owner read failed'; END IF;
  BEGIN PERFORM hsi_memory.read_current('synthetic-token-bob','a','s',r); RAISE EXCEPTION 'cross tenant read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
@@ -59,9 +59,12 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen
  IF (SELECT count(*) FROM hsi_memory.list_current('synthetic-token-alice','a','s',NULL,10))<>1 THEN RAISE EXCEPTION 'list failed'; END IF;
  IF EXISTS(SELECT 1 FROM hsi_memory.list_current('synthetic-token-carol','a','s',NULL,10)) THEN RAISE EXCEPTION 'revoked list leaked'; END IF;
  BEGIN PERFORM hsi_memory.list_current('synthetic-token-bob','a','s',NULL,10); RAISE EXCEPTION 'cross tenant list accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
- IF (SELECT count(*) FROM hsi_memory.export_current('synthetic-token-alice','a','s',r,gen_random_uuid()))<>1 THEN RAISE EXCEPTION 'export failed'; END IF;
+ IF (SELECT count(*) FROM hsi_memory.export_current('synthetic-token-alice','a','s',r,export_id))<>1 THEN RAISE EXCEPTION 'export failed'; END IF;
  BEGIN PERFORM hsi_memory.export_current('synthetic-token-carol','a','s',r,gen_random_uuid()); RAISE EXCEPTION 'nonowner export accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
- PERFORM hsi_memory.propose_correction('synthetic-token-alice','a','s',r,2,'unverified proposal',gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.export_current('synthetic-token-alice','a','s',r,export_id))<>1 THEN RAISE EXCEPTION 'export replay failed'; END IF;
+ PERFORM hsi_memory.propose_correction('synthetic-token-alice','a','s',r,2,'unverified proposal',proposal_id);
+ IF hsi_memory.propose_correction('synthetic-token-alice','a','s',r,2,'unverified proposal',proposal_id)<>proposal_id THEN RAISE EXCEPTION 'proposal replay failed'; END IF;
+ BEGIN PERFORM hsi_memory.propose_correction('synthetic-token-alice','a','s',r,2,'changed proposal',proposal_id); RAISE EXCEPTION 'changed proposal accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
  IF (SELECT version FROM hsi_memory.read_current('synthetic-token-alice','a','s',r))<>2 THEN RAISE EXCEPTION 'proposal changed memory'; END IF;
  PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-alice','a','s',r)) THEN RAISE EXCEPTION 'deleted record visible'; END IF;
