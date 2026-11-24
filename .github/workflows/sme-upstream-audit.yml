@@ -1,0 +1,29 @@
+name: SME upstream audit
+on:
+  pull_request:
+    paths:
+      - 'scripts/sme-upstream-audit.py'
+      - 'scripts/test_sme_upstream_audit.py'
+      - '.github/workflows/sme-upstream-audit.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  static-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Parser fixtures
+        run: python3 scripts/test_sme_upstream_audit.py
+      - name: Query public pinned inventories
+        run: python3 scripts/sme-upstream-audit.py "${{ runner.temp }}/sme-upstream-audit.json"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sme-static-audit-evidence
+          path: ${{ runner.temp }}/sme-upstream-audit*.json
+          if-no-files-found: error
+          retention-days: 14
