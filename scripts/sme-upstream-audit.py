@@ -3,6 +3,8 @@
 import hashlib
 import json
 import pathlib
+import re
+import datetime
 import sys
 import tomllib
 import urllib.request
@@ -24,7 +26,17 @@ def request(url, body=None):
 
 def inventory(raw, ecosystem):
     if ecosystem == "Bun":
-        raise ValueError("Bun lock parser not implemented; coverage blocked")
+        clean = re.sub(r'("(?:\\.|[^"\\])*")|,(?=\s*[}\]])', lambda m: m.group(1) or "", raw.decode())
+        doc = json.loads(clean)
+        if doc["lockfileVersion"] != 1:
+            raise ValueError("unsupported Bun lock version")
+        rows = []
+        for key, entry in doc["packages"].items():
+            name, sep, version = entry[0].rpartition("@")
+            if not sep or not re.fullmatch(r"\d+\.\d+\.\d+(?:[-+][\w.+-]+)?", version) or entry[1] not in ("", None):
+                raise ValueError("unclassified Bun entry: "+key)
+            rows.append((name,version))
+        return sorted(set(rows))
     if ecosystem == "npm":
         rows = []
         for path, item in json.loads(raw)["packages"].items():
@@ -41,13 +53,14 @@ def inventory(raw, ecosystem):
             rows.append((item["name"],item["version"]))
         elif ecosystem=="PyPI" and isinstance(source,dict) and source.get("registry") in ("https://pypi.org/simple","https://pypi.org/simple/"):
             rows.append((item["name"],item["version"]))
+        elif (ecosystem=="crates.io" and source is None) or (ecosystem=="PyPI" and isinstance(source,dict) and source.get("editable")=="."):
+            continue  # local source remains outside registry coverage
         else:
-            # Local/workspace and alternate sources require separate review.
             raise ValueError("unclassified source for "+item["name"])
     return sorted(set(rows))
 
 def main():
-    report={"scope":"public pinned lockfiles only; no runtime or licence clearance","sources":[]}
+    report={"timestamp":datetime.datetime.now(datetime.timezone.utc).isoformat(),"scope":"public pinned lockfiles only; no runtime or licence clearance","sources":[]}
     for repo,sha,path,ecosystem in SOURCES:
         row={"repo":repo,"commit":sha,"lockfile":path,"ecosystem":ecosystem,"status":"blocked"}
         report["sources"].append(row)
@@ -59,7 +72,7 @@ def main():
             row["findings"]=[]
             for start in range(0,len(packages),100):
                 batch=packages[start:start+100]
-                result=json.loads(request("https://api.osv.dev/v1/querybatch",{"queries":[{"package":{"name":n,"ecosystem":ecosystem},"version":v} for n,v in batch]}))
+                result=json.loads(request("https://api.osv.dev/v1/querybatch",{"queries":[{"package":{"name":n,"ecosystem":"npm" if ecosystem=="Bun" else ecosystem},"version":v} for n,v in batch]}))
                 if len(result["results"])!=len(batch):
                     raise ValueError("OSV response count mismatch")
                 for (n,v),entry in zip(batch,result["results"]):
@@ -74,6 +87,9 @@ def main():
     report["approval"]="blocked"
     out=pathlib.Path(sys.argv[1] if len(sys.argv)>1 else "sme-upstream-audit.json")
     out.write_text(json.dumps(report,indent=2)+"\n")
+    components=[{"type":"library","name":item["name"],"version":item["version"],"bom-ref":row["repo"]+":"+item["name"]+"@"+item["version"]} for row in report["sources"] for item in row.get("inventory",[])]
+    bom={"bomFormat":"CycloneDX","specVersion":"1.5","version":1,"metadata":{"properties":[{"name":"hsi:coverage","value":"partial registry inventory"}]},"components":components}
+    out.with_suffix(".cdx.json").write_text(json.dumps(bom,indent=2)+"\n")
     print("Static audit report:",out)
     return 1 if any(r["status"] in ("blocked","findings") for r in report["sources"]) else 0
 if __name__=="__main__":
