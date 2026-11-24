@@ -57,6 +57,43 @@ export function TrustPublicPage() {
         </div>
       </PublicSection>
       <PublicSection
+        id="scientific-memory"
+        title="Scientific memory: designed to be owned, scoped and expiring."
+        description="Persistent scientific memory is in development and is not enabled for researchers. These are the design rules it is being built and tested against, not features you can use today."
+      >
+        <div className="hsi-principles">
+          {[
+            {
+              title: "Owned and scoped",
+              text: "Each remembered item belongs to one researcher within one organisation and project scope. It is designed so another organisation cannot read it, and sharing is an explicit grant to a named person.",
+            },
+            {
+              title: "Expiry and revocation",
+              text: "Items carry a retention date, and a share carries its own expiry. A revoked or expired share stops working at the next lookup.",
+            },
+            {
+              title: "Export and audit",
+              text: "Only the owner can export an item, the current version only, and each export is recorded. Nothing is delivered outside the system.",
+            },
+          ].map((s) => (
+            <article key={s.title}>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </article>
+          ))}
+        </div>
+        <div className="hsi-trust-statements">
+          <p>A remembered note is not a verified finding.</p>
+          <p>Memory does not enter the knowledge graph on its own.</p>
+          <p>A note cannot support a claim until it passes the same evidence and review steps as any other source.</p>
+        </div>
+        <p>
+          Status: the database procedures behind these rules have been tested in a disposable PostgreSQL database
+          with synthetic data. No real research content is stored, and no live memory service is running.
+          Embedding for retrieval is limited to synthetic fixtures; no external embedding provider is approved.
+        </p>
+      </PublicSection>
+      <PublicSection
         id="validation"
         title="Validation is a methodology, not a scoreboard."
         description="Former /validation addresses land here. Benchmarks and evaluation harnesses exist as frameworks. Public pages do not invent accuracy percentages, and expert-labelled gold cases are not claimed."

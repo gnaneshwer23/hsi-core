@@ -101,3 +101,15 @@ test('scientific companion labels its concept preview as scripted and not live',
  await expect(page.getByText(/No model is running on this page/)).toBeVisible();
  await expect(page.getByText('Think through an experimental design')).toBeVisible();
 });
+
+test('trust page states that scientific memory is planned and not evidence, and passes axe',async({page})=>{
+ await page.goto('/trust');
+ const s=page.locator('#scientific-memory');
+ await expect(s).toBeVisible();
+ await expect(s).toContainText('not enabled for researchers');
+ await expect(s).toContainText('does not enter the knowledge graph on its own');
+ await expect(s).toContainText('no live memory service is running');
+ await expect(s.locator('article')).toHaveCount(3);
+ const r=await new AxeBuilder({page}).include('#scientific-memory').analyze();
+ expect(r.violations).toEqual([]);
+});
