@@ -17,11 +17,13 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-embeddings.candidate.sql
 \ir memory-semantic.candidate.sql
 \ir memory-embedding-lifecycle.candidate.sql
+\ir memory-embedding-jobs.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_indexer;
 GRANT EXECUTE ON FUNCTION hsi_memory.store_embedding(text,text,uuid,integer,text,public.vector) TO sme_fixture_indexer;
+GRANT EXECUTE ON FUNCTION hsi_memory.enqueue_embedding(text,text,uuid,integer) TO sme_fixture_indexer;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_scheduler;
 GRANT EXECUTE ON FUNCTION hsi_memory.sweep_expired(integer) TO sme_fixture_scheduler;
@@ -38,6 +40,7 @@ CREATE POLICY fixture_owner_grants ON hsi_memory.grants TO sme_fixture_owner USI
 CREATE POLICY fixture_owner_events ON hsi_memory.events TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_proposals ON hsi_memory.correction_proposals TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_embeddings ON hsi_memory.embeddings TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_jobs ON hsi_memory.embedding_jobs TO sme_fixture_owner USING(true) WITH CHECK(true);
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -74,6 +77,8 @@ SET ROLE sme_fixture_indexer;
 DO $indexer_test$
 DECLARE r uuid:='00000000-0000-4000-8000-000000000089';
 BEGIN
+ IF NOT hsi_memory.enqueue_embedding('a','s',r,1) OR NOT hsi_memory.enqueue_embedding('a','s',r,1) THEN RAISE EXCEPTION 'enqueue replay failed'; END IF;
+ IF hsi_memory.enqueue_embedding('b','s',r,1) OR hsi_memory.enqueue_embedding('a','s',r,2) THEN RAISE EXCEPTION 'invalid enqueue accepted'; END IF;
  IF NOT hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'embedding write failed'; END IF;
  IF NOT hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'embedding replay failed'; END IF;
  BEGIN PERFORM hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[0,1,0,0,0,0,0,0]'); RAISE EXCEPTION 'changed embedding accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
@@ -81,7 +86,13 @@ BEGIN
  IF hsi_memory.store_embedding('a','s',r,2,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'wrong version accepted'; END IF;
 END $indexer_test$;
 RESET ROLE;
+DO $queue_count$ BEGIN
+ IF (SELECT count(*) FROM hsi_memory.embedding_jobs WHERE record_id='00000000-0000-4000-8000-000000000089')<>1 THEN RAISE EXCEPTION 'duplicate queue job'; END IF;
+END $queue_count$;
 SET ROLE sme_fixture_runtime;
+DO $queue_denial$ BEGIN
+ BEGIN PERFORM hsi_memory.enqueue_embedding('a','s','00000000-0000-4000-8000-000000000089',1); RAISE EXCEPTION 'runtime enqueue accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $queue_denial$;
 DO $indexer_denial$ BEGIN
  BEGIN PERFORM hsi_memory.store_embedding('a','s','00000000-0000-4000-8000-000000000089',1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]'); RAISE EXCEPTION 'runtime embedding write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $indexer_denial$;
