@@ -11,6 +11,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir scope-registry.candidate.sql
 \ir memory-procedures.candidate.sql
 \ir memory-mutations.candidate.sql
+\ir memory-lifecycle.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_owner,sme_fixture_runtime;
@@ -24,6 +25,7 @@ CREATE POLICY fixture_owner_records ON hsi_memory.records TO sme_fixture_owner U
 CREATE POLICY fixture_owner_versions ON hsi_memory.versions TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_grants ON hsi_memory.grants TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_events ON hsi_memory.events TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_proposals ON hsi_memory.correction_proposals TO sme_fixture_owner USING(true) WITH CHECK(true);
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -32,6 +34,7 @@ DO $$ DECLARE f record; BEGIN
 END $$;
 REVOKE CREATE ON SCHEMA hsi_memory FROM sme_fixture_owner;
 GRANT EXECUTE ON FUNCTION hsi_memory.create_record(text,text,text,uuid,text,text,jsonb,timestamptz,uuid),hsi_memory.read_current(text,text,text,uuid),hsi_memory.revise(text,text,text,uuid,integer,text,jsonb,uuid),hsi_memory.set_share(text,text,text,uuid,text,timestamptz,boolean,uuid),hsi_memory.delete_record(text,text,text,uuid,uuid) TO sme_fixture_runtime;
+GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),hsi_memory.export_current(text,text,text,uuid,uuid),hsi_memory.propose_correction(text,text,text,uuid,integer,text,uuid) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
 SET ROLE sme_fixture_runtime;
@@ -47,9 +50,17 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; BEGIN
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'revocation failed'; END IF;
  IF hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised','[]',gen_random_uuid())<>2 THEN RAISE EXCEPTION 'revision failed'; END IF;
  BEGIN PERFORM hsi_memory.revise('synthetic-token-alice','a','s',r,1,'stale','[]',gen_random_uuid()); RAISE EXCEPTION 'stale revision accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ IF (SELECT count(*) FROM hsi_memory.list_current('synthetic-token-alice','a','s',NULL,10))<>1 THEN RAISE EXCEPTION 'list failed'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.list_current('synthetic-token-carol','a','s',NULL,10)) THEN RAISE EXCEPTION 'revoked list leaked'; END IF;
+ BEGIN PERFORM hsi_memory.list_current('synthetic-token-bob','a','s',NULL,10); RAISE EXCEPTION 'cross tenant list accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ IF (SELECT count(*) FROM hsi_memory.export_current('synthetic-token-alice','a','s',r,gen_random_uuid()))<>1 THEN RAISE EXCEPTION 'export failed'; END IF;
+ BEGIN PERFORM hsi_memory.export_current('synthetic-token-carol','a','s',r,gen_random_uuid()); RAISE EXCEPTION 'nonowner export accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ PERFORM hsi_memory.propose_correction('synthetic-token-alice','a','s',r,2,'unverified proposal',gen_random_uuid());
+ IF (SELECT version FROM hsi_memory.read_current('synthetic-token-alice','a','s',r))<>2 THEN RAISE EXCEPTION 'proposal changed memory'; END IF;
  PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-alice','a','s',r)) THEN RAISE EXCEPTION 'deleted record visible'; END IF;
 END $$;
 RESET ROLE;
+DO $ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.correction_proposals) THEN RAISE EXCEPTION 'proposal deletion failed'; END IF; END $;
 SET CONSTRAINTS ALL IMMEDIATE;
 ROLLBACK;
