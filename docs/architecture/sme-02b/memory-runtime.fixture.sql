@@ -16,8 +16,12 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-lexical.candidate.sql
 \ir memory-embeddings.candidate.sql
 \ir memory-semantic.candidate.sql
+\ir memory-embedding-lifecycle.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
+CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_indexer;
+GRANT EXECUTE ON FUNCTION hsi_memory.store_embedding(text,text,uuid,integer,text,public.vector) TO sme_fixture_indexer;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_scheduler;
 GRANT EXECUTE ON FUNCTION hsi_memory.sweep_expired(integer) TO sme_fixture_scheduler;
@@ -66,7 +70,21 @@ END $embedding$;
 INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until) VALUES('a','s','00000000-0000-4000-8000-000000000089','alice','note','synthetic_demo',1,now()+interval '1 day');
 INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'semantic test');
 INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'synthetic-v1',2,'[1,0]');
+SET ROLE sme_fixture_indexer;
+DO $indexer_test$
+DECLARE r uuid:='00000000-0000-4000-8000-000000000089';
+BEGIN
+ IF NOT hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'embedding write failed'; END IF;
+ IF NOT hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'embedding replay failed'; END IF;
+ BEGIN PERFORM hsi_memory.store_embedding('a','s',r,1,'hsi-synthetic-fixture-v1','[0,1,0,0,0,0,0,0]'); RAISE EXCEPTION 'changed embedding accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ IF hsi_memory.store_embedding('b','s',r,1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'wrong scope accepted'; END IF;
+ IF hsi_memory.store_embedding('a','s',r,2,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'wrong version accepted'; END IF;
+END $indexer_test$;
+RESET ROLE;
 SET ROLE sme_fixture_runtime;
+DO $indexer_denial$ BEGIN
+ BEGIN PERFORM hsi_memory.store_embedding('a','s','00000000-0000-4000-8000-000000000089',1,'hsi-synthetic-fixture-v1','[1,0,0,0,0,0,0,0]'); RAISE EXCEPTION 'runtime embedding write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $indexer_denial$;
 DO $semantic_test$
 DECLARE r uuid:='00000000-0000-4000-8000-000000000089';
 BEGIN
