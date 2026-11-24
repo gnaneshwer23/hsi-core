@@ -42,7 +42,7 @@ GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),h
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
 SET ROLE sme_fixture_runtime;
-DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen_random_uuid(); export_id uuid:=gen_random_uuid(); proposal_id uuid:=gen_random_uuid(); create_id uuid:=gen_random_uuid(); delete_id uuid:=gen_random_uuid(); BEGIN
+DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen_random_uuid(); export_id uuid:=gen_random_uuid(); proposal_id uuid:=gen_random_uuid(); create_id uuid:=gen_random_uuid(); delete_id uuid:=gen_random_uuid(); share_id uuid:=gen_random_uuid(); revoke_id uuid:=gen_random_uuid(); BEGIN
  PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id);
  IF hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id)<>r THEN RAISE EXCEPTION 'create replay failed'; END IF;
  BEGIN PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','changed','[]',now()+interval '1 day',create_id); RAISE EXCEPTION 'changed create accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
@@ -50,8 +50,15 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen
  BEGIN PERFORM hsi_memory.read_current('synthetic-token-bob','a','s',r); RAISE EXCEPTION 'cross tenant read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  BEGIN PERFORM 1 FROM hsi_memory.records; RAISE EXCEPTION 'direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'private read accepted'; END IF;
- PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,gen_random_uuid());
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,share_id);
  IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-carol','a','s',r))<>1 THEN RAISE EXCEPTION 'share failed'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,revoke_id);
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,share_id);
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'old share restored access'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,gen_random_uuid());
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,revoke_id);
+ IF NOT EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'old revoke removed new grant'; END IF;
+ BEGIN PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '2 hours',false,share_id); RAISE EXCEPTION 'changed share accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
  PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,gen_random_uuid());
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'revocation failed'; END IF;
  IF hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised','[]',retry_id)<>2 THEN RAISE EXCEPTION 'revision failed'; END IF;
