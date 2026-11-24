@@ -18,8 +18,8 @@ jobs:
           persist-credentials: false
       - name: Parser fixtures
         run: python3 scripts/test_sme_upstream_audit.py
-      - name: Query public pinned inventories
-        run: python3 scripts/sme-upstream-audit.py "${{ runner.temp }}/sme-upstream-audit.json"
+      - name: Collect reference-only evidence (not dependency clearance)
+        run: python3 scripts/sme-upstream-audit.py "${{ runner.temp }}/sme-upstream-audit.json" --reference-only
       - uses: actions/upload-artifact@v4
         if: always()
         with:
