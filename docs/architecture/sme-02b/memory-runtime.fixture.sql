@@ -1,0 +1,55 @@
+-- Disposable CI database ONLY; never apply to Neon or production.
+\set ON_ERROR_STOP on
+BEGIN;
+CREATE SCHEMA neon_auth;
+CREATE TABLE neon_auth."user"(id text PRIMARY KEY,"emailVerified" boolean,banned boolean);
+CREATE TABLE neon_auth.session(token text,"userId" text,"expiresAt" timestamptz,"impersonatedBy" text);
+INSERT INTO neon_auth."user" VALUES('alice',true,false),('bob',true,false),('carol',true,false);
+INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1 hour',NULL FROM neon_auth."user";
+\ir memory-schema.candidate.sql
+\ir memory-identity.candidate.sql
+\ir scope-registry.candidate.sql
+\ir memory-procedures.candidate.sql
+\ir memory-mutations.candidate.sql
+CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
+CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_owner,sme_fixture_runtime;
+GRANT USAGE ON SCHEMA neon_auth TO sme_fixture_owner;
+GRANT SELECT ON ALL TABLES IN SCHEMA neon_auth TO sme_fixture_owner;
+GRANT SELECT ON public.hsi_scopes,public.hsi_memberships TO sme_fixture_owner;
+CREATE POLICY fixture_owner_scopes ON public.hsi_scopes TO sme_fixture_owner USING(true);
+CREATE POLICY fixture_owner_memberships ON public.hsi_memberships TO sme_fixture_owner USING(true);
+GRANT SELECT,INSERT,UPDATE,DELETE ON ALL TABLES IN SCHEMA hsi_memory TO sme_fixture_owner;
+CREATE POLICY fixture_owner_records ON hsi_memory.records TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_versions ON hsi_memory.versions TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_grants ON hsi_memory.grants TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_events ON hsi_memory.events TO sme_fixture_owner USING(true) WITH CHECK(true);
+GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
+DO $$ DECLARE f record; BEGIN
+ FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
+ EXECUTE format('ALTER FUNCTION %s OWNER TO sme_fixture_owner',f.signature);
+ END LOOP;
+END $$;
+REVOKE CREATE ON SCHEMA hsi_memory FROM sme_fixture_owner;
+GRANT EXECUTE ON FUNCTION hsi_memory.create_record(text,text,text,uuid,text,text,jsonb,timestamptz,uuid),hsi_memory.read_current(text,text,text,uuid),hsi_memory.revise(text,text,text,uuid,integer,text,jsonb,uuid),hsi_memory.set_share(text,text,text,uuid,text,timestamptz,boolean,uuid),hsi_memory.delete_record(text,text,text,uuid,uuid) TO sme_fixture_runtime;
+INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
+INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
+SET ROLE sme_fixture_runtime;
+DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; BEGIN
+ PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-alice','a','s',r))<>1 THEN RAISE EXCEPTION 'owner read failed'; END IF;
+ BEGIN PERFORM hsi_memory.read_current('synthetic-token-bob','a','s',r); RAISE EXCEPTION 'cross tenant read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM 1 FROM hsi_memory.records; RAISE EXCEPTION 'direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'private read accepted'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-carol','a','s',r))<>1 THEN RAISE EXCEPTION 'share failed'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'revocation failed'; END IF;
+ IF hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised','[]',gen_random_uuid())<>2 THEN RAISE EXCEPTION 'revision failed'; END IF;
+ BEGIN PERFORM hsi_memory.revise('synthetic-token-alice','a','s',r,1,'stale','[]',gen_random_uuid()); RAISE EXCEPTION 'stale revision accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-alice','a','s',r)) THEN RAISE EXCEPTION 'deleted record visible'; END IF;
+END $$;
+RESET ROLE;
+SET CONSTRAINTS ALL IMMEDIATE;
+ROLLBACK;
