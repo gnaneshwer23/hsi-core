@@ -61,6 +61,6 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; BEGIN
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-alice','a','s',r)) THEN RAISE EXCEPTION 'deleted record visible'; END IF;
 END $$;
 RESET ROLE;
-DO $ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.correction_proposals) THEN RAISE EXCEPTION 'proposal deletion failed'; END IF; END $;
+DO $fixture$ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.correction_proposals) THEN RAISE EXCEPTION 'proposal deletion failed'; END IF; END $fixture$;
 SET CONSTRAINTS ALL IMMEDIATE;
 ROLLBACK;
