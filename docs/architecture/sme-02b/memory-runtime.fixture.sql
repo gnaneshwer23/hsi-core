@@ -12,8 +12,12 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-procedures.candidate.sql
 \ir memory-mutations.candidate.sql
 \ir memory-lifecycle.candidate.sql
+\ir memory-retention.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
+CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_scheduler;
+GRANT EXECUTE ON FUNCTION hsi_memory.sweep_expired(integer) TO sme_fixture_scheduler;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_owner,sme_fixture_runtime;
 GRANT USAGE ON SCHEMA neon_auth TO sme_fixture_owner;
 GRANT SELECT ON ALL TABLES IN SCHEMA neon_auth TO sme_fixture_owner;
@@ -62,5 +66,24 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; BEGIN
 END $$;
 RESET ROLE;
 DO $fixture$ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.correction_proposals) THEN RAISE EXCEPTION 'proposal deletion failed'; END IF; END $fixture$;
+-- Seed expired and active records as fixture administrator.
+INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until) VALUES
+('a','s','00000000-0000-4000-8000-000000000002','alice','note','synthetic_demo',1,now()-interval '1 day'),
+('a','s','00000000-0000-4000-8000-000000000003','alice','note','synthetic_demo',1,now()+interval '1 day');
+INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body) SELECT tenant_id,scope_id,id,1,'fixture' FROM hsi_memory.records;
+SET ROLE sme_fixture_runtime;
+DO $retention$ BEGIN
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-alice','a','s','00000000-0000-4000-8000-000000000002')) THEN RAISE EXCEPTION 'expired read'; END IF;
+ BEGIN PERFORM hsi_memory.sweep_expired(1); RAISE EXCEPTION 'runtime sweep accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $retention$;
+RESET ROLE;
+SET ROLE sme_fixture_scheduler;
+DO $retention$ BEGIN
+ IF hsi_memory.sweep_expired(1)<>1 OR hsi_memory.sweep_expired(1)<>0 THEN RAISE EXCEPTION 'sweep count failed'; END IF;
+END $retention$;
+RESET ROLE;
+DO $retention$ BEGIN
+ IF (SELECT count(*) FROM hsi_memory.records)<>1 OR (SELECT count(*) FROM hsi_memory.versions)<>1 OR (SELECT count(*) FROM hsi_memory.events WHERE operation='retention_delete')<>1 THEN RAISE EXCEPTION 'retention cascade or audit failed'; END IF;
+END $retention$;
 SET CONSTRAINTS ALL IMMEDIATE;
 ROLLBACK;
