@@ -14,6 +14,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-lifecycle.candidate.sql
 \ir memory-retention.candidate.sql
 \ir memory-lexical.candidate.sql
+\ir memory-embeddings.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -43,7 +44,26 @@ GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),h
 GRANT EXECUTE ON FUNCTION hsi_memory.search_lexical(text,text,text,text,integer) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
+-- Test storage independently before restricted runtime operations.
+DO $embedding$
+DECLARE r uuid:='00000000-0000-4000-8000-000000000088';
+BEGIN
+ INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until) VALUES('a','s',r,'alice','note','synthetic_demo',1,now()+interval '1 day');
+ INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body) VALUES('a','s',r,1,'synthetic embedding');
+ INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('a','s',r,1,'synthetic-v1',2,'[1,0]');
+ BEGIN
+ INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('b','s',r,1,'synthetic-v1',2,'[1,0]');
+ RAISE EXCEPTION 'cross tenant embedding accepted'; EXCEPTION WHEN foreign_key_violation THEN NULL; END;
+ BEGIN
+ INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('a','s',r,1,'invalid',3,'[1,0]');
+ RAISE EXCEPTION 'dimension mismatch accepted'; EXCEPTION WHEN check_violation THEN NULL; END;
+ DELETE FROM hsi_memory.records WHERE tenant_id='a' AND scope_id='s' AND id=r;
+ IF EXISTS(SELECT 1 FROM hsi_memory.embeddings WHERE record_id=r) THEN RAISE EXCEPTION 'embedding cascade failed'; END IF;
+END $embedding$;
 SET ROLE sme_fixture_runtime;
+DO $embedding_access$ BEGIN
+ BEGIN PERFORM 1 FROM hsi_memory.embeddings; RAISE EXCEPTION 'direct embedding read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $embedding_access$;
 DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen_random_uuid(); export_id uuid:=gen_random_uuid(); proposal_id uuid:=gen_random_uuid(); create_id uuid:=gen_random_uuid(); delete_id uuid:=gen_random_uuid(); share_id uuid:=gen_random_uuid(); revoke_id uuid:=gen_random_uuid(); BEGIN
  PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id);
  IF hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id)<>r THEN RAISE EXCEPTION 'create replay failed'; END IF;
