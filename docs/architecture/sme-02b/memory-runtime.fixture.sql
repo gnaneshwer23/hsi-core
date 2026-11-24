@@ -13,6 +13,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-mutations.candidate.sql
 \ir memory-lifecycle.candidate.sql
 \ir memory-retention.candidate.sql
+\ir memory-lexical.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -39,6 +40,7 @@ END $$;
 REVOKE CREATE ON SCHEMA hsi_memory FROM sme_fixture_owner;
 GRANT EXECUTE ON FUNCTION hsi_memory.create_record(text,text,text,uuid,text,text,jsonb,timestamptz,uuid),hsi_memory.read_current(text,text,text,uuid),hsi_memory.revise(text,text,text,uuid,integer,text,jsonb,uuid),hsi_memory.set_share(text,text,text,uuid,text,timestamptz,boolean,uuid),hsi_memory.delete_record(text,text,text,uuid,uuid) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.list_current(text,text,text,uuid,integer),hsi_memory.export_current(text,text,text,uuid,uuid),hsi_memory.propose_correction(text,text,text,uuid,integer,text,uuid) TO sme_fixture_runtime;
+GRANT EXECUTE ON FUNCTION hsi_memory.search_lexical(text,text,text,text,integer) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
 SET ROLE sme_fixture_runtime;
@@ -46,11 +48,15 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen
  PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id);
  IF hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','fixture','[]',now()+interval '1 day',create_id)<>r THEN RAISE EXCEPTION 'create replay failed'; END IF;
  BEGIN PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','changed','[]',now()+interval '1 day',create_id); RAISE EXCEPTION 'changed create accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ IF (SELECT count(*) FROM hsi_memory.search_lexical('synthetic-token-alice','a','s','fixture',10))<>1 THEN RAISE EXCEPTION 'lexical owner match failed'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_lexical('synthetic-token-carol','a','s','fixture',10)) THEN RAISE EXCEPTION 'private lexical leak'; END IF;
+ BEGIN PERFORM hsi_memory.search_lexical('synthetic-token-bob','a','s','fixture',10); RAISE EXCEPTION 'cross tenant lexical accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-alice','a','s',r))<>1 THEN RAISE EXCEPTION 'owner read failed'; END IF;
  BEGIN PERFORM hsi_memory.read_current('synthetic-token-bob','a','s',r); RAISE EXCEPTION 'cross tenant read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  BEGIN PERFORM 1 FROM hsi_memory.records; RAISE EXCEPTION 'direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'private read accepted'; END IF;
  PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,share_id);
+ IF (SELECT count(*) FROM hsi_memory.search_lexical('synthetic-token-carol','a','s','fixture',10))<>1 THEN RAISE EXCEPTION 'shared lexical missing'; END IF;
  IF (SELECT count(*) FROM hsi_memory.read_current('synthetic-token-carol','a','s',r))<>1 THEN RAISE EXCEPTION 'share failed'; END IF;
  PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,revoke_id);
  PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,share_id);
@@ -60,6 +66,7 @@ DO $$ DECLARE r uuid:='00000000-0000-4000-8000-000000000001'; retry_id uuid:=gen
  IF NOT EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'old revoke removed new grant'; END IF;
  BEGIN PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '2 hours',false,share_id); RAISE EXCEPTION 'changed share accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
  PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.search_lexical('synthetic-token-carol','a','s','fixture',10)) THEN RAISE EXCEPTION 'revoked lexical leak'; END IF;
  IF EXISTS(SELECT 1 FROM hsi_memory.read_current('synthetic-token-carol','a','s',r)) THEN RAISE EXCEPTION 'revocation failed'; END IF;
  IF hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised','[]',retry_id)<>2 THEN RAISE EXCEPTION 'revision failed'; END IF;
  IF hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised','[]',retry_id)<>2 THEN RAISE EXCEPTION 'replay failed'; END IF;
