@@ -140,6 +140,29 @@ export function HomeLanding(){
      </div>
     </section>
 
+    <section className="cine-section" id="scientific-memory" aria-labelledby="cine-memory">
+     <div className="cine-wrap">
+      <p className="cine-eye">— Scientific memory · In development</p>
+      <div className="cine-split">
+       <h2 id="cine-memory">Science should build on what you already know.</h2>
+       <p>HSI is developing a governed scientific memory layer to help researchers revisit previous questions, evidence references, provisional hypotheses and investigation context without starting from scratch.</p>
+      </div>
+      <FigurePath label="Planned scientific memory journey" steps={[
+       {n:"01",title:"Capture research context",text:"Keep notes, evidence references and provisional ideas distinct."},
+       {n:"02",title:"Retrieve relevant context",text:"Combine keyword, conceptual and biological relationship retrieval."},
+       {n:"03",title:"Recheck permissions and evidence",text:"Respect scope, current versions and scientific uncertainty."},
+       {n:"04",title:"Continue the investigation",text:"Use relevant context to inform the next research question."},
+      ]}/>
+      <FigureBoard label="Scientific memory development status" cells={[
+       {n:"01",title:"Memory foundation",text:"Database and lifecycle procedures tested in disposable PostgreSQL, not a live memory service."},
+       {n:"02",title:"Hybrid retrieval",text:"Keyword retrieval tested in fixtures; semantic ranking implemented offline. Vector storage and graph integration remain in development."},
+       {n:"03",title:"Research continuity",text:"Personal and permission-based project memory, living scientific notes and investigation recovery are planned experiences."},
+      ]}/>
+      <p className="cine-note">Research preview roadmap. Persistent scientific memory is not currently enabled for researchers. Remembered content is not verified evidence and does not automatically enter the knowledge graph.</p>
+      <Link className="cine-btn cine-btn-line" to="/trust">Explore the scientific trust model</Link>
+     </div>
+    </section>
+
     <section className="cine-section" aria-labelledby="cine-agents">
      <div className="cine-wrap cine-split">
       <div>
@@ -147,7 +170,7 @@ export function HomeLanding(){
        <h2 id="cine-agents">Specialised scientific responsibilities. One connected investigation.</h2>
       </div>
       <div>
-       <p>HSI’s agent architecture coordinates evidence discovery, source integrity, biological mapping, mechanism investigation, contradiction analysis, verification and research evaluation. Agents propose and analyse. Scientific evidence and authorised review determine what can be trusted.</p>
+       <p>HSI’s agent architecture coordinates evidence discovery, source integrity, biological mapping, mechanism investigation, contradiction analysis, verification and research evaluation. Governed retrieval of previous research context is being developed as a shared capability, not an independent source of scientific truth. Agents propose and analyse. Scientific evidence and authorised review determine what can be trusted.</p>
        <div className="cine-cta" style={{justifyContent:"flex-start"}}>
         <Link className="cine-btn" to="/intelligence">Explore Scientific Intelligence</Link>
        </div>
@@ -173,7 +196,7 @@ export function HomeLanding(){
       </div>
       <div>
        <p>Imagine discussing a complex biological mechanism, challenging an interpretation or exploring alternative experiments through a natural scientific conversation. HSI is developing toward an evidence-grounded Scientific Companion with text, voice and optional audiovisual interaction.</p>
-       <p>Future capability — not currently advertised as a live service.</p>
+       <p>Future capability — not currently advertised as a live service. Permission-based conversation continuity is also planned; voice and audiovisual memory are not enabled.</p>
        <Link className="cine-btn cine-btn-line" to="/scientific-companion">Explore the Scientific Companion Vision</Link>
       </div>
      </div>
@@ -183,7 +206,7 @@ export function HomeLanding(){
      <div className="cine-wrap cine-split">
       <h2 id="cine-network">Great science rarely happens in isolation.</h2>
       <div>
-       <p>HSI’s future Research Network aims to connect scientific questions with relevant people, expertise and verified opportunities. Community and matching capabilities are being developed. Interest and opportunity status must be independently verified.</p>
+       <p>HSI’s future Research Network aims to connect scientific questions with relevant people, expertise and verified opportunities. Community and matching capabilities are being developed. Interest and opportunity status must be independently verified. Shared institutional knowledge is a planned capability, with explicit permissions rather than automatic access to private research.</p>
        <Link className="cine-btn cine-btn-line" to="/research-community">Explore the Research Community</Link>
       </div>
      </div>
