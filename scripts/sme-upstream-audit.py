@@ -85,12 +85,18 @@ def main():
             row["error"]=str(exc)
     report["uncovered"]=["COG skills and external tools","Karpathy gist revision/licence","vendored code and additional workspace manifests","transitive licences","runtime tests"]
     report["approval"]="blocked"
+    for row in report["sources"]:
+        row["integration_decision"]="reference_only_no_install_no_code_import"
+        print(row["repo"],row["status"],row.get("error",""),"affected packages:",len(row.get("findings",[])))
     out=pathlib.Path(sys.argv[1] if len(sys.argv)>1 else "sme-upstream-audit.json")
     out.write_text(json.dumps(report,indent=2)+"\n")
     components=[{"type":"library","name":item["name"],"version":item["version"],"bom-ref":row["repo"]+":"+item["name"]+"@"+item["version"]} for row in report["sources"] for item in row.get("inventory",[])]
     bom={"bomFormat":"CycloneDX","specVersion":"1.5","version":1,"metadata":{"properties":[{"name":"hsi:coverage","value":"partial registry inventory"}]},"components":components}
     out.with_suffix(".cdx.json").write_text(json.dumps(bom,indent=2)+"\n")
     print("Static audit report:",out)
+    # Evidence collection is not dependency clearance. Strict mode remains fail-closed.
+    if "--reference-only" in sys.argv[2:]:
+        return 0 if all(r["status"] in ("blocked","findings","no_findings_in_queried_inventory") for r in report["sources"]) else 1
     return 1 if any(r["status"] in ("blocked","findings") for r in report["sources"]) else 0
 if __name__=="__main__":
     sys.exit(main())
