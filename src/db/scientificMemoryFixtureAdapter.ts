@@ -8,7 +8,25 @@ export function createScientificMemoryFixtureAdapter(sql:MemorySql,sessionToken:
  if(!scope.test(tenant)||!scope.test(scopeId)||!uuid.test(id))throw Error("Invalid memory selector");
  return [sessionToken,tenant,scopeId,id];
  }
+ function request(id:string){if(typeof id!=="string"||!uuid.test(id))throw Error("Invalid request");return id;}
+ function expiry(value:string){if(typeof value!=="string"||!Number.isFinite(Date.parse(value))||!/^\d{4}-\d{2}-\d{2}T.*Z$/.test(value))throw Error("Invalid expiry");return value;}
+ function content(body:string,sources:readonly string[]){if(typeof body!=="string"||new TextEncoder().encode(body).length>65536||!Array.isArray(sources)||sources.length>100||sources.some(s=>typeof s!=="string"||s.length>2048))throw Error("Invalid content");return JSON.stringify(sources);}
  return {
+ async create(tenant:string,scopeId:string,id:string,kind:string,body:string,sources:readonly string[],until:string,requestId:string){
+ if(!["note","preference","hypothesis","evidence_reference","investigation_reference"].includes(kind))throw Error("Invalid kind");
+ return sql.unsafe("SELECT hsi_memory.create_record($1::text,$2::text,$3::text,$4::uuid,$5::text,$6::text,$7::jsonb,$8::timestamptz,$9::uuid) AS id",[...keys(tenant,scopeId,id),kind,body,content(body,sources),expiry(until),request(requestId)]);
+ },
+ async share(tenant:string,scopeId:string,id:string,grantee:string,until:string,requestId:string){
+ if(typeof grantee!=="string"||!scope.test(grantee))throw Error("Invalid grantee");
+ return sql.unsafe("SELECT hsi_memory.set_share($1::text,$2::text,$3::text,$4::uuid,$5::text,$6::timestamptz,$7::boolean,$8::uuid)",[...keys(tenant,scopeId,id),grantee,expiry(until),false,request(requestId)]);
+ },
+ async revoke(tenant:string,scopeId:string,id:string,grantee:string,requestId:string){
+ if(typeof grantee!=="string"||!scope.test(grantee))throw Error("Invalid grantee");
+ return sql.unsafe("SELECT hsi_memory.set_share($1::text,$2::text,$3::text,$4::uuid,$5::text,$6::timestamptz,$7::boolean,$8::uuid)",[...keys(tenant,scopeId,id),grantee,null,true,request(requestId)]);
+ },
+ async delete(tenant:string,scopeId:string,id:string,requestId:string){
+ return sql.unsafe("SELECT hsi_memory.delete_record($1::text,$2::text,$3::text,$4::uuid,$5::uuid)",[...keys(tenant,scopeId,id),request(requestId)]);
+ },
  async read(tenant:string,scopeId:string,id:string){
  return sql.unsafe("SELECT * FROM hsi_memory.read_current($1::text,$2::text,$3::text,$4::uuid)",keys(tenant,scopeId,id));
  },
