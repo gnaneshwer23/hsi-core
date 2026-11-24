@@ -13,9 +13,12 @@ HSI's context-conflict classifier (`src/knowledgeGraph/contextConflict.ts`) labe
 | Command | Path | Purpose |
 | --- | --- | --- |
 | `bun run conflict:bench:check` / `:fixture` | `evaluation/conflict-benchmark/fixtures/` | Harness only — CI; never a scientific result |
+| `bun run conflict:bench:report` | `fixtures/example-cases.v1.json` | Local Example listing. `harness_only`. Does not state an accuracy figure |
 | `bun run conflict:bench:expert` (alias `conflict:bench`) | `.hsi-private-benchmark/conflict/` | Expert-curated cases only; reports stay in the vault |
 
 Expert mode refuses synthetic fixture files and refuses `synthetic_fixture` provenance. Fixture paths are unchanged by A4.2.
+
+`example-cases.v1.json` adds Example rows for species, tissue, endpoint or method, dose, population, a true contradiction, an apparent conflict, and a same-direction pair. Every row is `synthetic_fixture`, says `EXAMPLE` and `harness_only`, and carries two agreeing expected labels. `bun run conflict:bench:report` writes that listing under `evaluation/conflict-benchmark/reports/example/` (gitignored). It does not publish a score.
 
 ## Labels
 

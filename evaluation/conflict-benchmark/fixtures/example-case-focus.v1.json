@@ -1,0 +1,16 @@
+{
+  "label": "Example",
+  "harnessOnly": true,
+  "provenance": "synthetic_fixture",
+  "note": "Local harness cases only. Not expert labels. Not a published accuracy result.",
+  "focus": {
+    "EX-SPECIES": "species",
+    "EX-TISSUE": "tissue",
+    "EX-METHOD": "endpoint_or_method",
+    "EX-DOSE": "dose",
+    "EX-POPULATION": "population",
+    "EX-TRUE": "true_contradiction",
+    "EX-APPARENT": "apparent_conflict",
+    "EX-SAME-DIRECTION": "no_disagreement"
+  }
+}

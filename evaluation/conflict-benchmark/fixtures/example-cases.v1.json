@@ -1,0 +1,90 @@
+[
+  {
+    "id": "EX-SPECIES",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Species difference: a human cohort and a mouse study report opposite directions for the same invented metabolite.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-species-a", "citation": "Example record species A (not a real study)", "model": "human_in_vivo", "tissue": "colon", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "ex-species-b", "citation": "Example record species B (not a real study)", "model": "mouse", "tissue": "colon", "population": "adults", "design": "cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "context_dependent"}, {"raterId": "example-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-TISSUE",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Tissue difference: two human studies report opposite directions in serum versus liver.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-tissue-a", "citation": "Example record tissue A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "ex-tissue-b", "citation": "Example record tissue B (not a real study)", "model": "human_in_vivo", "tissue": "liver", "population": "adults", "design": "cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "context_dependent"}, {"raterId": "example-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-METHOD",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Endpoint and method difference: the same human population is read out by ELISA versus flow cytometry, with opposite directions.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-method-a", "citation": "Example record method A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "ELISA cytokine endpoint, cohort", "negated": false},
+      {"sourceId": "ex-method-b", "citation": "Example record method B (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "flow-cytometry endpoint, cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "context_dependent"}, {"raterId": "example-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-DOSE",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Dose difference: a low-dose and a high-dose mouse exposure report opposite directions. Dose is recorded in the study-design stratum.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-dose-a", "citation": "Example record dose A (not a real study)", "model": "mouse", "tissue": "colon", "population": "adult animals", "design": "low-dose gavage", "negated": false},
+      {"sourceId": "ex-dose-b", "citation": "Example record dose B (not a real study)", "model": "mouse", "tissue": "colon", "population": "adult animals", "design": "high-dose gavage", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "context_dependent"}, {"raterId": "example-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-POPULATION",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Population difference: adults with obesity and healthy adults report opposite directions in the same tissue and design.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-population-a", "citation": "Example record population A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults with obesity", "design": "cohort", "negated": false},
+      {"sourceId": "ex-population-b", "citation": "Example record population B (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "healthy adults", "design": "cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "context_dependent"}, {"raterId": "example-rater-2", "label": "context_dependent"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-TRUE",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. True contradiction: the same species, tissue, population and design report opposite directions.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-true-a", "citation": "Example record contradiction A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "ex-true-b", "citation": "Example record contradiction B (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "true_contradiction"}, {"raterId": "example-rater-2", "label": "true_contradiction"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-APPARENT",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Apparent conflict: directions differ, but one record does not state its study system or design, so a context difference cannot be separated from a real conflict.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-apparent-a", "citation": "Example record apparent A (not a real study)", "model": "human_in_vivo", "tissue": "colon", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "ex-apparent-b", "citation": "Example record apparent B (not a real study)", "model": "unspecified", "tissue": null, "population": null, "design": null, "negated": true}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "insufficient_context"}, {"raterId": "example-rater-2", "label": "insufficient_context"}],
+    "adjudicated": null
+  },
+  {
+    "id": "EX-SAME-DIRECTION",
+    "question": "EXAMPLE. harness_only. Synthetic fixture. Same direction across tissues: both records report the effect, so there is no disagreement to classify as a conflict.",
+    "provenance": "synthetic_fixture",
+    "records": [
+      {"sourceId": "ex-same-a", "citation": "Example record agreement A (not a real study)", "model": "human_in_vivo", "tissue": "serum", "population": "adults", "design": "cohort", "negated": false},
+      {"sourceId": "ex-same-b", "citation": "Example record agreement B (not a real study)", "model": "mouse", "tissue": "liver", "population": "adult animals", "design": "animal model", "negated": false}
+    ],
+    "labels": [{"raterId": "example-rater-1", "label": "no_disagreement"}, {"raterId": "example-rater-2", "label": "no_disagreement"}],
+    "adjudicated": null
+  }
+]

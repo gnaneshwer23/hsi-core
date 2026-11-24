@@ -308,6 +308,7 @@
     "conflict:bench:expert": "bun --no-env-file scripts/conflict-benchmark.ts --expert",
     "conflict:bench:fixture": "bun --no-env-file scripts/conflict-benchmark.ts --fixture",
     "conflict:bench:check": "bun --no-env-file scripts/conflict-benchmark.ts --check",
+    "conflict:bench:report": "bun --no-env-file scripts/conflict-benchmark.ts --example-report",
     "label-vault:layout": "bun --no-env-file scripts/label-vault.ts layout",
     "label-vault:init": "bun --no-env-file scripts/label-vault.ts init",
     "label-vault:status": "bun --no-env-file scripts/label-vault.ts status",
