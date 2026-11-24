@@ -24,7 +24,7 @@ END $$;
 REVOKE ALL ON FUNCTION hsi_memory.read_current(text,text,text,uuid) FROM PUBLIC;
 CREATE FUNCTION hsi_memory.revise(p_token text,p_tenant text,p_scope text,p_id uuid,p_expected integer,p_body text,p_sources jsonb,p_request uuid)
 RETURNS integer LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
-DECLARE v_actor text; v_current integer;
+DECLARE v_actor text; v_current integer; prior hsi_memory.events%ROWTYPE;
 BEGIN
  v_actor:=hsi_memory.resolve_principal(p_token);
  IF v_actor IS NULL OR hsi_memory.active_membership(v_actor,p_tenant,p_scope) IS DISTINCT FROM true THEN
@@ -33,6 +33,14 @@ BEGIN
  WHERE r.tenant_id=p_tenant AND r.scope_id=p_scope AND r.id=p_id AND r.owner_id=v_actor
  AND r.state='active' AND r.retention_until>clock_timestamp() FOR UPDATE;
  IF NOT FOUND THEN RAISE EXCEPTION 'Memory unavailable' USING ERRCODE='42501'; END IF;
+ -- Recheck access before replay; compare original immutable version payload.
+ SELECT e.* INTO prior FROM hsi_memory.events e WHERE e.tenant_id=p_tenant AND e.actor_id=v_actor AND e.operation='revise' AND e.request_id=p_request;
+ IF FOUND THEN
+ IF prior.scope_id IS DISTINCT FROM p_scope OR prior.record_id IS DISTINCT FROM p_id OR p_expected IS DISTINCT FROM prior.version-1 OR NOT EXISTS(
+ SELECT 1 FROM hsi_memory.versions v WHERE v.tenant_id=p_tenant AND v.scope_id=p_scope AND v.record_id=p_id AND v.version=prior.version AND v.body IS NOT DISTINCT FROM p_body AND v.source_refs IS NOT DISTINCT FROM p_sources)
+ THEN RAISE EXCEPTION 'Request conflict' USING ERRCODE='40001'; END IF;
+ RETURN prior.version;
+ END IF;
  IF p_expected IS DISTINCT FROM v_current THEN RAISE EXCEPTION 'Version conflict' USING ERRCODE='40001'; END IF;
  INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body,source_refs)
  VALUES(p_tenant,p_scope,p_id,v_current+1,p_body,p_sources);
@@ -42,5 +50,4 @@ BEGIN
  RETURN v_current+1;
 END $$;
 REVOKE ALL ON FUNCTION hsi_memory.revise(text,text,text,uuid,integer,text,jsonb,uuid) FROM PUBLIC;
--- Duplicate request IDs roll back, not yet replay-safe. No create/share/delete
--- until retention, canonical membership and idempotency contracts are resolved.
+-- Revision replay is scoped and payload checked. Other mutations remain non-replay-safe.
