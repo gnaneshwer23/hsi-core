@@ -44,7 +44,7 @@ END $$;
 REVOKE ALL ON FUNCTION hsi_memory.set_share(text,text,text,uuid,text,timestamptz,boolean,uuid) FROM PUBLIC;
 CREATE FUNCTION hsi_memory.delete_record(p_token text,p_tenant text,p_scope text,p_id uuid,p_request uuid)
 RETURNS void LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
-DECLARE a text; v integer;
+DECLARE a text; v integer; prior hsi_memory.events%ROWTYPE;
 BEGIN
  a:=hsi_memory.resolve_principal(p_token);
  IF a IS NULL OR hsi_memory.active_membership(a,p_tenant,p_scope) IS DISTINCT FROM true THEN RAISE EXCEPTION 'Memory unavailable' USING ERRCODE='42501'; END IF;
