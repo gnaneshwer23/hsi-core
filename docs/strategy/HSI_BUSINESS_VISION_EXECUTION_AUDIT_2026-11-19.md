@@ -2,6 +2,7 @@
 
 **Date:** 19 November 2026 (Europe/London)  
 **Directive:** Definitive Business Vision, USP and Engineering Execution Directive (this audit’s governing brief)  
+**Later doctrine (20 Nov 2026):** [`HSI_BUSINESS_PREMORTEM_2026-11-20.md`](./HSI_BUSINESS_PREMORTEM_2026-11-20.md) — failure-mode prioritisation; does **not** replace this audit’s implementation matrix. Engineering mapping: [`../engineering/PREMORTEM_90_DAY_RESPONSE_PLAN.md`](../engineering/PREMORTEM_90_DAY_RESPONSE_PLAN.md).  
 **Method:** Repository truth from `docs/STATUS.md` / capability register, journey acceptance docs, implementation audits, open PRs — **no production config changes, no held-migration applies, no merges, no PHI.**  
 **Honesty:** `researcherJourneyCompleteClaimed=false` · `writesEnabledClaimed=false` · `mergedPrEqualsProductionAcceptance=false` · `scientificallyValidatedClaimed=false`
 
