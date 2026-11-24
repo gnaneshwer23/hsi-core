@@ -10,7 +10,11 @@ import {DOMAIN_GRAPH_VERSION} from './src/features/science/generatedDomainGraphV
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const repoSrc = path.resolve(rootDir, "../src");
 
-export default defineConfig({
+// Shared evidence code under ../src hashes with node:crypto. A browser cannot load it (the dev server threw at import time and every route was blank),
+// so client builds and the dev server get a small SHA-256 stand-in. The server-side prerender build (`--ssr`) keeps the real module.
+const browserNodeCrypto = path.resolve(rootDir, "src/shims/nodeCryptoBrowser.ts");
+
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), {
     name:'hsi-public-graph-backend',
     configureServer(server){
@@ -33,9 +37,10 @@ export default defineConfig({
     }
   }],
   resolve: {
-    alias: {
-      "@hsi": repoSrc,
-    },
+    alias: [
+      { find: "@hsi", replacement: repoSrc },
+      ...(isSsrBuild ? [] : [{ find: /^node:crypto$/, replacement: browserNodeCrypto }]),
+    ],
   },
   server: {
     port: 5173,
@@ -47,4 +52,4 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
-});
+}));

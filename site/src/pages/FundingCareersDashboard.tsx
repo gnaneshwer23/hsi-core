@@ -53,13 +53,12 @@ export function FundingCareersDashboard() {
             Public-call and institutional sketches only. No invented award rates or
             conversion percentages.
           </p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Funding sketches">
             {demo.fundingSketches.map((f) => (
               <button
                 key={f.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedFunding.id === f.id}
                 onClick={() => setSelectedFunding(f)}
               >

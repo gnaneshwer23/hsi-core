@@ -3,13 +3,15 @@
  */
 import {assertHsiToolPermission,validateHsiAgentManifest,validateHsiAgentRunEnvelope,HSI_TOOL_IDS,type HsiAgentManifest,type HsiAgentRole,type HsiAgentRunEnvelope,type HsiToolId} from "./hsiAgentIntelligenceContracts";
 import {createHsiOrchestrationDeadline} from "./hsiAgentOrchestrationBudget";
+import {hashHsiCheckpointInput} from "./hsiAgentDurableCheckpoint";
+import type {ToolGateway,ToolResult} from "./governedToolGateway";
 import {
   classifyHsiOrchestrationCancel,
   type HsiOrchestrationCancelRecord,
 } from "./hsiAgentOrchestrationCancel";
 export type HsiAgentTask={id:string;manifest:HsiAgentManifest;dependsOn:readonly string[]};
 export type HsiAgentStepResult={status:"completed"|"blocked";outputRef:string|null;reason:string|null};
-export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
+export type HsiAgentExecutor=(context:{investigationId:string;taskId:string;role:HsiAgentRole;assertTool:(tool:HsiToolId)=>void;/** Calls an external tool through the governed gateway only. Always supplied by the orchestrator; it throws when no gateway was configured. Optional in the type so hand-built test contexts still compile. */callTool?:(tool:HsiToolId,input:unknown,provider?:string)=>Promise<ToolResult>;signal:AbortSignal;dependencies:Readonly<Record<string,HsiAgentStepResult>>})=>Promise<HsiAgentStepResult>;
 export type HsiOrchestrationResult={
   schemaVersion:"hsi-agent-orchestration-1";
   investigationId:string;
@@ -19,13 +21,20 @@ export type HsiOrchestrationResult={
   limitations:readonly string[];
   /** Structured stop taxonomy when cancelled or classified failure (U30). */
   termination:HsiOrchestrationCancelRecord|null;
+  /** Present only when a gateway was configured. One entry per gateway call; full detail is in the gateway audit log. */
+  gatewayCalls?:readonly HsiGatewayCallReceipt[];
 };
+export type HsiGatewayCallReceipt={taskId:string;tool:HsiToolId;invocationId:string;ok:boolean;code:string|null;replayed:boolean;auditSeq:number;responseHash:string|null};
 const ID=/^[A-Za-z0-9][A-Za-z0-9._:-]{0,99}$/;
 export async function runHsiAgentOrchestration(input:{
  investigationId:string;tasks:readonly HsiAgentTask[];executors:Partial<Record<HsiAgentRole,HsiAgentExecutor>>;
  graphRelease:{id:string;version:string;manifestHash:string};
  dataClass:"public_biomedical"|"licensed_partner"|"synthetic_demo";
  now?:()=>string;signal?:AbortSignal;
+ /** Optional governed tool gateway. Without it, `callTool` refuses. Executors never receive a raw fetch. */
+ toolGateway?:ToolGateway;
+ /** Required for a gateway in authenticated mode: yields the verified authorisation for one task (see `authoriseCallsFor`). The task's own manifest is not what the gateway trusts. */
+ authoriseCall?:(task:{taskId:string;role:HsiAgentRole})=>Promise<unknown>;
  /** Optional wall-clock bound across all tasks (distinct from per-task timeoutMs). */
  maxOrchestrationMs?:number;
 }):Promise<HsiOrchestrationResult>{
@@ -46,6 +55,7 @@ export async function runHsiAgentOrchestration(input:{
  }
  for(const task of input.tasks)visit(task);
  const now=input.now??(()=>new Date().toISOString());
+ const gatewayCalls:HsiGatewayCallReceipt[]=[];
  const results:Record<string,HsiAgentStepResult>=Object.create(null);
  const runs:HsiAgentRunEnvelope[]=[];
  let status:HsiOrchestrationResult["status"]="completed";
@@ -89,13 +99,24 @@ export async function runHsiAgentOrchestration(input:{
     result=await Promise.race([
      Promise.resolve().then(()=>{
       if(signal?.aborted)throw Error("Cancelled before dispatch");
-      return executor({investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:structuredClone(Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!]))),assertTool:(tool)=>{
+      const ctxBase={investigationId:input.investigationId,taskId:task.id,role:task.manifest.role,signal:controller.signal,dependencies:structuredClone(Object.fromEntries(task.dependsOn.map(d=>[d,results[d]!]))),assertTool:(tool:HsiToolId)=>{
       if(!acceptingCalls||controller.signal.aborted)throw Error("Agent invocation already closed");
       const invocationId=task.id+"-tool-"+(calls.length+1);
       if(calls.length>=task.manifest.maxToolCalls||!HSI_TOOL_IDS.includes(tool)){policyViolation=true;policyDenied=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));throw Error("Agent tool budget exceeded or unknown tool")}
       try{assertHsiToolPermission(task.manifest,tool,input.dataClass);calls.push({tool,invocationId,status:"authorized"})}
       catch(e){policyViolation=true;policyDenied=true;controller.abort();rejectCancellation?.(Error("Agent policy denied"));calls.push({tool,invocationId,status:"denied"});throw e}
-     }});}),
+     }};
+      const callTool=async(tool:HsiToolId,toolInput:unknown,provider?:string):Promise<ToolResult>=>{
+       if(!input.toolGateway)throw Error("No governed tool gateway configured");
+       ctxBase.assertTool(tool); // same permission, budget and denial semantics as before; a denial aborts the run
+       // Content-derived id: the same logical call in a recovered attempt replays instead of repeating its side effect.
+       const invocationId="h-"+hashHsiCheckpointInput({investigationId:input.investigationId,taskId:task.id,tool,provider:provider??null,input:toolInput}).slice(0,40);
+       const authorisation=input.authoriseCall?await input.authoriseCall({taskId:task.id,role:task.manifest.role}):undefined;
+       const r=await input.toolGateway.call({authorisation,manifest:task.manifest,investigationId:input.investigationId,taskId:task.id,invocationId,tool,provider,input:toolInput,signal:controller.signal});
+       gatewayCalls.push({taskId:task.id,tool,invocationId,ok:r.ok,code:r.ok?null:r.code,replayed:r.ok?r.replayed:false,auditSeq:r.auditSeq,responseHash:r.ok?r.provenance.responseHash:null});
+       return structuredClone(r);
+      };
+      return executor({...ctxBase,callTool});}),
      new Promise<never>((_,reject)=>{
       rejectCancellation=reject;
       signal?.addEventListener("abort",onAbort,{once:true});
@@ -135,5 +156,6 @@ export async function runHsiAgentOrchestration(input:{
  if(stop!==null){
   limitations.push(`Orchestration termination classified as ${stop.reason} (no scientific approval; side effects not undone)`);
  }
- return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations,termination:stop};
+ if(input.toolGateway)limitations.push("Tool dispatch is recorded by the gateway audit log; run envelopes still record authorization checks only");
+ return {schemaVersion:"hsi-agent-orchestration-1",investigationId:input.investigationId,status,runs,results,limitations,termination:stop,...(input.toolGateway?{gatewayCalls}:{})};
 }

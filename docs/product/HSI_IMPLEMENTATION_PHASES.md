@@ -32,7 +32,7 @@
 | Storage | Public APIs are stateless | Nothing persists; migrations held |
 | Abuse control | Per-instance in-memory limits, same-origin check | Not distributed; resets per instance; no auth on model endpoint |
 | Observability | None found (no error tracking, tracing, log drain, alerts) | Cannot detect or diagnose live failures |
-| Headers | HSTS, nosniff, XFO, Referrer, Permissions-Policy; CSP is **Report-Only** | CSP not enforced; no report endpoint; HSTS lacks `includeSubDomains`/preload decision |
+| Headers | HSTS, nosniff, XFO, Referrer, Permissions-Policy; CSP is **Report-Only** | CSP not enforced; no report endpoint; HSTS lacks `includeSubDomains`/preload decision. *Updated 22 Nov 2026: the CSP is now enforced and a report endpoint (`/api/csp-report`) exists; HSTS decision still open.* |
 | Functions | `maxDuration: 30` on `api/**/*.ts` | Fine for now; long model runs need Queues or background execution (platform default is now 300 s with Fluid Compute) |
 | Config | `vercel.json` | Platform now recommends `vercel.ts`; optional |
 | CI | `p0-repository-hygiene`, `research-foundation`, `production-probe` | No dependency/secret scanning, no load test, no restore drill, no rollback runbook |

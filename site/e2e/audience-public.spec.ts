@@ -86,3 +86,15 @@ test('pricing and access page lists planned tiers without inventing prices',asyn
  await expect(page.locator('#main-content')).toContainText('Research group');
  await expect(page.locator('#main-content')).not.toContainText(/\$\d|£\d|per seat|subscribe now/i);
 });
+
+test('biotech, laboratories and community pages explain their use and label what is planned',async({page})=>{
+ await page.goto('/biotech');
+ await expect(page.getByRole('heading',{name:'Questions an R&D team could bring.'})).toBeVisible();
+ await expect(page.locator('#main-content')).toContainText('does not decide which study is right');
+ await page.goto('/laboratories');
+ await expect(page.getByRole('heading',{name:'Where it fits a laboratory workflow.'})).toBeVisible();
+ await expect(page.locator('#main-content')).toContainText('cannot be uploaded in this preview');
+ await page.goto('/research-community');
+ await expect(page.getByRole('heading',{name:'What a future Research Network could offer.'})).toBeVisible();
+ await expect(page.locator('#main-content')).toContainText('No collaborators, institutions or matches are shown');
+});

@@ -71,6 +71,7 @@ import { NotFound } from "./pages/NotFound";
 const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/AuthenticatedInterrogativeWorkbench").then(m=>({default:m.AuthenticatedInterrogativeWorkbench})));
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
+const FixtureRunRoute=lazy(()=>import("./pages/FixtureRun").then(m=>({default:m.FixtureRunPage})));
 const InvestigationWorkspaceRoute=lazy(()=>import("./pages/InvestigationWorkspace").then(m=>({default:m.InvestigationWorkspacePage})));
 const ScientificCompanionRoute=lazy(()=>import("./pages/ScientificCompanion").then(m=>({default:m.ScientificCompanionPage})));
 const WelcomeRoute=lazy(()=>import("./pages/Welcome").then(m=>({default:m.WelcomePage})));
@@ -197,6 +198,7 @@ export default function App() {
         <Route path="research/mechanism-workflow" element={<Suspense fallback={<p role="status">Loading mechanism workflow…</p>}><ResearchMechanismWorkflowPage/></Suspense>} />
         <Route path="research/discovery-experience" element={<Navigate to="/research/workspace" replace />} />
         <Route path="research/investigate" element={<Suspense fallback={<p role="status">Loading investigation…</p>}><ScientificInvestigationPage/></Suspense>} />
+        <Route path="research/runs" element={<Suspense fallback={<p role="status">Loading recorded runs…</p>}><FixtureRunRoute/></Suspense>} />
         <Route path="research/workspace" element={<Suspense fallback={<p role="status">Loading workspace…</p>}><InvestigationWorkspaceRoute/></Suspense>} />
         <Route path="research/companion" element={<Suspense fallback={<p role="status">Loading scientific companion…</p>}><ScientificCompanionRoute/></Suspense>} />
         <Route path="welcome" element={<Suspense fallback={<p role="status">Loading…</p>}><WelcomeRoute/></Suspense>} />

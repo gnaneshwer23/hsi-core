@@ -58,13 +58,12 @@ export function CommunityDashboard() {
             Permission-aware group sketches. Durable Circles store is held — no
             automatic IP bleed.
           </p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Circles">
             {demo.circles.map((c) => (
               <button
                 key={c.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedCircle.id === c.id}
                 onClick={() => setSelectedCircle(c)}
               >
@@ -127,13 +126,12 @@ export function CommunityDashboard() {
           <p className="ent-lead">
             Gaps and next questions — shared ≠ public by default.
           </p>
-          <div className="ent-tree" role="list">
+          <div className="ent-tree" role="group" aria-label="Challenges">
             {demo.challenges.map((ch) => (
               <button
                 key={ch.id}
                 type="button"
                 className="ent-node"
-                role="listitem"
                 aria-pressed={selectedChallenge.id === ch.id}
                 onClick={() => setSelectedChallenge(ch)}
               >
