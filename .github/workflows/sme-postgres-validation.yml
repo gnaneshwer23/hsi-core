@@ -31,3 +31,10 @@ jobs:
         env:
           PGPASSWORD: fixture-only
         run: psql -X -v ON_ERROR_STOP=1 -h 127.0.0.1 -U postgres -d sme_fixture -f docs/architecture/sme-02b/memory-runtime.fixture.sql
+
+      - name: Execute multi-connection revision validation
+        env:
+          PGPASSWORD: fixture-only
+        run: |
+          psql -X -v ON_ERROR_STOP=1 -v concurrency_setup=1 -h 127.0.0.1 -U postgres -d sme_fixture -f docs/architecture/sme-02b/memory-runtime.fixture.sql
+          bash docs/architecture/sme-02b/memory-concurrency.fixture.sh
