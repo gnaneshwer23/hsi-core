@@ -101,4 +101,8 @@ DO $retention$ BEGIN
  IF (SELECT count(*) FROM hsi_memory.records)<>1 OR (SELECT count(*) FROM hsi_memory.versions)<>1 OR (SELECT count(*) FROM hsi_memory.events WHERE operation='retention_delete')<>1 THEN RAISE EXCEPTION 'retention cascade or audit failed'; END IF;
 END $retention$;
 SET CONSTRAINTS ALL IMMEDIATE;
+\if :{?concurrency_setup}
+COMMIT;
+\else
 ROLLBACK;
+\endif
