@@ -46,3 +46,8 @@ jobs:
         env:
           SME_DISPOSABLE_FIXTURE: '1'
         run: bun --no-env-file docs/architecture/sme-02b/memory-worker-e2e.fixture.ts
+
+      - name: Execute independent-connection delivery validation
+        env:
+          SME_DISPOSABLE_FIXTURE: '1'
+        run: bun --no-env-file docs/architecture/sme-02b/memory-delivery-e2e.fixture.ts
