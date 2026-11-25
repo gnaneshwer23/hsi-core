@@ -68,6 +68,7 @@ const ScienceResearchAgents=lazy(()=>import("./pages/ScienceResearchAgents").the
 const ScienceZoom=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m.ScienceZoom})));
 const ScienceConnections=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m.ScienceConnections})));
 import { NotFound } from "./pages/NotFound";
+const LandingV2=lazy(()=>import("./landing-v2/LandingV2"));
 const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/AuthenticatedInterrogativeWorkbench").then(m=>({default:m.AuthenticatedInterrogativeWorkbench})));
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
@@ -97,6 +98,7 @@ const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m
 export default function App() {
   return (
     <Routes>
+      <Route path="landing-v2/*" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2/></Suspense>}/>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
