@@ -15,20 +15,6 @@ test('the footer leads to the research app, which opens the app shell',async({pa
  await expect(page.locator('.rh-app')).toBeVisible();
 });
 
-test('home leads with the graph, context diagram and working scenario choices',async({page})=>{
- await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Your next scientific discovery starts with a better question.');
- await expect(page.locator('.pg-proof')).toBeVisible();
- const diagram=page.locator('.relationship-diagram');
- await diagram.getByRole('button',{name:'Context',exact:true}).click();
- await expect(diagram).toContainText('Under which experimental conditions?');
- await diagram.getByRole('button',{name:'Review',exact:true}).click();
- await expect(diagram).toContainText('What has actually been checked?');
- await expect(page.locator('#product-demo').getByRole('tab')).toHaveCount(6);
- await expect(page.locator('.pg-domain-list').getByRole('link')).toHaveCount(6);
- await expect(page.locator('.pg-status')).toContainText('candidate relationships');
-});
-
 test('how it works shows the research flow and separates checks from approval',async({page})=>{
  await page.goto('/how-it-works');
  await expect(page.getByRole('list',{name:'Investigation journey',exact:true}).getByRole('listitem')).toHaveCount(8);
@@ -51,7 +37,7 @@ test('the public sitemap lists the marketing pages, and the header shows Stage 2
  const sitemap=await (await request.get('/sitemap.xml')).text();
  const locs=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>new URL(m[1]!).pathname).sort();
  expect(locs).toEqual([...PUBLIC].sort());
- await page.setViewportSize({width:1440,height:900});await page.goto('/');
+ await page.setViewportSize({width:1440,height:900});await page.goto('/how-it-works');
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','Scientific Intelligence','For Researchers','Community']);
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button')).toHaveCount(0);
 });
