@@ -671,6 +671,58 @@
     {
       "source": "/docs",
       "destination": "/_pages/docs.html"
+    },
+    {
+      "source": "/landing-v2",
+      "destination": "/_pages/landing-v2.html"
+    },
+    {
+      "source": "/landing-v2/science",
+      "destination": "/_pages/landing-v2--science.html"
+    },
+    {
+      "source": "/landing-v2/solutions",
+      "destination": "/_pages/landing-v2--solutions.html"
+    },
+    {
+      "source": "/landing-v2/data-sources",
+      "destination": "/_pages/landing-v2--data-sources.html"
+    },
+    {
+      "source": "/landing-v2/trust",
+      "destination": "/_pages/landing-v2--trust.html"
+    },
+    {
+      "source": "/landing-v2/early-access",
+      "destination": "/_pages/landing-v2--early-access.html"
+    },
+    {
+      "source": "/landing-v2/platform/memory",
+      "destination": "/_pages/landing-v2--platform--memory.html"
+    },
+    {
+      "source": "/landing-v2/platform/agents",
+      "destination": "/_pages/landing-v2--platform--agents.html"
+    },
+    {
+      "source": "/landing-v2/platform/contradiction-analysis",
+      "destination": "/_pages/landing-v2--platform--contradiction-analysis.html"
+    },
+    {
+      "source": "/landing-v2/platform/workbench",
+      "destination": "/_pages/landing-v2--platform--workbench.html"
+    },
+    {
+      "source": "/landing-v2/platform/knowledge-graph",
+      "destination": "/_pages/landing-v2--platform--knowledge-graph.html"
+    },
+    {
+      "source": "/landing-v2/platform/discovery-engine",
+      "destination": "/_pages/landing-v2--platform--discovery-engine.html"
+    },
+    {
+      "source": "/landing-v2/platform/companion",
+      "destination": "/_pages/landing-v2--platform--companion.html"
     }
   ],
   "redirects": [

@@ -1,0 +1,121 @@
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
+import "@fontsource-variable/space-grotesk";
+import "@fontsource-variable/newsreader";
+import "@fontsource-variable/newsreader/wght-italic.css";
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import "./landing-v2.css";
+import { Header, Footer } from "./components/site/Header";
+
+type PageMeta = { meta: { title?: string; name?: string; content?: string; property?: string }[] };
+type PageModule = { default: ComponentType; pageMeta: PageMeta };
+
+/** Sets the title and description for the page and keeps it out of search indexes while it is a preview. Restores the previous values on unmount. */
+function DocMeta({ meta }: { meta: PageMeta }) {
+  useEffect(() => {
+    const prevTitle = document.title;
+    const title = meta.meta.find((m) => m.title)?.title;
+    const description = meta.meta.find((m) => m.name === "description")?.content;
+    const made: HTMLMetaElement[] = [];
+    const set = (name: string, content: string) => {
+      let el = document.head.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
+      const had = el?.content;
+      if (!el) {
+        el = document.createElement("meta");
+        el.name = name;
+        document.head.appendChild(el);
+        made.push(el);
+      }
+      el.content = content;
+      return () => {
+        if (made.includes(el!)) el!.remove();
+        else if (had !== undefined) el!.content = had;
+      };
+    };
+    if (title) document.title = title;
+    const undo = [set("robots", "noindex, nofollow"), ...(description ? [set("description", description)] : [])];
+    return () => {
+      document.title = prevTitle;
+      undo.forEach((u) => u());
+    };
+  }, [meta]);
+  return null;
+}
+
+function lazyPage(load: () => Promise<PageModule>) {
+  return lazy(async () => {
+    const m = await load();
+    const Page = m.default;
+    return {
+      default: () => (
+        <>
+          <DocMeta meta={m.pageMeta} />
+          <Page />
+        </>
+      ),
+    };
+  });
+}
+
+const Home = lazyPage(() => import("./pages/index"));
+const Science = lazyPage(() => import("./pages/science"));
+const Solutions = lazyPage(() => import("./pages/solutions"));
+const DataSources = lazyPage(() => import("./pages/data-sources"));
+const Trust = lazyPage(() => import("./pages/trust"));
+const EarlyAccess = lazyPage(() => import("./pages/early-access"));
+const Memory = lazyPage(() => import("./pages/platform/memory"));
+const Agents = lazyPage(() => import("./pages/platform/agents"));
+const Contradiction = lazyPage(() => import("./pages/platform/contradiction-analysis"));
+const Workbench = lazyPage(() => import("./pages/platform/workbench"));
+const KnowledgeGraph = lazyPage(() => import("./pages/platform/knowledge-graph"));
+const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
+const Companion = lazyPage(() => import("./pages/platform/companion"));
+
+function LandingV2Layout({ children }: { children: ReactNode }) {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return (
+    <div className="lv2">
+      <Header />
+      <main>
+        <Suspense fallback={<p role="status" className="px-6 py-24 text-sm text-muted-foreground">Loading…</p>}>
+          {children}
+        </Suspense>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+const PAGES = {
+  home: Home,
+  science: Science,
+  solutions: Solutions,
+  "data-sources": DataSources,
+  trust: Trust,
+  "early-access": EarlyAccess,
+  "platform/memory": Memory,
+  "platform/agents": Agents,
+  "platform/contradiction-analysis": Contradiction,
+  "platform/workbench": Workbench,
+  "platform/knowledge-graph": KnowledgeGraph,
+  "platform/discovery-engine": Discovery,
+  "platform/companion": Companion,
+} as const;
+export type LandingV2Page = keyof typeof PAGES;
+
+/** Lazily loaded by App.tsx, one explicit route per page (so every rewrite in vercel.json has a matching route, and unknown paths keep the site's real 404). */
+export default function LandingV2App({ page }: { page: LandingV2Page }) {
+  const Page = PAGES[page];
+  return (
+    <LandingV2Layout>
+      <Page />
+    </LandingV2Layout>
+  );
+}

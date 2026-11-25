@@ -3,6 +3,7 @@ import {realpathSync} from "node:fs";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 import {createPublicGraphSnapshotHandler} from '../src/server/publicGraphSnapshotService';
 import {readPublishedGraphSnapshot} from '../src/server/readPublishedGraphSnapshot';
 import {DOMAIN_GRAPH_VERSION} from './src/features/science/generatedDomainGraphVersion';
@@ -15,7 +16,7 @@ const repoSrc = path.resolve(rootDir, "../src");
 const browserNodeCrypto = path.resolve(rootDir, "src/shims/nodeCryptoBrowser.ts");
 
 export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [react(), {
+  plugins: [react(), tailwindcss(), {
     name:'hsi-public-graph-backend',
     configureServer(server){
       const handler=createPublicGraphSnapshotHandler({currentVersion:DOMAIN_GRAPH_VERSION,readPublishedSnapshot:version=>readPublishedGraphSnapshot(path.join(rootDir,'public/research/domain-graph/versions'),version)});
