@@ -98,7 +98,19 @@ const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m
 export default function App() {
   return (
     <Routes>
-      <Route path="landing-v2/*" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2/></Suspense>}/>
+      <Route path="landing-v2" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="home"/></Suspense>}/>
+      <Route path="landing-v2/science" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="science"/></Suspense>}/>
+      <Route path="landing-v2/solutions" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="solutions"/></Suspense>}/>
+      <Route path="landing-v2/data-sources" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="data-sources"/></Suspense>}/>
+      <Route path="landing-v2/trust" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="trust"/></Suspense>}/>
+      <Route path="landing-v2/early-access" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="early-access"/></Suspense>}/>
+      <Route path="landing-v2/platform/memory" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/memory"/></Suspense>}/>
+      <Route path="landing-v2/platform/agents" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/agents"/></Suspense>}/>
+      <Route path="landing-v2/platform/contradiction-analysis" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/contradiction-analysis"/></Suspense>}/>
+      <Route path="landing-v2/platform/workbench" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/workbench"/></Suspense>}/>
+      <Route path="landing-v2/platform/knowledge-graph" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/knowledge-graph"/></Suspense>}/>
+      <Route path="landing-v2/platform/discovery-engine" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/discovery-engine"/></Suspense>}/>
+      <Route path="landing-v2/platform/companion" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/companion"/></Suspense>}/>
       <Route element={<Layout />}>
         <Route index element={<Home />} />
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />

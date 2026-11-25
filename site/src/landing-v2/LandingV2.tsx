@@ -1,5 +1,5 @@
-import { lazy, Suspense, useEffect, type ComponentType } from "react";
-import { Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
+import { useLocation } from "react-router-dom";
 import "@fontsource-variable/space-grotesk";
 import "@fontsource-variable/newsreader";
 import "@fontsource-variable/newsreader/wght-italic.css";
@@ -10,7 +10,6 @@ import "@fontsource/ibm-plex-mono/400.css";
 import "@fontsource/ibm-plex-mono/500.css";
 import "./landing-v2.css";
 import { Header, Footer } from "./components/site/Header";
-import { Link } from "./router";
 
 type PageMeta = { meta: { title?: string; name?: string; content?: string; property?: string }[] };
 type PageModule = { default: ComponentType; pageMeta: PageMeta };
@@ -76,22 +75,7 @@ const KnowledgeGraph = lazyPage(() => import("./pages/platform/knowledge-graph")
 const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
 const Companion = lazyPage(() => import("./pages/platform/companion"));
 
-function NotFound() {
-  return (
-    <div className="flex min-h-[60vh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">The page you're looking for doesn't exist or has been moved.</p>
-        <Link to="/" className="mt-6 inline-flex rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground">
-          Go home
-        </Link>
-      </div>
-    </div>
-  );
-}
-
-function LandingV2Layout() {
+function LandingV2Layout({ children }: { children: ReactNode }) {
   const { pathname } = useLocation();
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -101,7 +85,7 @@ function LandingV2Layout() {
       <Header />
       <main>
         <Suspense fallback={<p role="status" className="px-6 py-24 text-sm text-muted-foreground">Loading…</p>}>
-          <Outlet />
+          {children}
         </Suspense>
       </main>
       <Footer />
@@ -109,26 +93,29 @@ function LandingV2Layout() {
   );
 }
 
-/** Mounted by App.tsx as the lazy splat route `landing-v2/*`, outside the site's own Layout (this section has its own header and footer). */
-export default function LandingV2App() {
+const PAGES = {
+  home: Home,
+  science: Science,
+  solutions: Solutions,
+  "data-sources": DataSources,
+  trust: Trust,
+  "early-access": EarlyAccess,
+  "platform/memory": Memory,
+  "platform/agents": Agents,
+  "platform/contradiction-analysis": Contradiction,
+  "platform/workbench": Workbench,
+  "platform/knowledge-graph": KnowledgeGraph,
+  "platform/discovery-engine": Discovery,
+  "platform/companion": Companion,
+} as const;
+export type LandingV2Page = keyof typeof PAGES;
+
+/** Lazily loaded by App.tsx, one explicit route per page (so every rewrite in vercel.json has a matching route, and unknown paths keep the site's real 404). */
+export default function LandingV2App({ page }: { page: LandingV2Page }) {
+  const Page = PAGES[page];
   return (
-    <Routes>
-      <Route element={<LandingV2Layout />}>
-        <Route index element={<Home />} />
-        <Route path="science" element={<Science />} />
-        <Route path="solutions" element={<Solutions />} />
-        <Route path="data-sources" element={<DataSources />} />
-        <Route path="trust" element={<Trust />} />
-        <Route path="early-access" element={<EarlyAccess />} />
-        <Route path="platform/memory" element={<Memory />} />
-        <Route path="platform/agents" element={<Agents />} />
-        <Route path="platform/contradiction-analysis" element={<Contradiction />} />
-        <Route path="platform/workbench" element={<Workbench />} />
-        <Route path="platform/knowledge-graph" element={<KnowledgeGraph />} />
-        <Route path="platform/discovery-engine" element={<Discovery />} />
-        <Route path="platform/companion" element={<Companion />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <LandingV2Layout>
+      <Page />
+    </LandingV2Layout>
   );
 }
