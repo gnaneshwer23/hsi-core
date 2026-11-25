@@ -1,0 +1,10 @@
+import {test,expect} from "bun:test";
+import {createEvidenceSourceGateway,type EvidenceSourceAdapter} from "../src/scientificMemoryEvidenceSource";
+const identity={sourceId:"fixture:paper",sourceVersion:"v1"};
+const now=Date.parse("2026-01-02T00:00:00Z");
+const notice={...identity,authority:"synthetic-fixture",status:"retracted",checkedAt:"2026-01-01T00:00:00Z",noticeRef:"fixture:notice"};
+const adapter:EvidenceSourceAdapter={authority:"synthetic-fixture",transport:"local_fixture",async lookup(){return notice;}};
+test("preserves exact source version and notice",async()=>{expect(await createEvidenceSourceGateway(adapter).lookup(identity,now)).toEqual(notice);});
+test("external transport denied before lookup",async()=>{let called=false;const g=createEvidenceSourceGateway({...adapter,transport:"external",async lookup(){called=true;return notice;}});await expect(g.lookup(identity,now)).rejects.toThrow("not approved");expect(called).toBe(false);});
+test("mismatched source and future observation rejected",async()=>{for(const response of [{...notice,sourceVersion:"v2"},{...notice,checkedAt:"2027-01-01T00:00:00Z"}])await expect(createEvidenceSourceGateway({...adapter,async lookup(){return response;}}).lookup(identity,now)).rejects.toThrow("unavailable");});
+test("timeout aborts fixture lookup",async()=>{let aborted=false;const g=createEvidenceSourceGateway({...adapter,async lookup(_,signal){return new Promise(resolve=>signal.addEventListener("abort",()=>{aborted=true;resolve(notice);}));}},10);await expect(g.lookup(identity,now)).rejects.toThrow("unavailable");expect(aborted).toBe(true);});
