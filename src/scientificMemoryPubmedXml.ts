@@ -11,13 +11,13 @@ export function projectPubmedXml(requested:string,xml:string,parser:PubmedXmlPar
  function validate(n:PubmedXmlNode,depth:number){if(depth>64||++count>50000||!n||typeof n.name!=="string"||typeof n.text!=="string"||!Array.isArray(n.children)||!n.attributes)throw Error("Invalid XML tree");for(const c of n.children)validate(c,depth+1);}
  validate(root,0);
  const children=(n:PubmedXmlNode,name:string)=>n.children.filter(c=>c.name===name);
- function one(n:PubmedXmlNode,name:string){const matches=children(n,name);if(matches.length!==1)throw Error("Ambiguous XML identity");return matches[0];}
+ function one(n:PubmedXmlNode,name:string){const matches=children(n,name);const match=matches[0];if(matches.length!==1||!match)throw Error("Ambiguous XML identity");return match;}
  if(root.name!=="PubmedArticleSet"||root.children.length!==1)throw Error("Unexpected PubMed record count");
  const article=one(root,"PubmedArticle"),citation=one(article,"MedlineCitation");
  if(normalizePmid(one(citation,"PMID").text.trim())!==pmid)throw Error("PMID mismatch");
  const links=children(citation,"CommentsCorrectionsList").flatMap(n=>children(n,"CommentsCorrections")).map(n=>{
  const ids=children(n,"PMID");if(ids.length>1)throw Error("Ambiguous notice PMID");
- return {refType:n.attributes.RefType,pmid:ids.length?normalizePmid(ids[0].text.trim()):undefined};
+ return {refType:n.attributes.RefType,pmid:ids[0]?normalizePmid(ids[0].text.trim()):undefined};
  });
  const ids=children(article,"PubmedData").flatMap(n=>children(n,"ArticleIdList")).flatMap(n=>children(n,"ArticleId"));
  const dois=[...new Set(ids.filter(n=>n.attributes.IdType==="doi").map(n=>normalizeEvidenceDoi(n.text.trim())))];
