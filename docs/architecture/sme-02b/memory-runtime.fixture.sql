@@ -21,6 +21,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-embedding-scheduling.candidate.sql
 \ir memory-embedding-worker.candidate.sql
 \ir memory-embedding-recovery.candidate.sql
+\ir memory-graph-links.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -48,6 +49,9 @@ CREATE POLICY fixture_owner_events ON hsi_memory.events TO sme_fixture_owner USI
 CREATE POLICY fixture_owner_proposals ON hsi_memory.correction_proposals TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_embeddings ON hsi_memory.embeddings TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_jobs ON hsi_memory.embedding_jobs TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_graph_nodes ON hsi_memory.graph_nodes TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_graph_links ON hsi_memory.graph_links TO sme_fixture_owner USING(true) WITH CHECK(true);
+GRANT EXECUTE ON FUNCTION hsi_memory.read_graph_links(text,text,text,text,uuid[]) TO sme_fixture_runtime;
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -61,6 +65,27 @@ GRANT EXECUTE ON FUNCTION hsi_memory.search_lexical(text,text,text,text,integer)
 GRANT EXECUTE ON FUNCTION hsi_memory.search_semantic(text,text,text,text,public.vector,integer) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
+-- Graph link fixture is removed before worker queue tests.
+INSERT INTO hsi_memory.graph_nodes VALUES(repeat('a',64),'entity:fixture');
+SET ROLE sme_fixture_runtime;
+SELECT hsi_memory.create_record('synthetic-token-alice','a','s','00000000-0000-4000-8000-000000000092','note','graph fixture','[]',now()+interval '1 day',gen_random_uuid());
+RESET ROLE;
+INSERT INTO hsi_memory.graph_links VALUES('a','s','00000000-0000-4000-8000-000000000092',1,repeat('a',64),'entity:fixture');
+DO $graph_fk$ BEGIN
+ BEGIN INSERT INTO hsi_memory.graph_links VALUES('a','s','00000000-0000-4000-8000-000000000092',1,repeat('a',64),'unknown'); RAISE EXCEPTION 'unknown node accepted'; EXCEPTION WHEN foreign_key_violation THEN NULL; END;
+ BEGIN INSERT INTO hsi_memory.graph_links VALUES('b','s','00000000-0000-4000-8000-000000000092',1,repeat('a',64),'entity:fixture'); RAISE EXCEPTION 'cross tenant link accepted'; EXCEPTION WHEN foreign_key_violation THEN NULL; END;
+END $graph_fk$;
+SET ROLE sme_fixture_runtime;
+DO $graph_read$ DECLARE r uuid:='00000000-0000-4000-8000-000000000092'; BEGIN
+ IF (SELECT count(*) FROM hsi_memory.read_graph_links('synthetic-token-alice','a','s',repeat('a',64),ARRAY[r]))<>1 THEN RAISE EXCEPTION 'owner link missing'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_graph_links('synthetic-token-carol','a','s',repeat('a',64),ARRAY[r])) THEN RAISE EXCEPTION 'private link leaked'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_graph_links('synthetic-token-alice','a','s',repeat('b',64),ARRAY[r])) THEN RAISE EXCEPTION 'wrong graph pin'; END IF;
+ PERFORM hsi_memory.revise('synthetic-token-alice','a','s',r,1,'new graph context','[]',gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_graph_links('synthetic-token-alice','a','s',repeat('a',64),ARRAY[r])) THEN RAISE EXCEPTION 'stale link returned'; END IF;
+ PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
+END $graph_read$;
+RESET ROLE;
+DO $graph_cascade$ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.graph_links) THEN RAISE EXCEPTION 'graph cascade failed'; END IF; END $graph_cascade$;
 -- Test storage independently before restricted runtime operations.
 DO $embedding$
 DECLARE r uuid:='00000000-0000-4000-8000-000000000088';
