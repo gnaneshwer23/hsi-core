@@ -54,6 +54,7 @@ CREATE POLICY fixture_owner_graph_nodes ON hsi_memory.graph_nodes TO sme_fixture
 CREATE POLICY fixture_owner_graph_links ON hsi_memory.graph_links TO sme_fixture_owner USING(true) WITH CHECK(true);
 GRANT EXECUTE ON FUNCTION hsi_memory.revalidate_ranked(text,text,text,uuid[],integer[]) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.read_graph_links(text,text,text,text,uuid[]) TO sme_fixture_runtime;
+CREATE POLICY fixture_owner_identifiers ON hsi_memory.record_identifiers TO sme_fixture_owner USING(true) WITH CHECK(true);
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -104,6 +105,17 @@ DO $delivery$ DECLARE r uuid:='00000000-0000-4000-8000-000000000093'; BEGIN
  PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
  IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[2])) THEN RAISE EXCEPTION 'deleted delivery leaked'; END IF;
 END $delivery$;
+RESET ROLE;
+SET ROLE sme_fixture_runtime;
+DO $identifier$ DECLARE r uuid:='00000000-0000-4000-8000-000000000094'; BEGIN
+ PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','original','[]',now()+interval '1 day',gen_random_uuid());
+ PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
+ BEGIN
+ PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','replacement','[]',now()+interval '1 day',gen_random_uuid());
+ RAISE EXCEPTION 'deleted identifier reused'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[1])) THEN RAISE EXCEPTION 'old reference revived'; END IF;
+ BEGIN PERFORM count(*) FROM hsi_memory.record_identifiers; RAISE EXCEPTION 'reservation table exposed'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $identifier$;
 RESET ROLE;
 -- Test storage independently before restricted runtime operations.
 DO $embedding$
