@@ -1,3 +1,14 @@
+-- Candidate only. Non-content identifier reservations survive deletion.
+CREATE TABLE hsi_memory.record_identifiers (
+ tenant_id text NOT NULL,scope_id text NOT NULL,record_id uuid NOT NULL,
+ PRIMARY KEY(tenant_id,scope_id,record_id)
+);
+ALTER TABLE hsi_memory.record_identifiers ENABLE ROW LEVEL SECURITY;
+ALTER TABLE hsi_memory.record_identifiers FORCE ROW LEVEL SECURITY;
+REVOKE ALL ON hsi_memory.record_identifiers FROM PUBLIC;
+-- Existing records and historical audit identifiers must be reserved before any migration.
+INSERT INTO hsi_memory.record_identifiers SELECT tenant_id,scope_id,id FROM hsi_memory.records
+ UNION SELECT tenant_id,scope_id,record_id FROM hsi_memory.events ON CONFLICT DO NOTHING;
 -- Offline candidates; no runtime grants. Owner-only mutations.
 CREATE FUNCTION hsi_memory.create_record(p_token text,p_tenant text,p_scope text,p_id uuid,p_kind text,p_body text,p_sources jsonb,p_until timestamptz,p_request uuid)
 RETURNS uuid LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog AS $$
@@ -14,6 +25,10 @@ BEGIN
  THEN RAISE EXCEPTION 'Request conflict' USING ERRCODE='40001'; END IF;
  RETURN p_id;
  END IF;
+ -- Reserve the identifier transactionally; deletion never releases it.
+ INSERT INTO hsi_memory.record_identifiers(tenant_id,scope_id,record_id) VALUES(p_tenant,p_scope,p_id)
+ ON CONFLICT DO NOTHING;
+ IF NOT FOUND THEN RAISE EXCEPTION 'Memory identifier unavailable' USING ERRCODE='40001'; END IF;
  INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until)
  VALUES(p_tenant,p_scope,p_id,a,p_kind,'synthetic_demo',1,p_until);
  INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body,source_refs) VALUES(p_tenant,p_scope,p_id,1,p_body,p_sources);
