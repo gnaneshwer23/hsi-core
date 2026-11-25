@@ -9,14 +9,13 @@ import {
 import { Card, Section, StatusTag, meta } from "../components/site/ui";
 import {
   ContradictionPanel,
-  DomainTabs,
   InvestigationDemo,
   PersonaTabs,
 } from "../components/site/Interactive";
 import { Hero } from "../components/home/Hero";
 import { Fragmentation } from "../components/home/Fragmentation";
 import { MemoryEngine } from "../components/home/MemoryEngine";
-import { PathwayMap } from "../components/site/Visuals";
+import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
 import { EarlyAccessForm } from "../components/site/EarlyAccessForm";
 import { agents, sources } from "../lib/site-data";
 
@@ -28,9 +27,13 @@ export default function Home() {
       <Hero />
       <Fragmentation />
       <MemoryEngine />
-      <Section eyebrow="04 · Six scientific domains" title="Presented equally. Connected deeply.">
-        <DomainTabs />
-        <PathwayMap className="mt-8" />
+      <Section
+        id="atlas"
+        eyebrow="04 · Interactive biological atlas"
+        title="Six domains. One connected biology."
+        intro="Follow a pathway across immunology, neuroscience, microbiome, genomics, tissue and disease, and see how well each step is evidenced."
+      >
+        <BiologicalAtlas />
       </Section>
 
       <Section
