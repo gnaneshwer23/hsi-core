@@ -23,6 +23,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-embedding-recovery.candidate.sql
 \ir memory-graph-links.candidate.sql
 \ir memory-revalidation.candidate.sql
+\ir memory-evidence-status.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -55,6 +56,10 @@ CREATE POLICY fixture_owner_graph_links ON hsi_memory.graph_links TO sme_fixture
 GRANT EXECUTE ON FUNCTION hsi_memory.revalidate_ranked(text,text,text,uuid[],integer[]) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.read_graph_links(text,text,text,text,uuid[]) TO sme_fixture_runtime;
 CREATE POLICY fixture_owner_identifiers ON hsi_memory.record_identifiers TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_evidence ON hsi_memory.evidence_observations TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE ROLE sme_fixture_evidence_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_evidence_ingestor;
+GRANT EXECUTE ON FUNCTION hsi_memory.record_evidence_observation(uuid,text,text,text,timestamptz,text) TO sme_fixture_evidence_ingestor;
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -68,6 +73,21 @@ GRANT EXECUTE ON FUNCTION hsi_memory.search_lexical(text,text,text,text,integer)
 GRANT EXECUTE ON FUNCTION hsi_memory.search_semantic(text,text,text,text,public.vector,integer) TO sme_fixture_runtime;
 INSERT INTO public.hsi_scopes(tenant_id,id,name,kind,active) VALUES('a','s','A','project',true),('b','s','B','project',true);
 INSERT INTO public.hsi_memberships(tenant_id,scope_id,principal_id,role,granted_by) VALUES('a','s','alice','researcher','fixture'),('a','s','carol','researcher','fixture'),('b','s','bob','researcher','fixture');
+SET ROLE sme_fixture_evidence_ingestor;
+DO $evidence$ DECLARE i uuid:=gen_random_uuid(); t timestamptz:=now(); BEGIN
+ PERFORM hsi_memory.record_evidence_observation(i,'fixture:paper','v1','current',t,'fixture:notice1');
+ PERFORM hsi_memory.record_evidence_observation(i,'fixture:paper','v1','current',t,'fixture:notice1');
+ BEGIN PERFORM hsi_memory.record_evidence_observation(i,'fixture:paper','v1','retracted',t,'fixture:notice1'); RAISE EXCEPTION 'conflicting replay accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ PERFORM hsi_memory.record_evidence_observation(gen_random_uuid(),'fixture:paper','v1','retracted',t,'fixture:notice2');
+ BEGIN PERFORM count(*) FROM hsi_memory.evidence_observations; RAISE EXCEPTION 'direct access accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $evidence$;
+RESET ROLE;
+DO $evidence_count$ BEGIN IF (SELECT count(*) FROM hsi_memory.evidence_observations WHERE source_id='fixture:paper')<>2 THEN RAISE EXCEPTION 'history not preserved'; END IF; END $evidence_count$;
+SET ROLE sme_fixture_runtime;
+DO $evidence_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.record_evidence_observation(gen_random_uuid(),'fixture:paper','v1','current',now(),'fixture:notice'); RAISE EXCEPTION 'runtime ingestion accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $evidence_deny$;
+RESET ROLE;
 -- Graph link fixture is removed before worker queue tests.
 INSERT INTO hsi_memory.graph_nodes VALUES(repeat('a',64),'entity:fixture');
 SET ROLE sme_fixture_runtime;
