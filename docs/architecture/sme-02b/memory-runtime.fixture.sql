@@ -22,6 +22,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-embedding-worker.candidate.sql
 \ir memory-embedding-recovery.candidate.sql
 \ir memory-graph-links.candidate.sql
+\ir memory-revalidation.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -51,6 +52,7 @@ CREATE POLICY fixture_owner_embeddings ON hsi_memory.embeddings TO sme_fixture_o
 CREATE POLICY fixture_owner_jobs ON hsi_memory.embedding_jobs TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_graph_nodes ON hsi_memory.graph_nodes TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE POLICY fixture_owner_graph_links ON hsi_memory.graph_links TO sme_fixture_owner USING(true) WITH CHECK(true);
+GRANT EXECUTE ON FUNCTION hsi_memory.revalidate_ranked(text,text,text,uuid[],integer[]) TO sme_fixture_runtime;
 GRANT EXECUTE ON FUNCTION hsi_memory.read_graph_links(text,text,text,text,uuid[]) TO sme_fixture_runtime;
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
@@ -86,6 +88,23 @@ DO $graph_read$ DECLARE r uuid:='00000000-0000-4000-8000-000000000092'; BEGIN
 END $graph_read$;
 RESET ROLE;
 DO $graph_cascade$ BEGIN IF EXISTS(SELECT 1 FROM hsi_memory.graph_links) THEN RAISE EXCEPTION 'graph cascade failed'; END IF; END $graph_cascade$;
+SET ROLE sme_fixture_runtime;
+DO $delivery$ DECLARE r uuid:='00000000-0000-4000-8000-000000000093'; BEGIN
+ PERFORM hsi_memory.create_record('synthetic-token-alice','a','s',r,'note','delivery fixture','[]',now()+interval '1 day',gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[1]))<>1 THEN RAISE EXCEPTION 'owner delivery missing'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-carol','a','s',ARRAY[r],ARRAY[1])) THEN RAISE EXCEPTION 'private delivery leaked'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',now()+interval '1 hour',false,gen_random_uuid());
+ IF (SELECT count(*) FROM hsi_memory.revalidate_ranked('synthetic-token-carol','a','s',ARRAY[r],ARRAY[1]))<>1 THEN RAISE EXCEPTION 'shared delivery missing'; END IF;
+ PERFORM hsi_memory.set_share('synthetic-token-alice','a','s',r,'carol',NULL,true,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-carol','a','s',ARRAY[r],ARRAY[1])) THEN RAISE EXCEPTION 'revoked delivery leaked'; END IF;
+ PERFORM hsi_memory.revise('synthetic-token-alice','a','s',r,1,'revised delivery','[]',gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[1])) THEN RAISE EXCEPTION 'stale delivery leaked'; END IF;
+ IF (SELECT count(*) FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[2]))<>1 THEN RAISE EXCEPTION 'current delivery missing'; END IF;
+ BEGIN PERFORM hsi_memory.revalidate_ranked('synthetic-token-bob','a','s',ARRAY[r],ARRAY[2]); RAISE EXCEPTION 'cross tenant delivery accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ PERFORM hsi_memory.delete_record('synthetic-token-alice','a','s',r,gen_random_uuid());
+ IF EXISTS(SELECT 1 FROM hsi_memory.revalidate_ranked('synthetic-token-alice','a','s',ARRAY[r],ARRAY[2])) THEN RAISE EXCEPTION 'deleted delivery leaked'; END IF;
+END $delivery$;
+RESET ROLE;
 -- Test storage independently before restricted runtime operations.
 DO $embedding$
 DECLARE r uuid:='00000000-0000-4000-8000-000000000088';
