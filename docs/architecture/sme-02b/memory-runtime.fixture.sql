@@ -18,6 +18,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-semantic.candidate.sql
 \ir memory-embedding-lifecycle.candidate.sql
 \ir memory-embedding-jobs.candidate.sql
+\ir memory-embedding-scheduling.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -73,6 +74,11 @@ END $embedding$;
 INSERT INTO hsi_memory.records(tenant_id,scope_id,id,owner_id,kind,data_class,current_version,retention_until) VALUES('a','s','00000000-0000-4000-8000-000000000089','alice','note','synthetic_demo',1,now()+interval '1 day');
 INSERT INTO hsi_memory.versions(tenant_id,scope_id,record_id,version,body) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'semantic test');
 INSERT INTO hsi_memory.embeddings(tenant_id,scope_id,record_id,version,model,dimensions,embedding) VALUES('a','s','00000000-0000-4000-8000-000000000089',1,'synthetic-v1',2,'[1,0]');
+SET CONSTRAINTS hsi_memory.schedule_embedding_version IMMEDIATE;
+DO $auto_queue$ BEGIN
+ IF (SELECT count(*) FROM hsi_memory.embedding_jobs WHERE record_id='00000000-0000-4000-8000-000000000089' AND version=1 AND state='queued')<>1 THEN RAISE EXCEPTION 'automatic enqueue missing'; END IF;
+END $auto_queue$;
+SET CONSTRAINTS hsi_memory.schedule_embedding_version DEFERRED;
 SET ROLE sme_fixture_indexer;
 DO $indexer_test$
 DECLARE r uuid:='00000000-0000-4000-8000-000000000089';
