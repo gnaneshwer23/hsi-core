@@ -19,12 +19,16 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-embedding-lifecycle.candidate.sql
 \ir memory-embedding-jobs.candidate.sql
 \ir memory-embedding-scheduling.candidate.sql
+\ir memory-embedding-worker.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_indexer;
 GRANT EXECUTE ON FUNCTION hsi_memory.store_embedding(text,text,uuid,integer,text,public.vector) TO sme_fixture_indexer;
 GRANT EXECUTE ON FUNCTION hsi_memory.enqueue_embedding(text,text,uuid,integer) TO sme_fixture_indexer;
+CREATE ROLE sme_fixture_worker NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_worker;
+GRANT EXECUTE ON FUNCTION hsi_memory.claim_embedding(),hsi_memory.finish_embedding(text,text,uuid,integer,uuid,public.vector) TO sme_fixture_worker;
 CREATE ROLE sme_fixture_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_scheduler;
 GRANT EXECUTE ON FUNCTION hsi_memory.sweep_expired(integer) TO sme_fixture_scheduler;
@@ -95,7 +99,22 @@ RESET ROLE;
 DO $queue_count$ BEGIN
  IF (SELECT count(*) FROM hsi_memory.embedding_jobs WHERE record_id='00000000-0000-4000-8000-000000000089')<>1 THEN RAISE EXCEPTION 'duplicate queue job'; END IF;
 END $queue_count$;
+SET ROLE sme_fixture_worker;
+DO $worker_test$
+DECLARE k record;
+BEGIN
+ SELECT * INTO k FROM hsi_memory.claim_embedding();
+ IF k.record_id IS DISTINCT FROM '00000000-0000-4000-8000-000000000089'::uuid OR k.body IS DISTINCT FROM 'semantic test' THEN RAISE EXCEPTION 'claim failed'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.claim_embedding()) THEN RAISE EXCEPTION 'duplicate claim'; END IF;
+ IF hsi_memory.finish_embedding(k.tenant_id,k.scope_id,k.record_id,k.version,gen_random_uuid(),'[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'wrong lease accepted'; END IF;
+ IF NOT hsi_memory.finish_embedding(k.tenant_id,k.scope_id,k.record_id,k.version,k.lease_id,'[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'completion failed'; END IF;
+ IF hsi_memory.finish_embedding(k.tenant_id,k.scope_id,k.record_id,k.version,k.lease_id,'[1,0,0,0,0,0,0,0]') THEN RAISE EXCEPTION 'completed lease reused'; END IF;
+END $worker_test$;
+RESET ROLE;
 SET ROLE sme_fixture_runtime;
+DO $worker_denial$ BEGIN
+ BEGIN PERFORM hsi_memory.claim_embedding(); RAISE EXCEPTION 'runtime claim accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $worker_denial$;
 DO $queue_denial$ BEGIN
  BEGIN PERFORM hsi_memory.enqueue_embedding('a','s','00000000-0000-4000-8000-000000000089',1); RAISE EXCEPTION 'runtime enqueue accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $queue_denial$;
