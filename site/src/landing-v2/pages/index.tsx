@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Card, Section, StatusTag, meta } from "../components/site/ui";
 import {
-  ContradictionPanel,
   InvestigationDemo,
   PersonaTabs,
 } from "../components/site/Interactive";
@@ -16,8 +15,10 @@ import { Hero } from "../components/home/Hero";
 import { Fragmentation } from "../components/home/Fragmentation";
 import { MemoryEngine } from "../components/home/MemoryEngine";
 import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
+import { AgentBoard } from "../components/agents/AgentBoard";
+import { ContradictionLab } from "../components/contradiction/ContradictionLab";
 import { EarlyAccessForm } from "../components/site/EarlyAccessForm";
-import { agents, sources } from "../lib/site-data";
+import { sources } from "../lib/site-data";
 
 export const pageMeta = meta("HSI — The living intelligence of human biology", "A scientific intelligence platform for human biology, in development: persistent scientific memory, specialised AI agents and contradiction-aware evidence verification are being built and validated.");
 
@@ -37,21 +38,12 @@ export default function Home() {
       </Section>
 
       <Section
+        id="agents"
         eyebrow="05 · Scientific AI agents"
-        title="Specialised agents that collaborate."
-        intro="Each agent has a narrow responsibility. Outputs are passed, checked and contested before they reach you."
+        title="Specialised agents that check one another."
+        intro="Each agent has a narrow job. What one produces, a different agent checks, and every chain ends with a person."
       >
-        <div className="grid gap-4 md:grid-cols-3">
-          {agents.map((a) => (
-            <Card key={a.name}>
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-semibold">{a.name}</h3>
-                <StatusTag s={a.status} />
-              </div>
-              <p className="mt-3 text-sm text-muted-foreground">{a.role}</p>
-            </Card>
-          ))}
-        </div>
+        <AgentBoard />
       </Section>
 
       <Section
@@ -63,10 +55,12 @@ export default function Home() {
       </Section>
 
       <Section
+        id="contradiction"
         eyebrow="07 · Contradiction intelligence"
-        title="Conflicting findings, evaluated in context."
+        title="Most disagreement is missing context."
+        intro="Align conflicting studies by model, sex, dose and timing before calling them contradictory, and keep what remains unresolved in view."
       >
-        <ContradictionPanel />
+        <ContradictionLab />
       </Section>
 
       <Section eyebrow="08 · Research outputs" title="Outputs built for scientific review.">
