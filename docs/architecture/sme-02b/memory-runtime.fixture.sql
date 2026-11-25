@@ -24,6 +24,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-graph-links.candidate.sql
 \ir memory-revalidation.candidate.sql
 \ir memory-evidence-status.candidate.sql
+\ir memory-publication-assertions.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -60,6 +61,10 @@ CREATE POLICY fixture_owner_evidence ON hsi_memory.evidence_observations TO sme_
 CREATE ROLE sme_fixture_evidence_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_evidence_ingestor;
 GRANT EXECUTE ON FUNCTION hsi_memory.record_evidence_observation(uuid,text,text,text,timestamptz,text) TO sme_fixture_evidence_ingestor;
+CREATE POLICY fixture_owner_assertions ON hsi_memory.publication_assertion_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE ROLE sme_fixture_assertion_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_assertion_ingestor;
+GRANT EXECUTE ON FUNCTION hsi_memory.stage_publication_assertion(uuid,text,text,text,text) TO sme_fixture_assertion_ingestor;
 GRANT CREATE ON SCHEMA hsi_memory TO sme_fixture_owner;
 DO $$ DECLARE f record; BEGIN
  FOR f IN SELECT p.oid::regprocedure AS signature FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace WHERE n.nspname='hsi_memory' LOOP
@@ -87,6 +92,22 @@ SET ROLE sme_fixture_runtime;
 DO $evidence_deny$ BEGIN
  BEGIN PERFORM hsi_memory.record_evidence_observation(gen_random_uuid(),'fixture:paper','v1','current',now(),'fixture:notice'); RAISE EXCEPTION 'runtime ingestion accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $evidence_deny$;
+RESET ROLE;
+SET ROLE sme_fixture_assertion_ingestor;
+DO $assertions$ DECLARE i uuid:=gen_random_uuid(); BEGIN
+ PERFORM hsi_memory.stage_publication_assertion(i,'10.1234/fixture-paper','v1','crossref','fixture:notice');
+ PERFORM hsi_memory.stage_publication_assertion(i,'10.1234/fixture-paper','v1','crossref','fixture:notice');
+ BEGIN PERFORM hsi_memory.stage_publication_assertion(i,'10.1234/fixture-paper','v2','crossref','fixture:notice'); RAISE EXCEPTION 'conflict accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ BEGIN PERFORM hsi_memory.stage_publication_assertion(gen_random_uuid(),'10.1234/fixture-paper','v1','publisher','https://example.org'); RAISE EXCEPTION 'external locator accepted'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ BEGIN PERFORM count(*) FROM hsi_memory.publication_assertion_candidates; RAISE EXCEPTION 'direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM hsi_memory.record_evidence_observation(gen_random_uuid(),'fixture:paper','v1','current',now(),'fixture:notice'); RAISE EXCEPTION 'trusted observation write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $assertions$;
+RESET ROLE;
+DO $assertion_count$ BEGIN IF (SELECT count(*) FROM hsi_memory.publication_assertion_candidates WHERE verification_state='unverified' AND NOT scientific_claim_allowed)<>1 THEN RAISE EXCEPTION 'assertion replay or state failure'; END IF; END $assertion_count$;
+SET ROLE sme_fixture_runtime;
+DO $assertion_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.stage_publication_assertion(gen_random_uuid(),'10.1234/fixture-paper','v1','crossref','fixture:notice'); RAISE EXCEPTION 'runtime assertion write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $assertion_deny$;
 RESET ROLE;
 -- Graph link fixture is removed before worker queue tests.
 INSERT INTO hsi_memory.graph_nodes VALUES(repeat('a',64),'entity:fixture');
