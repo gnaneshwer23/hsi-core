@@ -11,7 +11,7 @@ export function createScientificMemoryDelivery(sql:MemorySql){
   for(const r of ranked){if(!r||typeof r.id!=="string"||!uuid.test(r.id)||!Number.isInteger(r.version)||r.version<1||r.version>2147483647||expected.has(r.id.toLowerCase()))throw Error("Invalid delivery reference");expected.set(r.id.toLowerCase(),r.version);}
   if(!expected.size)return [];
   try{
-   const rows=await sql.unsafe("SELECT * FROM hsi_memory.revalidate_ranked($1::text,$2::text,$3::text,$4::uuid[],$5::integer[])",[token,tenant,scopeId,[...expected.keys()],[...expected.values()]]);
+   const rows=await sql.unsafe("SELECT * FROM hsi_memory.revalidate_ranked($1::text,$2::text,$3::text,$4::uuid[],$5::integer[])",[token,tenant,scopeId,"{"+[...expected.keys()].join(",")+"}","{"+[...expected.values()].join(",")+"}"]);
    if(!Array.isArray(rows)||rows.length>expected.size)throw Error();
    const result=new Map<string,DeliveredMemory>();
    for(const raw of rows){

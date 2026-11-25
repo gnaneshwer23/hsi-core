@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 'docs/architecture/sme-02b/**'
+      - 'src/scientificMemoryDelivery.ts'
+      - 'src/scientificMemoryGraphChannel.ts'
       - '.github/workflows/sme-postgres-validation.yml'
   workflow_dispatch:
 permissions:

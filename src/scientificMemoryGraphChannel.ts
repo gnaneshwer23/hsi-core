@@ -11,7 +11,7 @@ export function createMemoryGraphChannel(sql:MemorySql,retriever:Awaited<ReturnT
   if(candidateIds.length===0)return [];
   const allowed=new Set(candidateIds.map(id=>id.toLowerCase()));
   try{
-   const rows=await sql.unsafe("SELECT * FROM hsi_memory.read_graph_links($1::text,$2::text,$3::text,$4::text,$5::uuid[])",[token,tenant,scopeId,retriever.graphVersion,[...candidateIds]]);
+   const rows=await sql.unsafe("SELECT * FROM hsi_memory.read_graph_links($1::text,$2::text,$3::text,$4::text,$5::uuid[])",[token,tenant,scopeId,retriever.graphVersion,"{"+candidateIds.join(",")+"}"]);
    if(rows.length>5000)throw Error();
    const grouped=new Map<string,{id:string;version:number;nodeIds:string[]}>();
    for(const raw of rows){
