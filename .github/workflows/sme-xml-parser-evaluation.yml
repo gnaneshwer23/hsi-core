@@ -1,0 +1,25 @@
+name: SME isolated XML parser evaluation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+      - name: Resolve pinned candidate without lifecycle scripts
+        working-directory: docs/architecture/sme-02b
+        run: |
+          printf '{"private":true,"dependencies":{"saxes":"6.0.0"}}\n' > package.json
+          npm install --ignore-scripts --no-audit --no-fund
+          npm audit --omit=dev --audit-level=moderate
+          npm ls --all
+      - name: Run isolated parser fixture
+        run: bun --no-env-file docs/architecture/sme-02b/pubmed-parser-probe.ts
