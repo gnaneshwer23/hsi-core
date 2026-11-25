@@ -1,0 +1,19 @@
+name: SME Europe PMC live validation
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.3.14'
+      - run: bun --no-env-file docs/architecture/sme-02b/europe-pmc-live-probe.ts
+        env:
+          SME_PUBLIC_EUROPE_PMC_PROBE: '1'
