@@ -2,7 +2,7 @@ import {test,expect} from "bun:test";
 import {createEvidenceSourceGateway,type EvidenceSourceAdapter} from "../src/scientificMemoryEvidenceSource";
 const identity={sourceId:"fixture:paper",sourceVersion:"v1"};
 const now=Date.parse("2026-01-02T00:00:00Z");
-const notice={...identity,authority:"synthetic-fixture",status:"retracted",checkedAt:"2026-01-01T00:00:00Z",noticeRef:"fixture:notice"};
+const notice={...identity,authority:"synthetic-fixture",status:"retracted" as const,checkedAt:"2026-01-01T00:00:00Z",noticeRef:"fixture:notice"};
 const adapter:EvidenceSourceAdapter={authority:"synthetic-fixture",transport:"local_fixture",async lookup(){return notice;}};
 test("preserves exact source version and notice",async()=>{expect(await createEvidenceSourceGateway(adapter).lookup(identity,now)).toEqual(notice);});
 test("external transport denied before lookup",async()=>{let called=false;const g=createEvidenceSourceGateway({...adapter,transport:"external",async lookup(){called=true;return notice;}});await expect(g.lookup(identity,now)).rejects.toThrow("not approved");expect(called).toBe(false);});
