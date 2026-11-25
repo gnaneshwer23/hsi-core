@@ -68,3 +68,42 @@ done
 "${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.records WHERE id='$r2'" | grep -qx 0
 "${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.versions WHERE record_id='$r2'" | grep -qx 0
 "${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.grants WHERE record_id='$r2'" | grep -qx 0
+
+# The remaining record has version 2; version 1 must have been cancelled.
+"${p[@]}" -Atq -c "SELECT state FROM hsi_memory.embedding_jobs WHERE record_id='$r' AND version=1" | grep -qx cancelled
+claim="SET ROLE sme_fixture_worker; SELECT lease_id FROM hsi_memory.claim_embedding();"
+"${p[@]}" -Atq -c "$claim" >"$dir/worker1" &
+a=$!
+"${p[@]}" -Atq -c "$claim" >"$dir/worker2" &
+b=$!
+wait "$a"
+wait "$b"
+lease=$(cat "$dir/worker1" "$dir/worker2")
+[[ "$lease" =~ ^[0-9a-f-]{36}$ ]]
+"${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.embedding_jobs WHERE record_id='$r' AND version=2 AND state='leased' AND attempts=1" | grep -qx 1
+# Simulate expiry without wall-clock sleeps; replacement must fence the old worker.
+"${p[@]}" -c "UPDATE hsi_memory.embedding_jobs SET lease_until=clock_timestamp()-interval '1 second' WHERE record_id='$r' AND version=2"
+replacement=$("${p[@]}" -Atq -c "$claim")
+[[ "$replacement" =~ ^[0-9a-f-]{36}$ && "$replacement" != "$lease" ]]
+finish() {
+ "${p[@]}" -Atq -c "SET ROLE sme_fixture_worker; SELECT hsi_memory.finish_embedding('a','s','$r',$1,'$2','[1,0,0,0,0,0,0,0]')"
+}
+finish 2 "$lease" | grep -qx f
+# Revise while the replacement worker holds a lease.
+"${p[@]}" -Atq -c "SET ROLE sme_fixture_runtime; SELECT hsi_memory.revise('synthetic-token-alice','a','s','$r',2,'new scientific context','[]',gen_random_uuid())" | grep -qx 3
+finish 2 "$replacement" | grep -qx f
+"${p[@]}" -Atq -c "SELECT state FROM hsi_memory.embedding_jobs WHERE record_id='$r' AND version=2" | grep -qx cancelled
+latest=$("${p[@]}" -Atq -c "$claim")
+[[ "$latest" =~ ^[0-9a-f-]{36}$ ]]
+# Exhausted abandoned lease is terminal, not reclaimable.
+"${p[@]}" -c "UPDATE hsi_memory.embedding_jobs SET attempts=5,lease_until=clock_timestamp()-interval '1 second' WHERE record_id='$r' AND version=3"
+"${p[@]}" -Atq -c "SET ROLE sme_fixture_worker; SELECT hsi_memory.recover_embedding_jobs(25)" | grep -qx 1
+"${p[@]}" -Atq -c "SELECT state FROM hsi_memory.embedding_jobs WHERE record_id='$r' AND version=3" | grep -qx failed
+finish 3 "$latest" | grep -qx f
+"${p[@]}" -Atq -c "SET ROLE sme_fixture_runtime; SELECT hsi_memory.revise('synthetic-token-alice','a','s','$r',3,'delete race','[]',gen_random_uuid())" | grep -qx 4
+last=$("${p[@]}" -Atq -c "$claim")
+[[ "$last" =~ ^[0-9a-f-]{36}$ ]]
+"${p[@]}" -Atq -c "SET ROLE sme_fixture_runtime; SELECT hsi_memory.delete_record('synthetic-token-alice','a','s','$r',gen_random_uuid())"
+finish 4 "$last" | grep -qx f
+"${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.embedding_jobs WHERE record_id='$r'" | grep -qx 0
+"${p[@]}" -Atq -c "SELECT count(*) FROM hsi_memory.embeddings WHERE record_id='$r'" | grep -qx 0
