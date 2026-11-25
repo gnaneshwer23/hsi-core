@@ -40,6 +40,7 @@
   --color-chart-5: var(--chart-5);
   --color-primary-ink: var(--primary-ink);
   --color-helix-ink: var(--helix-ink);
+  --color-conflict-ink: var(--conflict-ink);
   --color-verify: var(--verify);
   --color-signal: var(--signal);
   --color-helix: var(--helix);
@@ -108,10 +109,11 @@
   /* Darker teal for text on the paper-coloured sections, and a lighter helix for small chips on dark; both added to meet WCAG AA contrast (the original values measured 2.0:1 and 4.46:1). */
   --primary-ink: oklch(0.42 0.07 180);
   --helix-ink: oklch(0.7 0.053 214);
+  --conflict-ink: oklch(0.74 0.11 17); /* red for text on dark cards (the base red measured 4.3:1) */
   color-scheme: dark;
 }
 
-.lv2{background-color:var(--background);color:var(--foreground);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;min-height:100vh;line-height:1.5}
+.lv2{overflow-x:clip;background-color:var(--background);color:var(--foreground);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;min-height:100vh;line-height:1.5}
 :where(.lv2) *, :where(.lv2) ::before, :where(.lv2) ::after{box-sizing:border-box;border:0 solid var(--border)}
 :where(.lv2) h1, :where(.lv2) h2, :where(.lv2) h3, :where(.lv2) h4{font-family:var(--font-display);letter-spacing:-0.02em;font-size:inherit;font-weight:inherit;margin:0}
 :where(.lv2) p, :where(.lv2) ul, :where(.lv2) ol, :where(.lv2) dl, :where(.lv2) dd, :where(.lv2) figure, :where(.lv2) blockquote{margin:0}
