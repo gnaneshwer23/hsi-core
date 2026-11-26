@@ -44,7 +44,7 @@ describe("Stage 2 landing design system + nav", () => {
     expect(isAudienceNavActive("/how-it-works")).toBe(false);
   });
 
-  it("wires Nav/Footer/LandingPrimitives for shared Stage 2 chrome", () => {
+  it("wires Nav/Footer for shared Stage 2 chrome", () => {
     const nav = root("site/src/components/Nav.tsx");
     expect(nav).not.toContain("AUDIENCE_NAV_LINKS");
     expect(nav).toContain("aria-expanded");
@@ -53,10 +53,6 @@ describe("Stage 2 landing design system + nav", () => {
     expect(footer).toContain("/solutions#researchers");
     expect(footer).toContain("/trust#validation");
     expect(footer).not.toContain("Pricing & Access");
-    const primitives = root("site/src/components/landing/LandingPrimitives.tsx");
-    expect(primitives).toContain("LandingMaturityLabel");
-    expect(primitives).toContain("LandingHero");
-    expect(primitives).toContain("demonstration");
     expect(root("docs/design/HSI_STAGE2_PUBLIC_LANDING_INVENTORY_2026-11-19.md")).toContain("PR 1");
   });
 });

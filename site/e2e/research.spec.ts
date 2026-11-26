@@ -47,6 +47,6 @@ test("source registry rejects tampered imported metadata", async ({ page }) => {
 test("unknown client route has a recovery view", async ({ page }) => {
   await page.goto("/unknown-test-destination");
   await expect(page.getByRole("heading", { name: "Page not found" })).toBeVisible();
-  await page.getByRole("link", { name: "Open research workspace" }).click();
-  await expect(page).toHaveURL(/\/discovery$/);
+  await page.getByRole("link", { name: "Explore the knowledge graph" }).click();
+  await expect(page).toHaveURL(/\/knowledge-graph$/);
 });
