@@ -167,3 +167,8 @@
 @keyframes scan { from { transform: translateX(-100%) } to { transform: translateX(300%) } }
 @utility animate-scan { animation: scan 1.6s linear infinite; }
 @media (prefers-reduced-motion: reduce) { .lv2 *, .lv2 *::before, .lv2 *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; } }
+
+/* The live published graph (a site component) inside the landing v2 theme: keep its title and status badge apart. */
+.lv2 .lg-inset-label{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;margin-bottom:.75rem;font-family:var(--font-mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted-foreground)}
+.lv2 .lg-inset-label .lg-chrome-badge{border:1px solid var(--border);border-radius:999px;padding:.15rem .6rem;color:var(--foreground)}
+.lv2 .lg .og-cap,.lv2 .lg-wait,.lv2 .lg .lg-meta{color:var(--muted-foreground)} /* the base colour came from a variable this theme redefines and measured 3:1 */
