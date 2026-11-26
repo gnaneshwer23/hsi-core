@@ -1,11 +1,11 @@
 import {normalizePmid} from "./scientificMemoryPubmed";
-import {normalizeEvidenceDoi} from "./scientificMemoryCrossref";
+import {normalizeEvidenceDoi,interpretCrossrefStatus} from "./scientificMemoryCrossref";
 import {projectEuropePmcCore} from "./scientificMemoryEuropePmcCore";
 type Authority="crossref"|"pubmed"|"europe_pmc";
 type Fetcher=(url:string,init:RequestInit)=>Promise<Response>;
 /** Isolated capture gateway. Injected transport and clock are trusted fixture dependencies, not client inputs. */
 export function createProvenanceCapture(fetcher:Fetcher,enabled=false,clock:()=>number=Date.now){
- async function captureInternal(authority:Authority,identifier:string,project:boolean){
+ async function captureInternal(authority:Authority,identifier:string,project:"europe_pmc"|"crossref"|false){
  if(!enabled)throw Error("Capture disabled");
  let url:string;
  switch(authority){
@@ -28,13 +28,16 @@ export function createProvenanceCapture(fetcher:Fetcher,enabled=false,clock:()=>
  const payloadSha256=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");
  const checkedAt=new Date(clock()).toISOString();
  const provenance={authority,endpoint:url,checkedAt,payloadSha256,byteLength:size,mediaType,authorityAuthenticated:false as const,ingestionAllowed:false as const,scientificClaimAllowed:false as const};
- const candidate=project?projectEuropePmcCore(normalizePmid(identifier),JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(bytes))):null;
- return {provenance,candidate};
+ const payload:unknown=project?JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(bytes)):null;
+ const candidate=project==="europe_pmc"?projectEuropePmcCore(normalizePmid(identifier),payload):null;
+ const crossrefCandidate=project==="crossref"?interpretCrossrefStatus(identifier,payload):null;
+ return {provenance,candidate,crossrefCandidate};
  };
  try{return await Promise.race([run(),new Promise<never>((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error("Capture timeout"));},5000);})]);}finally{if(timer!==undefined)clearTimeout(timer);}
  }
  return {
  async capture(authority:Authority,identifier:string){return (await captureInternal(authority,identifier,false)).provenance;},
- async captureEuropePmc(identifier:string){const result=await captureInternal("europe_pmc",identifier,true);if(!result.candidate)throw Error("Missing projection");return {provenance:result.provenance,candidate:result.candidate,ingestionAllowed:false as const,scientificClaimAllowed:false as const};}
+ async captureEuropePmc(identifier:string){const result=await captureInternal("europe_pmc",identifier,"europe_pmc");if(!result.candidate)throw Error("Missing projection");return {provenance:result.provenance,candidate:result.candidate,ingestionAllowed:false as const,scientificClaimAllowed:false as const};},
+ async captureCrossref(identifier:string){const result=await captureInternal("crossref",identifier,"crossref");if(!result.crossrefCandidate)throw Error("Missing projection");return {provenance:result.provenance,candidate:result.crossrefCandidate,ingestionAllowed:false as const,scientificClaimAllowed:false as const};}
  };
 }
