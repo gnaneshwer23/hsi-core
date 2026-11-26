@@ -28,7 +28,7 @@ test("public access paths lead to the real account process without a pretend sub
  await expect(page.getByRole("main")).toContainText("never claims operator receipt unless the server reports provider acceptance");
  await expect(page.getByRole("heading",{name:/Keep a browser draft of your question/i})).toHaveCount(1);
  await page.getByLabel(/Research question or investigation focus/i).fill("How might cytokine signalling vary across tissues in research models?");
- await page.getByRole("button",{name:/Start a pilot request/i}).first().click();
+ await page.getByRole("button",{name:/Save my question/i}).first().click();
  await expect(page.getByRole("status")).toContainText("Saved in this browser only");
  expect(posts).toEqual([]);
  await page.getByRole("link",{name:"Create an account",exact:true}).first().click();await expect(page).toHaveURL(/sign-up/);expect(posts).toEqual([]);

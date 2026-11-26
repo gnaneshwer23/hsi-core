@@ -240,7 +240,7 @@ export function AccessIntentPanel(){
             <button className="xp-button" type="submit" disabled={busy}>{busy?"Sending…":"Send access request"}</button>
             <button className="xp-button xp-button-secondary" type="button" onClick={()=>saveDraft()} disabled={busy}>Save browser draft</button>
           </>
-          :<button className="xp-button" type="submit" disabled={busy||deliveryStatus==="loading"}>Start a pilot request</button>}
+          :<button className="xp-button" type="submit" disabled={busy||deliveryStatus==="loading"}>Save my question</button>}
         {draft?<button className="xp-button xp-button-secondary" type="button" onClick={clear} disabled={busy}>Clear draft</button>:null}
       </div>
     </form>
