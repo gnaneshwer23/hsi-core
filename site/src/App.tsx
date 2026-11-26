@@ -1,6 +1,7 @@
 import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense,type ComponentType} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+const WorkspacePreview=lazy(()=>import("./landing-v2/workspace"));
 const Onboarding=lazy(()=>import("./landing-v2/onboarding"));
 const Layout=lazy(()=>import("./components/Layout").then(m=>({default:m.Layout})));
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
@@ -125,6 +126,15 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
       <Route path="onboarding/resources" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
       <Route path="onboarding/preferences" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
       <Route path="onboarding/review" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="workspace/preview" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/student" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/researcher" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/professor" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/laboratory" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/computational" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/clinical" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/biotech" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/institution" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
       <Route element={<Suspense fallback={null}><Layout /></Suspense>}>
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />

@@ -529,6 +529,42 @@
       "destination": "/_pages/onboarding--review.html"
     },
     {
+      "source": "/workspace/preview",
+      "destination": "/_pages/workspace--preview.html"
+    },
+    {
+      "source": "/workspace/preview/student",
+      "destination": "/_pages/workspace--preview--student.html"
+    },
+    {
+      "source": "/workspace/preview/researcher",
+      "destination": "/_pages/workspace--preview--researcher.html"
+    },
+    {
+      "source": "/workspace/preview/professor",
+      "destination": "/_pages/workspace--preview--professor.html"
+    },
+    {
+      "source": "/workspace/preview/laboratory",
+      "destination": "/_pages/workspace--preview--laboratory.html"
+    },
+    {
+      "source": "/workspace/preview/computational",
+      "destination": "/_pages/workspace--preview--computational.html"
+    },
+    {
+      "source": "/workspace/preview/clinical",
+      "destination": "/_pages/workspace--preview--clinical.html"
+    },
+    {
+      "source": "/workspace/preview/biotech",
+      "destination": "/_pages/workspace--preview--biotech.html"
+    },
+    {
+      "source": "/workspace/preview/institution",
+      "destination": "/_pages/workspace--preview--institution.html"
+    },
+    {
       "source": "/research/gaps",
       "destination": "/_pages/research--gaps.html"
     },
