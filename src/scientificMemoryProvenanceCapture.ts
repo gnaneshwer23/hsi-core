@@ -1,10 +1,11 @@
 import {normalizePmid} from "./scientificMemoryPubmed";
 import {normalizeEvidenceDoi} from "./scientificMemoryCrossref";
+import {projectEuropePmcCore} from "./scientificMemoryEuropePmcCore";
 type Authority="crossref"|"pubmed"|"europe_pmc";
 type Fetcher=(url:string,init:RequestInit)=>Promise<Response>;
 /** Isolated capture gateway. Injected transport and clock are trusted fixture dependencies, not client inputs. */
 export function createProvenanceCapture(fetcher:Fetcher,enabled=false,clock:()=>number=Date.now){
- return {async capture(authority:Authority,identifier:string){
+ async function captureInternal(authority:Authority,identifier:string,project:boolean){
  if(!enabled)throw Error("Capture disabled");
  let url:string;
  switch(authority){
@@ -26,8 +27,14 @@ export function createProvenanceCapture(fetcher:Fetcher,enabled=false,clock:()=>
  const digest=await crypto.subtle.digest("SHA-256",bytes);
  const payloadSha256=Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,"0")).join("");
  const checkedAt=new Date(clock()).toISOString();
- return {authority,endpoint:url,checkedAt,payloadSha256,byteLength:size,mediaType,authorityAuthenticated:false as const,ingestionAllowed:false as const,scientificClaimAllowed:false as const};
+ const provenance={authority,endpoint:url,checkedAt,payloadSha256,byteLength:size,mediaType,authorityAuthenticated:false as const,ingestionAllowed:false as const,scientificClaimAllowed:false as const};
+ const candidate=project?projectEuropePmcCore(normalizePmid(identifier),JSON.parse(new TextDecoder("utf-8",{fatal:true}).decode(bytes))):null;
+ return {provenance,candidate};
  };
  try{return await Promise.race([run(),new Promise<never>((_,reject)=>{timer=setTimeout(()=>{controller.abort();reject(Error("Capture timeout"));},5000);})]);}finally{if(timer!==undefined)clearTimeout(timer);}
- }};
+ }
+ return {
+ async capture(authority:Authority,identifier:string){return (await captureInternal(authority,identifier,false)).provenance;},
+ async captureEuropePmc(identifier:string){const result=await captureInternal("europe_pmc",identifier,true);if(!result.candidate)throw Error("Missing projection");return {provenance:result.provenance,candidate:result.candidate,ingestionAllowed:false as const,scientificClaimAllowed:false as const};}
+ };
 }
