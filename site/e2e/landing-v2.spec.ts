@@ -114,3 +114,25 @@ test('homepage and a landing v2 page pass axe on desktop and the homepage at 390
  await page.setViewportSize({width:390,height:844});await page.goto('/');await page.waitForTimeout(1200);
  expect((await new AxeBuilder({page}).analyze()).violations.map(v=>v.id+':'+v.nodes.length)).toEqual([]);
 });
+
+test('the homepage previews agents, investigation, contradiction and data as short sections that link to the full pages, without repeating the interactives',async({page})=>{
+ await page.goto('/');
+ for(const [id,link,href] of [['agents','See how agents hand work on','/platform/agents'],['investigation','Walk through the ten stages','/platform/workbench'],['contradiction','Try the alignment','/platform/contradiction-analysis'],['data','See every source and its status','/data-sources']] as const){
+  const s=page.locator('#'+id);
+  await expect(s.getByRole('link',{name:link})).toHaveAttribute('href',href);
+  await expect(s.getByText('Illustrative',{exact:true}).first()).toBeVisible();
+ }
+ // the full interactive versions live only on their own pages
+ await expect(page.getByRole('button',{name:'A conflict kept visible'})).toHaveCount(0);
+ await expect(page.getByRole('button',{name:'Verify claims'})).toHaveCount(0);
+ await expect(page.getByRole('button',{name:'No grouping'})).toHaveCount(0);
+ await expect(page.locator('#agents')).toContainText('Expert review');
+ await expect(page.locator('#contradiction')).toContainText('Unresolved · requires expert review');
+});
+
+test('every homepage teaser link opens its page with the full interactive',async({page})=>{
+ await page.goto('/');
+ await page.locator('#contradiction').getByRole('link',{name:'Try the alignment'}).click();
+ await expect(page).toHaveURL(/\/platform\/contradiction-analysis$/);
+ await expect(page.getByRole('button',{name:'No grouping'})).toBeVisible();
+});

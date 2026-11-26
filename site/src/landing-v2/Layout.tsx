@@ -6,6 +6,7 @@ import { Header, Footer } from "./components/site/Header";
 export function LandingV2Layout({ children }: { children: ReactNode }) {
   const { pathname, hash } = useLocation();
   useEffect(() => {
+    document.documentElement.dataset.hydrated ||= "lv2"; // lets tests and monitors know the page is interactive
     if (hash) document.getElementById(decodeURIComponent(hash.slice(1)))?.scrollIntoView({ block: "start" });
     else window.scrollTo(0, 0);
   }, [pathname, hash]);

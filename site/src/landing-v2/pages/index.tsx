@@ -14,11 +14,8 @@ import { Hero } from "../components/home/Hero";
 import { Fragmentation } from "../components/home/Fragmentation";
 import { MemoryEngine } from "../components/home/MemoryEngine";
 import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
-import { AgentBoard } from "../components/agents/AgentBoard";
-import { InvestigationRecord } from "../components/investigation/InvestigationRecord";
+import { AgentsTeaser, InvestigationTeaser, ContradictionTeaser, DataTeaser } from "../components/home/Teasers";
 import { LiveGraphHero } from "../../components/home/LiveGraphHero";
-import { ContradictionLab } from "../components/contradiction/ContradictionLab";
-import { sources } from "../lib/site-data";
 
 export const pageMeta = meta("HSI — The living intelligence of human biology", "A scientific intelligence platform for human biology, in development: persistent scientific memory, specialised AI agents and contradiction-aware evidence verification are being built and validated.");
 
@@ -46,32 +43,11 @@ export default function Home() {
         <LiveGraphHero />
       </Section>
 
-      <Section
-        id="agents"
-        eyebrow="05 · Scientific AI agents"
-        title="Specialised agents that check one another."
-        intro="Each agent has a narrow job. What one produces, a different agent checks, and every chain ends with a person."
-      >
-        <AgentBoard />
-      </Section>
+      <AgentsTeaser />
 
-      <Section
-        id="investigation"
-        eyebrow="06 · Investigation record"
-        title="From a research question to the next experiment."
-        intro="One invented question, followed through ten stages. See what the record keeps at each step, who produced it, who checked it and what stays visible."
-      >
-        <InvestigationRecord labHref="#contradiction" />
-      </Section>
+      <InvestigationTeaser />
 
-      <Section
-        id="contradiction"
-        eyebrow="07 · Contradiction intelligence"
-        title="Most disagreement is missing context."
-        intro="Align conflicting studies by model, sex, dose and timing before calling them contradictory, and keep what remains unresolved in view."
-      >
-        <ContradictionLab />
-      </Section>
+      <ContradictionTeaser />
 
       <Section eyebrow="08 · Research outputs" title="Outputs built for scientific review.">
         <div className="grid gap-4 md:grid-cols-4">
@@ -99,26 +75,7 @@ export default function Home() {
         <PersonaTabs />
       </Section>
 
-      <Section
-        eyebrow="10 · Data ecosystem"
-        title="Grounded in public scientific resources."
-        intro="Integration status is shown honestly. Names are listed for reference only and do not imply partnership."
-      >
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {sources.map((s) => (
-            <div
-              key={s.name}
-              className="flex items-center justify-between rounded-lg border border-border bg-card/40 px-4 py-3"
-            >
-              <div>
-                <p className="text-sm font-medium">{s.name}</p>
-                <p className="font-mono text-[11px] text-muted-foreground">{s.type}</p>
-              </div>
-              <StatusTag s={s.status} />
-            </div>
-          ))}
-        </div>
-      </Section>
+      <DataTeaser />
 
       <Section
         eyebrow="11 · Scientific Companion"

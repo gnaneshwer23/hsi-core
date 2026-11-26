@@ -1,29 +1,29 @@
 import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 import type {Page} from '@playwright/test';
-/** Opens the homepage and waits until it is hydrated, so clicks are not lost to the prerendered markup. */
-const home=async(page:Page)=>{await page.goto('/');await page.waitForFunction(()=>document.documentElement.dataset.hydrated==='home');};
+/** Opens a landing page and waits until it is hydrated, so clicks are not lost to the prerendered markup. */
+const open=async(page:Page,path:string)=>{await page.goto(path);await page.waitForFunction(()=>!!document.documentElement.dataset.hydrated);};
 
-/** LEA-01B: the agent orchestration board and the contradiction lab on /landing-v2. Everything shown is illustrative and invented. */
+/** LEA-01B: the agent orchestration board and the contradiction lab on /platform/agents and /platform/contradiction-analysis. Everything shown is illustrative and invented. */
 test('agent board is labelled illustrative and offers three traces',async({page})=>{
- await home(page);
- const s=page.locator('#agents');
+ await open(page,'/platform/agents');
+ const s=page.locator('main');
  await expect(s.getByText('Illustrative',{exact:true}).first()).toBeVisible();
  await expect(s.getByText('Example claims are invented')).toBeVisible();
  for(const n of ['A claim that holds','A claim returned for missing support','A conflict kept visible'])await expect(s.getByRole('button',{name:n})).toBeVisible();
 });
 
 test('a returned claim stays out of the output and says why',async({page})=>{
- await home(page);
- const s=page.locator('#agents');
+ await open(page,'/platform/agents');
+ const s=page.locator('main');
  await s.getByRole('button',{name:'A claim returned for missing support'}).click();
  await expect(s.getByText('Returned to Literature Synthesis with the reason')).toBeVisible();
  await expect(s.getByText('Returned, not in output.')).toBeVisible();
 });
 
 test('an agent states what it takes, hands on, who checks it and what it does not do',async({page})=>{
- await home(page);
- const s=page.locator('#agents');
+ await open(page,'/platform/agents');
+ const s=page.locator('main');
  await s.getByRole('button',{name:/^Evidence Verification/}).click();
  const d=s.locator('[aria-live]');
  await expect(d.getByRole('heading',{name:'Evidence Verification'})).toBeVisible();
@@ -32,24 +32,24 @@ test('an agent states what it takes, hands on, who checks it and what it does no
 });
 
 test('the last step of a conflict trace is a person, and the board says every chain ends with one',async({page})=>{
- await home(page);
- const s=page.locator('#agents');
+ await open(page,'/platform/agents');
+ const s=page.locator('main');
  await s.getByRole('button',{name:/Expert review/}).last().click();
  await expect(s.locator('[aria-live]').getByText('Agents propose; scientists decide.')).toBeVisible();
 });
 
 test('agent board particles follow the motion preference',async({page})=>{
  await page.emulateMedia({reducedMotion:'reduce'});
- await home(page);await page.waitForTimeout(500);
- expect(await page.locator('#agents animateMotion').count()).toBe(0);
+ await open(page,'/platform/agents');await page.waitForTimeout(500);
+ expect(await page.locator('main animateMotion').count()).toBe(0);
  await page.emulateMedia({reducedMotion:'no-preference'});
- await home(page);
- await expect.poll(()=>page.locator('#agents animateMotion').count()).toBeGreaterThan(0);
+ await open(page,'/platform/agents');
+ await expect.poll(()=>page.locator('main animateMotion').count()).toBeGreaterThan(0);
 });
 
 test('contradiction lab regroups studies and shows how well each variable separates the results',async({page})=>{
- await home(page);
- const s=page.locator('#contradiction');
+ await open(page,'/platform/contradiction-analysis');
+ const s=page.locator('main');
  await expect(s.getByText('Illustrative',{exact:true}).first()).toBeVisible();
  await expect(s.getByRole('button',{name:'No grouping'})).toHaveAttribute('aria-pressed','true');
  await s.getByRole('button',{name:'Timing',exact:true}).click();
@@ -60,8 +60,8 @@ test('contradiction lab regroups studies and shows how well each variable separa
 });
 
 test('a study with a missing value stays visible and is not scored',async({page})=>{
- await home(page);
- const s=page.locator('#contradiction');
+ await open(page,'/platform/contradiction-analysis');
+ const s=page.locator('main');
  await s.getByRole('button',{name:'Dose',exact:true}).click();
  const g=s.locator('th[scope=rowgroup]').filter({hasText:'Not reported'});
  await expect(g).toContainText('value missing, not scored');
@@ -69,8 +69,8 @@ test('a study with a missing value stays visible and is not scored',async({page}
 });
 
 test('the lab keeps the conflict unresolved and lists its gaps',async({page})=>{
- await home(page);
- const s=page.locator('#contradiction');
+ await open(page,'/platform/contradiction-analysis');
+ const s=page.locator('main');
  await expect(s.getByText('Unresolved · requires expert review')).toBeVisible();
  await expect(s.getByText('Gaps kept visible')).toBeVisible();
  await expect(s.getByText(/did not report dose/)).toBeVisible();
@@ -84,17 +84,16 @@ test('platform pages for agents and contradiction analysis render the new compon
  await expect(page.getByRole('button',{name:'No grouping'})).toBeVisible();
 });
 
-test('both sections have no overflow at 375px and pass axe in several states',async({page})=>{
- await page.setViewportSize({width:375,height:812});
- await home(page);
- await page.locator('#contradiction').scrollIntoViewIfNeeded();
- const w=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
- expect(w.sw).toBeLessThanOrEqual(w.cw);
- await page.setViewportSize({width:1280,height:900});
- await page.locator('#agents').getByRole('button',{name:'A claim returned for missing support'}).click();
- await page.locator('#contradiction').getByRole('button',{name:'Dose',exact:true}).click();
- for(const sel of ['#agents','#contradiction']){
-  const res=await new AxeBuilder({page}).include(sel).analyze();
-  expect(res.violations.map(v=>v.id+':'+v.nodes.length),sel).toEqual([]);
+test('both pages have no overflow at 375px and pass axe in several states',async({page})=>{
+ for(const path of ['/platform/agents','/platform/contradiction-analysis']){
+  await page.setViewportSize({width:375,height:812});
+  await open(page,path);
+  const w=await page.evaluate(()=>({sw:document.documentElement.scrollWidth,cw:document.documentElement.clientWidth}));
+  expect(w.sw,path).toBeLessThanOrEqual(w.cw);
+  await page.setViewportSize({width:1280,height:900});
+  if(path.endsWith('agents'))await page.getByRole('button',{name:'A claim returned for missing support'}).click();
+  else await page.getByRole('button',{name:'Dose',exact:true}).click();
+  const res=await new AxeBuilder({page}).analyze();
+  expect(res.violations.map(v=>v.id+':'+v.nodes.length),path).toEqual([]);
  }
 });
