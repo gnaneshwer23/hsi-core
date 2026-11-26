@@ -75,6 +75,7 @@ export function Review(){
       <h2 id="ob-done-h" className="ob-h2">Where next</h2>
       <div className="ob-done-actions">
        <Link to={plan.firstAction.to} className="ob-btn ob-btn-primary">{plan.firstAction.label}</Link>
+       <Link to="/settings/scientific-profile" className="ob-btn ob-btn-quiet">Review my scientific profile</Link>
        <Link to="/sign-up" className="ob-btn ob-btn-quiet">Create an account to keep this</Link>
       </div>
       <Note>The workspace above is a demonstration with illustrative content. It is not your data, and it does not use your answers beyond choosing which demonstration to open.</Note>

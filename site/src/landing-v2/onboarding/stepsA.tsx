@@ -1,7 +1,7 @@
-import {useEffect} from "react";
+import {useEffect,useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {Link} from "../router";
-import {ROLES,roleById,stepById,type RoleId} from "../../../../src/onboarding/scientificOnboarding";
+import {ROLES,roleById,stepById,type DataClass,type RoleId} from "../../../../src/onboarding/scientificOnboarding";
 import {OnboardingShell} from "./Shell";
 import {Chip,FieldError,Note,Status,TextField} from "./ui";
 import {useOnboarding} from "./store";
@@ -101,6 +101,13 @@ export function Institution(){
       {([["under-50","Under 50 researchers"],["50-500","50 to 500"],["over-500","Over 500"]] as const).map(([v,l])=><Chip key={v} role="radio" on={s.institutionInfo.size===v} onClick={()=>set({size:s.institutionInfo.size===v?"":v})}>{l}</Chip>)}
      </div>
     </fieldset>
+    <Departments/>
+    <fieldset className="ob-group"><legend>Kinds of data the organisation expects to use <span className="ob-optional">(optional)</span></legend>
+     <p className="ob-hint">A plan, not an authorisation. Restricted data needs your organisation's approval and administrator-provisioned access.</p>
+     <div className="ob-chips">
+      {(["public","private","restricted"] as DataClass[]).map(c=><Chip key={c} on={s.institutionInfo.intendedData.includes(c)} onClick={()=>set({intendedData:s.institutionInfo.intendedData.includes(c)?s.institutionInfo.intendedData.filter(x=>x!==c):[...s.institutionInfo.intendedData,c]})}>{{public:"Public metadata",private:"Members' private documents",restricted:"Restricted research data"}[c]}</Chip>)}
+     </div>
+    </fieldset>
    </div>
    <section className="ob-next" aria-labelledby="ob-inst-next">
     <h2 id="ob-inst-next" className="ob-h3">What happens next</h2>
@@ -112,5 +119,21 @@ export function Institution(){
    </section>
    <Note tone="caution">Choosing an administrator role, or entering an organisation here, does not give anyone access. Nothing is sent from this page.</Note>
   </OnboardingShell>
+ );
+}
+
+function Departments(){
+ const [s,d]=useOnboarding();
+ const [name,setName]=useState("");
+ const add=()=>{if(name.trim()){d({type:"addDepartment",name});setName("")}};
+ return (
+  <section className="ob-interests" aria-labelledby="ob-dept">
+   <h2 id="ob-dept" className="ob-h3">Departments or groups <span className="ob-optional">(optional)</span></h2>
+   <form className="ob-inline" onSubmit={e=>{e.preventDefault();add()}}>
+    <label className="ob-field ob-field-grow"><span>Name</span><input value={name} onChange={e=>setName(e.target.value)} maxLength={80} placeholder="For example Immunology"/></label>
+    <button type="submit" className="ob-btn ob-btn-quiet">Add</button>
+   </form>
+   {s.institutionInfo.departments.length>0&&<ul className="ob-tags" aria-label="Departments">{s.institutionInfo.departments.map((x,i)=><li key={x}>{x}<button type="button" aria-label={`Remove ${x}`} onClick={()=>d({type:"removeDepartment",index:i})}>×</button></li>)}</ul>}
+  </section>
  );
 }
