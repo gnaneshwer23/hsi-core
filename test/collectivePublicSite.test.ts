@@ -19,8 +19,7 @@ describe("public collective page matches the register",()=>{
  test("the capability pages are not public pages: every old URL redirects permanently to how it works and none is indexed",()=>{
   const sources=new Set(vercel.redirects.map(r=>r.source));
   expect(vercel.redirects.find(r=>r.source==="/intelligence/:slug")).toMatchObject({destination:"/how-it-works",permanent:true});
-  expect(vercel.rewrites.find(r=>r.source==="/intelligence")).toMatchObject({destination:"/_pages/intelligence.html"});
-  expect(vercel.redirects.find(r=>r.source==="/intelligence")).toBeUndefined();
+  expect(vercel.redirects.find(r=>r.source==="/intelligence")).toMatchObject({destination:"/platform/agents",permanent:true});
   void sources;
  });
  test("related-capability references point at real capabilities",()=>{

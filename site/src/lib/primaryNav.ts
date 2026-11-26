@@ -3,7 +3,6 @@ export const PRIMARY_NAV_LINKS = [
   { to: "/", label: "Home" },
   { to: "/how-it-works", label: "How It Works" },
   { to: "/knowledge-graph", label: "Knowledge Graph" },
-  { to: "/intelligence", label: "Scientific Intelligence" },
   { to: "/solutions#researchers", label: "For Researchers" },
   { to: "/solutions#community", label: "Community" },
 ] as const;
@@ -23,21 +22,15 @@ export const AUDIENCE_NAV_LINKS = [
 /** Pages that are part of the research app, not the public site. They stay reachable but are not in the public navigation. */
 export const RESEARCH_NAV_LINKS = [
   { to: "/evidence-intelligence", label: "Evidence intelligence" },
-  { to: "/context-conflict-audit", label: "Context-Conflict Audit" },
 ] as const;
 
 /** The indexed pages that use the original site header and footer. The homepage, trust, how-it-works, about, contact and the landing platform pages use the landing header and footer instead (see landing-v2/indexed.ts). */
 export const PUBLIC_MARKETING_PATHS = [
   "/",
-  "/knowledge-graph",
-  "/intelligence",
-  "/research-gaps",
-  "/scientific-companion",
-  "/validation",
 ] as const;
 
 /** Indexed pages that use the landing header and footer instead (they are not in PUBLIC_MARKETING_PATHS because the original chrome does not render them). */
-export const LANDING_CHROME_PATHS = ["/how-it-works", "/trust", "/about", "/contact"] as const;
+export const LANDING_CHROME_PATHS = ["/how-it-works", "/trust", "/about", "/contact", "/knowledge-graph"] as const;
 
 /** Account creation is distinct from provisioned research access. */
 export const PRIMARY_NAV_CTA = { to: "/sign-up", label: "Create account" } as const;

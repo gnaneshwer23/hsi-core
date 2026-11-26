@@ -27,7 +27,7 @@ describe("Stage 2 landing design system + nav", () => {
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
-    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How It Works", "Knowledge Graph", "Scientific Intelligence", "For Researchers", "Community"]);
+    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How It Works", "Knowledge Graph", "For Researchers", "Community"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
       "/solutions#researchers",

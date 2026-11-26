@@ -6,7 +6,7 @@ import "../../styles/demo-universe.css";
 const NAV = [
   { to: "/demo/universe", label: "Demo universe", end: true },
   { to: "/science/study-comparison", label: "Study comparison", end: true },
-  { to: "/context-conflict-audit", label: "Context-conflict audit", end: true },
+  { to: "/platform/contradiction-analysis", label: "Context-conflict audit", end: true },
   { to: "/research/workspace", label: "Investigations", end: true },
   { to: "/research/journey", label: "Guided walkthrough", end: true },
   { to: "/enterprise/lab", label: "Lab shell", end: true },

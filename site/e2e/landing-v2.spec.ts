@@ -3,8 +3,8 @@ import AxeBuilder from '@axe-core/playwright';
 import {readFile} from 'node:fs/promises';
 
 /** The homepage and the /landing-v2 pages (ported from the Lovable site). They have their own header and footer, state their status honestly, and only the homepage is indexable. */
-const INDEXED=['/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/discovery-engine','/data-sources','/solutions'];
-const PREVIEW=['/landing-v2/platform/knowledge-graph','/landing-v2/platform/companion'];
+const INDEXED=['/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/discovery-engine','/data-sources','/solutions','/knowledge-graph','/platform/companion'];
+const PREVIEW:string[]=[];
 
 for(const r of ['/',...INDEXED,...PREVIEW]){
  test(`${r} renders and has no console errors; the homepage and the six promoted pages are indexable, the rest stay noindex previews`,async({page})=>{

@@ -9,7 +9,6 @@ const groups = [
       { to: "/", label: "Home" },
       { to: "/how-it-works", label: "How It Works" },
       { to: "/knowledge-graph", label: "Knowledge Graph" },
-      { to: "/intelligence", label: "Scientific Intelligence" },
       { to: "/solutions#researchers", label: "For Researchers" },
       { to: "/solutions#community", label: "Community" },
       { to: "/demo/universe", label: "Example investigation" },
@@ -25,8 +24,7 @@ const groups = [
       { to: "/solutions#clinical", label: "Clinical research" },
       { to: "/solutions#laboratories", label: "Laboratories" },
       { to: "/solutions#community", label: "Research community" },
-      { to: "/research-gaps", label: "Research Gaps" },
-      { to: "/scientific-companion", label: "Scientific Companion" },
+      { to: "/knowledge-graph#gaps", label: "Research Gaps" },
     ],
   },
   {
@@ -40,7 +38,6 @@ const groups = [
   {
     name: "Trust",
     links: [
-      { to: "/validation", label: "Validation" },
       { to: "/trust", label: "Trust" },
       { to: "/trust#validation", label: "Validation methodology" },
       { to: "/trust#privacy", label: "Privacy information" },

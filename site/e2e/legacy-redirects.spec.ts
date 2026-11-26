@@ -17,8 +17,8 @@ test('platform and science redirects land on honest destination copy',async({pag
  await expect(page.getByRole('main')).toContainText('Research preview');
  await page.goto('/science');
  await expect(page).toHaveURL(/\/knowledge-graph$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('connections behind complex biology');
- await expect(page.locator('.pg-micro').first()).toContainText('unreviewed');
+ await expect(page.getByRole('heading',{level:1})).toContainText('Every connection, with the study behind it');
+ await expect(page.getByRole('main')).toContainText('none is an approved finding');
 });
 test('retired pages are permanent redirects at the host and absent from the sitemap',async({request})=>{
  const config=JSON.parse(await readFile(new URL('../vercel.json',import.meta.url),'utf8')) as {redirects:{source:string;destination:string;permanent:boolean}[]};
