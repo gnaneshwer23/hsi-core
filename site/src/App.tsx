@@ -68,6 +68,7 @@ const ScienceZoom=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m
 const ScienceConnections=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m.ScienceConnections})));
 import { NotFound } from "./pages/NotFound";
 const LandingV2=lazy(()=>import("./landing-v2/LandingV2"));
+import type {LandingV2Page} from "./landing-v2/LandingV2";
 const HomeV2=lazy(()=>import("./landing-v2/HomePage"));
 const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/AuthenticatedInterrogativeWorkbench").then(m=>({default:m.AuthenticatedInterrogativeWorkbench})));
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
@@ -95,23 +96,29 @@ const ClaimKnowledgeGraph=lazy(()=>import("./pages/ClaimKnowledgeGraph").then(m=
 
 const CapabilityLab=lazy(()=>import("./pages/CapabilityLab").then(m=>({default:m.CapabilityLab})));
 
-export default function App({home:Home=HomeV2}:{home?:ComponentType}={}) {
+export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:ComponentType;landing?:ComponentType<{page:LandingV2Page}>}={}) {
   return (
     <Routes>
       <Route path="landing-v2" element={<Navigate to="/" replace />}/>
       <Route index element={<Suspense fallback={null}><Home/></Suspense>}/>
-      <Route path="landing-v2/science" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="science"/></Suspense>}/>
-      <Route path="landing-v2/solutions" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="solutions"/></Suspense>}/>
-      <Route path="landing-v2/data-sources" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="data-sources"/></Suspense>}/>
-      <Route path="landing-v2/trust" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="trust"/></Suspense>}/>
+      <Route path="data-sources" element={<Suspense fallback={null}><Landing page="data-sources"/></Suspense>}/>
+      <Route path="platform/memory" element={<Suspense fallback={null}><Landing page="platform/memory"/></Suspense>}/>
+      <Route path="platform/agents" element={<Suspense fallback={null}><Landing page="platform/agents"/></Suspense>}/>
+      <Route path="platform/contradiction-analysis" element={<Suspense fallback={null}><Landing page="platform/contradiction-analysis"/></Suspense>}/>
+      <Route path="platform/workbench" element={<Suspense fallback={null}><Landing page="platform/workbench"/></Suspense>}/>
+      <Route path="platform/discovery-engine" element={<Suspense fallback={null}><Landing page="platform/discovery-engine"/></Suspense>}/>
+      <Route path="landing-v2/science" element={<Suspense fallback={<p role="status">Loading…</p>}><Landing page="science"/></Suspense>}/>
+      <Route path="landing-v2/solutions" element={<Suspense fallback={<p role="status">Loading…</p>}><Landing page="solutions"/></Suspense>}/>
+      <Route path="landing-v2/data-sources" element={<Navigate to="/data-sources" replace />}/>
+      <Route path="landing-v2/trust" element={<Navigate to="/trust" replace />}/>
       <Route path="landing-v2/early-access" element={<Navigate to="/contact" replace />}/>
-      <Route path="landing-v2/platform/memory" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/memory"/></Suspense>}/>
-      <Route path="landing-v2/platform/agents" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/agents"/></Suspense>}/>
-      <Route path="landing-v2/platform/contradiction-analysis" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/contradiction-analysis"/></Suspense>}/>
-      <Route path="landing-v2/platform/workbench" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/workbench"/></Suspense>}/>
-      <Route path="landing-v2/platform/knowledge-graph" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/knowledge-graph"/></Suspense>}/>
-      <Route path="landing-v2/platform/discovery-engine" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/discovery-engine"/></Suspense>}/>
-      <Route path="landing-v2/platform/companion" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/companion"/></Suspense>}/>
+      <Route path="landing-v2/platform/memory" element={<Navigate to="/platform/memory" replace />}/>
+      <Route path="landing-v2/platform/agents" element={<Navigate to="/platform/agents" replace />}/>
+      <Route path="landing-v2/platform/contradiction-analysis" element={<Navigate to="/platform/contradiction-analysis" replace />}/>
+      <Route path="landing-v2/platform/workbench" element={<Navigate to="/platform/workbench" replace />}/>
+      <Route path="landing-v2/platform/knowledge-graph" element={<Suspense fallback={<p role="status">Loading…</p>}><Landing page="platform/knowledge-graph"/></Suspense>}/>
+      <Route path="landing-v2/platform/discovery-engine" element={<Navigate to="/platform/discovery-engine" replace />}/>
+      <Route path="landing-v2/platform/companion" element={<Suspense fallback={<p role="status">Loading…</p>}><Landing page="platform/companion"/></Suspense>}/>
       <Route element={<Layout />}>
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
         <Route path="solutions" element={<Navigate to="/how-it-works" replace />} />

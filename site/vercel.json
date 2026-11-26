@@ -723,6 +723,30 @@
     {
       "source": "/landing-v2/platform/companion",
       "destination": "/_pages/landing-v2--platform--companion.html"
+    },
+    {
+      "source": "/platform/memory",
+      "destination": "/_pages/platform--memory.html"
+    },
+    {
+      "source": "/platform/agents",
+      "destination": "/_pages/platform--agents.html"
+    },
+    {
+      "source": "/platform/contradiction-analysis",
+      "destination": "/_pages/platform--contradiction-analysis.html"
+    },
+    {
+      "source": "/platform/workbench",
+      "destination": "/_pages/platform--workbench.html"
+    },
+    {
+      "source": "/platform/discovery-engine",
+      "destination": "/_pages/platform--discovery-engine.html"
+    },
+    {
+      "source": "/data-sources",
+      "destination": "/_pages/data-sources.html"
     }
   ],
   "redirects": [
