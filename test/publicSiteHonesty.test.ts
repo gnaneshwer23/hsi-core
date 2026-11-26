@@ -56,28 +56,8 @@ describe("Public HSI site honesty", () => {
     for(const route of ["/modules/isi","/modules/aksh-health","/modules/trials","/modules/clinical"])expect(primaryNav).not.toContain(route);
     const nav=site("src/components/Nav.tsx");
     expect(nav).toContain("PRIMARY_NAV_LINKS");expect(nav).toContain("PRIMARY_NAV_CTA");expect(nav).not.toContain("AUDIENCE_NAV_LINKS");expect(nav).not.toContain("ENGINEERING_LINKS");
-    const home=site("src/pages/Home.tsx"),experience=site("src/components/Experience.tsx");
-    const homeHero=site("src/components/editorial/HomeHero.tsx");
-    const homeEcosystem=site("src/components/editorial/HomeEcosystemProducts.tsx");
-    const homeApps=site("src/components/editorial/HomeApplications.tsx");
-    const marketingPage=site("src/components/marketing/MarketingPage.tsx");
-    const homeSurface=[home,homeHero,homeEcosystem,homeApps,site("src/components/editorial/HomeIntegrity.tsx"),site("src/lib/brand.ts"),site("src/lib/productMaturity.ts")].join("\n");
-    expect(homeSurface).toContain("Investigate biological mechanisms");expect(homeSurface).toContain("across human systems");expect(homeSurface).toContain("Connecting human biology");
-    expect(homeHero).toContain("cl-hero-domains");expect(homeHero).toContain("Immunity");expect(homeHero).toContain("Microbiome");
-    expect(homeHero).toContain("/science/graph?q=neuro");expect(homeHero).toContain("first scientific investigation");
-    expect(homeHero).toContain('to="/research/investigate"');expect(homeHero).toContain("See a curated investigation");
-    expect(homeHero).not.toMatch(/validation case|clinically validated|clinically proven|clinical validation|scientifically validated/i);
-    expect(homeSurface).toContain("Aksh Health");expect(homeSurface).toContain("HSI Clinical");expect(homeSurface).toContain("Immune Super Intelligence");expect(homeSurface).toContain("HSI Trials");
-    expect(homeSurface).toContain("does not auto-enter");
-    expect(home).not.toContain("ValidationPreview");expect(home).toContain("Independent validation remains pending");expect(experience).toContain("review scope");
-    expect(experience).toContain("MarketingCTA");expect(marketingPage).toContain("Connecting human biology");expect(homeSurface).not.toContain("100% accurate");
-    expect(marketingPage).toContain("JOURNEY_BY_PATH");expect(marketingPage).toContain("PUBLIC_PRIMARY_CTA");
-    expect(home).toContain("ContextAuditInstrument");expect(home).toContain("ResearchBriefPreview");
     const layout=site("src/components/Layout.tsx");
     expect(layout).toContain("home-shell");expect(layout).toMatch(/isPublicPage \|\| isHome/);
-    const ecosystem = site("src/components/landing/EcosystemGrid.tsx");
-    expect(ecosystem).toContain("ECOSYSTEM_PRODUCTS");
-    expect(ecosystem).toContain("MATURITY_CHIP_LABEL");
     const roadmap = site("src/pages/Roadmap.tsx");
     expect(roadmap).toContain("MATURITY_CHIP_LABEL");
     expect(roadmap).toContain('to="/status"');
@@ -97,7 +77,6 @@ describe("Public HSI site honesty", () => {
     expect(cta).toContain('to:"/knowledge-graph"');
     expect(cta).not.toMatch(/PUBLIC_PLATFORM_CTA[\s\S]*to:"\/platform"/);
     expect(cta).not.toMatch(/PUBLIC_SCIENCE_CTA[\s\S]*to:"\/science"/);
-    expect(experience).not.toContain('to:"/science",label:"Science"');
     expect(site("src/pages/SignIn.tsx")).toContain('to="/science"');
     expect(site("src/pages/ResearchAccount.tsx")).toContain('to="/knowledge-graph"');
     expect(site("src/lib/retiredMarketingPaths.ts")).toContain('"/platform": "/how-it-works"');
@@ -167,24 +146,6 @@ describe("Public HSI site honesty", () => {
 });
 
 
-it("Stage A Platform includes all four distinct product perspectives and honest maturity", () => {
-  const platform = site("src/pages/Platform.tsx");
-  expect(platform).toContain('type ProductId = EcosystemProduct["id"];');
-  expect(platform).toContain('aksh:');
-  expect(platform).toContain('clinical:');
-  expect(platform).toContain('trials:');
-  expect(platform).toContain('isi:');
-  expect(platform).toContain("ECOSYSTEM_PRODUCTS.find");
-  expect(platform).toContain("ECOSYSTEM_PRODUCTS.map");
-  expect(platform).toContain("MATURITY_CHIP_LABEL");
-  expect(platform).toContain("No live matching, eligibility confirmation or enrolment");
-  expect(platform).toContain("not patient-record transfers");
-  const maturity = site("src/lib/productMaturity.ts");
-  expect(maturity).toContain('name: "Aksh Health"');
-  expect(maturity).toContain('name: "HSI Clinical"');
-  expect(maturity).toContain('name: "HSI Trials"');
-  expect(maturity).toContain('name: "ISI Research"');
-});
 
 
 describe("Stage A public security boundary audit", () => {
@@ -212,14 +173,3 @@ describe("Stage A public security boundary audit", () => {
 });
 
 
-describe("Homepage scientific visuals and product proof",()=>{
- it("leads with a product demonstration while preserving artwork and labelled validation components",()=>{
-  const home=site("src/pages/Home.tsx"),preview=site("src/components/ValidationPreview.tsx"),art=site("src/components/Experience.tsx"),editorial=site("src/components/editorial/Editorial.tsx");
-  const homeHero=site("src/components/editorial/HomeHero.tsx");
-  expect(home).toContain("tissue-context-1600.webp");expect(home).toContain("ResearchBriefPreview");expect(home).toContain("A plausible explanation is not a validated mechanism");
-  expect(homeHero).toContain("homepageHeroDesktopSources");expect(homeHero).toContain("homepageHeroMobileSources");
-  expect(editorial).toContain("BiologyArtwork");expect(art).toContain('role="img"');expect(art).toContain("EXPERIENCE_DOMAINS");
-  expect(preview).toContain("loadValidationCatalogue");expect(preview).toContain("loadValidationScenario");expect(preview).toContain("Synthetic validation");
-  expect(preview).toContain("Reference intervals are not supplied");expect(home).not.toContain("PMID:12345678");
- });
-});

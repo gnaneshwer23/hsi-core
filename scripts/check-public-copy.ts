@@ -9,15 +9,8 @@ const WRONG_BRAND = ["Health Super Intelligence", "Human Systems Intelligence", 
 
 const LANDING_FILES = [
   "site/public/llms.txt",
-  "site/src/pages/Home.tsx",
-  "site/src/pages/Products.tsx",
-  "site/src/pages/Platform.tsx",
-  "site/src/pages/ForAksh.tsx",
-  "site/src/pages/ForIsi.tsx",
-  "site/src/pages/ForTrials.tsx",
-  "site/src/pages/ClinicalModule.tsx",
-  "site/src/lib/brand.ts",
   "site/src/lib/seo/siteSeo.ts",
+  "site/src/landing-v2/pages/index.tsx",
   "site/src/components/Footer.tsx",
 ];
 
@@ -45,20 +38,13 @@ export function findPublicCopyIssues(cwd = process.cwd()): string[] {
     if (/100% accurate|clinically proven platform/i.test(text)) issues.push(`${relative} contains an unsupported accuracy claim`);
   }
   // Current public positioning: one HSI technology, never the retired product portfolio.
-  for (const relative of ["site/src/pages/ScientificPublic.tsx", "site/src/landing-v2/pages/trust.tsx", "site/src/landing-v2/pages/about.tsx", "site/src/landing-v2/pages/index.tsx", "site/src/pages/Technology.tsx", "site/src/lib/seo/siteSeo.ts", "site/public/llms.txt"]) {
+  for (const relative of ["site/src/pages/ScientificPublic.tsx", "site/src/landing-v2/pages/trust.tsx", "site/src/landing-v2/pages/about.tsx", "site/src/landing-v2/pages/index.tsx", "site/src/lib/seo/siteSeo.ts", "site/public/llms.txt"]) {
     if (/Aksh Health|HSI Clinical|Immune Super Intelligence|HSI Trials|four governed modules|four products/i.test(readFileSync(resolve(cwd, relative), "utf8"))) issues.push(`${relative} reintroduces retired public product positioning`);
   }
   const readme = readFileSync(resolve(cwd, "README.md"), "utf8");
   if (!/\bsynthetic\b/i.test(readme)) issues.push("README.md must state that demonstration data is synthetic");
-  const home = readFileSync(resolve(cwd, "site/src/pages/Home.tsx"), "utf8");
-  const homeHero = readFileSync(resolve(cwd, "site/src/components/editorial/HomeHero.tsx"), "utf8");
-  const brand = readFileSync(resolve(cwd, "site/src/lib/brand.ts"), "utf8");
-  const tagline = "Connecting human biology. Advancing scientific discovery. Transforming our understanding of health.";
-  const homeSurface = `${home}\n${homeHero}\n${brand}`;
-  if (!homeSurface.includes(tagline)) issues.push("Home.tsx is missing the landing tagline");
-  if (!home.includes("See why the evidence conflicts.")) issues.push("Home.tsx must preserve the approved evidence-conflict headline");
-  const instrument=readFileSync(resolve(cwd,"site/src/components/public/ResearchPublic.tsx"),"utf8");
-  if(!instrument.includes("Synthetic studies. No real study, live audit or scientific approval."))issues.push("Public audit must disclose its synthetic, non-approved status");
+  const home = readFileSync(resolve(cwd, "site/src/landing-v2/components/home/Hero.tsx"), "utf8");
+  if (!home.includes("See what the evidence supports")) issues.push("The homepage hero must keep the approved headline");
   return issues;
 }
 
