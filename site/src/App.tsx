@@ -1,6 +1,8 @@
 import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense,type ComponentType} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+const WorkspacePreview=lazy(()=>import("./landing-v2/workspace"));
+const Onboarding=lazy(()=>import("./landing-v2/onboarding"));
 const Layout=lazy(()=>import("./components/Layout").then(m=>({default:m.Layout})));
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
@@ -114,6 +116,25 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
       <Route path="landing-v2/platform/discovery-engine" element={<Navigate to="/platform/discovery-engine" replace />}/>
       <Route path="landing-v2/platform/companion" element={<Navigate to="/platform/companion" replace />}/>
       <Route path="platform/companion" element={<Suspense fallback={null}><Landing page="platform/companion"/></Suspense>}/>
+      <Route path="onboarding" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/role" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/institution" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/identity" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/science" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/objectives" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/methods" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/resources" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/preferences" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="onboarding/review" element={<Suspense fallback={null}><Onboarding/></Suspense>}/>
+      <Route path="workspace/preview" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/student" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/researcher" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/professor" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/laboratory" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/computational" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/clinical" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/biotech" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/institution" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
       <Route element={<Suspense fallback={null}><Layout /></Suspense>}>
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />

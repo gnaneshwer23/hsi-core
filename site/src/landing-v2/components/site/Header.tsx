@@ -69,7 +69,7 @@ export function Header() {
             Request access
           </Link>
         </div>
-        <button type="button" className="lg:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
+        <button type="button" className="inline-flex h-11 w-11 items-center justify-center lg:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
