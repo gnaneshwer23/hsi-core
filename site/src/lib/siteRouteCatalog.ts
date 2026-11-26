@@ -137,6 +137,15 @@ const LABS_SYNTHETIC = new Set([
 ]);
 
 const AUTH_ACCOUNT = new Set([
+  "/workspace/preview",
+  "/workspace/preview/student",
+  "/workspace/preview/researcher",
+  "/workspace/preview/professor",
+  "/workspace/preview/laboratory",
+  "/workspace/preview/computational",
+  "/workspace/preview/clinical",
+  "/workspace/preview/biotech",
+  "/workspace/preview/institution",
   "/onboarding",
   "/onboarding/role",
   "/onboarding/institution",

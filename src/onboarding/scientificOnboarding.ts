@@ -384,12 +384,6 @@ const FIRST_ACTION:Record<PersonaId,{title:string;label:string}>={
  institution:{title:"Configure an organisation workspace",label:"Review organisation structure"},
 };
 
-/** Where each persona lands today: the existing demonstration workspaces. Role-specific previews replace these in the next phase. */
-export const WORKSPACE_ROUTE:Record<PersonaId,string>={
- student:"/workspaces/student",researcher:"/workspaces/researcher",professor:"/workspaces/professor",laboratory:"/workspaces/laboratory",
- clinical:"/workspaces/clinical",biotech:"/workspaces/biotech",computational:"/workspaces",institution:"/workspaces",
-};
-
 /** Builds the plan from the answers only. It never invents findings and never claims anything was created. */
 export function deriveWorkspacePlan(s:OnboardingState):WorkspacePlan|null{
  const persona=personaOf(s);if(!persona||!s.primaryRole)return null;
@@ -398,7 +392,7 @@ export function deriveWorkspacePlan(s:OnboardingState):WorkspacePlan|null{
  if(s.privacy.memory!=="off"&&!ids.has("memory"))tools.push({...CAP.memory,why:WHY.memory!});
  if(tools.length===0)tools.push({...CAP.graph,why:WHY.graph!});
  const domains=[s.primaryDomain,...s.secondaryDomains].filter((d):d is DomainKey=>!!d).map(d=>DOMAINS.find(x=>x.key===d)!.label);
- const fa=FIRST_ACTION[persona];
+ const fa=s.primaryRole==="postdoc"?{title:"Compare conflicting scientific findings",label:"Open an illustrative conflict comparison"}:FIRST_ACTION[persona];
  const q=s.question.trim();
  const objectives=s.objectives.map(o=>objectiveById[o].label);
  const firstInvestigation=q
@@ -415,7 +409,7 @@ export function deriveWorkspacePlan(s:OnboardingState):WorkspacePlan|null{
   persona,personaLabel:PERSONA_LABEL[persona],primaryRoleLabel:roleById[s.primaryRole].label,
   secondaryRoleLabels:s.secondaryRoles.map(r=>roleById[r].label),domains,
   interests:s.interests.map(i=>i.name),objectives,tools:tools.slice(0,6),firstInvestigation,
-  firstAction:{label:fa.label,to:WORKSPACE_ROUTE[persona]},notes,
+  firstAction:{label:fa.label,to:`/workspace/preview/${persona}`},notes,
  };
 }
 

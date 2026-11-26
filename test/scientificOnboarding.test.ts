@@ -8,6 +8,11 @@ import {
 const withRole=(role:Parameters<typeof reduce>[1] extends infer A?any:never)=>reduce(EMPTY_STATE,{type:"setPrimaryRole",role});
 
 describe("scientific onboarding contract",()=>{
+ it("gives a postdoc a conflict comparison and a PhD researcher a gap investigation as the first action",()=>{
+  const f=(r:any)=>deriveWorkspacePlan({...EMPTY_STATE,primaryRole:r,primaryDomain:"immunology",objectives:["gaps"]})!.firstInvestigation.title;
+  expect(f("postdoc")).toBe("Compare conflicting scientific findings");
+  expect(f("phd")).toBe("Investigate a research gap");
+ });
  it("offers the thirteen roles and maps every role to one of eight dashboards",()=>{
   expect(ROLES).toHaveLength(13);
   const personas=new Set(ROLES.map(r=>r.persona));
@@ -120,7 +125,7 @@ describe("scientific onboarding contract",()=>{
   expect(plan.firstInvestigation.basis).toBe("your objectives");
   expect(plan.tools.length).toBeGreaterThan(0);
   expect(plan.tools.every(t=>["Prototype","In development","Planned","Illustrative"].includes(t.status))).toBe(true);
-  expect(plan.firstAction.to).toBe("/workspaces/professor");
+  expect(plan.firstAction.to).toBe("/workspace/preview/professor");
   expect(plan.notes.join(" ")).toMatch(/does not grant access/);
   const withQuestion=deriveWorkspacePlan(reduce(s,{type:"set",patch:{question:"Does butyrate change barrier function?"}}))!;
   expect(withQuestion.firstInvestigation.basis).toBe("your question");
