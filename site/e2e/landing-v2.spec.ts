@@ -3,8 +3,8 @@ import AxeBuilder from '@axe-core/playwright';
 import {readFile} from 'node:fs/promises';
 
 /** The homepage and the /landing-v2 pages (ported from the Lovable site). They have their own header and footer, state their status honestly, and only the homepage is indexable. */
-const INDEXED=['/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/discovery-engine','/data-sources'];
-const PREVIEW=['/landing-v2/science','/landing-v2/solutions','/landing-v2/platform/knowledge-graph','/landing-v2/platform/companion'];
+const INDEXED=['/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/discovery-engine','/data-sources','/solutions'];
+const PREVIEW=['/landing-v2/platform/knowledge-graph','/landing-v2/platform/companion'];
 
 for(const r of ['/',...INDEXED,...PREVIEW]){
  test(`${r} renders and has no console errors; the homepage and the six promoted pages are indexable, the rest stay noindex previews`,async({page})=>{
@@ -44,7 +44,7 @@ test('every early-access button leads to the working request page, and no protot
  await page.goto('/');
  await expect(page.getByText('HSI is being built to connect')).toBeVisible();
  await expect(page.getByRole('banner').getByRole('link',{name:'Request access'})).toHaveAttribute('href','/contact');
- await expect(page.getByRole('contentinfo').getByRole('link',{name:'Early Access'})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('contentinfo').getByRole('link',{name:'Contact'})).toHaveAttribute('href','/contact');
  const s=page.locator('main').getByRole('link',{name:'Start a pilot request'});
  await expect(s).toHaveAttribute('href','/contact#pilot-request');
  await expect(page.locator('main').getByRole('link',{name:'Create an account'})).toHaveAttribute('href','/sign-up');
@@ -60,9 +60,49 @@ test('/landing-v2/early-access redirects to the contact page',async({page})=>{
  await expect(page).toHaveURL(/\/contact$/);
 });
 
-test('landing v2 solutions page states the no-patient-data and not-CDS boundary',async({page})=>{
- await page.goto('/landing-v2/solutions');
- await expect(page.getByText('does not process patient data and is not clinical decision support')).toBeVisible();
+test('solutions page has one section per audience, each saying what it does and does not do, with no patient data or clinical advice',async({page})=>{
+ await page.goto('/solutions');
+ await expect(page.getByRole('heading',{level:1})).toContainText('How different research teams use HSI');
+ for(const id of ['researchers','research-groups','biotech','clinical','laboratories','community']){
+  const s=page.locator('#'+id);
+  await expect(s.getByRole('heading',{name:'What you can do'})).toBeVisible();
+  await expect(s.getByRole('heading',{name:'What it does not do'})).toBeVisible();
+ }
+ await expect(page.locator('#clinical')).toContainText('It is not clinical decision support');
+ await expect(page.locator('#clinical')).toContainText('does not accept patient data');
+ await expect(page.locator('main')).not.toContainText(/\$\d|£\d|per seat|subscribe now/i);
+ await page.goto('/solutions#laboratories');
+ await expect(page.locator('#laboratories')).toBeInViewport();
+});
+
+test('the retired audience pages lead to their section of the Solutions page',async({page})=>{
+ for(const [from,to] of [['/researchers','researchers'],['/enterprise','research-groups'],['/biotech','biotech'],['/clinical','clinical'],['/laboratories','laboratories'],['/research-community','community'],['/academic','research-groups']]){
+  await page.goto(from);await expect(page).toHaveURL(new RegExp('/solutions#'+to+'$'));
+ }
+});
+
+test('header: wordmark without tagline, one Platform menu, four links, sign in and request access',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
+ await page.goto('/');
+ const header=page.getByRole('banner');
+ await expect(header.getByText('Scientific intelligence platform',{exact:false})).toHaveCount(0);
+ const menu=header.getByRole('button',{name:'Platform'});
+ await expect(menu).toHaveAttribute('aria-expanded','false');
+ await menu.click();
+ await expect(menu).toHaveAttribute('aria-expanded','true');
+ for(const n of ['Agents','Contradiction analysis','Investigation record','Memory','Discovery'])await expect(header.getByRole('link',{name:new RegExp('^'+n)})).toBeVisible();
+ await page.keyboard.press('Escape');
+ await expect(menu).toHaveAttribute('aria-expanded','false');
+ for(const n of ['Solutions','Knowledge graph','Trust','About'])await expect(header.getByRole('navigation',{name:'Main'}).getByRole('link',{name:n,exact:true})).toBeVisible();
+ expect(await header.getByRole('navigation',{name:'Main'}).getByRole('button').count()).toBe(1);
+});
+
+test('footer: four short columns and one plain disclaimer, no mono-uppercase status line',async({page})=>{
+ await page.goto('/');
+ const f=page.getByRole('contentinfo');
+ for(const c of ['Platform','Solutions','Company','Legal'])await expect(f.getByRole('navigation',{name:c})).toBeVisible();
+ await expect(f).toContainText('A research tool in development. It does not give clinical advice and does not process patient data.');
+ await expect(f.getByRole('link',{name:'Privacy'})).toHaveAttribute('href','/trust#privacy');
 });
 
 test('/landing-v2 now leads to the homepage, and the old homepage content is gone',async({page})=>{
@@ -82,10 +122,10 @@ test('homepage chrome: skip link, header with sign-in, links to real site pages,
  await expect(header.getByRole('link',{name:'Sign in'})).toHaveAttribute('href','/sign-in');
  await expect(header.getByRole('link',{name:'Request access'})).toHaveAttribute('href','/contact');
  const footer=page.getByRole('contentinfo');
- await expect(footer.getByRole('link',{name:'Trust & Governance'})).toHaveAttribute('href','/trust');
+ await expect(footer.getByRole('link',{name:'Trust and governance'})).toHaveAttribute('href','/trust');
  await expect(footer.getByRole('link',{name:'How it works'})).toHaveAttribute('href','/how-it-works');
  await expect(footer.getByRole('link',{name:'Contact'})).toHaveAttribute('href','/contact');
- await footer.getByRole('link',{name:'Trust & Governance'}).click();
+ await footer.getByRole('link',{name:'Trust and governance'}).click();
  await expect(page).toHaveURL(/\/trust$/);
 });
 

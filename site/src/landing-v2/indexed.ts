@@ -10,4 +10,5 @@ export const LV2_INDEXED = [
   "/how-it-works",
   "/about",
   "/contact",
+  "/solutions",
 ] as const;

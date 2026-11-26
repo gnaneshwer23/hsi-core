@@ -11,6 +11,7 @@ import Trust, { pageMeta as trustMeta } from "./pages/trust";
 import HowItWorks, { pageMeta as howMeta } from "./pages/how-it-works";
 import About, { pageMeta as aboutMeta } from "./pages/about";
 import Contact, { pageMeta as contactMeta } from "./pages/contact";
+import Solutions, { pageMeta as solutionsMeta } from "./pages/solutions";
 
 /** The indexed landing v2 pages, imported directly so the build can render them to HTML (the browser bundle loads them lazily). */
 const STATIC: Record<string, [ComponentType, PageMeta]> = {
@@ -24,6 +25,7 @@ const STATIC: Record<string, [ComponentType, PageMeta]> = {
   "how-it-works": [HowItWorks, howMeta],
   about: [About, aboutMeta],
   contact: [Contact, contactMeta],
+  solutions: [Solutions, solutionsMeta],
 };
 
 export default function LandingV2Static({ page }: { page: string }) {

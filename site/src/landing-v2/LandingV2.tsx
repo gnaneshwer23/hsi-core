@@ -59,7 +59,6 @@ function lazyPage(load: () => Promise<PageModule>) {
   });
 }
 
-const Science = lazyPage(() => import("./pages/science"));
 const Solutions = lazyPage(() => import("./pages/solutions"));
 const DataSources = lazyPage(() => import("./pages/data-sources"));
 const Trust = lazyPage(() => import("./pages/trust"));
@@ -75,7 +74,6 @@ const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
 const Companion = lazyPage(() => import("./pages/platform/companion"));
 
 const PAGES = {
-  science: Science,
   solutions: Solutions,
   "data-sources": DataSources,
   trust: Trust,

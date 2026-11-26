@@ -4,20 +4,20 @@ export const PRIMARY_NAV_LINKS = [
   { to: "/how-it-works", label: "How It Works" },
   { to: "/knowledge-graph", label: "Knowledge Graph" },
   { to: "/intelligence", label: "Scientific Intelligence" },
-  { to: "/researchers", label: "For Researchers" },
-  { to: "/research-community", label: "Community" },
+  { to: "/solutions#researchers", label: "For Researchers" },
+  { to: "/solutions#community", label: "Community" },
 ] as const;
 
 /**
  * Audience destinations stay in the footer. Keep their routes available without crowding the header.
  */
 export const AUDIENCE_NAV_LINKS = [
-  { to: "/researchers", label: "Researchers", note: "Audience page" },
-  { to: "/enterprise", label: "Research Groups", note: "Audience page" },
-  { to: "/biotech", label: "Biotech teams", note: "Audience page" },
-  { to: "/clinical", label: "Clinical Research", note: "Audience page" },
-  { to: "/laboratories", label: "Laboratories", note: "Audience page" },
-  { to: "/research-community", label: "Research Community", note: "Audience page" },
+  { to: "/solutions#researchers", label: "Researchers", note: "Audience page" },
+  { to: "/solutions#research-groups", label: "Research Groups", note: "Audience page" },
+  { to: "/solutions#biotech", label: "Biotech teams", note: "Audience page" },
+  { to: "/solutions#clinical", label: "Clinical Research", note: "Audience page" },
+  { to: "/solutions#laboratories", label: "Laboratories", note: "Audience page" },
+  { to: "/solutions#community", label: "Research Community", note: "Audience page" },
 ] as const;
 
 /** Pages that are part of the research app, not the public site. They stay reachable but are not in the public navigation. */
@@ -33,12 +33,6 @@ export const PUBLIC_MARKETING_PATHS = [
   "/intelligence",
   "/research-gaps",
   "/scientific-companion",
-  "/researchers",
-  "/enterprise",
-  "/biotech",
-  "/clinical",
-  "/laboratories",
-  "/research-community",
   "/validation",
 ] as const;
 

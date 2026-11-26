@@ -1,106 +1,97 @@
-import { Link, SiteLink } from "../../router";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
-import { nav } from "../../lib/site-data";
+import { Link, SiteLink } from "../../router";
+import { footerColumns, mainLinks, platformMenu } from "../../lib/site-data";
 
 export function Logo() {
   return (
     <Link to="/" className="flex items-center gap-3">
-      <span className="grid size-9 place-items-center rounded-md border border-primary/40 bg-primary/10 font-display text-sm font-bold text-primary">
-        HSI
-      </span>
-      <span className="hidden leading-tight sm:block">
-        <span className="block font-display text-sm font-semibold">Human Super Intelligence</span>
-        <span className="block font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
-          Scientific Intelligence Platform
-        </span>
-      </span>
+      <span className="grid size-8 place-items-center rounded-md border border-primary/40 bg-primary/10 font-display text-xs font-bold text-primary">HSI</span>
+      <span className="font-display text-[15px] font-semibold tracking-tight">Human Super Intelligence</span>
     </Link>
+  );
+}
+
+const linkClass = "rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground";
+
+function PlatformMenu() {
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onDown = (e: MouseEvent) => !ref.current?.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("mousedown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("mousedown", onDown);
+    };
+  }, [open]);
+  return (
+    <div ref={ref} className="relative">
+      <button type="button" aria-expanded={open} aria-controls="platform-menu" onClick={() => setOpen((v) => !v)} className={`${linkClass} flex items-center gap-1`}>
+        Platform <ChevronDown className={`size-3.5 transition-transform ${open ? "rotate-180" : ""}`} aria-hidden />
+      </button>
+      {open && (
+        <div id="platform-menu" className="absolute left-0 top-full z-50 mt-2 w-80 rounded-xl border border-border bg-card p-2 shadow-xl">
+          {platformMenu.map((i) => (
+            <Link key={i.to} to={i.to} onClick={() => setOpen(false)} className="block rounded-lg px-3 py-2.5 hover:bg-accent">
+              <span className="block text-sm font-medium">{i.label}</span>
+              <span className="block text-xs text-muted-foreground">{i.desc}</span>
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
 export function Header() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-5 md:px-10">
+    <header className="sticky top-0 z-50 border-b border-border/60 bg-background/90 backdrop-blur-xl">
+      <div className="mx-auto flex h-16 max-w-[1280px] items-center justify-between gap-6 px-5 md:px-8">
         <Logo />
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Main">
-          {nav.map((g) => (
-            <div key={g.label} className="group relative">
-              <button className="flex items-center gap-1 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground group-focus-within:text-foreground">
-                {g.label} <ChevronDown className="size-3.5" />
-              </button>
-              <div className="invisible absolute left-0 top-full w-80 pt-2 opacity-0 transition-all group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
-                <div className="glass rounded-xl p-2">
-                  {g.items.map((i) => (
-                    <Link
-                      key={i.to}
-                      to={i.to}
-                      className="block rounded-lg px-3 py-2.5 hover:bg-accent"
-                    >
-                      <span className="block text-sm font-medium">{i.label}</span>
-                      <span className="block text-xs text-muted-foreground">{i.desc}</span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            </div>
+          <PlatformMenu />
+          {mainLinks.map((l) => (
+            <Link key={l.to} to={l.to} className={linkClass}>
+              {l.label}
+            </Link>
           ))}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
-          <SiteLink to="/sign-in" className="whitespace-nowrap rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
+          <SiteLink to="/sign-in" className={`${linkClass} whitespace-nowrap`}>
             Sign in
           </SiteLink>
-          <Link
-            to="/platform/workbench"
-            className="whitespace-nowrap rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
-          >
-            Explore HSI
-          </Link>
-          <Link
-            to="/early-access"
-            className="whitespace-nowrap bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-          >
+          <Link to="/contact" className="whitespace-nowrap rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">
             Request access
           </Link>
         </div>
-        <button
-          className="lg:hidden"
-          onClick={() => setOpen(!open)}
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-        >
+        <button type="button" className="lg:hidden" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open}>
           {open ? <X /> : <Menu />}
         </button>
       </div>
       {open && (
         <div className="max-h-[calc(100vh-4rem)] overflow-y-auto border-t border-border bg-background px-5 pb-8 lg:hidden">
-          {nav.map((g) => (
-            <div key={g.label} className="border-b border-border/60 py-4">
-              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                {g.label}
-              </p>
-              {g.items.map((i) => (
-                <Link
-                  key={i.to}
-                  to={i.to}
-                  onClick={() => setOpen(false)}
-                  className="block py-2 text-base"
-                >
-                  {i.label}
-                </Link>
-              ))}
-            </div>
+          <p className="pt-4 text-xs font-medium text-muted-foreground">Platform</p>
+          {platformMenu.map((i) => (
+            <Link key={i.to} to={i.to} onClick={() => setOpen(false)} className="block py-2 text-base">
+              {i.label}
+            </Link>
           ))}
-          <SiteLink to="/sign-in" onClick={() => setOpen(false)} className="mt-4 block py-2 text-base">
-            Sign in
-          </SiteLink>
-          <Link
-            to="/early-access"
-            onClick={() => setOpen(false)}
-            className="mt-6 block rounded-md bg-primary px-4 py-3 text-center font-medium text-primary-foreground"
-          >
+          <div className="mt-3 border-t border-border/60 pt-2">
+            {mainLinks.map((l) => (
+              <Link key={l.to} to={l.to} onClick={() => setOpen(false)} className="block py-2 text-base">
+                {l.label}
+              </Link>
+            ))}
+            <SiteLink to="/sign-in" onClick={() => setOpen(false)} className="block py-2 text-base">
+              Sign in
+            </SiteLink>
+          </div>
+          <Link to="/contact" onClick={() => setOpen(false)} className="mt-5 block rounded-md bg-primary px-4 py-3 text-center font-medium text-primary-foreground">
             Request access
           </Link>
         </div>
@@ -112,56 +103,29 @@ export function Header() {
 export function Footer() {
   return (
     <footer className="border-t border-border/60">
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-5 md:px-8">
-        <div className="md:col-span-2">
+      <div className="mx-auto grid max-w-[1280px] gap-10 px-5 py-14 md:px-8 lg:grid-cols-[1.2fr_repeat(4,1fr)]">
+        <div>
           <Logo />
-          <p className="mt-4 max-w-sm text-sm text-muted-foreground">
-            Understand biology. Resolve uncertainty. Advance discovery.
-          </p>
-          <p className="mt-4 font-mono text-[11px] uppercase tracking-wider text-signal">
-            Research platform in development · capabilities labelled by status
+          <p className="mt-4 max-w-xs text-sm text-muted-foreground">
+            A research tool in development. It does not give clinical advice and does not process patient data.
           </p>
         </div>
-        {nav
-          .slice(0, 3)
-          .concat(nav.slice(3))
-          .map((g) =>
-            g.label === "Science" ? null : (
-              <div key={g.label}>
-                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                  {g.label}
-                </p>
-                <ul className="mt-3 space-y-2 text-sm">
-                  {g.items.map((i) => (
-                    <li key={i.to}>
-                      <Link to={i.to} className="text-foreground/80 hover:text-primary">
-                        {i.label}
-                      </Link>
-                    </li>
-                  ))}
-                  {g.label === "Resources" &&
-                    ([["How it works", "/how-it-works"], ["About", "/about"], ["Contact", "/contact"], ["Sign in", "/sign-in"]] as const).map(([t, to]) => (
-                      <li key={to}>
-                        <SiteLink to={to} className="text-foreground/80 hover:text-primary">
-                          {t}
-                        </SiteLink>
-                      </li>
-                    ))}
-                  {g.label === "Solutions" && (
-                    <li>
-                      <Link to="/science" className="text-foreground/80 hover:text-primary">
-                        Scientific domains
-                      </Link>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            ),
-          )}
+        {footerColumns.map((c) => (
+          <nav key={c.title} aria-label={c.title}>
+            <p className="text-sm font-medium">{c.title}</p>
+            <ul className="mt-3 space-y-2 text-sm">
+              {c.links.map((l) => (
+                <li key={l.label}>
+                  <Link to={l.to} className="text-muted-foreground hover:text-foreground">
+                    {l.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
       </div>
-      <div className="border-t border-border/60 py-6 text-center font-mono text-xs text-muted-foreground">
-        © 2026 Human Super Intelligence · HSI supports scientific judgement, it does not replace it.
-      </div>
+      <div className="border-t border-border/60 py-5 text-center text-xs text-muted-foreground">© 2026 Human Super Intelligence</div>
     </footer>
   );
 }
