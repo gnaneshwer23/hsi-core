@@ -17,7 +17,7 @@ export default function Page() {
         </div>
       </PageHero>
       <Section eyebrow="Ten stages" title="Click a stage to see what it keeps.">
-        <InvestigationRecord />
+        <InvestigationRecord labTo="/platform/contradiction-analysis" />
       </Section>
     </>
   );
