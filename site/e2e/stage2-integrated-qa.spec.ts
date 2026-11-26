@@ -29,7 +29,7 @@ test("Stage 2 public pages: one h1, Get Access chrome, honesty, no overflow at 3
 
 test("Stage 2 audience menu lists the six indexed destinations", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/how-it-works");
+  await page.goto("/researchers");
   const menu = page.getByRole("navigation", {name:"Footer audiences"});
   await expect(menu).toBeVisible();
   for (const [href, name] of [

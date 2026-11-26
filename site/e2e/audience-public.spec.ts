@@ -80,7 +80,7 @@ test('research community landing keeps Circles held and /community redirect hone
 test('pricing and access page lists planned tiers without inventing prices',async({page})=>{
  await page.goto('/contact');
  await expect(page.getByRole('heading',{level:1})).toContainText('design-partner pilot');
- await expect(page.getByRole('heading',{name:'Access shapes (planned labels only).'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Planned labels only.'})).toBeVisible();
  await expect(page.locator('#main-content')).toContainText('No prices');
  await expect(page.locator('#main-content')).toContainText('Individual researcher');
  await expect(page.locator('#main-content')).toContainText('Research group');

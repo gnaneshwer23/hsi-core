@@ -12,11 +12,13 @@ import { LV2_INDEXED } from "../site/src/landing-v2/indexed";
 const root = (...p: string[]) => readFileSync(resolve(import.meta.dir, "..", ...p), "utf8");
 
 const STAGE2_SURFACES = [
-  "site/src/pages/HomeLanding.tsx",
-  "site/src/pages/HowItWorksPage.tsx",
+  "site/src/landing-v2/pages/index.tsx",
+  "site/src/landing-v2/pages/how-it-works.tsx",
+  "site/src/landing-v2/pages/trust.tsx",
+  "site/src/landing-v2/pages/about.tsx",
   "site/src/pages/AudiencePublicPages.tsx",
   "site/src/pages/EnterpriseLanding.tsx",
-  "site/src/pages/ContactPublic.tsx",
+  "site/src/landing-v2/pages/contact.tsx",
 ] as const;
 
 /** Promotional claim shapes — honesty denials that quote the banned phrase are allowed in copy. */
@@ -28,7 +30,7 @@ describe("Stage 2 integrated QA locks", () => {
     const marketing = ([...PUBLIC_MARKETING_PATHS] as string[]).sort();
     const seo = Object.keys(SEO_PAGES).filter((p) => !(LV2_INDEXED as readonly string[]).includes(p)).sort();
     expect(marketing).toEqual(seo);
-    expect(marketing).toHaveLength(16);
+    expect(marketing).toHaveLength(12);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
   });
 

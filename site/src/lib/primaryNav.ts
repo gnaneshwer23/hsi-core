@@ -26,10 +26,9 @@ export const RESEARCH_NAV_LINKS = [
   { to: "/context-conflict-audit", label: "Context-Conflict Audit" },
 ] as const;
 
-/** The only public (indexed) pages. */
+/** The indexed pages that use the original site header and footer. The homepage, trust, how-it-works, about, contact and the landing platform pages use the landing header and footer instead (see landing-v2/indexed.ts). */
 export const PUBLIC_MARKETING_PATHS = [
   "/",
-  "/how-it-works",
   "/knowledge-graph",
   "/intelligence",
   "/research-gaps",
@@ -41,10 +40,10 @@ export const PUBLIC_MARKETING_PATHS = [
   "/laboratories",
   "/research-community",
   "/validation",
-  "/trust",
-  "/about",
-  "/contact",
 ] as const;
+
+/** Indexed pages that use the landing header and footer instead (they are not in PUBLIC_MARKETING_PATHS because the original chrome does not render them). */
+export const LANDING_CHROME_PATHS = ["/how-it-works", "/trust", "/about", "/contact"] as const;
 
 /** Account creation is distinct from provisioned research access. */
 export const PRIMARY_NAV_CTA = { to: "/sign-up", label: "Create account" } as const;

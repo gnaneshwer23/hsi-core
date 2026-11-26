@@ -2,7 +2,6 @@ import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense,type ComponentType} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Layout } from "./components/Layout";
-import {ContactPublicPage as Contact} from "./pages/ContactPublic";
 import {EnterpriseLandingPage} from "./pages/EnterpriseLanding";
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
@@ -19,7 +18,6 @@ const FundingCareersDashboard=lazy(()=>import("./pages/FundingCareersDashboard")
 const FirstPilotDashboard=lazy(()=>import("./pages/FirstPilotDashboard").then(m=>({default:m.FirstPilotDashboard})));
 const DemoUniversePage=lazy(()=>import("./pages/DemoUniversePage").then(m=>({default:m.DemoUniversePage})));
 import {ContextConflictAuditPage} from "./pages/PublicResearchPages";
-import {TrustPublicPage,AboutPublicPage} from "./pages/PublicFoundationPages";
 import {
   ResearchersPublicPage,
   BiotechPublicPage,
@@ -27,13 +25,9 @@ import {
   LaboratoriesPublicPage,
   CommunityPublicPage,
 } from "./pages/AudiencePublicPages";
-import {HowItWorksPage as HowItWorks} from "./pages/HowItWorksPage";
 import {ScientificEvidence as EvidenceIntelligencePage} from "./pages/ScientificPublic";
 import {KnowledgeGraphPublicPage} from "./pages/KnowledgeGraphPublic";
 import {IntelligencePublicPage,ResearchGapsPublicPage,ScientificCompanionPublicPage,ValidationPublicPage} from "./pages/CinematicStoryPages";
-import {PasswordRecovery} from "./pages/PasswordRecovery";
-import { SignIn } from "./pages/SignIn";
-import { SignUp } from "./pages/SignUp";
 import { ResearchAccount } from "./pages/ResearchAccount";
 const Explore=lazy(()=>import("./pages/Explore").then(m=>({default:m.Explore})));
 const DiscoveryEngine=lazy(()=>import("./pages/DiscoveryEngine").then(m=>({default:m.DiscoveryEngine})));
@@ -70,6 +64,7 @@ import { NotFound } from "./pages/NotFound";
 const LandingV2=lazy(()=>import("./landing-v2/LandingV2"));
 import type {LandingV2Page} from "./landing-v2/LandingV2";
 const HomeV2=lazy(()=>import("./landing-v2/HomePage"));
+const Account=lazy(()=>import("./landing-v2/Account"));
 const AuthenticatedInterrogativeWorkbench=lazy(()=>import("./pages/AuthenticatedInterrogativeWorkbench").then(m=>({default:m.AuthenticatedInterrogativeWorkbench})));
 const ResearchMechanismWorkflowPage=lazy(()=>import("./pages/ResearchMechanismWorkflow").then(m=>({default:m.ResearchMechanismWorkflowPage})));
 const ScientificInvestigationPage=lazy(()=>import("./pages/ScientificInvestigation").then(m=>({default:m.ScientificInvestigationPage})));
@@ -101,6 +96,14 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
     <Routes>
       <Route path="landing-v2" element={<Navigate to="/" replace />}/>
       <Route index element={<Suspense fallback={null}><Home/></Suspense>}/>
+      <Route path="sign-in" element={<Suspense fallback={null}><Account which="sign-in"/></Suspense>}/>
+      <Route path="sign-up" element={<Suspense fallback={null}><Account which="sign-up"/></Suspense>}/>
+      <Route path="forgot-password" element={<Suspense fallback={null}><Account which="forgot"/></Suspense>}/>
+      <Route path="reset-password" element={<Suspense fallback={null}><Account which="reset"/></Suspense>}/>
+      <Route path="trust" element={<Suspense fallback={null}><Landing page="trust"/></Suspense>}/>
+      <Route path="how-it-works" element={<Suspense fallback={null}><Landing page="how-it-works"/></Suspense>}/>
+      <Route path="about" element={<Suspense fallback={null}><Landing page="about"/></Suspense>}/>
+      <Route path="contact" element={<Suspense fallback={null}><Landing page="contact"/></Suspense>}/>
       <Route path="data-sources" element={<Suspense fallback={null}><Landing page="data-sources"/></Suspense>}/>
       <Route path="platform/memory" element={<Suspense fallback={null}><Landing page="platform/memory"/></Suspense>}/>
       <Route path="platform/agents" element={<Suspense fallback={null}><Landing page="platform/agents"/></Suspense>}/>
@@ -125,7 +128,6 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />
         <Route path="community" element={<Navigate to="/research/home" replace />} />
         <Route path="pricing" element={<Navigate to="/contact" replace />} />
-        <Route path="contact" element={<Contact/>}/>
         <Route path="research/dashboard" element={<ResearchDashboard/>}/>
         <Route path="academic" element={<EnterpriseLandingPage/>}/>
         <Route path="enterprise" element={<EnterpriseLandingPage/>}/>
@@ -148,10 +150,6 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="workspaces/community" element={<Suspense fallback={<p role="status">Loading community workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
         <Route path="workspaces/enterprise" element={<Suspense fallback={<p role="status">Loading enterprise workspace…</p>}><WorkspaceDashboardPage/></Suspense>}/>
         <Route path="research/governance" element={<GovernanceDashboard/>}/>
-        <Route path="sign-in" element={<SignIn />} />
-        <Route path="forgot-password" element={<PasswordRecovery key="request" mode="request" />} />
-        <Route path="reset-password" element={<PasswordRecovery key="reset" mode="reset" />} />
-        <Route path="sign-up" element={<SignUp />} />
         <Route path="research/account" element={<ResearchAccount />} />
         <Route path="platform" element={<Navigate to="/how-it-works" replace />} />
         {import.meta.env.DEV && <Route path={"design/identity"} element={<IdentityStudy/>}/> }
@@ -184,8 +182,6 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="research-briefs" element={<Navigate to="/how-it-works" replace />} />
         <Route path="applications" element={<Navigate to="/how-it-works" replace />} />
         <Route path="knowledge-graph" element={<KnowledgeGraphPublicPage />} />
-        <Route path="trust" element={<TrustPublicPage />} />
-        <Route path="about" element={<AboutPublicPage />} />
         <Route path="researchers" element={<ResearchersPublicPage />} />
         <Route path="biotech" element={<BiotechPublicPage />} />
         <Route path="clinical" element={<ClinicalPublicPage />} />
@@ -193,7 +189,6 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="research-community" element={<CommunityPublicPage />} />
         <Route path="validation" element={<ValidationPublicPage />} />
         <Route path="technology" element={<Navigate to="/how-it-works" replace />} />
-        <Route path="how-it-works" element={<HowItWorks />} />
         <Route path="research-gaps" element={<ResearchGapsPublicPage />} />
         <Route path="scientific-companion" element={<ScientificCompanionPublicPage />} />
         <Route path="explore" element={<Explore />} />

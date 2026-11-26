@@ -136,3 +136,45 @@ test('every homepage teaser link opens its page with the full interactive',async
  await expect(page).toHaveURL(/\/platform\/contradiction-analysis$/);
  await expect(page.getByRole('button',{name:'No grouping'})).toBeVisible();
 });
+
+
+test('how it works shows the journey and separates checks from approval',async({page})=>{
+ await page.goto('/how-it-works');
+ await expect(page.getByRole('heading',{level:1})).toContainText('evidence-linked decisions');
+ await expect(page.getByRole('list',{name:'Investigation journey',exact:true}).getByRole('listitem')).toHaveCount(8);
+ await expect(page.getByRole('list',{name:'Scientific review boundaries',exact:true}).getByRole('listitem')).toHaveCount(4);
+ await expect(page.getByRole('main').locator('img')).toHaveCount(2);
+ await expect(page.getByRole('link',{name:'See an example investigation record'}).first()).toHaveAttribute('href','/platform/workbench');
+ await page.getByRole('button',{name:'Context',exact:true}).click();
+ await expect(page.getByText('Under which experimental conditions?')).toBeVisible();
+});
+
+test('trust page keeps its governance states, scientific memory rules and notice anchors',async({page})=>{
+ await page.goto('/trust');
+ await expect(page.getByRole('heading',{level:1})).toContainText('separates evidence from approval');
+ await expect(page.getByRole('list',{name:'The five states'}).getByRole('listitem')).toHaveCount(5);
+ await expect(page.locator('#scientific-memory')).toContainText('not enabled for researchers');
+ await expect(page.locator('#scientific-memory')).toContainText('does not enter the knowledge graph on its own');
+ for(const id of ['privacy','terms','accessibility','security']){await page.goto('/trust#'+id);await expect(page.locator('#'+id)).toBeInViewport();}
+});
+
+test('contact page keeps the honest access path and a working request panel',async({page})=>{
+ await page.goto('/contact');
+ await expect(page.getByRole('heading',{level:1})).toContainText('design-partner pilot');
+ await expect(page.getByRole('list',{name:'The access path'}).getByRole('listitem')).toHaveCount(3);
+ await expect(page.locator('#pilot-request')).toContainText('browser draft');
+ await expect(page.getByRole('link',{name:'Create an account'}).first()).toHaveAttribute('href',/\/sign-up/);
+ await expect(page.locator('main')).not.toContainText(/\$\d|£\d|per seat|subscribe now/i);
+});
+
+test('about page states responsibility and its limits; sign-in and sign-up use the landing header and footer',async({page})=>{
+ await page.goto('/about');
+ await expect(page.getByRole('heading',{level:1})).toContainText('What HSI is for');
+ await expect(page.getByRole('main')).toContainText('No institutional affiliations');
+ for(const p of ['/sign-in','/sign-up','/forgot-password']){
+  await page.goto(p);
+  await expect(page.getByRole('banner').getByRole('link',{name:'Sign in'})).toBeVisible();
+  await expect(page.getByRole('contentinfo')).toBeVisible();
+  await expect(page.getByRole('heading',{level:1})).toBeVisible();
+ }
+});
