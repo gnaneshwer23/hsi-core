@@ -4,8 +4,9 @@ import { agents as siteAgents } from "../../lib/site-data";
 import { StatusTag } from "../site/ui";
 import { StatusChip } from "../atlas/EvidenceLegend";
 import { INV_STAGES, QUESTION } from "./investigationData";
+import { SiteLink } from "../../router";
 
-export function InvestigationRecord({ className, labHref }: { className?: string; labHref?: string }) {
+export function InvestigationRecord({ className, labTo }: { className?: string; labTo?: string }) {
   const [i, setI] = useState(0);
   const s = INV_STAGES[i]!;
   const maturity = s.by.fixed ?? siteAgents.find((a) => a.name === s.by.agent)?.status;
@@ -66,9 +67,9 @@ export function InvestigationRecord({ className, labHref }: { className?: string
               ))}
             </ul>
           )}
-          {s.id === "compare" && labHref && (
+          {s.id === "compare" && labTo && (
             <p className="mt-4 text-sm">
-              <a href={labHref} className="text-primary underline underline-offset-2">Try the alignment in the contradiction lab →</a>
+              <SiteLink to={labTo} className="text-primary underline underline-offset-2">Try the alignment in the contradiction lab →</SiteLink>
             </p>
           )}
           <div className="mt-6 flex items-center justify-between gap-2">
