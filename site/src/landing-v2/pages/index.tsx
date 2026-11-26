@@ -16,6 +16,7 @@ import { Fragmentation } from "../components/home/Fragmentation";
 import { MemoryEngine } from "../components/home/MemoryEngine";
 import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
 import { AgentBoard } from "../components/agents/AgentBoard";
+import { LiveGraphHero } from "../../components/home/LiveGraphHero";
 import { ContradictionLab } from "../components/contradiction/ContradictionLab";
 import { EarlyAccessForm } from "../components/site/EarlyAccessForm";
 import { sources } from "../lib/site-data";
@@ -35,6 +36,15 @@ export default function Home() {
         intro="Follow a pathway across immunology, neuroscience, microbiome, genomics, tissue and disease, and see how well each step is evidenced."
       >
         <BiologicalAtlas />
+      </Section>
+
+      <Section
+        id="published-graph"
+        eyebrow="Live snapshot"
+        title="And this is the real graph, unreviewed."
+        intro="The atlas above is illustrative. This is the graph HSI has published so far, read live from the published snapshot. Every line is a candidate from a recorded source; nothing here is an approved finding."
+      >
+        <LiveGraphHero />
       </Section>
 
       <Section
