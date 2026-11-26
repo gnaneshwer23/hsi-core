@@ -577,6 +577,10 @@
       "destination": "/_pages/workspace--immersive.html"
     },
     {
+      "source": "/workspace/graph",
+      "destination": "/_pages/workspace--graph.html"
+    },
+    {
       "source": "/research/gaps",
       "destination": "/_pages/research--gaps.html"
     },

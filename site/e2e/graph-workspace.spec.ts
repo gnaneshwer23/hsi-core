@@ -1,0 +1,151 @@
+import AxeBuilder from "@axe-core/playwright";
+import {expect,test,type Page} from "@playwright/test";
+
+const open=async(page:Page)=>{await page.goto("/workspace/graph");await expect(page.getByRole("heading",{level:1,name:"Living Intelligence Graph"})).toBeVisible();await expect(page.locator("g.gw-node").first()).toBeVisible()};
+const table=async(page:Page)=>{await page.getByRole("radio",{name:"Table"}).click();await expect(page.locator("table.gw-table")).toBeVisible()};
+
+test("it opens on the real published slice and says every relationship is a candidate",async({page})=>{
+ await open(page);
+ await expect(page.locator(".gw-banner")).toContainText("Every relationship is a candidate: unreviewed, confidence not calibrated, source not verified");
+ expect(await page.locator("g.gw-node").count()).toBeGreaterThan(30);
+ expect(await page.locator("line.gw-edge").count()).toBeGreaterThan(20);
+ await expect(page.getByLabel("Scope",{exact:true})).toContainText("Immunology × Microbiome");
+});
+
+test("a relationship's inspector shows status, explicit missing context with reasons, and the source",async({page})=>{
+ await open(page);await table(page);
+ await page.locator("table.gw-table tbody th button").first().click();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ await expect(side.getByRole("heading",{name:"Relationship"})).toBeVisible();
+ for(const t of ["Candidate","Unreviewed","Confidence not calibrated","Source not verified"])await expect(side).toContainText(t);
+ await expect(side).toContainText("No relationship in the published graph is reviewed or approved");
+ await expect(side).toContainText("Not stated");
+ await expect(side).toContainText("HSI does not record this field yet.");
+ await expect(side).toContainText("Cell type");await expect(side).toContainText("Dose");
+ await expect(side).toContainText("HSI shows a passage only where one is recorded and rights allow. None is invented.");
+ await expect(side.getByRole("link",{name:/DOI|PubMed/}).first()).toHaveAttribute("rel","noopener noreferrer");
+});
+
+test("selecting a concept lists its relationships and never claims an identifier",async({page})=>{
+ await open(page);
+ await page.locator("g.gw-node").nth(4).click();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ await expect(side.getByRole("heading",{name:/Relationships \(\d+\)/})).toBeVisible();
+ await expect(side).toContainText("No canonical identifier is shown in this phase");
+});
+
+test("the table is an equivalent accessible view with source links",async({page})=>{
+ await open(page);
+ const nodes=await page.locator("g.gw-node").count();
+ await table(page);
+ const rows=page.locator("table.gw-table tbody tr");
+ expect(await rows.count()).toBeGreaterThan(20);
+ await expect(page.locator("table.gw-table caption")).toContainText("None is reviewed or approved");
+ await expect(rows.first().getByRole("link",{name:"DOI"})).toHaveAttribute("target","_blank");
+ expect(nodes).toBeGreaterThan(0);
+});
+
+test("filters narrow the view, count 'Not stated' as a value, and say an empty result is not evidence of absence",async({page})=>{
+ await open(page);await table(page);
+ const all=await page.locator("table.gw-table tbody tr").count();
+ await page.getByRole("group",{name:"Species"}).getByLabel(/Not stated/).check();
+ const some=await page.locator("table.gw-table tbody tr").count();
+ expect(some).toBeGreaterThan(0);expect(some).toBeLessThan(all);
+ await page.getByRole("button",{name:"Reset"}).click();
+ expect(await page.locator("table.gw-table tbody tr").count()).toBe(all);
+ await page.getByLabel(/Context stated: at least/).fill("8");
+ await expect(page.getByRole("status").filter({hasText:"not evidence of absence"})).toBeVisible();
+});
+
+test("modes without data or blocked by a decision cannot be opened, and say why",async({page})=>{
+ await open(page);
+ const mode=page.getByLabel("Mode",{exact:true});
+ await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toHaveJSProperty("disabled",true);
+ await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toContainText("No data yet");
+ await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toHaveJSProperty("disabled",true);
+ await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toContainText("Blocked");
+ await expect(mode.locator("option",{hasText:"Biological Atlas"})).toHaveJSProperty("disabled",false);
+});
+
+test("the contradiction mode never invents a conflict",async({page})=>{
+ await open(page);
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Contradiction Graph"});
+ const empty=page.getByRole("status").filter({hasText:"nothing to compare"});
+ const pairs=page.locator('line.gw-edge[data-pair]');
+ await expect(empty.or(pairs.first())).toBeVisible();
+ await expect(page.getByText(/confirmed contradiction|resolved/i)).toHaveCount(0);
+});
+
+test("the coverage strip reports no coverage for genomics instead of drawing it",async({page})=>{
+ await open(page);
+ const cov=page.getByRole("region",{name:/Coverage in the published graph/}).or(page.locator("section[aria-labelledby=gw-cov]"));
+ await expect(cov.locator("li",{hasText:"Genomics & Multi-omics"})).toContainText("No coverage");
+ await expect(cov).toContainText("not a measure of how well a domain is understood");
+});
+
+test("the whole published graph is larger than the slice, and neighbours can be added within a bound",async({page})=>{
+ await open(page);
+ const slice=await page.locator("g.gw-node").count();
+ await page.getByRole("radio",{name:"1 hop"}).click();
+ await expect(page.getByText(/Added \d+ relationship/)).toBeVisible();
+ expect(await page.locator("g.gw-node").count()).toBeGreaterThanOrEqual(slice);
+ await page.getByLabel("Scope",{exact:true}).selectOption("all");
+ expect(await page.locator("g.gw-node").count()).toBeGreaterThan(slice);
+});
+
+test("pathway tracing lists association chains and says they are not mechanisms",async({page})=>{
+ await open(page);await table(page);
+ const first=page.locator("table.gw-table tbody tr").first();
+ const from=await first.locator("th button").innerText(),to=await first.locator("td").nth(1).innerText();
+ await page.getByLabel("From",{exact:true}).selectOption({label:from});
+ await page.getByLabel("To",{exact:true}).selectOption({label:to});
+ await expect(page.getByRole("list",{name:"Association chains"})).toBeVisible();
+ await expect(page.getByText("It is not a mechanism and not a causal claim.")).toBeVisible();
+});
+
+test("export carries the statuses and the not-stated markers",async({page})=>{
+ await open(page);
+ const dl=page.waitForEvent("download");
+ await page.getByRole("button",{name:"Export this view"}).click();
+ const d=await dl;expect(d.suggestedFilename()).toMatch(/^hsi-graph-044eb4d6-/);
+ const text=await (await import("node:fs/promises")).readFile((await d.path())!,"utf8");
+ expect(text).toContain('"approved": false');expect(text).toContain("unreviewed");expect(text).toContain("not_recorded_in_graph_schema");
+});
+
+test("a failing snapshot shows no substitute graph",async({page})=>{
+ await page.route("**/api/research/graph-snapshot**",r=>r.fulfill({status:500,body:"x"}));
+ await page.goto("/workspace/graph");
+ await expect(page.getByText("Snapshot unavailable. No substitute graph is shown.")).toBeVisible();
+ await expect(page.locator("g.gw-node")).toHaveCount(0);
+});
+
+test("a conflict goal opens the contradiction mode, and every other mode stays reachable",async({page})=>{
+ await page.goto("/onboarding/role");
+ await page.getByRole("radio",{name:/Postdoctoral researcher/}).click();
+ await page.getByRole("button",{name:"Continue"}).click();await page.getByRole("button",{name:"Skip for now"}).click();
+ await page.getByRole("radio",{name:"Primary"}).first().click();await page.getByRole("button",{name:"Continue"}).click();
+ await page.getByRole("checkbox",{name:/Investigate conflicting evidence/}).click();await page.getByRole("button",{name:"Continue"}).click();
+ await page.goto("/workspace/graph");
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("contradiction");
+ await expect(page.getByText("Every other mode, including conflicts, stays one click away.")).toBeVisible();
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Mechanism Graph"});
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ for(const v of ["Graph","Table"]){
+  test(`accessible and no horizontal scroll, ${v} view: ${name}`,async({page})=>{
+   await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+   await open(page);
+   if(v==="Table")await table(page);
+   await page.getByRole("button",{name:/./}).first().isVisible();
+   for(const w of [vp.width,320]){
+    await page.setViewportSize({width:w,height:vp.height});
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+   }
+   await page.setViewportSize(vp);
+   const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+  });
+ }
+}
