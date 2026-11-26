@@ -104,7 +104,7 @@ export default function App({home:Home=HomeV2}:{home?:ComponentType}={}) {
       <Route path="landing-v2/solutions" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="solutions"/></Suspense>}/>
       <Route path="landing-v2/data-sources" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="data-sources"/></Suspense>}/>
       <Route path="landing-v2/trust" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="trust"/></Suspense>}/>
-      <Route path="landing-v2/early-access" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="early-access"/></Suspense>}/>
+      <Route path="landing-v2/early-access" element={<Navigate to="/contact" replace />}/>
       <Route path="landing-v2/platform/memory" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/memory"/></Suspense>}/>
       <Route path="landing-v2/platform/agents" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/agents"/></Suspense>}/>
       <Route path="landing-v2/platform/contradiction-analysis" element={<Suspense fallback={<p role="status">Loading…</p>}><LandingV2 page="platform/contradiction-analysis"/></Suspense>}/>

@@ -62,7 +62,7 @@ export const nav = [
     items: [
       { label: "Data Sources", to: "/data-sources", desc: "Connected and planned integrations" },
       { label: "Trust & Governance", to: "/trust", desc: "Provenance, uncertainty, oversight" },
-      { label: "Early Access", to: "/early-access", desc: "Join research validation" },
+      { label: "Early Access", to: "/early-access", desc: "Start a pilot request" },
     ],
   },
 ] as const;
