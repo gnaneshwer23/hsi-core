@@ -1,13 +1,13 @@
 /* LEA-02B workspace previews. Scoped to .ws inside .lv2. */
 .lv2.ws{min-height:100vh;background:oklch(0.17 0.026 254);display:grid;grid-template-rows:auto auto 1fr}
-.ws-top{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.75rem 1.25rem;border-bottom:1px solid color-mix(in oklab,var(--foreground) 12%,transparent)}
-.ws-switch{display:flex;align-items:center;gap:1rem}
+.ws-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;padding:.75rem 1.25rem;border-bottom:1px solid color-mix(in oklab,var(--foreground) 12%,transparent)}
+.ws-switch{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1rem;min-width:0;max-width:100%}
 .ws-switch select,.ws-field select,.ws-field input{min-height:44px;padding:.5rem .75rem;border-radius:6px;border:1px solid color-mix(in oklab,var(--foreground) 28%,transparent);background:color-mix(in oklab,var(--card) 70%,transparent);color:var(--foreground);font:inherit;font-size:1rem;max-width:100%}
 .ws-link{color:var(--primary);text-decoration:underline;text-underline-offset:3px;min-height:24px;display:inline-flex;align-items:center}
 .ws-banner{padding:.75rem 1.25rem;background:color-mix(in oklab,var(--signal) 12%,transparent);border-bottom:1px solid color-mix(in oklab,var(--signal) 35%,transparent);font-size:.875rem;line-height:1.5}
 .ws-shell{display:grid;grid-template-columns:minmax(0,1fr);max-width:80rem;width:100%;margin:0 auto}
-.ws-nav{padding:1rem 1.25rem 0}
-.ws-nav ul{list-style:none;margin:.5rem 0 0;padding:0;display:flex;gap:.5rem;overflow-x:auto;scrollbar-width:thin}
+.ws-nav{padding:1rem 1.25rem 0;min-width:0}
+.ws-nav ul{list-style:none;margin:.5rem 0 0;padding:0;display:flex;gap:.5rem;overflow-x:auto;max-width:100%;scrollbar-width:thin}
 .ws-nav a{display:inline-flex;align-items:center;gap:.4rem;min-height:44px;padding:0 .875rem;border-radius:999px;border:1px solid color-mix(in oklab,var(--foreground) 20%,transparent);white-space:nowrap;font-size:.875rem;color:var(--foreground);text-decoration:none}
 .ws-nav a:hover{border-color:var(--primary)}
 .ws-dot{width:.5rem;height:.5rem;border-radius:999px;background:var(--signal);display:inline-block}
@@ -76,7 +76,7 @@
 @media (min-width:768px){.ws-board{grid-template-columns:repeat(3,1fr)}}
 .ws-card-sm{margin:.25rem 0;padding:.6rem .75rem;border-radius:6px;border:1px solid color-mix(in oklab,var(--foreground) 16%,transparent);font-size:.9375rem}
 
-.ws-scroll{overflow-x:auto;max-width:100%}
+.ws-scroll{overflow-x:auto;max-width:100%;position:relative}
 .ws-table{width:100%;border-collapse:collapse;font-size:.9375rem}
 .ws-table th,.ws-table td{padding:.6rem .75rem;text-align:left;border-bottom:1px solid color-mix(in oklab,var(--foreground) 12%,transparent);vertical-align:top;min-width:7rem}
 .ws-table thead th{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);font-weight:500}
