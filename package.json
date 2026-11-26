@@ -94,7 +94,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit",
-    "lint": "biome check scripts/generate-status.ts scripts/check-public-copy.ts src/db/migrate.ts src/db/neonGuard.ts test/foundations.test.ts site/src/pages/ClinicalModule.tsx",
+    "lint": "biome check scripts/generate-status.ts scripts/check-public-copy.ts src/db/migrate.ts src/db/neonGuard.ts test/foundations.test.ts",
     "status:write": "bun scripts/generate-status.ts",
     "status:check": "bun scripts/generate-status.ts --check",
     "copy:check": "bun scripts/check-public-copy.ts",

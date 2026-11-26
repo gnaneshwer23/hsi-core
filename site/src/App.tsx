@@ -49,7 +49,7 @@ const ScienceClinicalTrials=lazy(()=>import("./pages/ScienceClinicalTrials").the
 const ScienceResearchAgents=lazy(()=>import("./pages/ScienceResearchAgents").then(m=>({default:m.ScienceResearchAgents})));
 const ScienceZoom=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m.ScienceZoom})));
 const ScienceConnections=lazy(()=>import("./pages/ScienceExplorer").then(m=>({default:m.ScienceConnections})));
-import { NotFound } from "./pages/NotFound";
+const NotFound=lazy(()=>import("./landing-v2/NotFound"));
 const LandingV2=lazy(()=>import("./landing-v2/LandingV2"));
 import type {LandingV2Page} from "./landing-v2/LandingV2";
 const HomeV2=lazy(()=>import("./landing-v2/HomePage"));
@@ -249,7 +249,7 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
       </Route>
     </Routes>
   );
