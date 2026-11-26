@@ -62,7 +62,7 @@ export function Header() {
             to="/early-access"
             className="whitespace-nowrap bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
-            Request Early Access
+            Request access
           </Link>
         </div>
         <button
@@ -101,7 +101,7 @@ export function Header() {
             onClick={() => setOpen(false)}
             className="mt-6 block rounded-md bg-primary px-4 py-3 text-center font-medium text-primary-foreground"
           >
-            Request Early Access
+            Request access
           </Link>
         </div>
       )}

@@ -1,4 +1,4 @@
-import { Link } from "../router";
+import { Link, SiteLink } from "../router";
 import {
   ShieldCheck,
   FileText,
@@ -18,7 +18,6 @@ import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
 import { AgentBoard } from "../components/agents/AgentBoard";
 import { LiveGraphHero } from "../../components/home/LiveGraphHero";
 import { ContradictionLab } from "../components/contradiction/ContradictionLab";
-import { EarlyAccessForm } from "../components/site/EarlyAccessForm";
 import { sources } from "../lib/site-data";
 
 export const pageMeta = meta("HSI — The living intelligence of human biology", "A scientific intelligence platform for human biology, in development: persistent scientific memory, specialised AI agents and contradiction-aware evidence verification are being built and validated.");
@@ -172,7 +171,30 @@ export default function Home() {
         title="Help shape the future of scientific intelligence."
         intro="We invite students, researchers, universities, laboratories and life-science organisations to take part in research validation and potential pilots."
       >
-        <EarlyAccessForm />
+        <div className="flex flex-wrap items-center gap-4">
+          <SiteLink to="/contact#pilot-request" className="bg-primary px-6 py-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
+            Start a pilot request
+          </SiteLink>
+          <SiteLink to="/sign-up" className="border border-border px-6 py-4 text-sm font-medium hover:border-primary">
+            Create an account
+          </SiteLink>
+        </div>
+        <ol className="mt-10 grid max-w-3xl gap-x-10 gap-y-6 md:grid-cols-3">
+          {[
+            ["Tell us the question", "A pilot request starts from your research question and the evidence you need to see."],
+            ["Create an account", "Register and verify your email. An account is not research access."],
+            ["Access is approved", "Researcher, source and scientific-review permissions are provisioned separately by an administrator."],
+          ].map(([t, d], i) => (
+            <li key={t} className="border-t border-border pt-4">
+              <p className="font-mono text-xs text-primary">0{i + 1}</p>
+              <h3 className="mt-2 font-display text-base font-medium">{t}</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{d}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-6 max-w-3xl text-xs text-muted-foreground">
+          Requests start as a draft kept in your browser. Nothing is sent unless the request page confirms delivery, and it never claims receipt before the server does. Do not include patient data or unpublished research.
+        </p>
       </Section>
     </>
   );
