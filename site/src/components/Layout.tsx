@@ -1,3 +1,4 @@
+import "../styles/legacy";
 import { Outlet, useLocation } from "react-router-dom";
 import { useEffect, useRef, Suspense } from "react";
 import { Nav } from "./Nav";
