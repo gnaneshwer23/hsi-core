@@ -8,7 +8,6 @@ import {
 } from "lucide-react";
 import { Card, Section, StatusTag, meta } from "../components/site/ui";
 import {
-  InvestigationDemo,
   PersonaTabs,
 } from "../components/site/Interactive";
 import { Hero } from "../components/home/Hero";
@@ -16,6 +15,7 @@ import { Fragmentation } from "../components/home/Fragmentation";
 import { MemoryEngine } from "../components/home/MemoryEngine";
 import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
 import { AgentBoard } from "../components/agents/AgentBoard";
+import { InvestigationRecord } from "../components/investigation/InvestigationRecord";
 import { LiveGraphHero } from "../../components/home/LiveGraphHero";
 import { ContradictionLab } from "../components/contradiction/ContradictionLab";
 import { sources } from "../lib/site-data";
@@ -56,11 +56,12 @@ export default function Home() {
       </Section>
 
       <Section
-        eyebrow="06 · Investigation demonstration"
+        id="investigation"
+        eyebrow="06 · Investigation record"
         title="From a research question to the next experiment."
-        intro="Step through an illustrative investigation on the gut–brain axis."
+        intro="One invented question, followed through ten stages. See what the record keeps at each step, who produced it, who checked it and what stays visible."
       >
-        <InvestigationDemo />
+        <InvestigationRecord labHref="#contradiction" />
       </Section>
 
       <Section
@@ -130,13 +131,13 @@ export default function Home() {
             <StatusTag s="Illustrative" className="ml-2" />
           </div>
           <p>
-            <span className="text-muted-foreground">you ›</span> What did we conclude about butyrate
-            dosing last month?
+            <span className="text-muted-foreground">you ›</span> What did we conclude about the dose of
+            intervention X earlier?
           </p>
           <p className="text-foreground/90">
-            <span className="text-primary">hsi ›</span> Your 14 Oct investigation flagged dose as
-            the main explanatory variable (confidence: low). 2 new murine studies have appeared
-            since. Inspect evidence?
+            <span className="text-primary">hsi ›</span> Your earlier investigation recorded dose as a
+            candidate explanatory variable, and the conflict is still unresolved. I can check for
+            newer studies. Inspect the evidence?
           </p>
           <p className="pt-2 text-xs text-muted-foreground">
             Voice & audiovisual interaction — <span className="text-foreground">planned</span>

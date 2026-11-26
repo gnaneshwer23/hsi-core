@@ -1,26 +1,26 @@
 import { Card, PageHero, Section, StatusTag, meta } from "../../components/site/ui";
-import { ConfidenceMeter } from "../../components/site/Visuals";
+import { StatusChip } from "../../components/atlas/EvidenceLegend";
 
 export const pageMeta = meta("Discovery Engine — HSI", "HSI's planned discovery engine: finding research gaps, proposing testable hypotheses and drafting experiments for expert review.");
 
 const hyps = [
   {
-    h: "Reduced faecal butyrate precedes elevated CSF IL-6 in prodromal Parkinson's disease.",
-    s: 34,
-    n: 31,
-    gap: "No longitudinal human cohort",
+    h: "The timing of an intervention relative to the inflammatory insult explains mixed results across studies.",
+    status: "hypothesis" as const,
+    gap: "Few studies vary timing alone",
+    falsified: "Studies that vary timing alone show the same effect.",
   },
   {
-    h: "AhR ligand availability modulates microglial priming via peripheral immune signalling.",
-    s: 22,
-    n: 12,
-    gap: "Mechanism mostly in vitro",
+    h: "A candidate metabolite modulates brain immune cells through peripheral immune signalling.",
+    status: "hypothesis" as const,
+    gap: "The mechanism is mostly shown in vitro",
+    falsified: "Blocking the peripheral signal leaves the brain-cell response unchanged.",
   },
   {
-    h: "Sex-specific SCFA responses explain conflicting murine neuroinflammation results.",
-    s: 46,
-    n: 19,
+    h: "Sex-specific responses explain conflicting results in animal models.",
+    status: "association" as const,
     gap: "Few sex-stratified analyses",
+    falsified: "Sex-stratified reanalyses show no difference between sexes.",
   },
 ];
 
@@ -37,7 +37,7 @@ export default function Page() {
           <StatusTag s="Illustrative" />
         </div>
       </PageHero>
-      <Section eyebrow="Example output" title="Candidate hypotheses, ranked with uncertainty.">
+      <Section eyebrow="Example output" title="Candidate hypotheses, each with what would falsify it.">
         <div className="space-y-4">
           {hyps.map((x, i) => (
             <Card key={x.h} className="grid gap-6 md:grid-cols-[1fr_260px]">
@@ -46,15 +46,10 @@ export default function Page() {
                 <p className="mt-2 text-lg">{x.h}</p>
                 <p className="mt-3 font-mono text-xs text-signal">Key gap: {x.gap}</p>
               </div>
-              <div className="space-y-3">
-                <ConfidenceMeter
-                  label="Evidence support"
-                  value={x.s}
-                  tone={x.s > 40 ? "primary" : "signal"}
-                />
-                <p className="font-mono text-[11px] text-muted-foreground">
-                  {x.n} linked records · requires expert review
-                </p>
+              <div className="space-y-3 text-sm">
+                <StatusChip status={x.status} />
+                <p className="text-muted-foreground"><span className="font-mono text-[11px] uppercase tracking-widest">Falsified if</span><br />{x.falsified}</p>
+                <p className="font-mono text-[11px] text-muted-foreground">A proposal · requires expert review</p>
               </div>
             </Card>
           ))}
