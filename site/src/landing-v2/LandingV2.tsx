@@ -1,15 +1,5 @@
-import { lazy, Suspense, useEffect, type ComponentType, type ReactNode } from "react";
-import { useLocation } from "react-router-dom";
-import "@fontsource-variable/space-grotesk";
-import "@fontsource-variable/newsreader";
-import "@fontsource-variable/newsreader/wght-italic.css";
-import "@fontsource/ibm-plex-sans/400.css";
-import "@fontsource/ibm-plex-sans/500.css";
-import "@fontsource/ibm-plex-sans/600.css";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
-import "./landing-v2.css";
-import { Header, Footer } from "./components/site/Header";
+import { lazy, useEffect, type ComponentType } from "react";
+import { LandingV2Layout } from "./Layout";
 
 type PageMeta = { meta: { title?: string; name?: string; content?: string; property?: string }[] };
 type PageModule = { default: ComponentType; pageMeta: PageMeta };
@@ -61,7 +51,6 @@ function lazyPage(load: () => Promise<PageModule>) {
   });
 }
 
-const Home = lazyPage(() => import("./pages/index"));
 const Science = lazyPage(() => import("./pages/science"));
 const Solutions = lazyPage(() => import("./pages/solutions"));
 const DataSources = lazyPage(() => import("./pages/data-sources"));
@@ -75,26 +64,7 @@ const KnowledgeGraph = lazyPage(() => import("./pages/platform/knowledge-graph")
 const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
 const Companion = lazyPage(() => import("./pages/platform/companion"));
 
-function LandingV2Layout({ children }: { children: ReactNode }) {
-  const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-  return (
-    <div className="lv2">
-      <Header />
-      <main>
-        <Suspense fallback={<p role="status" className="px-6 py-24 text-sm text-muted-foreground">Loading…</p>}>
-          {children}
-        </Suspense>
-      </main>
-      <Footer />
-    </div>
-  );
-}
-
 const PAGES = {
-  home: Home,
   science: Science,
   solutions: Solutions,
   "data-sources": DataSources,

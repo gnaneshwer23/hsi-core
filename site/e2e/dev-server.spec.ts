@@ -6,7 +6,7 @@ import {test,expect} from "@playwright/test";
 test.use({baseURL:"http://127.0.0.1:4179"});
 
 const ROUTES:[string,RegExp][]=[
- ["/",/Your next scientific discovery/i],
+ ["/",/Understand biology/i],
  ["/welcome",/Tell us what you work on/i],
  ["/research/account",/Research account/i],
  ["/workspaces",/HSI Research Intelligence/i],

@@ -70,7 +70,7 @@ export function ContradictionLab({ className }: { className?: string }) {
           </div>
         </div>
 
-        <div className="overflow-x-auto p-5">
+        <div className="overflow-x-auto p-5" role="region" aria-label="Studies, scrollable" tabIndex={0}>
           <table className="w-full min-w-[34rem] text-left text-sm">
             <caption className="sr-only">Invented studies{variable ? `, grouped by ${variable}` : ""}, with their context and result</caption>
             <thead>

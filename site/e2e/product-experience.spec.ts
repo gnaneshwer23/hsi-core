@@ -22,7 +22,7 @@ test("the knowledge graph page opens the existing versioned graph and preserves 
  await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);await expect(page.getByRole('heading',{level:1})).toContainText('Investigate a biological connection');
 });
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
- await page.setViewportSize({width:390,height:844});await page.goto("/");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
+ await page.setViewportSize({width:390,height:844});await page.goto("/how-it-works");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
  await menu.click(); await page.locator("#public-menu").getByRole("link",{name:"How It Works",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
  await expect(page.getByRole("heading",{level:1})).toContainText("evidence-linked decisions");

@@ -1,4 +1,4 @@
-import { Link } from "../../router";
+import { Link, SiteLink } from "../../router";
 import { useState } from "react";
 import { ChevronDown, Menu, X } from "lucide-react";
 import { nav } from "../../lib/site-data";
@@ -49,15 +49,18 @@ export function Header() {
           ))}
         </nav>
         <div className="hidden items-center gap-2 lg:flex">
+          <SiteLink to="/sign-in" className="whitespace-nowrap rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground">
+            Sign in
+          </SiteLink>
           <Link
             to="/platform/workbench"
-            className="rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
+            className="whitespace-nowrap rounded-md px-3 py-2 text-sm text-muted-foreground hover:text-foreground"
           >
             Explore HSI
           </Link>
           <Link
             to="/early-access"
-            className="bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+            className="whitespace-nowrap bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
           >
             Request Early Access
           </Link>
@@ -90,6 +93,9 @@ export function Header() {
               ))}
             </div>
           ))}
+          <SiteLink to="/sign-in" onClick={() => setOpen(false)} className="mt-4 block py-2 text-base">
+            Sign in
+          </SiteLink>
           <Link
             to="/early-access"
             onClick={() => setOpen(false)}
@@ -133,6 +139,14 @@ export function Footer() {
                       </Link>
                     </li>
                   ))}
+                  {g.label === "Resources" &&
+                    ([["How it works", "/how-it-works"], ["About", "/about"], ["Contact", "/contact"], ["Sign in", "/sign-in"]] as const).map(([t, to]) => (
+                      <li key={to}>
+                        <SiteLink to={to} className="text-foreground/80 hover:text-primary">
+                          {t}
+                        </SiteLink>
+                      </li>
+                    ))}
                   {g.label === "Solutions" && (
                     <li>
                       <Link to="/science" className="text-foreground/80 hover:text-primary">
