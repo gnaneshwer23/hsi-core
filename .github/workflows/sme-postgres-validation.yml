@@ -60,3 +60,8 @@ jobs:
         env:
           SME_DISPOSABLE_FIXTURE: '1'
         run: bun --no-env-file docs/architecture/sme-02b/memory-evidence-e2e.fixture.ts
+
+      - name: Execute synthetic adjudication persistence validation
+        env:
+          SME_DISPOSABLE_FIXTURE: '1'
+        run: bun --no-env-file docs/architecture/sme-02b/memory-adjudication-e2e.fixture.ts
