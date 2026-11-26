@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Contradiction Intelligence"
+        eyebrow="Contradiction Intelligence"
         title="Most contradictions are missing context."
         intro="Conflicting results often reflect differences in model system, dose, timing, cohort or method. HSI is designed to surface those variables, assess verification status and state the remaining uncertainty."
       />

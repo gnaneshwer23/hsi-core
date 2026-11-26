@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Research Workbench"
+        eyebrow="Research Workbench"
         title="From a research question to the next experiment."
         intro="An interactive walkthrough of the proposed HSI workflow, using one invented question. It shows what an investigation record keeps at each stage, not a live run."
       >

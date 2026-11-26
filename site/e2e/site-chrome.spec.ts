@@ -36,7 +36,7 @@ test('footer has product, audiences, company and trust navigation with accessibl
  await page.getByRole('contentinfo').getByRole('link',{name:'Knowledge Graph',exact:true}).click();await expect(page).toHaveURL(/knowledge-graph$/);
 });
 test('primary and secondary actions remain readable and large enough on light and dark sections',async({page})=>{
- await page.goto('/');const heroActions=page.getByRole('main').getByRole('link',{name:/Explore HSI/}).first();await expect(heroActions).toBeVisible();const buttons=heroActions;
+ await page.goto('/');const heroActions=page.getByRole('main').getByRole('link',{name:/Explore the knowledge graph/}).first();await expect(heroActions).toBeVisible();const buttons=heroActions;
  for(const button of await buttons.all()){
   const b=(await button.boundingBox())!;expect(b.height).toBeGreaterThanOrEqual(44);
   const ratio=await button.evaluate(el=>{const toRgb=(s:string)=>{const c=document.createElement('canvas');c.width=c.height=1;const x=c.getContext('2d')!;x.fillStyle='#000';x.fillStyle=s;x.fillRect(0,0,1,1);return [...x.getImageData(0,0,1,1).data].slice(0,3)}; /* canvas converts oklch() and other modern colour syntaxes to sRGB */let bg=getComputedStyle(el).backgroundColor;let p=el.parentElement;while((bg==='rgba(0, 0, 0, 0)'||bg==='transparent')&&p){bg=getComputedStyle(p).backgroundColor;p=p.parentElement}const lum=(rgb:number[])=>rgb.map(v=>{v/=255;return v<=.04045?v/12.92:((v+.055)/1.055)**2.4}).reduce((a,v,i)=>a+v*[.2126,.7152,.0722][i]!,0);const a=lum(toRgb(getComputedStyle(el).color)),b=lum(toRgb(bg));return (Math.max(a,b)+.05)/(Math.min(a,b)+.05)});

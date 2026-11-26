@@ -21,7 +21,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Scientific Companion"
+        eyebrow="Scientific Companion"
         title="Ask in plain language. Get cited answers."
         intro="The Companion is a conversational layer over HSI's memory and agents. It is designed to answer with citations and confidence, and to say clearly when the evidence is not there."
       >
