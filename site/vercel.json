@@ -565,6 +565,10 @@
       "destination": "/_pages/workspace--preview--institution.html"
     },
     {
+      "source": "/settings/scientific-profile",
+      "destination": "/_pages/settings--scientific-profile.html"
+    },
+    {
       "source": "/research/gaps",
       "destination": "/_pages/research--gaps.html"
     },

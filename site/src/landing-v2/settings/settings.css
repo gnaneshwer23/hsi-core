@@ -1,0 +1,15 @@
+/* LEA-02C scientific profile settings. Builds on the workspace shell (.ws) and onboarding chips. */
+.st .st-grid{display:grid;gap:.5rem}
+@media (min-width:640px){.st .st-grid{grid-template-columns:repeat(auto-fit,minmax(15rem,1fr))}}
+.st .st-gap{margin-top:1rem}
+.st .st-hint{margin:-.25rem 0 .75rem}
+.st .st-row{display:flex;gap:.5rem;flex-wrap:wrap}.st .st-row input{flex:1 1 12rem}
+.st :is(.ob-chip,.ob-mode,.ob-link,.ob-tags button):focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+.st .ob-mode{min-height:48px}
+.st .ob-group legend{font-family:var(--font-display);font-size:1rem;font-weight:500;padding:0;margin-bottom:.625rem}
+.st .ws-rows li button.ob-link,.st .ws-rows li .ob-chip{justify-self:start}
+.st .ws-rows li button.ob-link{min-height:44px}
+.st-json{margin:.75rem 0;padding:1rem;max-height:22rem;overflow:auto;border-radius:8px;background:color-mix(in oklab,var(--foreground) 6%,transparent);font-family:var(--font-mono);font-size:.8125rem;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+.st-actions{display:flex;gap:.75rem;flex-wrap:wrap}
+.st-danger{margin-top:1.5rem;padding-top:1rem;border-top:1px solid color-mix(in oklab,var(--foreground) 14%,transparent)}
+.st-btn-danger{border-color:var(--conflict-ink);color:var(--conflict-ink)}

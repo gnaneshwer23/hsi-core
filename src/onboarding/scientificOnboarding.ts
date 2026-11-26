@@ -119,7 +119,8 @@ export type OnboardingState={
  methods:{techniques:string[];computational:string[];expertise:string;modelSystems:string[];datasets:string[];evidence:string[];level:ExplanationLevel|null};
  connections:Partial<Record<ConnectionId,"interested">>;
  privacy:{memory:Memory;sharing:Sharing;notifications:"off"|"weekly";external:"ask"|"never"};
- institutionInfo:{name:string;contact:string;size:""|"under-50"|"50-500"|"over-500"};
+ institutionInfo:{name:string;contact:string;size:""|"under-50"|"50-500"|"over-500";departments:string[];intendedData:DataClass[]};
+ projects:{name:string;note:string}[];
  visited:string[];
  skipped:string[];
  done:boolean;
@@ -132,7 +133,8 @@ export const EMPTY_STATE:OnboardingState={
  methods:{techniques:[],computational:[],expertise:"",modelSystems:[],datasets:[],evidence:[],level:null},
  connections:{},
  privacy:{memory:"private",sharing:"private",notifications:"off",external:"ask"},
- institutionInfo:{name:"",contact:"",size:""},
+ institutionInfo:{name:"",contact:"",size:"",departments:[],intendedData:[]},
+ projects:[],
  visited:[],skipped:[],done:false,
 };
 
@@ -236,6 +238,11 @@ export type Action=
  |{type:"toggleConnection";id:ConnectionId}
  |{type:"setPrivacy";patch:Partial<OnboardingState["privacy"]>}
  |{type:"setInstitution";patch:Partial<OnboardingState["institutionInfo"]>}
+ |{type:"addDepartment";name:string}
+ |{type:"removeDepartment";index:number}
+ |{type:"addProject";name:string;note:string}
+ |{type:"removeProject";index:number}
+ |{type:"setObjectives";ids:ObjectiveId[]}
  |{type:"visit";step:StepId}
  |{type:"skip";step:StepId}
  |{type:"finish"}
@@ -265,6 +272,19 @@ export function reduce(s:OnboardingState,a:Action):OnboardingState{
   }
   case "setPrivacy":return {...s,privacy:{...s.privacy,...a.patch}};
   case "setInstitution":return {...s,institutionInfo:{...s.institutionInfo,...a.patch}};
+  case "addDepartment":{
+   const name=a.name.trim().slice(0,80),d=s.institutionInfo.departments;
+   if(!name||d.length>=20||d.some(x=>x.toLowerCase()===name.toLowerCase()))return s;
+   return {...s,institutionInfo:{...s.institutionInfo,departments:[...d,name]}};
+  }
+  case "removeDepartment":return {...s,institutionInfo:{...s.institutionInfo,departments:s.institutionInfo.departments.filter((_,i)=>i!==a.index)}};
+  case "addProject":{
+   const name=a.name.trim().slice(0,80);
+   if(!name||s.projects.length>=10||s.projects.some(p=>p.name.toLowerCase()===name.toLowerCase()))return s;
+   return {...s,projects:[...s.projects,{name,note:a.note.trim().slice(0,200)}]};
+  }
+  case "removeProject":return {...s,projects:s.projects.filter((_,i)=>i!==a.index)};
+  case "setObjectives":return {...s,objectives:[...new Set(a.ids)].filter(id=>id in objectiveById)};
   case "visit":return s.visited.includes(a.step)?s:{...s,visited:[...s.visited,a.step]};
   case "skip":return {...s,skipped:s.skipped.includes(a.step)?s.skipped:[...s.skipped,a.step],visited:s.visited.includes(a.step)?s.visited:[...s.visited,a.step]};
   case "finish":return {...s,done:true};
@@ -320,7 +340,8 @@ export function parseState(raw:string|null):OnboardingState{
    notifications:p.notifications==="weekly"?"weekly":"off",
    external:p.external==="never"?"never":"ask",
   },
-  institutionInfo:{name:str(inst.name,MAX.text),contact:str(inst.contact,MAX.text),size:inList(inst.size,["under-50","50-500","over-500"] as const)?inst.size:""},
+  institutionInfo:{name:str(inst.name,MAX.text),contact:str(inst.contact,MAX.text),size:inList(inst.size,["under-50","50-500","over-500"] as const)?inst.size:"",departments:strs(inst.departments,null,20),intendedData:strs(inst.intendedData,["public","private","restricted"],3) as DataClass[]},
+  projects:Array.isArray(j.projects)?j.projects.filter((p:any)=>p&&typeof p.name==="string"&&p.name.trim()&&p.name.length<=80).slice(0,10).map((p:any)=>({name:p.name.trim(),note:str(p.note,200)})):[],
   visited:strs(j.visited,stepIds,STEPS.length) as string[],
   skipped:strs(j.skipped,stepIds,STEPS.length) as string[],
   done:j.done===true,
@@ -340,7 +361,7 @@ export function resumeStep(s:OnboardingState):StepId{
 
 /* ---------------------------------------------------- workspace planning */
 
-export type Capability={id:string;name:string;to:string;status:CapabilityStatus;why:string};
+export type Capability={id:string;name:string;to:string;status:CapabilityStatus;why:string;/** The answers that caused this recommendation. */because:string[]};
 const CAP={
  literature:{id:"literature",name:"Literature Synthesis",to:"/platform/agents",status:"Prototype" as CapabilityStatus},
  verification:{id:"verification",name:"Evidence Verification",to:"/platform/agents",status:"In development" as CapabilityStatus},
@@ -387,10 +408,13 @@ const FIRST_ACTION:Record<PersonaId,{title:string;label:string}>={
 /** Builds the plan from the answers only. It never invents findings and never claims anything was created. */
 export function deriveWorkspacePlan(s:OnboardingState):WorkspacePlan|null{
  const persona=personaOf(s);if(!persona||!s.primaryRole)return null;
- const ids=new Set<string>();const tools:Capability[]=[];
- for(const o of s.objectives)for(const k of BY_OBJECTIVE[o]??[])if(!ids.has(k)){ids.add(k);tools.push({...CAP[k],why:WHY[k]!})}
- if(s.privacy.memory!=="off"&&!ids.has("memory"))tools.push({...CAP.memory,why:WHY.memory!});
- if(tools.length===0)tools.push({...CAP.graph,why:WHY.graph!});
+ const tools:Capability[]=[];
+ for(const o of s.objectives)for(const k of BY_OBJECTIVE[o]??[]){
+  const label=objectiveById[o].label,have=tools.find(t=>t.id===k);
+  if(have)have.because.push(label);else tools.push({...CAP[k],why:WHY[k]!,because:[label]});
+ }
+ if(s.privacy.memory!=="off"&&!tools.some(t=>t.id==="memory"))tools.push({...CAP.memory,why:WHY.memory!,because:["You chose to keep scientific memory"]});
+ if(tools.length===0)tools.push({...CAP.graph,why:WHY.graph!,because:["No objective chosen yet, so a general starting point"]});
  const domains=[s.primaryDomain,...s.secondaryDomains].filter((d):d is DomainKey=>!!d).map(d=>DOMAINS.find(x=>x.key===d)!.label);
  const fa=s.primaryRole==="postdoc"?{title:"Compare conflicting scientific findings",label:"Open an illustrative conflict comparison"}:FIRST_ACTION[persona];
  const q=s.question.trim();
