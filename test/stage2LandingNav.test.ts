@@ -23,7 +23,7 @@ describe("Stage 2 landing design system + nav", () => {
     expect(css).toContain("#000310");
     expect(css).toContain("#C52076");
     expect(css).toContain("#2396AC");
-    expect(root("site/src/main.tsx")).toContain("cinematic.css");
+    expect(root("site/src/styles/legacy.ts")).toContain("cinematic.css");
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
