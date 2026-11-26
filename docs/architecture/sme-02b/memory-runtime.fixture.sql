@@ -25,6 +25,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-revalidation.candidate.sql
 \ir memory-evidence-status.candidate.sql
 \ir memory-publication-assertions.candidate.sql
+\ir memory-adjudication.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -62,6 +63,10 @@ CREATE ROLE sme_fixture_evidence_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_evidence_ingestor;
 GRANT EXECUTE ON FUNCTION hsi_memory.record_evidence_observation(uuid,text,text,text,timestamptz,text) TO sme_fixture_evidence_ingestor;
 CREATE POLICY fixture_owner_assertions ON hsi_memory.publication_assertion_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_adjudication ON hsi_memory.adjudication_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE ROLE sme_fixture_adjudication_writer NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_adjudication_writer;
+GRANT EXECUTE ON FUNCTION hsi_memory.stage_adjudication(uuid,text,text,text,jsonb) TO sme_fixture_adjudication_writer;
 CREATE ROLE sme_fixture_assertion_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_assertion_ingestor;
 GRANT EXECUTE ON FUNCTION hsi_memory.stage_publication_assertion(uuid,text,text,text,text) TO sme_fixture_assertion_ingestor;
@@ -92,6 +97,25 @@ SET ROLE sme_fixture_runtime;
 DO $evidence_deny$ BEGIN
  BEGIN PERFORM hsi_memory.record_evidence_observation(gen_random_uuid(),'fixture:paper','v1','current',now(),'fixture:notice'); RAISE EXCEPTION 'runtime ingestion accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $evidence_deny$;
+RESET ROLE;
+SET ROLE sme_fixture_adjudication_writer;
+DO $adjudication$ DECLARE i uuid:=gen_random_uuid(); p jsonb; BEGIN
+ SELECT jsonb_agg(jsonb_build_object('authority',a,'payloadSha256',repeat('a',64),'authorityAuthenticated',false,'ingestionAllowed',false,'scientificClaimAllowed',false) ORDER BY a) INTO p FROM unnest(ARRAY['crossref','pubmed','europe_pmc']) a;
+ PERFORM hsi_memory.stage_adjudication(i,'10.1234/fixture-paper','v1','quarantine',p);
+ PERFORM hsi_memory.stage_adjudication(i,'10.1234/fixture-paper','v1','quarantine',p);
+ BEGIN PERFORM hsi_memory.stage_adjudication(i,'10.1234/fixture-paper','v1','recheck_required',p); RAISE EXCEPTION 'conflict accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ BEGIN PERFORM hsi_memory.stage_adjudication(gen_random_uuid(),'10.1234/fixture-paper','v1','quarantine',jsonb_build_array(p->0,p->0,p->0)); RAISE EXCEPTION 'duplicate accepted'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ BEGIN PERFORM hsi_memory.stage_adjudication(gen_random_uuid(),'10.1234/fixture-paper','v1','quarantine',jsonb_set(p,'{0,ingestionAllowed}','true')); RAISE EXCEPTION 'trust flag accepted'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ BEGIN PERFORM count(*) FROM hsi_memory.adjudication_candidates; RAISE EXCEPTION 'direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN DELETE FROM hsi_memory.adjudication_candidates; RAISE EXCEPTION 'direct delete accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $adjudication$;
+RESET ROLE;
+DO $adjudication_count$ BEGIN IF (SELECT count(*) FROM hsi_memory.adjudication_candidates WHERE NOT ingestion_allowed AND NOT scientific_claim_allowed)<>1 THEN RAISE EXCEPTION 'adjudication replay failure'; END IF; END $adjudication_count$;
+SET ROLE sme_fixture_runtime;
+DO $adjudication_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.stage_adjudication(gen_random_uuid(),'10.1234/fixture-paper','v1','quarantine','[]'); RAISE EXCEPTION 'runtime write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM count(*) FROM hsi_memory.adjudication_candidates; RAISE EXCEPTION 'runtime read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $adjudication_deny$;
 RESET ROLE;
 SET ROLE sme_fixture_assertion_ingestor;
 DO $assertions$ DECLARE i uuid:=gen_random_uuid(); BEGIN
