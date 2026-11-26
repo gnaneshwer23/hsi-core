@@ -2,7 +2,7 @@ import {test,expect} from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 /** The homepage and the /landing-v2 pages (ported from the Lovable site). They have their own header and footer, state their status honestly, and only the homepage is indexable. */
-const ROUTES=['','/science','/solutions','/data-sources','/trust','/early-access','/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/knowledge-graph','/platform/discovery-engine','/platform/companion'];
+const ROUTES=['','/science','/solutions','/data-sources','/trust','/platform/memory','/platform/agents','/platform/contradiction-analysis','/platform/workbench','/platform/knowledge-graph','/platform/discovery-engine','/platform/companion'];
 
 for(const r of ROUTES){
  test(`landing v2 ${r||'home'} renders and has no console errors; only the homepage is indexable`,async({page})=>{
@@ -16,12 +16,25 @@ for(const r of ROUTES){
  });
 }
 
-test('landing v2 nav leads to a platform page and the early-access form says nothing is sent',async({page})=>{
- await page.goto('/landing-v2/early-access');
- await expect(page.getByText('Submissions are not yet stored or sent')).toBeVisible();
- await expect(page.getByText('Do not enter patient or unpublished research data')).toBeVisible();
+test('every early-access button leads to the working request page, and no prototype form remains',async({page})=>{
+ await page.setViewportSize({width:1440,height:900});
  await page.goto('/');
  await expect(page.getByText('HSI is being built to connect')).toBeVisible();
+ await expect(page.getByRole('banner').getByRole('link',{name:'Request access'})).toHaveAttribute('href','/contact');
+ await expect(page.getByRole('contentinfo').getByRole('link',{name:'Early Access'})).toHaveAttribute('href','/contact');
+ const s=page.locator('main').getByRole('link',{name:'Start a pilot request'});
+ await expect(s).toHaveAttribute('href','/contact#pilot-request');
+ await expect(page.locator('main').getByRole('link',{name:'Create an account'})).toHaveAttribute('href','/sign-up');
+ await expect(page.getByText('Submit application')).toHaveCount(0);
+ await expect(page.getByText('Nothing is sent unless the request page confirms delivery')).toBeVisible();
+ await s.click();
+ await expect(page).toHaveURL(/\/contact#pilot-request$/);
+ await expect(page.getByRole('heading',{level:1})).toContainText('Request a design-partner pilot');
+});
+
+test('/landing-v2/early-access redirects to the contact page',async({page})=>{
+ await page.goto('/landing-v2/early-access');
+ await expect(page).toHaveURL(/\/contact$/);
 });
 
 test('landing v2 trust page states that safeguards are designed, not deployed',async({page})=>{
@@ -50,7 +63,7 @@ test('homepage chrome: skip link, header with sign-in, links to real site pages,
  await expect(page.locator('#main-content')).toHaveCount(1);
  const header=page.getByRole('banner');
  await expect(header.getByRole('link',{name:'Sign in'})).toHaveAttribute('href','/sign-in');
- await expect(header.getByRole('link',{name:'Request Early Access'})).toHaveAttribute('href','/landing-v2/early-access');
+ await expect(header.getByRole('link',{name:'Request access'})).toHaveAttribute('href','/contact');
  const footer=page.getByRole('contentinfo');
  await expect(footer.getByRole('link',{name:'Trust & Governance'})).toHaveAttribute('href','/trust');
  await expect(footer.getByRole('link',{name:'How it works'})).toHaveAttribute('href','/how-it-works');
@@ -76,7 +89,7 @@ test('homepage is served as prerendered HTML with its content before JavaScript'
 });
 
 test('homepage and a landing v2 page pass axe on desktop and the homepage at 390px',async({page})=>{
- for(const p of ['/','/landing-v2/trust']){
+ for(const p of ['/','/landing-v2/trust','/landing-v2/platform/agents','/landing-v2/platform/contradiction-analysis']){
   await page.goto(p);await page.waitForTimeout(1200);
   const res=await new AxeBuilder({page}).analyze();
   expect(res.violations.map(v=>v.id+':'+v.nodes.length),p).toEqual([]);

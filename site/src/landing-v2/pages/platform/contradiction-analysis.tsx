@@ -24,7 +24,7 @@ export default function Page() {
           ].map(([t, d], i) => (
             <li key={t} className="relative border-t border-border pt-5">
               <span className="absolute -top-1.5 left-0 size-3 rounded-full border border-primary bg-background" aria-hidden />
-              <p className="font-mono text-xs text-primary-ink">0{i + 1}</p>
+              <p className="font-mono text-xs text-primary">0{i + 1}</p>
               <h3 className="mt-2 font-display text-lg font-medium">{t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{d}</p>
             </li>

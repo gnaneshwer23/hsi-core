@@ -55,7 +55,6 @@ const Science = lazyPage(() => import("./pages/science"));
 const Solutions = lazyPage(() => import("./pages/solutions"));
 const DataSources = lazyPage(() => import("./pages/data-sources"));
 const Trust = lazyPage(() => import("./pages/trust"));
-const EarlyAccess = lazyPage(() => import("./pages/early-access"));
 const Memory = lazyPage(() => import("./pages/platform/memory"));
 const Agents = lazyPage(() => import("./pages/platform/agents"));
 const Contradiction = lazyPage(() => import("./pages/platform/contradiction-analysis"));
@@ -69,7 +68,6 @@ const PAGES = {
   solutions: Solutions,
   "data-sources": DataSources,
   trust: Trust,
-  "early-access": EarlyAccess,
   "platform/memory": Memory,
   "platform/agents": Agents,
   "platform/contradiction-analysis": Contradiction,
