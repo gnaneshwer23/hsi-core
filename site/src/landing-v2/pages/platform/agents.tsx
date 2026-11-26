@@ -23,7 +23,7 @@ export default function Page() {
             ["People decide", "Agents propose. A reviewer sees the evidence, the conflicts and the uncertainty, and records a decision."],
           ].map(([t, d], i) => (
             <li key={t} className="border-t border-border pt-5">
-              <p className="font-mono text-xs text-primary-ink">0{i + 1}</p>
+              <p className="font-mono text-xs text-primary">0{i + 1}</p>
               <h3 className="mt-2 font-display text-lg font-medium">{t}</h3>
               <p className="mt-2 text-sm text-muted-foreground">{d}</p>
             </li>

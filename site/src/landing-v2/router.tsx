@@ -2,8 +2,8 @@ import { Link as RouterLink, type LinkProps } from "react-router-dom";
 
 /** Pages of this section that are not the homepage live under this prefix. */
 export const LV2_BASE = "/landing-v2";
-/** Destinations that exist as real site pages: the homepage and the Trust page. Everything else is a landing v2 page. */
-const SITE_PAGES: Record<string, string> = { "/": "/", "/trust": "/trust" };
+/** Destinations that exist as real site pages: the homepage, the Trust page and the access page. "Early access" goes to /contact, the one working way to ask for access (a pilot request plus account creation). Everything else is a landing v2 page. */
+const SITE_PAGES: Record<string, string> = { "/": "/", "/trust": "/trust", "/early-access": "/contact" };
 
 export function hrefFor(to: string) {
   return SITE_PAGES[to] ?? LV2_BASE + to;
