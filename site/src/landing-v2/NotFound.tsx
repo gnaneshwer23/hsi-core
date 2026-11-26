@@ -1,9 +1,14 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { applySeo } from "../lib/seo/applySeo";
 import { LandingV2Layout } from "./Layout";
 import { Link } from "./router";
 import { PageHero } from "./components/site/ui";
 
 /** The site's 404, in the landing design. The marker attribute is read by applySeo to set the noindex title. */
 export default function LandingV2NotFound() {
+  const { pathname } = useLocation();
+  useEffect(() => applySeo(pathname), [pathname]);
   return (
     <LandingV2Layout>
       <div data-not-found="true">

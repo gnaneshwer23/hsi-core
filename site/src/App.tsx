@@ -249,8 +249,8 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
         <Route path="roadmap" element={<Roadmap />} />
         <Route path="alignment" element={<Alignment />} />
         <Route path="docs" element={<Docs />} />
-        <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
       </Route>
+      <Route path="*" element={<Suspense fallback={null}><NotFound /></Suspense>} />
     </Routes>
   );
 }
