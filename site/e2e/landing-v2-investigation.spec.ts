@@ -3,11 +3,11 @@ import AxeBuilder from '@axe-core/playwright';
 import type {Page} from '@playwright/test';
 
 /** LEA-01C: the investigation record (replacing the simulated run) and the removal of invented figures from the landing copy. */
-const home=async(page:Page)=>{await page.goto('/');await page.waitForFunction(()=>document.documentElement.dataset.hydrated==='home');};
+const open=async(page:Page,path:string)=>{await page.goto(path);await page.waitForFunction(()=>!!document.documentElement.dataset.hydrated);};
 
 test('the investigation record says it is a record, not a run, and has ten stages',async({page})=>{
- await home(page);
- const s=page.locator('#investigation');
+ await open(page,'/platform/workbench');
+ const s=page.locator('main');
  await expect(s.getByText('a record, not a run')).toBeVisible();
  await expect(s.getByText('Illustrative',{exact:true}).first()).toBeVisible();
  expect(await s.getByRole('list',{name:'Investigation stages'}).getByRole('button').count()).toBe(10);
@@ -16,8 +16,8 @@ test('the investigation record says it is a record, not a run, and has ten stage
 });
 
 test('a failed claim stays out of the output, with its reason, producer and checker',async({page})=>{
- await home(page);
- const s=page.locator('#investigation');
+ await open(page,'/platform/workbench');
+ const s=page.locator('main');
  await s.getByRole('button',{name:'Verify claims'}).click();
  await expect(s.getByText('Stage 06 of 10')).toBeVisible();
  await expect(s.getByText('Not supported',{exact:true})).toBeVisible();
@@ -29,18 +29,18 @@ test('a failed claim stays out of the output, with its reason, producer and chec
 });
 
 test('mechanism links each carry their own evidence status, and the conflict stage links to the lab',async({page})=>{
- await home(page);
- const s=page.locator('#investigation');
+ await open(page,'/platform/workbench');
+ const s=page.locator('main');
  await s.getByRole('button',{name:'Map relevant mechanisms'}).click();
  const route=s.getByRole('list',{name:/status of each link/});
  await expect(route).toContainText('Supported');await expect(route).toContainText('Association');await expect(route).toContainText('Hypothesis');
  await s.getByRole('button',{name:'Compare conflicting findings'}).click();
- await expect(s.getByRole('link',{name:/contradiction lab/})).toHaveAttribute('href','#contradiction');
+ await expect(s.getByRole('link',{name:/contradiction lab/})).toHaveAttribute('href','/platform/contradiction-analysis');
 });
 
 test('Next and Previous step through the stages',async({page})=>{
- await home(page);
- const s=page.locator('#investigation');
+ await open(page,'/platform/workbench');
+ const s=page.locator('main');
  await s.getByRole('button',{name:'Next stage →'}).click();
  await expect(s.getByText('Stage 02 of 10')).toBeVisible();
  await s.getByRole('button',{name:'Previous'}).click();
@@ -66,11 +66,10 @@ test('the workbench page shows the same record',async({page})=>{
 
 test('the record has no overflow at 390px and the redesigned pages pass axe',async({page})=>{
  await page.setViewportSize({width:390,height:844});
- await home(page);
- await page.locator('#investigation').scrollIntoViewIfNeeded();
+ await open(page,'/platform/workbench');
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.setViewportSize({width:1280,height:900});
- expect((await new AxeBuilder({page}).include('#investigation').analyze()).violations.map(v=>v.id+':'+v.nodes.length)).toEqual([]);
+ expect((await new AxeBuilder({page}).include('main').analyze()).violations.map(v=>v.id+':'+v.nodes.length)).toEqual([]);
  for(const p of ['/landing-v2/platform/workbench','/landing-v2/platform/memory','/landing-v2/platform/discovery-engine','/landing-v2/platform/companion']){
   await page.goto(p);await page.waitForTimeout(800);
   expect((await new AxeBuilder({page}).analyze()).violations.map(v=>p+' '+v.id+':'+v.nodes.length)).toEqual([]);
