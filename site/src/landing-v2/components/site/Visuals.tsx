@@ -497,38 +497,3 @@ export function PathwayMap({ className }: { className?: string | undefined }) {
     </div>
   );
 }
-
-export function ConfidenceMeter({
-  value,
-  label,
-  tone = "primary",
-}: {
-  value: number;
-  label: string;
-  tone?: "primary" | "verify" | "signal" | "helix";
-}) {
-  const bg = { primary: "bg-primary", verify: "bg-verify", signal: "bg-signal", helix: "bg-helix" }[
-    tone
-  ];
-  return (
-    <div>
-      <div className="flex justify-between font-mono text-[11px]">
-        <span className="text-muted-foreground">{label}</span>
-        <span>{value}%</span>
-      </div>
-      <div
-        className="mt-1.5 h-1.5 overflow-hidden rounded-full bg-muted"
-        role="meter"
-        aria-valuenow={value}
-        aria-valuemin={0}
-        aria-valuemax={100}
-        aria-label={label}
-      >
-        <div
-          className={cn("h-full rounded-full transition-[width] duration-700", bg)}
-          style={{ width: `${value}%` }}
-        />
-      </div>
-    </div>
-  );
-}

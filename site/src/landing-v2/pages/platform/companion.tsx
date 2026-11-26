@@ -1,21 +1,19 @@
 import { PageHero, Section, StatusTag, meta } from "../../components/site/ui";
 
-export const pageMeta = meta("Scientific Companion — HSI", "A conversational interface to HSI that answers with cited evidence, stated confidence and links back to your lab's memory.");
+export const pageMeta = meta("Scientific Companion — HSI", "A conversational interface to HSI that answers with cited evidence, stated uncertainty and links back to your lab's memory.");
 
 const msgs = [
-  { who: "you", t: "Is there human evidence that butyrate reduces neuroinflammation?" },
+  { who: "you", t: "Is there human evidence that intervention X lowers marker Y?" },
   {
     who: "hsi",
-    t: "Not directly. Most supporting evidence comes from murine models [R-01, R-02]. The one human study in scope is observational and shows no clear association [R-04]. Your lab reviewed a related question in March — see investigation v1.2.",
-    conf: "Low",
-    src: 3,
+    t: "Not directly. Most supporting evidence comes from animal models [R-01, R-02]. The one human study in scope is observational and reports no clear association [R-04]. Your lab reviewed a related question earlier; see that investigation record.",
+    note: "Unresolved · requires expert review",
   },
   { who: "you", t: "What would most reduce that uncertainty?" },
   {
     who: "hsi",
     t: "A longitudinal cohort pairing faecal SCFA profiles with CSF inflammatory markers. I can draft a study outline for review.",
-    conf: "Moderate",
-    src: 2,
+    note: "Draft for review",
   },
 ];
 
@@ -49,10 +47,9 @@ export default function Page() {
                 </p>
               )}
               <p className="leading-relaxed">{m.t}</p>
-              {m.conf && (
+              {m.note && (
                 <p className="mt-2 font-mono text-[11px] text-muted-foreground">
-                  Confidence: <span className="text-signal">{m.conf}</span> · {m.src} sources ·
-                  illustrative
+                  Status: <span className="text-signal">{m.note}</span> · illustrative
                 </p>
               )}
             </div>
