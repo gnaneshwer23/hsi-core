@@ -1,6 +1,6 @@
 import {test,expect} from "@playwright/test";
 import {readFile} from "node:fs/promises";
-const pages={"/":"Understand biology. Resolve uncertainty. Advance discovery.","/how-it-works":"From scientific questions to evidence-linked decisions.","/knowledge-graph":"Every connection, with the study behind it.","/solutions":"How different research teams use HSI.","/evidence-intelligence":"Inspect what supports a connection before relying on it.","/trust":"How HSI separates evidence from approval.","/about":"What HSI is for.","/contact":"Request a design-partner pilot."};
+const pages={"/":"See what the evidence supports, and where it does not.","/how-it-works":"From scientific questions to evidence-linked decisions.","/knowledge-graph":"Every connection, with the study behind it.","/solutions":"How different research teams use HSI.","/evidence-intelligence":"Inspect what supports a connection before relying on it.","/trust":"How HSI separates evidence from approval.","/about":"What HSI is for.","/contact":"Request a design-partner pilot."};
 for(const [path,title] of Object.entries(pages))test(`approved public page, image and responsive layout ${path}`,async({page},info)=>{
  test.setTimeout(60000);const errors:string[]=[];page.on("pageerror",e=>errors.push(e.message));
  for(const width of [320,390,768,1440]){

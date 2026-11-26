@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Scientific AI Agents"
+        eyebrow="Scientific AI Agents"
         title="Narrow agents. Shared evidence. Contested conclusions."
         intro="Instead of one general model answering everything, HSI is designed to orchestrate specialised agents. Each output is designed to be checked by another agent, and every step to remain inspectable."
       />

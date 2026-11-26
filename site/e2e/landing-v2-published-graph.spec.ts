@@ -15,7 +15,7 @@ test('the published graph says it is live, candidate-only and unreviewed, and no
  await expect(g.getByRole('complementary',{name:'Selected concept'})).toContainText('Select a concept');
  await expect(g.getByRole('button',{name:'Display'})).toHaveCount(0);
  await expect(g.getByRole('button',{name:'PNG'})).toHaveCount(0);
- await expect(page.locator('#published-graph')).toContainText('The atlas above is illustrative');
+ await expect(page.locator('#published-graph')).toContainText('Every line is a candidate from a recorded source');
 });
 
 test('filters and search narrow the graph in place and selecting a concept shows unreviewed relationships',async({page})=>{

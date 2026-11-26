@@ -1,157 +1,99 @@
 import { Link, SiteLink } from "../router";
-import {
-  ShieldCheck,
-  FileText,
-  FlaskConical,
-  Network,
-  Lightbulb,
-} from "lucide-react";
-import { Card, Section, StatusTag, meta } from "../components/site/ui";
-import {
-  PersonaTabs,
-} from "../components/site/Interactive";
+import { Card, Section, meta } from "../components/site/ui";
 import { Hero } from "../components/home/Hero";
-import { Fragmentation } from "../components/home/Fragmentation";
-import { MemoryEngine } from "../components/home/MemoryEngine";
 import { BiologicalAtlas } from "../components/atlas/BiologicalAtlas";
-import { AgentsTeaser, InvestigationTeaser, ContradictionTeaser, DataTeaser } from "../components/home/Teasers";
 import { LiveGraphHero } from "../../components/home/LiveGraphHero";
 
-export const pageMeta = meta("HSI — The living intelligence of human biology", "A scientific intelligence platform for human biology, in development: persistent scientific memory, specialised AI agents and contradiction-aware evidence verification are being built and validated.");
+export const pageMeta = meta(
+  "HSI — See what the evidence supports",
+  "HSI links published studies to the biology they describe, so researchers can see where a claim came from, what it applied to and where studies disagree. A research platform in development.",
+);
+
+const steps = [
+  ["Ask a question", "Start with a research question, such as whether a pathway matters in a disease."],
+  ["Read the evidence", "See what each study found, and in which species, tissue and model."],
+  ["See where it holds", "Find where studies agree, where they conflict and which conditions might explain it. A person decides what it means."],
+] as const;
+
+const uses = [
+  ["Keep a record", "Questions, sources and decisions stay together, so work can be picked up later.", "/platform/memory", "How the record works"],
+  ["Use specialised agents", "Agents search, extract and check evidence. Each hands its work on for review.", "/platform/agents", "Meet the agents"],
+  ["Find disagreements", "Compare studies that seem to conflict and see which conditions differ.", "/platform/contradiction-analysis", "Try the comparison"],
+  ["Follow one investigation", "See a single question taken from start to finish, with the evidence at each stage.", "/platform/workbench", "See the walkthrough"],
+] as const;
 
 export default function Home() {
   return (
     <>
       <Hero />
-      <Fragmentation />
-      <MemoryEngine />
+
+      <Section id="how" title="From a question to a checked answer.">
+        <ol className="grid gap-8 md:grid-cols-3">
+          {steps.map(([t, d], i) => (
+            <li key={t} className="border-t border-border pt-5">
+              <p className="text-sm text-primary">Step {i + 1}</p>
+              <h3 className="mt-2 font-display text-xl font-medium">{t}</h3>
+              <p className="mt-3 text-muted-foreground">{d}</p>
+            </li>
+          ))}
+        </ol>
+        <p className="mt-8 text-sm">
+          <Link to="/how-it-works" className="text-primary underline underline-offset-4">Read the full walkthrough</Link>
+        </p>
+      </Section>
+
       <Section
         id="atlas"
-        eyebrow="04 · Interactive biological atlas"
-        title="Six domains. One connected biology."
-        intro="Follow a pathway across immunology, neuroscience, microbiome, genomics, tissue and disease, and see how well each step is evidenced."
+        title="Follow a pathway across biology."
+        intro="Choose a pathway to see how it links the immune system, the nervous system, the gut and other areas, and how well each step is supported. This is an illustration, not published data."
       >
         <BiologicalAtlas />
       </Section>
 
       <Section
         id="published-graph"
-        eyebrow="Live snapshot"
-        title="And this is the real graph, unreviewed."
-        intro="The atlas above is illustrative. This is the graph HSI has published so far, read live from the published snapshot. Every line is a candidate from a recorded source; nothing here is an approved finding."
+        title="The graph so far."
+        intro="This is the graph HSI has published, read live. Every line is a candidate from a recorded source. None is an approved finding."
       >
         <LiveGraphHero />
+        <p className="mt-6 text-sm">
+          <Link to="/knowledge-graph" className="text-primary underline underline-offset-4">About the knowledge graph</Link>
+        </p>
       </Section>
 
-      <AgentsTeaser />
-
-      <InvestigationTeaser />
-
-      <ContradictionTeaser />
-
-      <Section eyebrow="08 · Research outputs" title="Outputs built for scientific review.">
-        <div className="grid gap-4 md:grid-cols-4">
-          {[
-            [FileText, "Evidence dossiers"],
-            [Lightbulb, "Mechanistic hypotheses"],
-            [FlaskConical, "Experimental protocols"],
-            [Network, "Knowledge graphs"],
-          ].map(([I, t]) => {
-            const Icon = I as typeof FileText;
-            return (
-              <Card key={t as string}>
-                <Icon className="size-5 text-verify" />
-                <h3 className="mt-4 font-semibold">{t as string}</h3>
-                <p className="mt-2 font-mono text-xs text-muted-foreground">
-                  provenance · uncertainty · review status
-                </p>
+      <Section id="uses" title="What you can do with it.">
+        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+          {uses.map(([t, d, to, cta]) => (
+            <li key={t}>
+              <Card>
+                <h3 className="font-display text-lg font-medium">{t}</h3>
+                <p className="mt-3 text-sm text-muted-foreground">{d}</p>
+                <Link to={to} className="mt-4 inline-block text-sm text-primary underline underline-offset-4">{cta}</Link>
               </Card>
-            );
-          })}
-        </div>
-      </Section>
-
-      <Section eyebrow="09 · Solutions" title="Built for every research user.">
-        <PersonaTabs />
-      </Section>
-
-      <DataTeaser />
-
-      <Section
-        eyebrow="11 · Scientific Companion"
-        title="A companion that understands your research context."
-        intro="A text-first interface to the HSI system — not a separate source of scientific truth."
-      >
-        <div className="max-w-2xl space-y-3 rounded-xl border border-border bg-card/50 p-6 font-mono text-sm">
-          <div className="flex justify-end">
-            <StatusTag s="Prototype" />
-            <StatusTag s="Illustrative" className="ml-2" />
-          </div>
-          <p>
-            <span className="text-muted-foreground">you ›</span> What did we conclude about the dose of
-            intervention X earlier?
-          </p>
-          <p className="text-foreground/90">
-            <span className="text-primary">hsi ›</span> Your earlier investigation recorded dose as a
-            candidate explanatory variable, and the conflict is still unresolved. I can check for
-            newer studies. Inspect the evidence?
-          </p>
-          <p className="pt-2 text-xs text-muted-foreground">
-            Voice & audiovisual interaction — <span className="text-foreground">planned</span>
-          </p>
-        </div>
-      </Section>
-
-      <Section
-        eyebrow="12 · Trust & governance"
-        title="Scientific intelligence must earn your trust."
-      >
-        <div className="grid gap-4 md:grid-cols-4">
-          {[
-            "Source provenance",
-            "Explicit uncertainty",
-            "Data sovereignty",
-            "Human-in-the-loop review",
-          ].map((t) => (
-            <Card key={t}>
-              <ShieldCheck className="size-5 text-verify" />
-              <h3 className="mt-4 font-semibold">{t}</h3>
-            </Card>
+            </li>
           ))}
-        </div>
-        <Link to="/trust" className="mt-8 inline-block text-sm text-primary hover:underline">
-          Our intended safeguards →
-        </Link>
+        </ul>
       </Section>
 
-      <Section
-        eyebrow="13 · Early access"
-        title="Help shape the future of scientific intelligence."
-        intro="We invite students, researchers, universities, laboratories and life-science organisations to take part in research validation and potential pilots."
-      >
+      <Section id="audience" title="Made for people who do research." intro="Researchers, research groups, biotech R&D teams, clinical researchers and laboratories. Each has different needs, and the Solutions page says what HSI does and does not do for each.">
+        <Link to="/solutions" className="text-sm text-primary underline underline-offset-4">See the solutions</Link>
+      </Section>
+
+      <Section id="status" title="Where it stands." intro="HSI is in development. Some parts work today and others are planned, and every page says which. It does not give clinical advice and does not handle patient data.">
+        <Link to="/trust" className="text-sm text-primary underline underline-offset-4">How HSI keeps evidence separate from approval</Link>
+      </Section>
+
+      <Section id="access" title="Ask for access." intro="Tell us about your research question. Access is approved separately from creating an account.">
         <div className="flex flex-wrap items-center gap-4">
           <SiteLink to="/contact#pilot-request" className="bg-primary px-6 py-4 text-sm font-medium text-primary-foreground hover:bg-primary/90">
-            Start a pilot request
+            Request access
           </SiteLink>
           <SiteLink to="/sign-up" className="border border-border px-6 py-4 text-sm font-medium hover:border-primary">
             Create an account
           </SiteLink>
         </div>
-        <ol className="mt-10 grid max-w-3xl gap-x-10 gap-y-6 md:grid-cols-3">
-          {[
-            ["Tell us the question", "A pilot request starts from your research question and the evidence you need to see."],
-            ["Create an account", "Register and verify your email. An account is not research access."],
-            ["Access is approved", "Researcher, source and scientific-review permissions are provisioned separately by an administrator."],
-          ].map(([t, d], i) => (
-            <li key={t} className="border-t border-border pt-4">
-              <p className="font-mono text-xs text-primary">0{i + 1}</p>
-              <h3 className="mt-2 font-display text-base font-medium">{t}</h3>
-              <p className="mt-2 text-sm text-muted-foreground">{d}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6 max-w-3xl text-xs text-muted-foreground">
-          Requests start as a draft kept in your browser. Nothing is sent unless the request page confirms delivery, and it never claims receipt before the server does. Do not include patient data or unpublished research.
+        <p className="mt-6 max-w-2xl text-sm text-muted-foreground">
+          The request form saves a draft in your browser and says plainly whether it was delivered. Please do not include patient data or unpublished research.
         </p>
       </Section>
     </>

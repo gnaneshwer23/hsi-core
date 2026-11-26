@@ -28,7 +28,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Discovery Engine"
+        eyebrow="Discovery Engine"
         title="From mapped evidence to the next question."
         intro="The Discovery Engine is planned to identify gaps in the evidence, propose testable hypotheses and draft experiment options — always ranked with stated uncertainty and passed to researchers for judgement."
       >

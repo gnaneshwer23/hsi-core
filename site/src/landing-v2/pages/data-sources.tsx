@@ -7,7 +7,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Resources · Data Sources"
+        eyebrow="Data Sources"
         title="Public evidence, clearly labelled."
         intro="Status reflects HSI's integration work only. Listing a source does not imply a partnership or endorsement."
       />

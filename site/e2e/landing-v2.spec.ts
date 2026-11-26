@@ -42,14 +42,14 @@ test('an indexed landing page is served as HTML with its content before JavaScri
 test('every early-access button leads to the working request page, and no prototype form remains',async({page})=>{
  await page.setViewportSize({width:1440,height:900});
  await page.goto('/');
- await expect(page.getByText('HSI is being built to connect')).toBeVisible();
+ await expect(page.getByText('HSI links published studies to the biology they describe.')).toBeVisible();
  await expect(page.getByRole('banner').getByRole('link',{name:'Request access'})).toHaveAttribute('href','/contact');
  await expect(page.getByRole('contentinfo').getByRole('link',{name:'Contact'})).toHaveAttribute('href','/contact');
- const s=page.locator('main').getByRole('link',{name:'Start a pilot request'});
+ const s=page.locator('main').getByRole('link',{name:'Request access'});
  await expect(s).toHaveAttribute('href','/contact#pilot-request');
  await expect(page.locator('main').getByRole('link',{name:'Create an account'})).toHaveAttribute('href','/sign-up');
  await expect(page.getByText('Submit application')).toHaveCount(0);
- await expect(page.getByText('Nothing is sent unless the request page confirms delivery')).toBeVisible();
+ await expect(page.getByText('says plainly whether it was delivered')).toBeVisible();
  await s.click();
  await expect(page).toHaveURL(/\/contact#pilot-request$/);
  await expect(page.getByRole('heading',{level:1})).toContainText('Request a design-partner pilot');
@@ -108,7 +108,7 @@ test('footer: four short columns and one plain disclaimer, no mono-uppercase sta
 test('/landing-v2 now leads to the homepage, and the old homepage content is gone',async({page})=>{
  await page.goto('/landing-v2');
  await expect(page).toHaveURL(/\/$/);
- await expect(page.getByRole('heading',{level:1})).toContainText('Understand biology.');
+ await expect(page.getByRole('heading',{level:1})).toContainText('See what the evidence supports');
  await expect(page.locator('#product-demo')).toHaveCount(0);
 });
 
@@ -140,8 +140,8 @@ test('homepage mobile menu opens and leads to a platform page',async({page})=>{
 test('homepage is served as prerendered HTML with its content before JavaScript',async({browser})=>{
  const ctx=await browser.newContext({javaScriptEnabled:false});const page=await ctx.newPage();
  await page.goto('/');
- await expect(page.getByRole('heading',{level:1})).toContainText('Understand biology.');
- await expect(page.getByText('Interactive biological atlas')).toBeVisible();
+ await expect(page.getByRole('heading',{level:1})).toContainText('See what the evidence supports');
+ await expect(page.getByRole('heading',{name:'Follow a pathway across biology.'})).toBeVisible();
  await ctx.close();
 });
 
@@ -155,24 +155,23 @@ test('homepage and a landing v2 page pass axe on desktop and the homepage at 390
  expect((await new AxeBuilder({page}).analyze()).violations.map(v=>v.id+':'+v.nodes.length)).toEqual([]);
 });
 
-test('the homepage previews agents, investigation, contradiction and data as short sections that link to the full pages, without repeating the interactives',async({page})=>{
+test('the homepage is a short overview: three steps, the atlas, the live graph, four links to the platform pages, and no full interactives',async({page})=>{
  await page.goto('/');
- for(const [id,link,href] of [['agents','See how agents hand work on','/platform/agents'],['investigation','Walk through the ten stages','/platform/workbench'],['contradiction','Try the alignment','/platform/contradiction-analysis'],['data','See every source and its status','/data-sources']] as const){
-  const s=page.locator('#'+id);
-  await expect(s.getByRole('link',{name:link})).toHaveAttribute('href',href);
-  await expect(s.getByText('Illustrative',{exact:true}).first()).toBeVisible();
- }
+ await expect(page.getByRole('heading',{level:1})).toContainText('See what the evidence supports');
+ await expect(page.locator('#how').getByRole('listitem')).toHaveCount(3);
+ for(const [link,href] of [['How the record works','/platform/memory'],['Meet the agents','/platform/agents'],['Try the comparison','/platform/contradiction-analysis'],['See the walkthrough','/platform/workbench'],['See the solutions','/solutions'],['About the knowledge graph','/knowledge-graph']])
+  await expect(page.locator('main').getByRole('link',{name:link})).toHaveAttribute('href',href);
  // the full interactive versions live only on their own pages
  await expect(page.getByRole('button',{name:'A conflict kept visible'})).toHaveCount(0);
  await expect(page.getByRole('button',{name:'Verify claims'})).toHaveCount(0);
  await expect(page.getByRole('button',{name:'No grouping'})).toHaveCount(0);
- await expect(page.locator('#agents')).toContainText('Expert review');
- await expect(page.locator('#contradiction')).toContainText('Unresolved · requires expert review');
+ const words=(await page.locator('main').innerText()).split(/\s+/).length;
+ expect(words,'the homepage stays short').toBeLessThan(900);
 });
 
-test('every homepage teaser link opens its page with the full interactive',async({page})=>{
+test('the homepage links open their pages with the full interactive',async({page})=>{
  await page.goto('/');
- await page.locator('#contradiction').getByRole('link',{name:'Try the alignment'}).click();
+ await page.locator('main').getByRole('link',{name:'Try the comparison'}).click();
  await expect(page).toHaveURL(/\/platform\/contradiction-analysis$/);
  await expect(page.getByRole('button',{name:'No grouping'})).toBeVisible();
 });

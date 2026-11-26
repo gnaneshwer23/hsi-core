@@ -78,28 +78,22 @@ export function Hero() {
       </div>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,var(--background)_85%)]" />
       <div className="pointer-events-none mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-between px-5 pb-10 pt-24 md:px-10">
-        <div className="flex items-start justify-between font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
-          <span>The next generation of scientific intelligence</span>
-          <span className="hidden md:block">Research platform in development</span>
-        </div>
+        <p className="text-sm text-muted-foreground">A research platform in development</p>
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_320px]">
           <div className="pointer-events-auto">
             <h1 className="max-w-5xl font-display text-[clamp(2.6rem,6.2vw,6rem)] font-medium leading-[0.92] tracking-[-0.04em]">
-              Understand biology.{" "}
-              <span className="text-muted-foreground">Resolve uncertainty.</span>{" "}
-              <span className="font-serif font-light italic text-primary">Advance discovery.</span>
+              See what the evidence supports,{" "}
+              <span className="text-muted-foreground">and where it does not.</span>
             </h1>
             <p className="mt-6 max-w-xl font-serif text-xl leading-snug text-foreground/80 md:text-2xl">
-              HSI is being built to connect scientific evidence, biological mechanisms, persistent
-              research memory and specialised AI agents, to help scientists investigate complex
-              questions and identify research opportunities.
+              HSI links published studies to the biology they describe. For each claim, you can see where it came from, what it applied to and where studies disagree.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Link
                 to="/knowledge-graph"
                 className="group inline-flex items-center gap-3 bg-primary px-6 py-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-foreground hover:text-background"
               >
-                Explore HSI{" "}
+                Explore the knowledge graph{" "}
                 <span aria-hidden className="transition-transform group-hover:translate-x-1">
                   →
                 </span>
@@ -108,16 +102,14 @@ export function Hero() {
                 href="#how"
                 className="border-b border-foreground/40 pb-1 text-sm hover:border-primary hover:text-primary"
               >
-                See how it works
+                How it works
               </a>
             </div>
           </div>
           <div className="pointer-events-auto border-l border-border pl-5">
-            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-              Explore the system
-            </p>
+            <p className="text-sm text-muted-foreground">Explore the system</p>
             <ul className="mt-3">
-              {HERO_DOMAINS.map((d, i) => (
+              {HERO_DOMAINS.map((d) => (
                 <li key={d.key}>
                   <button
                     onMouseEnter={() => setFocus(d.key)}
@@ -126,7 +118,6 @@ export function Hero() {
                     onBlur={() => setFocus(null)}
                     className="group flex w-full items-baseline gap-4 py-1.5 text-left"
                   >
-                    <span className="font-mono text-[11px] text-muted-foreground">0{i + 1}</span>
                     <span
                       className={
                         focus === d.key
