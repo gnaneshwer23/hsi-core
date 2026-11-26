@@ -22,8 +22,12 @@ import "./styles/premium-hsi.css";
 import "./styles/collective-system.css";
 import "./styles/stage2-landing.css";
 import "./styles/cinematic.css";
+import "./landing-v2/styles";
 
 const root=document.getElementById("root")!;
 const app=<StrictMode><BrowserRouter><App /></BrowserRouter></StrictMode>;
 // Query-driven screens render afresh; public static pages hydrate only their exact route.
-if(root.dataset.prerendered===window.location.pathname&&!window.location.search){hydrateRoot(root,app)}else{createRoot(root).render(app)}
+if(root.dataset.prerendered===window.location.pathname&&!window.location.search){
+ // The homepage chunk loads before hydration starts, so the prerendered markup is hydrated in one pass rather than waiting behind a suspended boundary.
+ (window.location.pathname==="/"?import("./landing-v2/HomePage").then(()=>undefined,()=>undefined):Promise.resolve()).then(()=>{hydrateRoot(root,app)});
+}else{createRoot(root).render(app)}

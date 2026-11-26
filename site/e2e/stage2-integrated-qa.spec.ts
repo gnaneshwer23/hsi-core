@@ -9,7 +9,7 @@ test("Stage 2 public pages: one h1, Get Access chrome, honesty, no overflow at 3
 }) => {
   test.setTimeout(180000);
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const path of PUBLIC_MARKETING_PATHS) {
+  for (const path of PUBLIC_MARKETING_PATHS.filter((p) => p !== "/")) { // the homepage has its own chrome, tested in landing-v2.spec.ts
     await page.goto(path);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
     // Desktop Primary nav is display:none below 1151px; assert mobile chrome instead.
@@ -29,7 +29,7 @@ test("Stage 2 public pages: one h1, Get Access chrome, honesty, no overflow at 3
 
 test("Stage 2 audience menu lists the six indexed destinations", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/");
+  await page.goto("/how-it-works");
   const menu = page.getByRole("navigation", {name:"Footer audiences"});
   await expect(menu).toBeVisible();
   for (const [href, name] of [

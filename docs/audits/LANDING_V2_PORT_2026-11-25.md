@@ -18,3 +18,11 @@
 - Hypotheses are presented as something the system proposes; in `hsi-core` predictions are investigator-authored.
 - The 3D hero adds about 242 KB gzipped (lazy). Budgets were raised with reasons in `site/bundle-budget.json`; the follow-up is a smaller scene.
 - Cross-browser rendering and the 3D scene on low-end devices are not checked.
+
+## Update, 26 November 2026: the port is now the homepage
+
+`/` renders the landing v2 home (prerendered into the build, then hydrated; the page chunk is loaded before hydration). Its title and description are in `siteSeo.ts`. `/landing-v2` redirects to `/`. The other landing v2 pages stay at `/landing-v2/...`, still noindex, linked from the new header and footer. "Trust & Governance" in the header and footer goes to the existing `/trust` page. The header adds Sign in; the footer adds How it works, About, Contact and Sign in.
+
+**Removed from the homepage** (the components and pages still exist; their tests were retired with the homepage): the Demo Universe landing preview, the worked-conflict comparison, and the "landing proof" view of the live published graph. The graph and discovery content remains at `/knowledge-graph` and `/research/knowledge-graph`; the demo at `/demo/universe`. Whether any of this returns to the homepage is open.
+
+**Still open:** the other landing v2 pages are not yet in the sitemap or SEO prerender; the old `HomeLanding.tsx` and its styles are unrouted dead code awaiting removal; bundle CSS headroom is under 1 KB.

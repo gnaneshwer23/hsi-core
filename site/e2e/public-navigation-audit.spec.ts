@@ -11,7 +11,7 @@ test('all public links and selector states resolve, without linking older engine
   const destinations=new Set<string>();const report:{path:string;buttons:number;links:number}[]=[];
   const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
   await page.setViewportSize({width:1440,height:1000});
-  for(const path of PUBLIC_MARKETING_PATHS){
+  for(const path of PUBLIC_MARKETING_PATHS.filter(p=>p!=='/')){
     await page.goto(path);await expect(page.getByRole('heading',{level:1})).toBeVisible();
     // Homepage graph mounts after hydration to avoid React #418 float-layout mismatches.
     if(path==='/knowledge-graph')await expect(page.locator('#home-knowledge-graph')).toBeVisible();
@@ -56,7 +56,7 @@ test('all public links and selector states resolve, without linking older engine
 
 test('all public body links are clickable and reach their intended destinations',async({page})=>{
   test.setTimeout(180000);
-  for(const path of PUBLIC_MARKETING_PATHS){
+  for(const path of PUBLIC_MARKETING_PATHS.filter(p=>p!=='/')){
     await page.goto(path);
     const links=await page.getByRole('main').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')||h.startsWith('#')));
     for(const href of new Set(links)){
@@ -74,10 +74,10 @@ test('all public body links are clickable and reach their intended destinations'
 });
 
 test('header and footer destinations can be clicked',async({page})=>{
-  await page.setViewportSize({width:1440,height:1000});await page.goto('/');
+  await page.setViewportSize({width:1440,height:1000});await page.goto('/how-it-works');
   const hrefs=await page.locator('.hsi-nav-inner,#research-pages,.hsi-footer').locator('a[href]').evaluateAll(as=>as.map(a=>a.getAttribute('href')!).filter(h=>h.startsWith('/')));
   for(const href of new Set(hrefs)){
-    await page.goto('/');
+    await page.goto('/how-it-works');
     let link=page.locator('.hsi-nav,.hsi-footer').locator(`a[href=${JSON.stringify(href)}]:visible`).first();
     if(!await link.count()){await page.getByRole('button',{name:'Research',exact:true}).click();link=page.locator('#research-pages').locator(`a[href=${JSON.stringify(href)}]`)}
     await link.click();await expect(page).toHaveURL(new URL(href,'http://127.0.0.1:4178').href);await expect(page.getByRole('heading',{level:1})).toBeVisible();
