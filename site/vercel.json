@@ -565,8 +565,16 @@
       "destination": "/_pages/workspace--preview--institution.html"
     },
     {
+      "source": "/workspace/preview/reviewer",
+      "destination": "/_pages/workspace--preview--reviewer.html"
+    },
+    {
       "source": "/settings/scientific-profile",
       "destination": "/_pages/settings--scientific-profile.html"
+    },
+    {
+      "source": "/workspace/immersive",
+      "destination": "/_pages/workspace--immersive.html"
     },
     {
       "source": "/research/gaps",
