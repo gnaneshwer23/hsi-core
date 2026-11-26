@@ -1,0 +1,7 @@
+import {test,expect} from "bun:test";
+import {reconcilePublicationIdentity,type PublicationIdentityAssertion} from "../src/scientificMemoryPublicationIdentity";
+const anchor:PublicationIdentityAssertion={authority:"crossref",doi:"10.1234/example",version:"v1"};
+test("direct DOI linkage produces unverified identifier candidate",()=>{const r=reconcilePublicationIdentity(anchor,[{authority:"pubmed",doi:anchor.doi!,pmid:"123",pmcid:"PMC456"}]);expect(r.decision).toBe("candidate_match");expect(r.candidate.pmid).toBe("123");expect(r.identityVerified).toBe(false);expect(r.ingestionAllowed).toBe(false);});
+test("conflicting identifiers or versions prevent candidate match",()=>{const r=reconcilePublicationIdentity(anchor,[{authority:"pubmed",doi:anchor.doi!,pmid:"123"},{authority:"europe_pmc",doi:anchor.doi!,pmid:"456",version:"v2"}]);expect(r.decision).toBe("conflict");expect(r.conflicts).toEqual(["pmid","version"]);expect(r.candidate.pmid).toBeNull();});
+test("unlinked identifiers cannot establish identity transitively",()=>{const r=reconcilePublicationIdentity(anchor,[{authority:"pubmed",doi:anchor.doi!,pmid:"123"},{authority:"europe_pmc",pmid:"123",pmcid:"PMC456"}]);expect(r.decision).toBe("insufficient_linkage");expect(r.unresolved).toBe(1);expect(r.candidate.pmcid).toBeNull();});
+test("invalid identifiers rejected",()=>{expect(()=>reconcilePublicationIdentity(anchor,[{authority:"pubmed",pmid:"bad"}])).toThrow();});
