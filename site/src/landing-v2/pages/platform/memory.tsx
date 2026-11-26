@@ -3,10 +3,10 @@ import { Card, PageHero, Section, StatusTag, meta } from "../../components/site/
 export const pageMeta = meta("Scientific Memory Engine — HSI", "Persistent, permission-controlled scientific memory: lineage tracking, contextual recall and cross-project synthesis.");
 
 const timeline = [
-  ["v1.0", "Question defined", "Do SCFAs modulate microglial activation?"],
-  ["v1.1", "Evidence retrieved", "212 records · 37 preprints flagged"],
-  ["v1.2", "Reviewer note", "Dr. A: exclude studies without sex stratification"],
-  ["v1.3", "Hypothesis saved", "H1 linked to 9 sources · confidence low"],
+  ["v1.0", "Question defined", "Does intervention X lower marker Y?"],
+  ["v1.1", "Evidence retrieved", "Sources searched and filter rule saved; preprints flagged"],
+  ["v1.2", "Reviewer note", "A reviewer: set aside studies that do not report sex"],
+  ["v1.3", "Hypothesis saved", "H1 linked to its source passages; marked a proposal"],
 ];
 
 export default function Page() {
@@ -51,7 +51,7 @@ export default function Page() {
       <Section
         eyebrow="Lineage"
         title="An investigation, versioned."
-        intro="Illustrative record history."
+        intro="Illustrative record history. Memory is in development and not enabled for researchers."
       >
         <ol className="relative max-w-2xl border-l border-helix/40 pl-8">
           {timeline.map(([v, t, d]) => (
