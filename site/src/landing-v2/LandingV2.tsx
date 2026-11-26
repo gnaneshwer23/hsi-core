@@ -1,12 +1,20 @@
 import { lazy, useEffect, type ComponentType } from "react";
+import { useLocation } from "react-router-dom";
+import { applySeo } from "../lib/seo/applySeo";
+import { SEO_PAGES } from "../lib/seo/siteSeo";
 import { LandingV2Layout } from "./Layout";
 
-type PageMeta = { meta: { title?: string; name?: string; content?: string; property?: string }[] };
+export type PageMeta = { meta: { title?: string; name?: string; content?: string; property?: string }[] };
 type PageModule = { default: ComponentType; pageMeta: PageMeta };
 
-/** Sets the title and description for the page and keeps it out of search indexes while it is a preview. Restores the previous values on unmount. */
-function DocMeta({ meta }: { meta: PageMeta }) {
+/** Indexed pages take their metadata from SEO_PAGES (the same source as the prerendered HTML). The others set their own title and description and stay out of search indexes while they are previews; the previous values are restored on unmount. */
+export function DocMeta({ meta }: { meta: PageMeta }) {
+  const { pathname } = useLocation();
   useEffect(() => {
+    if (Object.hasOwn(SEO_PAGES, pathname)) {
+      applySeo(pathname);
+      return;
+    }
     const prevTitle = document.title;
     const title = meta.meta.find((m) => m.title)?.title;
     const description = meta.meta.find((m) => m.name === "description")?.content;
@@ -32,7 +40,7 @@ function DocMeta({ meta }: { meta: PageMeta }) {
       document.title = prevTitle;
       undo.forEach((u) => u());
     };
-  }, [meta]);
+  }, [meta, pathname]);
   return null;
 }
 
@@ -54,7 +62,6 @@ function lazyPage(load: () => Promise<PageModule>) {
 const Science = lazyPage(() => import("./pages/science"));
 const Solutions = lazyPage(() => import("./pages/solutions"));
 const DataSources = lazyPage(() => import("./pages/data-sources"));
-const Trust = lazyPage(() => import("./pages/trust"));
 const Memory = lazyPage(() => import("./pages/platform/memory"));
 const Agents = lazyPage(() => import("./pages/platform/agents"));
 const Contradiction = lazyPage(() => import("./pages/platform/contradiction-analysis"));
@@ -67,7 +74,6 @@ const PAGES = {
   science: Science,
   solutions: Solutions,
   "data-sources": DataSources,
-  trust: Trust,
   "platform/memory": Memory,
   "platform/agents": Agents,
   "platform/contradiction-analysis": Contradiction,

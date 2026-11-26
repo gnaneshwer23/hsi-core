@@ -7,6 +7,7 @@ import {
   PUBLIC_MARKETING_PATHS,
 } from "../site/src/lib/primaryNav";
 import { SEO_PAGES } from "../site/src/lib/seo/siteSeo";
+import { LV2_INDEXED } from "../site/src/landing-v2/indexed";
 
 const root = (...p: string[]) => readFileSync(resolve(import.meta.dir, "..", ...p), "utf8");
 
@@ -23,9 +24,9 @@ const FORBIDDEN =
   /clinically validated|clinically proven|scientifically validated|\$\d|£\d|per seat\/month|subscribe now|join thousands|members worldwide|120 expert-adjudicated results|\d{2,}% accuracy/i;
 
 describe("Stage 2 integrated QA locks", () => {
-  it("keeps PUBLIC_MARKETING_PATHS identical to indexed SEO_PAGES", () => {
+  it("keeps PUBLIC_MARKETING_PATHS identical to indexed SEO_PAGES, apart from the landing v2 pages that have their own header and footer", () => {
     const marketing = ([...PUBLIC_MARKETING_PATHS] as string[]).sort();
-    const seo = Object.keys(SEO_PAGES).sort();
+    const seo = Object.keys(SEO_PAGES).filter((p) => !(LV2_INDEXED as readonly string[]).includes(p)).sort();
     expect(marketing).toEqual(seo);
     expect(marketing).toHaveLength(16);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });

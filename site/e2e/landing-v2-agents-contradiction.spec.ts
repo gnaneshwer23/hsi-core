@@ -78,9 +78,9 @@ test('the lab keeps the conflict unresolved and lists its gaps',async({page})=>{
 });
 
 test('platform pages for agents and contradiction analysis render the new components',async({page})=>{
- await page.goto('/landing-v2/platform/agents');
+ await page.goto('/platform/agents');
  await expect(page.getByRole('button',{name:'A conflict kept visible'})).toBeVisible();
- await page.goto('/landing-v2/platform/contradiction-analysis');
+ await page.goto('/platform/contradiction-analysis');
  await expect(page.getByRole('button',{name:'No grouping'})).toBeVisible();
 });
 
