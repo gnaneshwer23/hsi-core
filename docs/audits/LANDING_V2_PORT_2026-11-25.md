@@ -26,3 +26,11 @@
 **Removed from the homepage** (the components and pages still exist; their tests were retired with the homepage): the Demo Universe landing preview, the worked-conflict comparison, and the "landing proof" view of the live published graph. The graph and discovery content remains at `/knowledge-graph` and `/research/knowledge-graph`; the demo at `/demo/universe`. Whether any of this returns to the homepage is open.
 
 **Still open:** the other landing v2 pages are not yet in the sitemap or SEO prerender; the old `HomeLanding.tsx` and its styles are unrouted dead code awaiting removal; bundle CSS headroom is under 1 KB.
+
+## Update, 26 November 2026: indexable pages
+
+Six landing pages have their own indexable URLs, prerendered into the build, in the sitemap, with unique titles and descriptions in `siteSeo.ts` (list: `site/src/landing-v2/indexed.ts`): `/platform/memory`, `/platform/agents`, `/platform/contradiction-analysis`, `/platform/workbench`, `/platform/discovery-engine` and `/data-sources`. Their old `/landing-v2/...` addresses redirect to them, and `/landing-v2/trust` redirects to `/trust`.
+
+Still noindex previews under `/landing-v2/`: science, solutions, the illustrative knowledge-graph page and the companion page. The knowledge-graph and companion previews overlap existing indexed pages (`/knowledge-graph`, `/scientific-companion`); science and solutions have retired redirects at `/science` and `/solutions`. Whether to replace, merge or retire those is open.
+
+The indexed pages use the landing header and footer, so `PUBLIC_MARKETING_PATHS` (the old chrome) excludes them; the Stage 2 invariant test says so.

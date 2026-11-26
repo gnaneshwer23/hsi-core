@@ -1,0 +1,31 @@
+import type { ComponentType } from "react";
+import { LandingV2Layout } from "./Layout";
+import { DocMeta, type PageMeta } from "./LandingV2";
+import Memory, { pageMeta as memoryMeta } from "./pages/platform/memory";
+import Agents, { pageMeta as agentsMeta } from "./pages/platform/agents";
+import Contradiction, { pageMeta as contradictionMeta } from "./pages/platform/contradiction-analysis";
+import Workbench, { pageMeta as workbenchMeta } from "./pages/platform/workbench";
+import Discovery, { pageMeta as discoveryMeta } from "./pages/platform/discovery-engine";
+import DataSources, { pageMeta as dataMeta } from "./pages/data-sources";
+
+/** The indexed landing v2 pages, imported directly so the build can render them to HTML (the browser bundle loads them lazily). */
+const STATIC: Record<string, [ComponentType, PageMeta]> = {
+  "platform/memory": [Memory, memoryMeta],
+  "platform/agents": [Agents, agentsMeta],
+  "platform/contradiction-analysis": [Contradiction, contradictionMeta],
+  "platform/workbench": [Workbench, workbenchMeta],
+  "platform/discovery-engine": [Discovery, discoveryMeta],
+  "data-sources": [DataSources, dataMeta],
+};
+
+export default function LandingV2Static({ page }: { page: string }) {
+  const entry = STATIC[page];
+  if (!entry) return null;
+  const [Page, meta] = entry;
+  return (
+    <LandingV2Layout>
+      <DocMeta meta={meta} />
+      <Page />
+    </LandingV2Layout>
+  );
+}
