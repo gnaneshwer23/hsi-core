@@ -489,6 +489,46 @@
       "destination": "/_pages/welcome.html"
     },
     {
+      "source": "/onboarding",
+      "destination": "/_pages/onboarding.html"
+    },
+    {
+      "source": "/onboarding/role",
+      "destination": "/_pages/onboarding--role.html"
+    },
+    {
+      "source": "/onboarding/institution",
+      "destination": "/_pages/onboarding--institution.html"
+    },
+    {
+      "source": "/onboarding/identity",
+      "destination": "/_pages/onboarding--identity.html"
+    },
+    {
+      "source": "/onboarding/science",
+      "destination": "/_pages/onboarding--science.html"
+    },
+    {
+      "source": "/onboarding/objectives",
+      "destination": "/_pages/onboarding--objectives.html"
+    },
+    {
+      "source": "/onboarding/methods",
+      "destination": "/_pages/onboarding--methods.html"
+    },
+    {
+      "source": "/onboarding/resources",
+      "destination": "/_pages/onboarding--resources.html"
+    },
+    {
+      "source": "/onboarding/preferences",
+      "destination": "/_pages/onboarding--preferences.html"
+    },
+    {
+      "source": "/onboarding/review",
+      "destination": "/_pages/onboarding--review.html"
+    },
+    {
       "source": "/research/gaps",
       "destination": "/_pages/research--gaps.html"
     },

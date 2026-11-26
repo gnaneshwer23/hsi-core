@@ -137,6 +137,16 @@ const LABS_SYNTHETIC = new Set([
 ]);
 
 const AUTH_ACCOUNT = new Set([
+  "/onboarding",
+  "/onboarding/role",
+  "/onboarding/institution",
+  "/onboarding/identity",
+  "/onboarding/science",
+  "/onboarding/objectives",
+  "/onboarding/methods",
+  "/onboarding/resources",
+  "/onboarding/preferences",
+  "/onboarding/review",
   "/sign-in",
   "/sign-up",
   "/forgot-password",
