@@ -50,7 +50,7 @@ test('Next and Previous step through the stages',async({page})=>{
 
 test('landing pages carry no invented counts, dates or confidence scores',async({page})=>{
  const bad=/212 records|37 preprints|9 sources|14 Oct|n=12|1,284|\b28%|71%|confidence: (low|moderate)|\d+ linked records|\d+ new murine/i;
- for(const p of ['/','/landing-v2/platform/memory','/landing-v2/platform/discovery-engine','/landing-v2/platform/companion','/landing-v2/platform/workbench']){
+ for(const p of ['/','/landing-v2/platform/memory','/landing-v2/platform/discovery-engine','/platform/companion','/landing-v2/platform/workbench']){
   await page.goto(p);
   // the contradiction lab shows percentages computed from its own labelled synthetic studies; everything else must carry none of the old invented figures
   const text=await page.locator('main').evaluate(el=>{const c=el.cloneNode(true) as HTMLElement;c.querySelector('#contradiction')?.remove();return c.textContent??'';});
@@ -70,7 +70,7 @@ test('the record has no overflow at 390px and the redesigned pages pass axe',asy
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  await page.setViewportSize({width:1280,height:900});
  expect((await new AxeBuilder({page}).include('main').analyze()).violations.map(v=>v.id+':'+v.nodes.length)).toEqual([]);
- for(const p of ['/landing-v2/platform/workbench','/landing-v2/platform/memory','/landing-v2/platform/discovery-engine','/landing-v2/platform/companion']){
+ for(const p of ['/landing-v2/platform/workbench','/landing-v2/platform/memory','/landing-v2/platform/discovery-engine','/platform/companion']){
   await page.goto(p);await page.waitForTimeout(800);
   expect((await new AxeBuilder({page}).analyze()).violations.map(v=>p+' '+v.id+':'+v.nodes.length)).toEqual([]);
  }

@@ -9,9 +9,8 @@ const groups = [
       { to: "/", label: "Home" },
       { to: "/how-it-works", label: "How It Works" },
       { to: "/knowledge-graph", label: "Knowledge Graph" },
-      { to: "/intelligence", label: "Scientific Intelligence" },
-      { to: "/researchers", label: "For Researchers" },
-      { to: "/research-community", label: "Community" },
+      { to: "/solutions#researchers", label: "For Researchers" },
+      { to: "/solutions#community", label: "Community" },
       { to: "/demo/universe", label: "Example investigation" },
       { to: "/research/home", label: "Research app" },
     ],
@@ -19,14 +18,13 @@ const groups = [
   {
     name: "Audiences",
     links: [
-      { to: "/researchers", label: "Researchers" },
-      { to: "/enterprise", label: "Research groups" },
-      { to: "/biotech", label: "Biotech teams" },
-      { to: "/clinical", label: "Clinical research" },
-      { to: "/laboratories", label: "Laboratories" },
-      { to: "/research-community", label: "Research community" },
-      { to: "/research-gaps", label: "Research Gaps" },
-      { to: "/scientific-companion", label: "Scientific Companion" },
+      { to: "/solutions#researchers", label: "Researchers" },
+      { to: "/solutions#research-groups", label: "Research groups" },
+      { to: "/solutions#biotech", label: "Biotech teams" },
+      { to: "/solutions#clinical", label: "Clinical research" },
+      { to: "/solutions#laboratories", label: "Laboratories" },
+      { to: "/solutions#community", label: "Research community" },
+      { to: "/knowledge-graph#gaps", label: "Research Gaps" },
     ],
   },
   {
@@ -40,7 +38,6 @@ const groups = [
   {
     name: "Trust",
     links: [
-      { to: "/validation", label: "Validation" },
       { to: "/trust", label: "Trust" },
       { to: "/trust#validation", label: "Validation methodology" },
       { to: "/trust#privacy", label: "Privacy information" },

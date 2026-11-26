@@ -12,11 +12,12 @@ import { LV2_INDEXED } from "../site/src/landing-v2/indexed";
 const root = (...p: string[]) => readFileSync(resolve(import.meta.dir, "..", ...p), "utf8");
 
 const STAGE2_SURFACES = [
-  "site/src/pages/HomeLanding.tsx",
-  "site/src/pages/HowItWorksPage.tsx",
-  "site/src/pages/AudiencePublicPages.tsx",
-  "site/src/pages/EnterpriseLanding.tsx",
-  "site/src/pages/ContactPublic.tsx",
+  "site/src/landing-v2/pages/index.tsx",
+  "site/src/landing-v2/pages/how-it-works.tsx",
+  "site/src/landing-v2/pages/trust.tsx",
+  "site/src/landing-v2/pages/about.tsx",
+  "site/src/landing-v2/pages/solutions.tsx",
+  "site/src/landing-v2/pages/contact.tsx",
 ] as const;
 
 /** Promotional claim shapes — honesty denials that quote the banned phrase are allowed in copy. */
@@ -28,28 +29,22 @@ describe("Stage 2 integrated QA locks", () => {
     const marketing = ([...PUBLIC_MARKETING_PATHS] as string[]).sort();
     const seo = Object.keys(SEO_PAGES).filter((p) => !(LV2_INDEXED as readonly string[]).includes(p)).sort();
     expect(marketing).toEqual(seo);
-    expect(marketing).toHaveLength(16);
+    expect(marketing).toEqual(["/"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
   });
 
-  it("indexes every audience destination and lists it in the footer", () => {
+  it("points every audience link at an anchor on the Solutions page, which is indexed", () => {
     const footer = root("site/src/components/Footer.tsx");
-    const app = root("site/src/App.tsx");
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
-      "/researchers",
-      "/enterprise",
-      "/biotech",
-      "/clinical",
-      "/laboratories",
-      "/research-community",
+      "/solutions#researchers",
+      "/solutions#research-groups",
+      "/solutions#biotech",
+      "/solutions#clinical",
+      "/solutions#laboratories",
+      "/solutions#community",
     ]);
-    for (const link of AUDIENCE_NAV_LINKS) {
-      expect(PUBLIC_MARKETING_PATHS).toContain(link.to);
-      expect(Object.hasOwn(SEO_PAGES, link.to)).toBe(true);
-      expect(footer).toContain(`"${link.to}"`);
-      // Audience destinations are never the site root.
-      expect(app).toContain(`path="${link.to.slice(1)}"`);
-    }
+    expect(Object.hasOwn(SEO_PAGES, "/solutions")).toBe(true);
+    for (const link of AUDIENCE_NAV_LINKS) expect(footer).toContain(`"${link.to}"`);
   });
 
   it("ships vercel page rewrites for every non-root marketing path", () => {

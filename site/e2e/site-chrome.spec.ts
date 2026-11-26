@@ -1,7 +1,7 @@
 import {test,expect} from '@playwright/test';
 test('shared header stays usable without overlap across mobile and desktop widths',async({page})=>{
  for(const width of [320,390,768,1150,1280,1440,1920]){
-  await page.setViewportSize({width,height:900});await page.goto('/how-it-works');const header=page.getByRole('banner');
+  await page.setViewportSize({width,height:900});await page.goto('/status');const header=page.getByRole('banner');
   await expect(header.getByRole('link',{name:'Human Super Intelligence home',exact:true})).toBeVisible();
   const links=await header.locator('.hsi-nav-inner > a,.hsi-nav-inner > nav,.hsi-nav-inner > .hsi-header-actions').evaluateAll(els=>els.map(e=>e.getBoundingClientRect()).filter(r=>r.width&&r.height).map(r=>({x:r.x,right:r.right,width:r.width,height:r.height})));
   for(let i=1;i<links.length;i++)expect(links[i]!.x,`Header overlap at ${width}`).toBeGreaterThanOrEqual(links[i-1]!.right-1);
@@ -9,11 +9,12 @@ test('shared header stays usable without overlap across mobile and desktop width
  }
 });
 test('desktop header has Stage 2 navigation links and an Audiences control',async({page})=>{
- await page.setViewportSize({width:1440,height:900});await page.goto('/how-it-works');
+ await page.setViewportSize({width:1440,height:900});await page.goto('/status');
  const nav=page.getByRole('navigation',{name:'Primary',exact:true});
-  await expect(nav.getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','Scientific Intelligence','For Researchers','Community']);
+  await expect(nav.getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','For Researchers','Community']);
   await expect(nav.getByRole('button')).toHaveCount(0);
-  await nav.getByRole('link',{name:'How It Works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
+  await nav.getByRole('link',{name:'How It Works',exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);await expect(page.getByRole('heading',{level:1})).toContainText('evidence-linked decisions');
+  await page.goto('/status');
   await page.getByRole('navigation',{name:'Footer trust'}).getByRole('link',{name:'Trust',exact:true}).click();await expect(page).toHaveURL(/trust$/);
 });
 test('mobile menu uses a clear icon, touch targets and working account/navigation links',async({page})=>{
@@ -25,7 +26,7 @@ test('mobile menu uses a clear icon, touch targets and working account/navigatio
 });
 test('footer has product, audiences, company and trust navigation with accessible touch targets',async({page})=>{
  for(const width of [320,768,1440]){
-  await page.setViewportSize({width,height:900});await page.goto('/how-it-works');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
+  await page.setViewportSize({width,height:900});await page.goto('/status');const footer=page.getByRole('contentinfo');await footer.scrollIntoViewIfNeeded();
   for(const name of ['Footer product','Footer audiences','Footer company','Footer trust'])await expect(footer.getByRole('navigation',{name})).toBeVisible();
   await expect(footer.getByRole('navigation',{name:'Footer product'}).getByRole('link',{name:'How It Works',exact:true})).toHaveAttribute('href','/how-it-works');
   for(const gone of ['Science','Applications','Intelligence Collective'])await expect(footer.getByRole('link',{name:gone,exact:true})).toHaveCount(0);

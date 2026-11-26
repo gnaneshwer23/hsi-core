@@ -20,7 +20,6 @@ export type SiteRouteBucket =
 /** Host + client retired marketing pairs already used by legacy-redirects e2e. */
 export const RETIRED_MARKETING_REDIRECTS = [
   ["/technology", "/how-it-works"],
-  ["/solutions", "/how-it-works"],
   ["/platform", "/how-it-works"],
   ["/applications", "/how-it-works"],
   ["/research", "/how-it-works"],
@@ -32,6 +31,18 @@ export const RETIRED_MARKETING_REDIRECTS = [
   ["/demo", "/research/journey"],
   ["/pricing", "/contact"],
   ["/evidence-safety", "/trust"],
+  ["/researchers", "/solutions#researchers"],
+  ["/research-community", "/solutions#community"],
+  ["/biotech", "/solutions#biotech"],
+  ["/clinical", "/solutions#clinical"],
+  ["/laboratories", "/solutions#laboratories"],
+  ["/enterprise", "/solutions#research-groups"],
+  ["/academic", "/solutions#research-groups"],
+  ["/research-gaps", "/knowledge-graph#gaps"],
+  ["/validation", "/trust#validation"],
+  ["/intelligence", "/platform/agents"],
+  ["/scientific-companion", "/platform/companion"],
+  ["/context-conflict-audit", "/platform/contradiction-analysis"],
 ] as const;
 
 /** Client Navigate hops that should land on an existing public destination in one step. */
@@ -54,16 +65,6 @@ const PUBLIC_MARKETING = new Set([
   "/",
   "/how-it-works",
   "/knowledge-graph",
-  "/intelligence",
-  "/research-gaps",
-  "/scientific-companion",
-  "/researchers",
-  "/enterprise",
-  "/biotech",
-  "/clinical",
-  "/laboratories",
-  "/research-community",
-  "/validation",
   "/trust",
   "/about",
   "/contact",
@@ -118,7 +119,6 @@ export const REVIEWER_TOOL_PATHS = [
   "/research/ontology-review",
   "/research/scientific-review",
   "/research/validation",
-  "/context-conflict-audit",
   "/curator",
 ] as const;
 

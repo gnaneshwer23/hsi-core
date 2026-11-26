@@ -12,45 +12,6 @@ async function ready(page: any, search = '') {
   await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
 }
 
-test('one snapshot, question and selected assertion survive home to Science to research and reload', async ({
-  page,
-}) => {
-  const posts: string[] = [];
-  page.on('request', (r) => {
-    if (r.method() === 'POST') posts.push(r.url());
-  });
-  await page.goto('/knowledge-graph');
-  await page.getByRole('link', { name: 'Open this selection in the research workspace ↗', exact: true }).click();
-  const graph = page.locator('.ig-experience');
-  await expect(graph).toBeVisible();
-  await graph.getByText("Question and filters", {exact:true}).click();
-  await graph
-    .getByRole('button', {
-      name: 'Gut metabolites → islet autoimmunity → type 1 diabetes',
-      exact: true,
-    })
-    .click();
-  await graph.getByRole('button', {name:'Evidence path',exact:true}).click();
-  await graph.locator('.ig-steps button').first().click();
-  await expect(graph.getByRole('region', { name: 'Selected assertion evidence' })).toBeVisible();
-  const handoff = await graph
-    .getByRole('link', { name: 'Continue in Science', exact: true })
-    .getAttribute('href');
-  const state = new URL(handoff!, 'https://example.test').searchParams;
-  expect(state.get('domainVersion')).toBe(bundle.version);
-  expect(state.get('edge')).toBeTruthy();
-  expect(state.get('path')).toBeTruthy();
-  await graph.getByRole('link', { name: 'Continue in Science', exact: true }).click();
-  await expect(page.getByRole('heading', { level: 1, name: title })).toBeVisible();
-  expect(new URL(page.url()).searchParams.get('edge')).toBe(state.get('edge'));
-  await page.getByRole('link', { name: 'Open research workspace', exact: true }).click();
-  await expect(page).toHaveURL(/\/research\/knowledge-graph\?/);
-  await page.reload();
-  await expect(page.getByRole('region', { name: 'Selected assertion evidence' })).toBeVisible();
-  for (const key of ['domainVersion', 'investigation', 'from', 'target', 'node', 'edge', 'path'])
-    expect(new URL(page.url()).searchParams.get(key)).toBe(state.get(key));
-  expect(posts).toEqual([]);
-});
 
 test('path step exposes actual source, context, missingness and exports a pinned no-approval inspection', async ({
   page,

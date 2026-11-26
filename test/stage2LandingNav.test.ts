@@ -27,23 +27,20 @@ describe("Stage 2 landing design system + nav", () => {
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {
-    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How It Works", "Knowledge Graph", "Scientific Intelligence", "For Researchers", "Community"]);
+    expect(PRIMARY_NAV_LINKS.map(l=>l.label)).toEqual(["Home", "How It Works", "Knowledge Graph", "For Researchers", "Community"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
     expect(AUDIENCE_NAV_LINKS.map((l) => l.to)).toEqual([
-      "/researchers",
-      "/enterprise",
-      "/biotech",
-      "/clinical",
-      "/laboratories",
-      "/research-community",
+      "/solutions#researchers",
+      "/solutions#research-groups",
+      "/solutions#biotech",
+      "/solutions#clinical",
+      "/solutions#laboratories",
+      "/solutions#community",
     ]);
     const primaryNav = root("site/src/lib/primaryNav.ts");
     for (const retired of ['"/platform"', '"/solutions"', '"/pricing"', '"/science"', '"/technology"']) {
       expect(primaryNav).not.toContain(retired);
     }
-    expect(isAudienceNavActive("/researchers")).toBe(true);
-    expect(isAudienceNavActive("/clinical")).toBe(true);
-    expect(isAudienceNavActive("/laboratories")).toBe(true);
     expect(isAudienceNavActive("/how-it-works")).toBe(false);
   });
 
@@ -53,7 +50,7 @@ describe("Stage 2 landing design system + nav", () => {
     expect(nav).toContain("aria-expanded");
     expect(nav).not.toContain("audience-pages");
     const footer = root("site/src/components/Footer.tsx");
-    expect(footer).toContain("/researchers");
+    expect(footer).toContain("/solutions#researchers");
     expect(footer).toContain("/trust#validation");
     expect(footer).not.toContain("Pricing & Access");
     const primitives = root("site/src/components/landing/LandingPrimitives.tsx");
