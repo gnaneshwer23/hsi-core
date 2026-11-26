@@ -1,7 +1,7 @@
 import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense,type ComponentType} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { Layout } from "./components/Layout";
+const Layout=lazy(()=>import("./components/Layout").then(m=>({default:m.Layout})));
 const GovernanceDashboard=lazy(()=>import("./pages/GovernanceDashboard").then(m=>({default:m.GovernanceDashboard})));
 const ResearchDashboard=lazy(()=>import("./pages/ResearchDashboard").then(m=>({default:m.ResearchDashboard})));
 const EnterpriseProfessorDashboard=lazy(()=>import("./pages/EnterpriseProfessorDashboard").then(m=>({default:m.EnterpriseProfessorDashboard})));
@@ -114,7 +114,7 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
       <Route path="landing-v2/platform/discovery-engine" element={<Navigate to="/platform/discovery-engine" replace />}/>
       <Route path="landing-v2/platform/companion" element={<Navigate to="/platform/companion" replace />}/>
       <Route path="platform/companion" element={<Suspense fallback={null}><Landing page="platform/companion"/></Suspense>}/>
-      <Route element={<Layout />}>
+      <Route element={<Suspense fallback={null}><Layout /></Suspense>}>
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />
         <Route path="community" element={<Navigate to="/research/home" replace />} />
