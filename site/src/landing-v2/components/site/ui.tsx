@@ -13,7 +13,7 @@ export function StatusTag({ s, className }: { s: Status; className?: string }) {
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider",
+        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium",
         statusStyle[s],
         className,
       )}
@@ -26,7 +26,7 @@ export function StatusTag({ s, className }: { s: Status; className?: string }) {
 
 export function Eyebrow({ children }: { children: ReactNode }) {
   return (
-    <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-muted-foreground">
+    <p className="text-sm text-primary">
       {children}
     </p>
   );

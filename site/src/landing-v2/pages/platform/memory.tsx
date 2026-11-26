@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <>
       <PageHero
-        eyebrow="Platform · Scientific Memory Engine"
+        eyebrow="Scientific Memory Engine"
         title="Research that remembers — and knows where it came from."
         intro="Laboratories lose context when people move on, projects end or notes scatter. The Memory Engine preserves questions, evidence, decisions and reviewer judgement as version-controlled, permissioned scientific records."
       >
