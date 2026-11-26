@@ -59,9 +59,12 @@ function lazyPage(load: () => Promise<PageModule>) {
   });
 }
 
-const Science = lazyPage(() => import("./pages/science"));
 const Solutions = lazyPage(() => import("./pages/solutions"));
 const DataSources = lazyPage(() => import("./pages/data-sources"));
+const Trust = lazyPage(() => import("./pages/trust"));
+const HowItWorks = lazyPage(() => import("./pages/how-it-works"));
+const About = lazyPage(() => import("./pages/about"));
+const Contact = lazyPage(() => import("./pages/contact"));
 const Memory = lazyPage(() => import("./pages/platform/memory"));
 const Agents = lazyPage(() => import("./pages/platform/agents"));
 const Contradiction = lazyPage(() => import("./pages/platform/contradiction-analysis"));
@@ -71,9 +74,12 @@ const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
 const Companion = lazyPage(() => import("./pages/platform/companion"));
 
 const PAGES = {
-  science: Science,
   solutions: Solutions,
   "data-sources": DataSources,
+  trust: Trust,
+  "how-it-works": HowItWorks,
+  about: About,
+  contact: Contact,
   "platform/memory": Memory,
   "platform/agents": Agents,
   "platform/contradiction-analysis": Contradiction,

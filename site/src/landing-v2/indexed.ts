@@ -6,4 +6,9 @@ export const LV2_INDEXED = [
   "/platform/workbench",
   "/platform/discovery-engine",
   "/data-sources",
+  "/trust",
+  "/how-it-works",
+  "/about",
+  "/contact",
+  "/solutions",
 ] as const;

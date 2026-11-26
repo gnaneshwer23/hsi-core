@@ -7,7 +7,6 @@ export const RETIRED_MARKETING_REDIRECTS = {
   "/science": "/knowledge-graph",
   "/science/body": "/knowledge-graph",
   "/technology": "/how-it-works",
-  "/solutions": "/how-it-works",
   "/applications": "/how-it-works",
   "/research": "/how-it-works",
   "/connected-intelligence": "/how-it-works",
@@ -16,6 +15,13 @@ export const RETIRED_MARKETING_REDIRECTS = {
   "/pricing": "/contact",
   "/demo": "/research/journey",
   "/community": "/research/home",
+  "/researchers": "/solutions#researchers",
+  "/research-community": "/solutions#community",
+  "/biotech": "/solutions#biotech",
+  "/clinical": "/solutions#clinical",
+  "/laboratories": "/solutions#laboratories",
+  "/enterprise": "/solutions#research-groups",
+  "/academic": "/solutions#research-groups",
 } as const;
 
 export type RetiredMarketingPath = keyof typeof RETIRED_MARKETING_REDIRECTS;

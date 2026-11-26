@@ -756,11 +756,6 @@
       "permanent": true
     },
     {
-      "source": "/solutions",
-      "destination": "/how-it-works",
-      "permanent": true
-    },
-    {
       "source": "/platform",
       "destination": "/how-it-works",
       "permanent": true
@@ -908,6 +903,41 @@
     {
       "source": "/intelligence/:slug",
       "destination": "/how-it-works",
+      "permanent": true
+    },
+    {
+      "source": "/researchers",
+      "destination": "/solutions#researchers",
+      "permanent": true
+    },
+    {
+      "source": "/research-community",
+      "destination": "/solutions#community",
+      "permanent": true
+    },
+    {
+      "source": "/biotech",
+      "destination": "/solutions#biotech",
+      "permanent": true
+    },
+    {
+      "source": "/clinical",
+      "destination": "/solutions#clinical",
+      "permanent": true
+    },
+    {
+      "source": "/laboratories",
+      "destination": "/solutions#laboratories",
+      "permanent": true
+    },
+    {
+      "source": "/enterprise",
+      "destination": "/solutions#research-groups",
+      "permanent": true
+    },
+    {
+      "source": "/academic",
+      "destination": "/solutions#research-groups",
       "permanent": true
     }
   ],

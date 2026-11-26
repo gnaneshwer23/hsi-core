@@ -29,16 +29,16 @@ test("Stage 2 public pages: one h1, Get Access chrome, honesty, no overflow at 3
 
 test("Stage 2 audience menu lists the six indexed destinations", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto("/how-it-works");
+  await page.goto("/knowledge-graph");
   const menu = page.getByRole("navigation", {name:"Footer audiences"});
   await expect(menu).toBeVisible();
   for (const [href, name] of [
-    ["/researchers", "Researchers"],
-    ["/enterprise", "Research groups"],
-    ["/biotech", "Biotech teams"],
-    ["/clinical", "Clinical research"],
-    ["/laboratories", "Laboratories"],
-    ["/research-community", "Research community"],
+    ["/solutions#researchers", "Researchers"],
+    ["/solutions#research-groups", "Research groups"],
+    ["/solutions#biotech", "Biotech teams"],
+    ["/solutions#clinical", "Clinical research"],
+    ["/solutions#laboratories", "Laboratories"],
+    ["/solutions#community", "Research community"],
   ] as const) {
     // NavLink uses role="menuitem"; accessible name includes the <small> note.
     await expect(menu.getByRole("link", { name: new RegExp(`^${name}`) })).toHaveAttribute(

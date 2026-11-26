@@ -1,70 +1,35 @@
 export type Status = "Prototype" | "In development" | "Planned" | "Illustrative";
 
-export const nav = [
-  {
-    label: "Platform",
-    items: [
-      {
-        label: "Scientific Memory Engine",
-        to: "/platform/memory",
-        desc: "Persistent, permissioned research memory",
-      },
-      {
-        label: "Scientific AI Agents",
-        to: "/platform/agents",
-        desc: "Specialised agents that collaborate",
-      },
-      {
-        label: "Contradiction Analysis",
-        to: "/platform/contradiction-analysis",
-        desc: "Evaluate conflicting evidence",
-      },
-      {
-        label: "Research Workbench",
-        to: "/platform/workbench",
-        desc: "Interactive investigation preview",
-      },
-      {
-        label: "Knowledge Graph",
-        to: "/platform/knowledge-graph",
-        desc: "Evidence-linked biological relations",
-      },
-      {
-        label: "Discovery Engine",
-        to: "/platform/discovery-engine",
-        desc: "Gaps, hypotheses, experiment drafts",
-      },
-      {
-        label: "Scientific Companion",
-        to: "/platform/companion",
-        desc: "Conversational, cited answers",
-      },
-    ],
-  },
-  {
-    label: "Science",
-    items: [
-      { label: "Six scientific domains", to: "/science", desc: "Immunology to disease mechanisms" },
-    ],
-  },
-  {
-    label: "Solutions",
-    items: [
-      {
-        label: "Solutions by research user",
-        to: "/solutions",
-        desc: "Students, labs, PIs, R&D, clinical",
-      },
-    ],
-  },
-  {
-    label: "Resources",
-    items: [
-      { label: "Data Sources", to: "/data-sources", desc: "Connected and planned integrations" },
-      { label: "Trust & Governance", to: "/trust", desc: "Provenance, uncertainty, oversight" },
-      { label: "Early Access", to: "/early-access", desc: "Start a pilot request" },
-    ],
-  },
+/** The one menu in the header. Everything else in the header is a plain link. */
+export const platformMenu = [
+  { label: "Agents", to: "/platform/agents", desc: "Specialised agents that check each other's work" },
+  { label: "Contradiction analysis", to: "/platform/contradiction-analysis", desc: "Compare conflicting studies in context" },
+  { label: "Investigation record", to: "/platform/workbench", desc: "What an investigation keeps, stage by stage" },
+  { label: "Memory", to: "/platform/memory", desc: "Questions, sources and decisions, owned and scoped" },
+  { label: "Discovery", to: "/platform/discovery-engine", desc: "Evidence gaps and hypotheses to test" },
+] as const;
+
+export const mainLinks = [
+  { label: "Solutions", to: "/solutions" },
+  { label: "Knowledge graph", to: "/knowledge-graph" },
+  { label: "Trust", to: "/trust" },
+  { label: "About", to: "/about" },
+] as const;
+
+export const audiences = [
+  { id: "researchers", label: "Researchers" },
+  { id: "research-groups", label: "Research groups" },
+  { id: "biotech", label: "Biotech and pharma R&D" },
+  { id: "clinical", label: "Clinical research" },
+  { id: "laboratories", label: "Laboratories" },
+  { id: "community", label: "Research community" },
+] as const;
+
+export const footerColumns = [
+  { title: "Platform", links: platformMenu.map((m) => ({ label: m.label, to: m.to })) },
+  { title: "Solutions", links: audiences.map((a) => ({ label: a.label, to: `/solutions#${a.id}` })) },
+  { title: "Company", links: [{ label: "How it works", to: "/how-it-works" }, { label: "Knowledge graph", to: "/knowledge-graph" }, { label: "Data sources", to: "/data-sources" }, { label: "About", to: "/about" }, { label: "Contact", to: "/contact" }] },
+  { title: "Legal", links: [{ label: "Trust and governance", to: "/trust" }, { label: "Privacy", to: "/trust#privacy" }, { label: "Research use", to: "/trust#terms" }, { label: "Accessibility", to: "/trust#accessibility" }, { label: "Security", to: "/trust#security" }] },
 ] as const;
 
 export const domains = [

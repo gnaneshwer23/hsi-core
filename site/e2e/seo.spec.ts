@@ -10,8 +10,8 @@ test('public landing HTML contains page content, unique canonicals and social me
 });
 test('public route hydrates from generated HTML without losing content or mismatching the server',async({page})=>{
  const errors:string[]=[];page.on('pageerror',e=>errors.push(e.message));
- await page.route('**/how-it-works',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/how-it-works.html',dist),'utf8')}));
- await page.goto('/how-it-works');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page).toHaveTitle(SEO_PAGES['/how-it-works']!.title);expect(errors).toEqual([]);
+ await page.route('**/knowledge-graph',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/knowledge-graph.html',dist),'utf8')}));
+ await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page).toHaveTitle(SEO_PAGES['/knowledge-graph']!.title);expect(errors).toEqual([]);
  await page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link',{name:'Knowledge Graph',exact:true}).click();await expect(page.locator('link[rel=canonical]')).toHaveAttribute('href',SITE_ORIGIN+'/knowledge-graph');await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content',SITE_ORIGIN+'/knowledge-graph');
  await page.goto('/research/account');await expect(page.locator('meta[name=robots]')).toHaveAttribute('content','noindex, follow');await expect(page.locator('#hsi-seo-schema')).toHaveCount(0);
 });
@@ -28,5 +28,5 @@ test('sitemap contains only public canonical pages and tool shells are noindex w
  const indexNow=await request.get('/indexnow-key.txt');expect(indexNow.status()).toBe(200);const key=(await indexNow.text()).trim();expect(key).toMatch(/^[a-f0-9]{32}$/i);expect((await request.get('/'+key+'.txt')).status()).toBe(200);
 });
 test('direct HTML remains useful when JavaScript is disabled',async({browser})=>{
- const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.route('**/how-it-works',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/how-it-works.html',dist),'utf8')}));await page.goto('/how-it-works');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('main').getByRole('link',{name:'Open an example investigation'}).first()).toBeVisible();await context.close();
+ const context=await browser.newContext({javaScriptEnabled:false});const page=await context.newPage();await page.route('**/knowledge-graph',async route=>route.fulfill({contentType:'text/html',body:await readFile(new URL('_pages/knowledge-graph.html',dist),'utf8')}));await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toBeVisible();await expect(page.getByRole('main').getByRole('link').first()).toBeVisible();await context.close();
 });

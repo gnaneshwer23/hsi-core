@@ -15,14 +15,6 @@ test('the footer leads to the research app, which opens the app shell',async({pa
  await expect(page.locator('.rh-app')).toBeVisible();
 });
 
-test('how it works shows the research flow and separates checks from approval',async({page})=>{
- await page.goto('/how-it-works');
- await expect(page.getByRole('list',{name:'Investigation journey',exact:true}).getByRole('listitem')).toHaveCount(8);
- await expect(page.getByRole('list',{name:'Scientific review boundaries',exact:true}).getByRole('listitem')).toHaveCount(4);
- await expect(page.locator('.pg-shots img')).toHaveCount(2);
- await expect(page.getByRole('link',{name:'Open an example investigation',exact:true}).first()).toHaveAttribute('href','/demo/universe');
-});
-
 test('every public page passes axe, has one h1 and does not overflow at 390px',async({page})=>{
  test.setTimeout(120000);
  await page.setViewportSize({width:390,height:844});
@@ -37,7 +29,7 @@ test('the public sitemap lists the marketing pages, and the header shows Stage 2
  const sitemap=await (await request.get('/sitemap.xml')).text();
  const locs=[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(m=>new URL(m[1]!).pathname).sort();
  expect(locs).toEqual([...PUBLIC].sort());
- await page.setViewportSize({width:1440,height:900});await page.goto('/how-it-works');
+ await page.setViewportSize({width:1440,height:900});await page.goto('/knowledge-graph');
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('link')).toHaveText(['Home','How It Works','Knowledge Graph','Scientific Intelligence','For Researchers','Community']);
  await expect(page.getByRole('navigation',{name:'Primary',exact:true}).getByRole('button')).toHaveCount(0);
 });
@@ -56,20 +48,6 @@ test('research gaps page states the failure and shows no figures when the snapsh
  await page.goto('/research-gaps');
  await expect(page.getByText(/could not be loaded, so no gap figures are shown/)).toBeVisible();
  await expect(page.getByText(/recorded gaps across/)).toHaveCount(0);
-});
-
-test('audience flow diagram is styled: bounded page height and readable step labels',async({page})=>{
- for(const path of ['/researchers','/biotech','/enterprise','/laboratories']){
-  await page.setViewportSize({width:1440,height:900});
-  await page.goto(path);
-  const h=await page.evaluate(()=>document.documentElement.scrollHeight);
-  expect(h,path+' page height').toBeLessThan(8000);
-  const label=page.locator('.ld-flow-label').first();
-  await expect(label).toBeVisible();
-  const [fg,bg]=await label.evaluate(el=>[getComputedStyle(el).color,getComputedStyle(document.body).backgroundColor]);
-  expect(fg,path+' label colour must differ from page ground').not.toBe(bg);
-  expect(fg,path+' label must not be the dark-ink default').not.toBe('rgb(25, 5, 5)');
- }
 });
 
 test('intelligence page states each agent’s maturity and boundary and the handoff path',async({page})=>{
