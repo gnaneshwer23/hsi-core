@@ -202,7 +202,7 @@ function ComparisonBriefPanel({ view }: { view: DemoComparisonView }) {
           Review status: {view.brief.honesty.reviewStatus}.{" "}
           <Link to="/science/study-comparison">Open source-grounded study comparison</Link>
           {" · "}
-          <Link to="/context-conflict-audit">Context-conflict audit</Link>
+          <Link to="/platform/contradiction-analysis">Context-conflict audit</Link>
         </p>
       </section>
     </>

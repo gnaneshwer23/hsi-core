@@ -122,7 +122,7 @@ export function Home() {
           identify what remains unresolved.
         </p>
         <ContextAuditInstrument id="home-audit" />
-        <PublicAction to="/context-conflict-audit" secondary>
+        <PublicAction to="/platform/contradiction-analysis" secondary>
           Explore the Audit
         </PublicAction>
       </PublicSection>
@@ -242,7 +242,7 @@ export function Home() {
       >
         <div className="hsi-actions">
           <PublicAction to="/contact">Request Research Access</PublicAction>
-          <PublicAction to="/context-conflict-audit" secondary>
+          <PublicAction to="/platform/contradiction-analysis" secondary>
             Explore the Audit
           </PublicAction>
         </div>

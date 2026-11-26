@@ -21,6 +21,11 @@ export const RETIRED_MARKETING_REDIRECTS = {
   "/clinical": "/solutions#clinical",
   "/laboratories": "/solutions#laboratories",
   "/enterprise": "/solutions#research-groups",
+  "/research-gaps": "/knowledge-graph#gaps",
+  "/validation": "/trust#validation",
+  "/intelligence": "/platform/agents",
+  "/scientific-companion": "/platform/companion",
+  "/context-conflict-audit": "/platform/contradiction-analysis",
   "/academic": "/solutions#research-groups",
 } as const;
 

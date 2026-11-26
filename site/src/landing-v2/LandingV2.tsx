@@ -69,7 +69,7 @@ const Memory = lazyPage(() => import("./pages/platform/memory"));
 const Agents = lazyPage(() => import("./pages/platform/agents"));
 const Contradiction = lazyPage(() => import("./pages/platform/contradiction-analysis"));
 const Workbench = lazyPage(() => import("./pages/platform/workbench"));
-const KnowledgeGraph = lazyPage(() => import("./pages/platform/knowledge-graph"));
+const KnowledgeGraph = lazyPage(() => import("./pages/knowledge-graph"));
 const Discovery = lazyPage(() => import("./pages/platform/discovery-engine"));
 const Companion = lazyPage(() => import("./pages/platform/companion"));
 
@@ -84,7 +84,7 @@ const PAGES = {
   "platform/agents": Agents,
   "platform/contradiction-analysis": Contradiction,
   "platform/workbench": Workbench,
-  "platform/knowledge-graph": KnowledgeGraph,
+  "knowledge-graph": KnowledgeGraph,
   "platform/discovery-engine": Discovery,
   "platform/companion": Companion,
 } as const;

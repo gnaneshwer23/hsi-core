@@ -96,7 +96,7 @@ export function Hero() {
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
               <Link
-                to="/platform/knowledge-graph"
+                to="/knowledge-graph"
                 className="group inline-flex items-center gap-3 bg-primary px-6 py-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-foreground hover:text-background"
               >
                 Explore HSI{" "}

@@ -11,4 +11,6 @@ export const LV2_INDEXED = [
   "/about",
   "/contact",
   "/solutions",
+  "/knowledge-graph",
+  "/platform/companion",
 ] as const;

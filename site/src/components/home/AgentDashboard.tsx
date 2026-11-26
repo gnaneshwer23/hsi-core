@@ -42,7 +42,7 @@ export function AgentDashboard(){
             <Link className="ag-link" to={`/intelligence/${sel.slug}`}>Read the {sel.name} responsibilities →</Link>
           </aside>
         </div>
-        <p className="ag-fine"><Link to="/intelligence">All {sum.capabilities} capabilities</Link> · <Link to="/connected-intelligence">What exists today and what is planned</Link></p>
+        <p className="ag-fine"><Link to="/platform/agents">All {sum.capabilities} capabilities</Link> · <Link to="/connected-intelligence">What exists today and what is planned</Link></p>
       </div>
     </section>
   );

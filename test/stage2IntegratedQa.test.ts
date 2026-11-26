@@ -29,7 +29,7 @@ describe("Stage 2 integrated QA locks", () => {
     const marketing = ([...PUBLIC_MARKETING_PATHS] as string[]).sort();
     const seo = Object.keys(SEO_PAGES).filter((p) => !(LV2_INDEXED as readonly string[]).includes(p)).sort();
     expect(marketing).toEqual(seo);
-    expect(marketing).toHaveLength(6);
+    expect(marketing).toEqual(["/"]);
     expect(PRIMARY_NAV_CTA).toEqual({ to: "/sign-up", label: "Create account" });
   });
 

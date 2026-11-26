@@ -11,18 +11,8 @@ test("public pages have a single main/title, working navigation and no narrow-sc
   if(route==="/")await page.screenshot({path:info.outputPath("home-mobile.png"),fullPage:true});
  }
 });
-test("the knowledge graph page opens the existing versioned graph and preserves selected context",async({page})=>{
- await page.goto('/knowledge-graph');await expect(page.getByRole('heading',{level:1})).toContainText('connections behind complex biology');
- await expect(page.locator('#home-knowledge-graph')).toContainText('Public research snapshot');
- await page.locator('#home-knowledge-graph').getByRole('button',{name:'Inspect this evidence',exact:true}).click();
- await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
- await page.locator('.hd-inspector').getByText('Source passages and permissions',{exact:true}).click();
- await expect(page.locator('.hd-inspector a').first()).toHaveAttribute('href',/^https:/);
- await page.getByRole('link',{name:'Open this selection in the research workspace ↗',exact:true}).click();
- await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);await expect(page.getByRole('heading',{level:1})).toContainText('Investigate a biological connection');
-});
 test("mobile menu opens, closes with Escape and connects public destinations",async({page})=>{
- await page.setViewportSize({width:390,height:844});await page.goto("/knowledge-graph");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
+ await page.setViewportSize({width:390,height:844});await page.goto("/status");const menu=page.getByRole("button",{name:"Open menu",exact:true});await menu.click();await expect(menu).toHaveAttribute("aria-expanded","true");
  await page.keyboard.press("Escape");await expect(menu).toHaveAttribute("aria-expanded","false");await expect(menu).toBeFocused();
  await menu.click(); await page.locator("#public-menu").getByRole("link",{name:"How It Works",exact:true}).click();await expect(page).toHaveURL(/how-it-works$/);
  await expect(page.getByRole("heading",{level:1})).toContainText("evidence-linked decisions");
@@ -68,12 +58,6 @@ test("graph controls, bookmarks and SVG/PNG/JSON exports preserve draft scope",a
  await page.goto("/science/graph?node=pancreas");const frame=page.locator(".xp-graph-frame").first();const zoomPct=frame.getByTestId("graph-zoom-pct");await expect(zoomPct).toBeVisible();const before=Number((await zoomPct.textContent())?.replace("%","")??"100");await frame.getByRole("button",{name:"Zoom in graph",exact:true}).click();await expect.poll(async()=>Number((await zoomPct.textContent())?.replace("%","")??"0")).toBeGreaterThan(before);
  await frame.getByRole("button",{name:"Pan graph right",exact:true}).click();await page.getByLabel("Depth",{exact:true}).selectOption("2");await expect(page).toHaveURL(/depth=2/);await page.reload();await expect(page.getByLabel("Depth",{exact:true})).toHaveValue("2");
  for(const format of ["SVG","PNG","JSON"]){const event=page.waitForEvent("download");await frame.getByRole("button",{name:"Download graph "+format,exact:true}).click();const d=await event;expect(d.suggestedFilename()).toContain("."+format.toLowerCase());if(format==="JSON"){const p=JSON.parse(await readFile((await d.path())!,"utf8"));expect(p.scientificApproval).toBe(false);expect(p.scope).toBe("public_educational_draft")}}
-});
-test("reduced-motion mode retains functional graph and verifier navigation",async({page})=>{
- await page.emulateMedia({reducedMotion:'reduce'});await page.goto('/knowledge-graph');
- await page.getByRole('button',{name:'Inspect this evidence',exact:true}).click();await expect(page.locator('.hd-inspector')).toContainText('Unreviewed source candidate');
- await page.getByRole('link',{name:'Open this selection in the research workspace ↗',exact:true}).click();await expect(page).toHaveURL(/domainVersion=[a-f0-9]{64}/);
- await expect(page.getByRole('heading',{level:1})).toHaveText('Investigate a biological connection.');
 });
 
 test("internal validation opens the actual trial view and PDF printing keeps labels and inert text",async({page})=>{

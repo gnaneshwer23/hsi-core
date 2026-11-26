@@ -6,7 +6,7 @@ HSI is being developed as one connected biomedical intelligence platform for evi
 - / — See why the evidence conflicts.
 - /knowledge-graph — Recorded biological relationships with source, experimental context and review status; candidates, not approved findings.
 - /platform — The shared evidence, biological graph, context, verification and governance foundation.
-- /context-conflict-audit — Interactive synthetic study comparison and five teaching outcomes; not a live audit.
+- /platform/contradiction-analysis — Interactive synthetic study comparison; not a live audit.
 - /evidence-intelligence — Illustrative provenance, passage, context, missingness and source permissions.
 - /research — Question, retrieval, connection, investigation, verification and human review.
 - /research-briefs — An expandable source-free example brief; labelled JSON/Markdown downloads, not reviewed or approved.
@@ -18,7 +18,7 @@ HSI is being developed as one connected biomedical intelligence platform for evi
 ## Access and secondary resources
 - /contact prepares a browser-only draft; it does not deliver or persist an access request.
 - /sign-in and /sign-up are account routes; account creation grants no research, source, reviewer or publication permission.
-- /how-it-works, /connected-intelligence, /departments, /intelligence and science/tool routes remain secondary resources. The former /technology, /solutions, /pricing and /evidence-safety pages permanently redirect to /platform, /applications, /contact and /trust.
+- /how-it-works, /connected-intelligence, /departments, /platform/agents and science/tool routes remain secondary resources. The former /technology, /solutions, /pricing and /evidence-safety pages permanently redirect to /platform, /applications, /contact and /trust.
 - /status describes capability maturity. Engineering implementation, deployment and scientific acceptance are different states.
 
 ## Scientific and data boundaries

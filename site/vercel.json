@@ -237,10 +237,6 @@
       "destination": "/_pages/platform.html"
     },
     {
-      "source": "/intelligence",
-      "destination": "/_pages/intelligence.html"
-    },
-    {
       "source": "/connected-intelligence",
       "destination": "/_pages/connected-intelligence.html"
     },
@@ -333,10 +329,6 @@
       "destination": "/_pages/intelligence--warden.html"
     },
     {
-      "source": "/context-conflict-audit",
-      "destination": "/_pages/context-conflict-audit.html"
-    },
-    {
       "source": "/evidence-intelligence",
       "destination": "/_pages/evidence-intelligence.html"
     },
@@ -381,24 +373,12 @@
       "destination": "/_pages/research-community.html"
     },
     {
-      "source": "/validation",
-      "destination": "/_pages/validation.html"
-    },
-    {
       "source": "/technology",
       "destination": "/_pages/technology.html"
     },
     {
       "source": "/how-it-works",
       "destination": "/_pages/how-it-works.html"
-    },
-    {
-      "source": "/research-gaps",
-      "destination": "/_pages/research-gaps.html"
-    },
-    {
-      "source": "/scientific-companion",
-      "destination": "/_pages/scientific-companion.html"
     },
     {
       "source": "/explore",
@@ -713,16 +693,8 @@
       "destination": "/_pages/landing-v2--platform--workbench.html"
     },
     {
-      "source": "/landing-v2/platform/knowledge-graph",
-      "destination": "/_pages/landing-v2--platform--knowledge-graph.html"
-    },
-    {
       "source": "/landing-v2/platform/discovery-engine",
       "destination": "/_pages/landing-v2--platform--discovery-engine.html"
-    },
-    {
-      "source": "/landing-v2/platform/companion",
-      "destination": "/_pages/landing-v2--platform--companion.html"
     },
     {
       "source": "/platform/memory",
@@ -747,6 +719,38 @@
     {
       "source": "/data-sources",
       "destination": "/_pages/data-sources.html"
+    },
+    {
+      "source": "/platform/companion",
+      "destination": "/_pages/platform--companion.html"
+    },
+    {
+      "source": "/intelligence",
+      "destination": "/_pages/intelligence.html"
+    },
+    {
+      "source": "/context-conflict-audit",
+      "destination": "/_pages/context-conflict-audit.html"
+    },
+    {
+      "source": "/validation",
+      "destination": "/_pages/validation.html"
+    },
+    {
+      "source": "/research-gaps",
+      "destination": "/_pages/research-gaps.html"
+    },
+    {
+      "source": "/scientific-companion",
+      "destination": "/_pages/scientific-companion.html"
+    },
+    {
+      "source": "/landing-v2/platform/knowledge-graph",
+      "destination": "/_pages/landing-v2--platform--knowledge-graph.html"
+    },
+    {
+      "source": "/landing-v2/platform/companion",
+      "destination": "/_pages/landing-v2--platform--companion.html"
     }
   ],
   "redirects": [
@@ -938,6 +942,41 @@
     {
       "source": "/academic",
       "destination": "/solutions#research-groups",
+      "permanent": true
+    },
+    {
+      "source": "/research-gaps",
+      "destination": "/knowledge-graph#gaps",
+      "permanent": true
+    },
+    {
+      "source": "/validation",
+      "destination": "/trust#validation",
+      "permanent": true
+    },
+    {
+      "source": "/intelligence",
+      "destination": "/platform/agents",
+      "permanent": true
+    },
+    {
+      "source": "/scientific-companion",
+      "destination": "/platform/companion",
+      "permanent": true
+    },
+    {
+      "source": "/context-conflict-audit",
+      "destination": "/platform/contradiction-analysis",
+      "permanent": true
+    },
+    {
+      "source": "/landing-v2/platform/knowledge-graph",
+      "destination": "/knowledge-graph",
+      "permanent": true
+    },
+    {
+      "source": "/landing-v2/platform/companion",
+      "destination": "/platform/companion",
       "permanent": true
     }
   ],
