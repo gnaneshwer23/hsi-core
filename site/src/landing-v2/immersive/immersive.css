@@ -1,0 +1,59 @@
+/* LEA-03 immersive workspace. Deep green, carbon and navy; mint and gold; red only for conflicts. */
+.lv2.im{--bar-supported:#83B8AD;--bar-association:#D8B477;--bar-hypothesis:#7FA6B8;--bar-contested:#E07A7A;min-height:100vh;background:radial-gradient(80rem 50rem at 70% -10%,#12332d55,transparent 70%),radial-gradient(60rem 40rem at -10% 110%,#0f2236aa,transparent 70%),#070d0c;display:grid;grid-template-rows:auto auto 1fr}
+.im-top{display:flex;align-items:center;gap:1rem;padding:.625rem 1.25rem;border-bottom:1px solid #ffffff14;backdrop-filter:blur(10px);background:#070d0ccc;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+.im-search{flex:1 1 14rem;max-width:26rem}.im-search select{width:100%;min-height:44px;padding:.5rem .75rem;border-radius:6px;border:1px solid #ffffff2e;background:#ffffff0a;color:var(--foreground);font:inherit}
+.im-top-links{display:flex;gap:1rem;margin-left:auto}
+.im-banner{padding:.625rem 1.25rem;background:color-mix(in oklab,var(--signal) 11%,transparent);border-bottom:1px solid color-mix(in oklab,var(--signal) 30%,transparent);font-size:.875rem;line-height:1.5}
+.im-shell{display:grid;grid-template-columns:minmax(0,1fr);gap:0;min-width:0}
+.im-nav,.im-side{padding:1rem 1.25rem}
+.im-nav ul{list-style:none;margin:0;padding:0;display:flex;gap:.375rem;overflow-x:auto;max-width:100%}
+.im-nav li{flex:none}
+.im-nav button,.im-nav a,.im-planned{display:inline-flex;align-items:center;gap:.4rem;min-height:44px;padding:0 .875rem;border-radius:999px;border:1px solid #ffffff26;background:transparent;color:var(--foreground);font:inherit;font-size:.875rem;text-decoration:none;cursor:pointer;white-space:nowrap}
+.im-nav button[aria-pressed=true]{background:color-mix(in oklab,var(--primary) 22%,transparent);border-color:var(--primary)}
+.im-planned{opacity:.7;cursor:default;border-style:dashed}
+.im-you{display:none}
+.im-main{padding:1rem 1.25rem 3rem;display:grid;gap:1rem;align-content:start;min-width:0;outline:none}
+.im-heading h1{font-family:var(--font-serif);font-weight:400;font-size:clamp(1.75rem,4vw,2.75rem);line-height:1.08;letter-spacing:-.02em;margin:.25rem 0 0}
+.im-controls{display:flex;flex-wrap:wrap;gap:.75rem 1.25rem}
+.im-layer-note{margin:0}
+.im-stage{position:relative;border-radius:14px;border:1px solid #ffffff1f;background:radial-gradient(40rem 26rem at 50% 45%,#16403a66,transparent 70%),linear-gradient(#0b1713cc,#08111dcc);min-height:22rem;height:min(62vh,40rem);overflow:hidden;backdrop-filter:blur(6px)}
+.im-stage canvas{display:block;width:100%!important;height:100%!important}
+.im-map{display:block;width:100%;height:100%}
+.im-zone{fill:#ffffff40;font-family:var(--font-mono);font-size:11px;letter-spacing:.2em}
+.im-label{fill:#e8eeeb;font-size:11.5px;font-family:var(--font-sans);paint-order:stroke;stroke:#08111d;stroke-width:3px}
+.im-node{cursor:pointer;outline:none}.im-node:focus-visible circle{stroke:var(--signal);stroke-width:3}
+.im-caption{position:absolute;left:.875rem;bottom:.75rem;margin:0;padding:.25rem .625rem;border-radius:6px;background:#070d0ccc;font-size:.8125rem;color:var(--muted-foreground);pointer-events:none}
+.im-legend{position:absolute;right:.875rem;top:.75rem;display:flex;gap:.75rem;margin:0;padding:.25rem .625rem;list-style:none;border-radius:6px;background:#070d0ccc;flex-wrap:wrap;justify-content:flex-end;max-width:70%}
+.im-wait{padding:2rem;color:var(--muted-foreground)}
+.im-bottom{display:grid;gap:1rem}
+@media (min-width:768px){.im-bottom{grid-template-columns:1fr 1fr}}
+.im-card{padding:1rem 1.125rem;border-radius:12px;border:1px solid #ffffff1a;background:#ffffff08;backdrop-filter:blur(8px);min-width:0}
+.im-card h2{font-family:var(--font-display);font-size:1rem;margin:0 0 .5rem}
+.im-bars,.im-rows,.im-plain,.im-time,.im-asks,.im-turns{list-style:none;margin:0;padding:0;display:grid;gap:.5rem}
+.im-bars li{display:grid;grid-template-columns:7.5rem 1fr 1.5rem;align-items:center;gap:.5rem;font-size:.875rem}
+.im-bar{height:.5rem;border-radius:999px;background:#ffffff14;overflow:hidden}.im-bar i{display:block;height:100%;border-radius:999px}
+.im-rows li{display:grid;gap:.125rem;padding:.375rem 0;border-bottom:1px solid #ffffff12}
+.im-rows button{background:none;border:0;padding:0;min-height:44px;text-align:left;color:var(--primary);font:inherit;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+.im-time li{display:grid;gap:.125rem;font-size:.875rem;padding-left:.75rem;border-left:2px solid var(--primary)}
+.im-time b{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted-foreground);font-weight:500}
+.im-plain{list-style:disc;padding-left:1.25rem;font-size:.9375rem}
+.im-nex-head{display:flex;justify-content:space-between;align-items:center;gap:.5rem}
+.im-asks .ws-btn{width:100%;justify-content:flex-start;text-align:left;white-space:normal}
+.im-asks .ws-btn:disabled{opacity:.45}
+.im-turns{margin-top:.75rem}.im-turns li{padding:.625rem .75rem;border-radius:8px;background:#ffffff0a;display:grid;gap:.25rem;font-size:.9375rem}
+.im-q{margin:0;font-weight:500;color:var(--signal)}
+.im .ws-btn,.im .ws-seg button{border-color:#ffffff2e}
+.im :is(button,a,select,input,[role=button]):focus-visible{outline:2px solid var(--signal);outline-offset:3px}
+@media (min-width:1100px){
+ .im-shell{grid-template-columns:13.5rem minmax(0,1fr) 22rem}
+ .im-nav{position:sticky;top:3.75rem;align-self:start}
+ .im-nav ul{display:grid;overflow:visible;gap:.125rem}
+ .im-nav button,.im-nav a,.im-planned{border:0;border-radius:6px;min-height:40px;width:100%;justify-content:space-between}
+ .im-nav button:hover,.im-nav a:hover{background:#ffffff0f}
+ .im-you{display:block;margin-top:1.5rem;padding-top:1rem;border-top:1px solid #ffffff14;font-size:.875rem}
+ .im-you ul{list-style:none;margin:.25rem 0 0;padding:0;display:grid;gap:.25rem}
+ .im-side{position:sticky;top:3.75rem;align-self:start;max-height:calc(100vh - 4rem);overflow:auto;display:grid;gap:1rem}
+ .im-stage{height:min(66vh,44rem)}
+}
+.im-side{display:grid;gap:1rem}
+@media (prefers-reduced-motion:no-preference){.im-card,.im-stage{animation:im-in .5s ease-out both}@keyframes im-in{from{opacity:0;transform:translateY(8px)}}}
