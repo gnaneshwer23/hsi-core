@@ -1,6 +1,6 @@
 import type {ReactNode} from "react";
 import {
- CONTEXT_KEYS,CONTEXT_LABEL,HSI_DOMAINS,MAX_CONTEXT,domainLabel,type DomainCoverageRow,type Facets,type Filters,type GraphAssertionView,type GraphModel,type Stated,
+ CONTEXT_KEYS,CONTEXT_LABEL,HSI_DOMAINS,MAX_CONTEXT,bandLabel,domainLabel,isLevel,scaleOfKind,type ScaleBand,type DomainCoverageRow,type Facets,type Filters,type GraphAssertionView,type GraphModel,type Stated,
 } from "../../../src/graphWorkspace";
 
 const READ:Record<string,string>={not_stated_in_source:"The source does not say.",not_recorded_in_graph_schema:"HSI does not record this field yet."};
@@ -28,6 +28,7 @@ export function FilterPanel({filters,set,facets,filtered,onReset,depth,setDepth,
    <Checks title="Scientific domain" facet={facets.domains} value={filters.domains} onChange={v=>set({...filters,domains:v as Filters["domains"]})} format={v=>domainLabel(v as never)}/>
    <Checks title="Concept type" facet={facets.kinds} value={filters.kinds} onChange={v=>set({...filters,kinds:v})}/>
    <Checks title="Reported relationship" facet={facets.predicates} value={filters.predicates} onChange={v=>set({...filters,predicates:v})} format={v=>v.replaceAll("_"," ")}/>
+   <Checks title="Biological scale" facet={facets.scales} value={filters.scales} onChange={v=>set({...filters,scales:v as ScaleBand[]})} format={v=>bandLabel(v as ScaleBand)}/>
    <Checks title="Species" facet={facets.species} value={filters.species} onChange={v=>set({...filters,species:v})}/>
    <Checks title="Model system" facet={facets.models} value={filters.models} onChange={v=>set({...filters,models:v})}/>
    <label className="gw-range"><span>Context stated: at least {filters.minContext} of {MAX_CONTEXT}</span>
@@ -75,6 +76,11 @@ export function AssertionTable({rows,selected,onSelect,compare}:{rows:readonly G
  );
 }
 
+function ScaleSection({kind}:{kind:string}){
+ const p=scaleOfKind(kind);
+ return <Section title="Biological scale"><p>{isLevel(p.band)?<>{bandLabel(p.band)}, from the concept type “{kind}”.</>:p.band==="not_biological"?<>Not a biological level: “{kind}” is not a biological entity.</>:<>Scale not recorded: the concept type “{kind}” carries no level, and none is guessed from the name.</>}</p><p className="gw-hint">Derived from the stated scale map, version {p.mapVersion}. The published graph records no scale of its own.</p></Section>;
+}
+
 function Section({title,children}:{title:string;children:ReactNode}){return <section className="gw-sec"><h3>{title}</h3>{children}</section>}
 
 export function Inspector({model,assertion,entityId,onSelectEntity,onSelectAssertion,related,statusSummary}:{
@@ -88,6 +94,7 @@ export function Inspector({model,assertion,entityId,onSelectEntity,onSelectAsser
     <h2>{node.name}</h2>
     <p className="gw-hint">{node.kind} · {(model.nodeDomains.get(node.id)?.domains.map(d=>domainLabel(d)).join(", "))||"No HSI domain mapped"}</p>
     {node.aliases.length>0&&<p className="gw-hint">Also called: {node.aliases.slice(0,4).join(", ")}</p>}
+    <ScaleSection kind={node.kind}/>
     <Section title="Identifiers"><p>No canonical identifier is shown in this phase. Candidate ontology mappings exist for some concepts and none is reviewed.</p></Section>
     <Section title={`Relationships (${related.length})`}>
      <ul className="gw-list">{related.slice(0,30).map(a=><li key={a.id}><button type="button" onClick={()=>onSelectAssertion(a.id)}>{a.subject.id===node.id?"→":"←"} {a.reportedAs} {a.subject.id===node.id?a.object.name:a.subject.name}</button></li>)}</ul>

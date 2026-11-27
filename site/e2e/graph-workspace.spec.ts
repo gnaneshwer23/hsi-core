@@ -2,6 +2,12 @@ import AxeBuilder from "@axe-core/playwright";
 import {expect,test,type Page} from "@playwright/test";
 
 const open=async(page:Page)=>{await page.goto("/workspace/graph");await expect(page.getByRole("heading",{level:1,name:"Living Intelligence Graph"})).toBeVisible();await expect(page.locator("g.gw-node").first()).toBeVisible()};
+/** Opens the 3D view when the browser provides WebGL; otherwise checks it is disabled with the reason. Returns whether 3D opened. */
+const threeD=async(page:Page)=>{
+ const r=page.getByRole("radio",{name:"3D"});
+ if(await r.isDisabled()){await expect(page.getByText("3D is unavailable in this browser because WebGL is not provided.")).toBeVisible();return false}
+ await r.click();await expect(page.locator("#gw-3d canvas")).toBeVisible();return true;
+};
 const table=async(page:Page)=>{await page.getByRole("radio",{name:"Table"}).click();await expect(page.locator("table.gw-table")).toBeVisible()};
 
 test("it opens on the real published slice and says every relationship is a candidate",async({page})=>{
@@ -133,11 +139,12 @@ test("a conflict goal opens the contradiction mode, and every other mode stays r
 });
 
 for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
- for(const v of ["Graph","Table"]){
+ for(const v of ["Graph","Table","3D"]){
   test(`accessible and no horizontal scroll, ${v} view: ${name}`,async({page})=>{
    await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
    await open(page);
    if(v==="Table")await table(page);
+   if(v==="3D")await threeD(page);
    await page.getByRole("button",{name:/./}).first().isVisible();
    for(const w of [vp.width,320]){
     await page.setViewportSize({width:w,height:vp.height});
@@ -224,3 +231,49 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
  });
 }
+
+test("the 3D view shows the same concepts as the graph, with a keyboard list by scale that drives the inspector",async({page})=>{
+ await open(page);
+ const n2d=await page.locator("g.gw-node").count();
+ if(!(await threeD(page)))return;
+ const nav=page.getByRole("navigation",{name:"Concepts in the 3D view by scale"});
+ await expect(nav).toBeVisible();
+ await expect(nav).toContainText("Scale not recorded");
+ const summaries=nav.locator("summary");
+ for(let i=0;i<await summaries.count();i++)await summaries.nth(i).click();
+ expect(await nav.getByRole("button").count()).toBe(n2d);
+ await nav.getByRole("button").first().click();
+ await expect(page.getByRole("complementary",{name:"Inspector"}).getByRole("heading",{name:"Biological scale"})).toBeVisible();
+});
+
+test("scale navigation narrows every view to the relationships touching a scale, and says where scale comes from",async({page})=>{
+ await open(page);await table(page);
+ const all=await page.locator("table.gw-table tbody tr").count();
+ const scales=page.getByRole("radiogroup",{name:"Biological scale"});
+ await expect(scales).toContainText("Scale not recorded");
+ await expect(page.getByText("the published graph records no scale of its own").first()).toBeVisible();
+ await scales.getByRole("radio",{name:/^Molecule/}).click();
+ const mol=await page.locator("table.gw-table tbody tr").count();
+ expect(mol).toBeGreaterThan(0);expect(mol).toBeLessThan(all);
+ await scales.getByRole("radio",{name:"All scales"}).click();
+ await expect(page.locator("table.gw-table tbody tr")).toHaveCount(all);
+});
+
+test("the scale panel reports how much is unplaced and never calls a cross-scale link a mechanism",async({page})=>{
+ await open(page);
+ const card=page.getByRole("region",{name:"Across biological scales"});
+ await expect(card).toContainText(/Of \d+ relationships in view, \d+ join two concepts with a recorded scale, \d+ have one, and \d+ have none\./);
+ await expect(card).toContainText("not a demonstrated mechanism that spans them");
+ await expect(card.getByRole("list",{name:"Relationships that cross scales"})).toContainText("Organism ↔ Molecule");
+});
+
+test("a concept's inspector says when its scale is not recorded instead of guessing",async({page})=>{
+ await open(page);await table(page);
+ await page.getByRole("radiogroup",{name:"Biological scale"}).getByRole("radio",{name:/^Scale not recorded/}).click();
+ await page.locator("table.gw-table tbody th button").first().click();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ await side.getByRole("button").first().click();
+ await expect(side.getByRole("heading",{name:"Biological scale"})).toBeVisible();
+ await expect(side).toContainText(/Scale not recorded|from the concept type|Not a biological level/);
+ await expect(side).toContainText("Derived from the stated scale map, version 1.0.0");
+});

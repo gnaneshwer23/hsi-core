@@ -4,3 +4,4 @@ export * from "./modes";
 export * from "./filters";
 export * from "./slice";
 export * from "./contradiction";
+export * from "./scale";
