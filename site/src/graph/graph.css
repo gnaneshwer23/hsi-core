@@ -138,3 +138,9 @@
 .gw-q-ends{margin:0}.gw-q-ends .gw-link{font:inherit}
 .gw-list small{display:block}
 .gw-qs h3{text-transform:none;letter-spacing:0;color:var(--foreground)}.gw-qs .gw-list li{font-size:.9375rem}
+/* LEA-04I: personalisation */
+.gw-why{margin-top:.5rem;font-size:.875rem}
+.gw-why summary{min-height:44px;display:inline-flex;align-items:center;cursor:pointer;color:var(--primary)}
+.gw-why .gw-btn{margin-top:.25rem}
+.gw-guide{margin-top:.5rem;padding:.6rem .85rem;border-radius:10px;border:1px solid #ffffff1f;background:#ffffff08;font-size:.9375rem;display:grid;gap:.35rem}
+.gw-guide p{margin:0}

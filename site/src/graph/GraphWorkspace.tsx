@@ -4,9 +4,10 @@ import {Logo} from "../landing-v2/components/site/Header";
 import {applySeo} from "../lib/seo/applySeo";
 import {useSharedBundle} from "../lib/useSharedBundle";
 import {useOnboarding} from "../landing-v2/onboarding/store";
+import {personaOf} from "../../../src/onboarding/scientificOnboarding";
 import {
- EMPTY_FILTERS,HSI_DOMAINS,NEXT_STUDY_NOTE,gapView,questionPathAssertions,questionView,questionsInView,SCALE_BANDS,bandLabel,bandOf,crossScaleLinks,placedShare,scaleCoverage,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
- type Filters,type GraphAssertionView,type ScaleBand,type GraphModel,type HsiDomain,type ModeId,type TracedPath,
+ DEFAULT_OPENING,EMPTY_FILTERS,HSI_DOMAINS,WORKSPACE_SCOPES,openingView,NEXT_STUDY_NOTE,gapView,questionPathAssertions,questionView,questionsInView,SCALE_BANDS,bandLabel,bandOf,crossScaleLinks,placedShare,scaleCoverage,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
+ type Filters,type GraphAssertionView,type ScaleBand,type GraphModel,type ModeId,type TracedPath,
 } from "../../../src/graphWorkspace";
 import {layoutGraph} from "../../../src/graphWorkspace/layout";
 import {layout3D} from "../../../src/graphWorkspace/scale";
@@ -33,13 +34,7 @@ function useWebGL(){
 const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap","hypothesis","experimental"];
 const PALETTE=["#83B8AD","#D8B477","#7FA6B8","#B7A8D0","#C9CED2","#5FA58F","#E0A96D","#8A9BA8"];
 
-type Scope={id:string;label:string;pair:[HsiDomain,HsiDomain]|null};
-const SCOPES:Scope[]=[
- {id:"imm-mic",label:"Immunology × Microbiome",pair:["immunology","microbiome"]},
- {id:"imm-neu",label:"Immunology × Neuroscience",pair:["immunology","neuroscience"]},
- {id:"mic-neu",label:"Microbiome × Neuroscience",pair:["microbiome","neuroscience"]},
- {id:"all",label:"Whole published graph",pair:null},
-];
+const SCOPES=WORKSPACE_SCOPES;
 const MAX_VIEW=400;
 
 export default function GraphWorkspace(){
@@ -59,9 +54,10 @@ export default function GraphWorkspace(){
 
 function Loaded({model}:{model:GraphModel}){
  const [onb]=useOnboarding();
- const start:ModeId=onb.objectives.includes("conflicts")?"contradiction":onb.objectives.includes("hypotheses")?"hypothesis":onb.objectives.includes("gaps")?"gap":"mechanism";
+ const opening=useMemo(()=>openingView({persona:personaOf(onb),objectives:onb.objectives,primaryDomain:onb.primaryDomain,secondaryDomains:onb.secondaryDomains,level:onb.methods.level}),[onb]);
+ const start:ModeId=opening.mode;
  const [mode,setMode]=useState<ModeId>(start);
- const [scopeId,setScopeId]=useState("imm-mic");
+ const [scopeId,setScopeId]=useState(opening.scopeId);
  const [view,setView]=useState<"graph"|"table"|"3d">("graph");
  const webgl=useWebGL();
  const [hover3d,setHover3d]=useState<string|null>(null);
@@ -189,7 +185,8 @@ function Loaded({model}:{model:GraphModel}){
       <p className="gw-eyebrow">{m.label} · {scope.label}</p>
       <h1>Living Intelligence Graph</h1>
       <p className="gw-hint">{m.summary} {m.readinessNote}</p>
-      {onb.objectives.length>0&&<p className="gw-hint">Opened on this mode for your goals. Every other mode, including conflicts, stays one click away.</p>}
+      {opening.personalised&&<details className="gw-why"><summary>Why the workspace opened here</summary><ul className="gw-list">{opening.reasons.map(r=><li key={r}>{r}</li>)}</ul><p className="gw-hint">Every other mode, including conflicts, stays one click away.</p><button type="button" className="gw-btn" onClick={()=>{changeMode(DEFAULT_OPENING.mode);setScopeId(DEFAULT_OPENING.scopeId);setDepth(0)}}>Open the default view</button></details>}
+      {opening.guidance&&<div className="gw-guide" role="note"><p><strong>Reading this graph.</strong> Each dot is a concept, such as a cell type, a molecule or a disease. Each line is a relationship that a published source reported between two concepts. A dashed line is a finding recorded as not holding.</p><p>Nothing here is established knowledge: every relationship is an unreviewed candidate. Select a dot or a line to see what the source stated, what it did not, and where it came from.</p></div>}
       {webgl.gl===false&&<p className="gw-hint">3D is unavailable in this browser because WebGL is not provided. The graph and the table show the same concepts and relationships.</p>}
       <div className="gw-scales">
        <div className="gw-seg" role="radiogroup" aria-label="Biological scale">

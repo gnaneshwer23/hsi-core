@@ -1,5 +1,6 @@
 import AxeBuilder from "@axe-core/playwright";
 import {expect,test,type Page} from "@playwright/test";
+import {EMPTY_STATE,ONBOARDING_KEY,serializeState,type OnboardingState} from "../../src/onboarding/scientificOnboarding";
 
 const open=async(page:Page)=>{await page.goto("/workspace/graph");await expect(page.getByRole("heading",{level:1,name:"Living Intelligence Graph"})).toBeVisible();await expect(page.locator("g.gw-node").first()).toBeVisible()};
 /** Opens the 3D view when the browser provides WebGL; otherwise checks it is disabled with the reason. Returns whether 3D opened. */
@@ -134,7 +135,9 @@ test("a conflict goal opens the contradiction mode, and every other mode stays r
  await page.getByRole("checkbox",{name:/Investigate conflicting evidence/}).click();await page.getByRole("button",{name:"Continue"}).click();
  await page.goto("/workspace/graph");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("contradiction");
- await expect(page.getByText("Every other mode, including conflicts, stays one click away.")).toBeVisible();
+ await page.getByText("Why the workspace opened here").click();
+ await expect(page.getByText("Opened in this mode because you chose to investigate conflicting evidence.")).toBeVisible();
+ await expect(page.getByText("Every other mode, including conflicts, stays one click away.").first()).toBeVisible();
  await page.getByLabel("Mode",{exact:true}).selectOption({label:"Mechanism Graph"});
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
 });
@@ -404,4 +407,62 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
    expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
   });
  }
+}
+
+const withProfile=async(page:Page,p:Partial<OnboardingState>)=>{
+ const raw=serializeState({...EMPTY_STATE,...p});
+ await page.addInitScript(([k,v])=>{try{localStorage.setItem(k!,v!)}catch{}},[ONBOARDING_KEY,raw]);
+};
+
+test("a profile chooses only where the workspace opens, gives its reasons, and can be undone",async({page})=>{
+ await withProfile(page,{primaryRole:"postdoc",objectives:["hypotheses"],primaryDomain:"neuroscience",secondaryDomains:["microbiome"]});
+ await open(page);
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("hypothesis");
+ await expect(page.getByLabel("Scope",{exact:true})).toHaveValue("mic-neu");
+ await page.getByText("Why the workspace opened here").click();
+ const why=page.locator("details.gw-why");
+ await expect(why).toContainText("you chose to generate testable hypotheses");
+ await expect(why).toContainText("Scoped to Microbiome × Neuroscience because these are your primary and secondary domains.");
+ await expect(why).toContainText("No relationship is hidden");
+ await expect(page.getByRole("button",{name:"Reset",exact:true})).toHaveCount(0);
+ await why.getByRole("button",{name:"Open the default view"}).click();
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
+ await expect(page.getByLabel("Scope",{exact:true})).toHaveValue("imm-mic");
+});
+
+test("a primary domain with no two-domain view opens the whole graph and says why",async({page})=>{
+ await withProfile(page,{primaryRole:"postdoc",primaryDomain:"genomics"});
+ await open(page);
+ await expect(page.getByLabel("Scope",{exact:true})).toHaveValue("all");
+ await page.getByText("Why the workspace opened here").click();
+ await expect(page.locator("details.gw-why")).toContainText("there is no two-domain view for your primary domain yet");
+});
+
+test("asking for foundations shows plain-language guidance; without a profile nothing is personalised",async({page,browser})=>{
+ await withProfile(page,{primaryRole:"undergraduate",methods:{...EMPTY_STATE.methods,level:"foundations"}});
+ await open(page);
+ await expect(page.locator(".gw-guide")).toContainText("Each dot is a concept");
+ await expect(page.locator(".gw-guide")).toContainText("every relationship is an unreviewed candidate");
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("atlas");
+ const fresh=await browser.newPage();
+ await open(fresh);
+ await expect(fresh.locator("details.gw-why")).toHaveCount(0);
+ await expect(fresh.locator(".gw-guide")).toHaveCount(0);
+ await fresh.close();
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ test(`the personalised opening is accessible with no horizontal scroll: ${name}`,async({page})=>{
+  await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+  await withProfile(page,{primaryRole:"undergraduate",objectives:["conflicts"],primaryDomain:"immunology",methods:{...EMPTY_STATE.methods,level:"foundations"}});
+  await page.goto("/workspace/graph");await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("contradiction");
+  await page.getByText("Why the workspace opened here").click();
+  for(const w of [vp.width,320]){
+   await page.setViewportSize({width:w,height:vp.height});
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+  }
+  await page.setViewportSize(vp);
+  const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+  expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+ });
 }
