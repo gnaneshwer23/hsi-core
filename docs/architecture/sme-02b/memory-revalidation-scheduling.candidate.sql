@@ -11,7 +11,7 @@ BEGIN
  pr:=CASE d.decision WHEN 'quarantine' THEN 0 WHEN 'recheck_required' THEN 1 ELSE 2 END;
  SELECT * INTO existing FROM hsi_memory.revalidation_jobs WHERE job_id=p_job;
  IF FOUND THEN
- IF existing.decision_id=p_decision AND existing.due_at=p_due AND existing.priority=pr THEN RETURN p_job; END IF;
+ IF existing.decision_id=p_decision AND existing.original_due_at=p_due AND existing.priority=pr THEN RETURN p_job; END IF;
  RAISE EXCEPTION 'Schedule replay conflict' USING ERRCODE='40001'; END IF;
  IF EXISTS(SELECT 1 FROM hsi_memory.revalidation_jobs j JOIN hsi_memory.adjudication_candidates a ON a.decision_id=j.decision_id WHERE a.doi=d.doi AND a.source_version=d.source_version AND j.state IN ('queued','leased')) THEN
  RAISE EXCEPTION 'Publication already scheduled' USING ERRCODE='40001'; END IF;
