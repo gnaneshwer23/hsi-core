@@ -56,7 +56,9 @@ export default function GraphWorkspace(){
 function Loaded({model}:{model:GraphModel}){
  const [onb]=useOnboarding();
  const opening=useMemo(()=>openingView({persona:personaOf(onb),objectives:onb.objectives,primaryDomain:onb.primaryDomain,secondaryDomains:onb.secondaryDomains,level:onb.methods.level}),[onb]);
- const start:ModeId=opening.mode;
+ /* A link may name a mode (?mode=), for example from a public page. It is used only if that mode can be opened. */
+ const linkMode=useMemo(()=>{try{const m=new URLSearchParams(window.location.search).get("mode");return m&&BUILT.includes(m as ModeId)&&isOpenable(modeById[m as ModeId])?m as ModeId:null}catch{return null}},[]);
+ const start:ModeId=linkMode??opening.mode;
  const [mode,setMode]=useState<ModeId>(start);
  /* A link may carry a search (?q=). It searches the whole published graph, so nothing is missed by the default scope. */
  const linkQuery=useMemo(()=>{try{return (new URLSearchParams(window.location.search).get("q")??"").trim().slice(0,200)}catch{return ""}},[]);
@@ -188,6 +190,7 @@ function Loaded({model}:{model:GraphModel}){
       <p className="gw-eyebrow">{m.label} · {scope.label}</p>
       <h1>Living Intelligence Graph</h1>
       <p className="gw-hint">{m.summary} {m.readinessNote}</p>
+      {linkMode&&!linkQuery&&<p className="gw-hint" role="status">Opened in {modeById[linkMode].label} from a link. Every other mode stays one click away.</p>}
       {linkQuery&&<p className="gw-hint" role="status">Opened from a link: searching the whole published graph for “{linkQuery}”. Clear the search to see everything.</p>}
       {opening.personalised&&<details className="gw-why"><summary>Why the workspace opened here</summary><ul className="gw-list">{opening.reasons.map(r=><li key={r}>{r}</li>)}</ul><p className="gw-hint">Every other mode, including conflicts, stays one click away.</p><button type="button" className="gw-btn" onClick={()=>{changeMode(DEFAULT_OPENING.mode);setScopeId(DEFAULT_OPENING.scopeId);setDepth(0)}}>Open the default view</button></details>}
       {opening.guidance&&<div className="gw-guide" role="note"><p><strong>Reading this graph.</strong> Each dot is a concept, such as a cell type, a molecule or a disease. Each line is a relationship that a published source reported between two concepts. A dashed line is a finding recorded as not holding.</p><p>Nothing here is established knowledge: every relationship is an unreviewed candidate. Select a dot or a line to see what the source stated, what it did not, and where it came from.</p></div>}

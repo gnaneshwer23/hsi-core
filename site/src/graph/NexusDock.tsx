@@ -30,6 +30,8 @@ export function NexusDock({model,mode,entity,assertionId,compareIds,path,onSelec
  const name=(id:string)=>model.nodes.get(id)?.name??id;
  const rel=(id:string)=>{const a=model.assertions.find(x=>x.id===id);return a?`${a.subject.name} ${a.reportedAs} ${a.object.name}`:id};
  const ready=agentReadiness(sel);
+ /* Agent titles cite relationship ids; show the relationship as people read it. The record keeps the ids. */
+ const readable=(t:string)=>{let out=t;for(const a of [...model.assertions].sort((x,y)=>y.id.length-x.id.length))if(out.includes(a.id))out=out.split(a.id).join(`“${a.subject.name} ${a.reportedAs} ${a.object.name}”`);return out.replace(/: (not comparable|insufficient context|potential disagreement|consistent context)$/,"");};
 
  const ctx=useMemo(()=>{
   if(!sel.nodeIds.length&&!sel.edgeIds.length)return {ctx:null,err:""};
@@ -90,7 +92,7 @@ export function NexusDock({model,mode,entity,assertionId,compareIds,path,onSelec
      <p className="gw-hint">Scoped to graph version {r.graphVersion.slice(0,8)}: {r.scope.nodeIds.length} concepts, {r.scope.edgeIds.length} relationships, {r.scope.evidenceIds.length} sources.</p>
      {r.abstentionReason&&<p role="note"><strong>No conclusion offered.</strong> {r.abstentionReason}</p>}
      {r.findings.length>0&&<ol className="gw-list">{r.findings.map((f,i)=><li key={i}>
-      <p><strong>{f.title}</strong>{f.class&&<> · <span className="gw-tag">{CLASS_LABEL[f.class]??f.class}</span></>}</p>
+      <p><strong>{readable(f.title)}</strong>{f.class&&<> · <span className="gw-tag">{CLASS_LABEL[f.class]??f.class}</span></>}</p>
       <p>{f.detail}</p>
       <button type="button" className="gw-link" onClick={()=>propose(r,f)}>Download as a proposal for review</button>
      </li>)}</ol>}
