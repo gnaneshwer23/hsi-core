@@ -37,7 +37,8 @@ test("selecting a concept lists its relationships and never claims an identifier
  await page.locator("g.gw-node").nth(4).click();
  const side=page.getByRole("complementary",{name:"Inspector"});
  await expect(side.getByRole("heading",{name:/Relationships \(\d+\)/})).toBeVisible();
- await expect(side).toContainText("No canonical identifier is shown in this phase");
+ await expect(side.getByRole("heading",{name:"Identifiers"})).toBeVisible();
+ await expect(side).toContainText(/Not a canonical identifier|No canonical identifier is shown/);
 });
 
 test("the table is an equivalent accessible view with source links",async({page})=>{
@@ -277,3 +278,70 @@ test("a concept's inspector says when its scale is not recorded instead of guess
  await expect(side).toContainText(/Scale not recorded|from the concept type|Not a biological level/);
  await expect(side).toContainText("Derived from the stated scale map, version 1.0.0");
 });
+
+const wholeSearch=async(page:Page,q:string)=>{
+ await open(page);
+ await page.getByLabel("Scope",{exact:true}).selectOption("all");
+ await table(page);
+ await page.getByPlaceholder("Search concepts…").fill(q);
+};
+
+test("a concept's evidence summary counts its sources, says what is not stated, and shows candidate identifiers as candidates",async({page})=>{
+ await wholeSearch(page,"Rheumatoid arthritis");
+ await page.locator("table.gw-table tbody tr").first().getByRole("button").click();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ await side.getByRole("button",{name:"Rheumatoid arthritis",exact:true}).first().click();
+ await expect(side.getByRole("heading",{level:2,name:"Rheumatoid arthritis"})).toBeVisible();
+ const ev=side.locator("section.gw-sec",{has:page.getByRole("heading",{name:"Evidence",exact:true})});
+ await expect(ev).toContainText(/\d+ candidate relationships?/);
+ await expect(ev).toContainText("Counted over the whole published graph");
+ await expect(ev).toContainText("counts are not a measure of strength");
+ const ids=side.locator("section.gw-sec",{has:page.getByRole("heading",{name:"Identifiers"})});
+ await expect(ids).toContainText("MONDO:0008383");
+ await expect(ids).toContainText("Candidate label match, unreviewed. Not a canonical identifier");
+});
+
+test("recorded passages show text only where rights allow, and the correction check is never implied",async({page})=>{
+ await wholeSearch(page,"Anti-CCP");
+ const rows=page.locator("table.gw-table tbody tr");
+ await expect(rows.first()).toBeVisible();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ let found=false;
+ for(let i=0;i<await rows.count()&&!found;i++){
+  await rows.nth(i).getByRole("button").first().click();
+  found=await side.getByText(/show recorded text/).count()>0;
+ }
+ expect(found).toBe(true);
+ await expect(side).toContainText("human clearance of permitted use is pending");
+ await expect(side).toContainText("Correction and retraction status not checked");
+ await expect(side).toContainText("No absence of retraction or correction is inferred");
+ await side.getByText(/Passage 1: show recorded text/).click();
+ await expect(side.locator("blockquote").first()).toBeVisible();
+});
+
+test("a source with unverified rights shows locators only, never text",async({page})=>{
+ await open(page);await table(page);
+ await page.locator("table.gw-table tbody th button").first().click();
+ const side=page.getByRole("complementary",{name:"Inspector"});
+ await expect(side).toContainText("Usage rights unverified");
+ await expect(side.locator("blockquote")).toHaveCount(0);
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ test(`the concept evidence inspector is accessible with no horizontal scroll: ${name}`,async({page})=>{
+  await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+  await wholeSearch(page,"Rheumatoid arthritis");
+  await page.locator("table.gw-table tbody tr").first().getByRole("button").click();
+  const side=page.getByRole("complementary",{name:"Inspector"});
+  await side.getByRole("button",{name:"Rheumatoid arthritis",exact:true}).first().click();
+  await expect(side.getByRole("heading",{name:"Evidence",exact:true})).toBeVisible();
+  await side.getByText(/^Sources \(\d+\)$/).click();
+  for(const w of [vp.width,320]){
+   await page.setViewportSize({width:w,height:vp.height});
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+  }
+  await page.setViewportSize(vp);
+  const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+  expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+ });
+}
