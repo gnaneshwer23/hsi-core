@@ -120,3 +120,14 @@
 .gw-levels button{all:unset;cursor:pointer;display:block;padding:.35rem .25rem;min-height:24px;border-radius:6px;font-size:.875rem;overflow-wrap:anywhere}
 .gw-levels button:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
 .gw-levels button[aria-pressed=true]{background:color-mix(in oklab,var(--primary) 22%,transparent)}
+/* LEA-04E: evidence intelligence */
+.gw-src{display:grid;gap:.35rem}
+.gw-src p{margin:0}
+.gw-src-title{font-weight:600;overflow-wrap:anywhere}
+.gw-passages{list-style:none;margin:0;padding:0;display:grid;gap:.4rem;font-size:.875rem}
+.gw-passages p{margin:0}.gw-passages small{display:block;color:var(--muted-foreground);overflow-wrap:anywhere}
+.gw-passages summary{min-height:44px;display:flex;align-items:center;cursor:pointer}
+.gw-passages blockquote{margin:.25rem 0;padding:.4rem .7rem;border-left:2px solid var(--primary);background:#ffffff08}
+.gw-srcs summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600}
+.gw-srcs li{display:grid;gap:.25rem;padding:.4rem 0;border-top:1px solid #ffffff14}
+.gw-right code{font-size:.8125rem;overflow-wrap:anywhere}

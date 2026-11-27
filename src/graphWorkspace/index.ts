@@ -5,3 +5,4 @@ export * from "./filters";
 export * from "./slice";
 export * from "./contradiction";
 export * from "./scale";
+export * from "./evidence";
