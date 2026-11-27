@@ -15,6 +15,7 @@ import {Graph2D,type GEdge,type GNode} from "./Graph2D";
 import {AssertionTable,FilterPanel,Inspector} from "./Panels";
 import {ComparePanel} from "./Compare";
 import {QuestionsPanel} from "./Investigate";
+import {NexusDock} from "./NexusDock";
 import "./graph.css";
 
 const Graph3D=lazy(()=>import("./Graph3D"));
@@ -243,6 +244,7 @@ function Loaded({model}:{model:GraphModel}){
        <p className="gw-hint">Gaps are recorded as gaps, not findings. {NEXT_STUDY_NOTE}</p>
       </section>
       <ComparePanel model={model} units={units} showUnits={m.select==="comparable_pairs"} compareIds={compareIds} setCompareIds={setCompareIds} activeUnit={activeUnit} setActiveUnit={setActiveUnit} globalCount={globalCount} inWhole={scopeId==="all"} onWhole={()=>{setScopeId("all");setDepth(0)}}/>
+      <NexusDock model={model} mode={mode} entity={entity} assertionId={assertionId} compareIds={compareIds} path={path} onSelectAssertion={id=>{setAssertionId(id);setEntity(null)}} onSelectConcept={selectNode}/>
       <section className="gw-card gw-wide" aria-labelledby="gw-path"><h2 id="gw-path">Pathway tracing</h2>
        <div className="gw-trace">
         <label className="gw-field"><span>From</span><select aria-label="From" value={from} onChange={e=>{setFrom(e.target.value);setPath(null)}}><option value="">Choose a concept…</option>{nodes.map(n=><option key={n.id} value={n.id}>{n.label}</option>)}</select></label>
