@@ -31,6 +31,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-revalidation-claim.candidate.sql
 \ir memory-revalidation-completion.candidate.sql
 \ir memory-revalidation-recovery.candidate.sql
+\ir memory-revalidation-identity.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -68,6 +69,10 @@ CREATE ROLE sme_fixture_evidence_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_evidence_ingestor;
 GRANT EXECUTE ON FUNCTION hsi_memory.record_evidence_observation(uuid,text,text,text,timestamptz,text) TO sme_fixture_evidence_ingestor;
 CREATE POLICY fixture_owner_assertions ON hsi_memory.publication_assertion_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_revalidation_identity ON hsi_memory.revalidation_identity_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE ROLE sme_fixture_identity_writer NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_identity_writer;
+GRANT EXECUTE ON FUNCTION hsi_memory.stage_revalidation_identity(uuid,text,text) TO sme_fixture_identity_writer;
 CREATE POLICY fixture_owner_revalidation ON hsi_memory.revalidation_jobs TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE ROLE sme_fixture_revalidation_worker NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_worker;
@@ -195,6 +200,21 @@ DO $recovery_test$ DECLARE j uuid:=gen_random_uuid(); d uuid:='00000000-0000-400
  RESET ROLE;
  IF NOT EXISTS(SELECT 1 FROM hsi_memory.revalidation_jobs WHERE job_id=j AND state='failed' AND lease_id IS NULL) THEN RAISE EXCEPTION 'Exhausted job not failed'; END IF;
 END $recovery_test$;
+SET ROLE sme_fixture_identity_writer;
+DO $identity_test$ DECLARE d uuid:='00000000-0000-4000-8000-000000000204'; BEGIN
+ IF hsi_memory.stage_revalidation_identity(d,'123','PMC456')<>d OR hsi_memory.stage_revalidation_identity(d,'123','PMC456')<>d THEN RAISE EXCEPTION 'Identity replay failed'; END IF;
+ BEGIN PERFORM hsi_memory.stage_revalidation_identity(d,'124','PMC456'); RAISE EXCEPTION 'Conflicting identity accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ BEGIN PERFORM hsi_memory.stage_revalidation_identity(d,'0',NULL); RAISE EXCEPTION 'Invalid PMID accepted'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ BEGIN PERFORM count(*) FROM hsi_memory.revalidation_identity_candidates; RAISE EXCEPTION 'Direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $identity_test$;
+RESET ROLE;
+DO $identity_count$ BEGIN IF (SELECT count(*) FROM hsi_memory.revalidation_identity_candidates WHERE NOT identity_verified AND NOT ingestion_allowed)<>1 THEN RAISE EXCEPTION 'Identity persistence failed'; END IF; END $identity_count$;
+SET ROLE sme_fixture_runtime;
+DO $identity_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.stage_revalidation_identity('00000000-0000-4000-8000-000000000204','123',NULL); RAISE EXCEPTION 'Runtime write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $identity_deny$;
+RESET ROLE;
+
 
 
 
