@@ -60,11 +60,11 @@ export function WorkspaceFrame({persona,profile,panels,children,variant}:{person
        {PREVIEW_PERSONAS.map(p=><option key={p} value={p}>{PERSONA_LABEL[p]}</option>)}
       </select>
      </label>
-     <Link to="/onboarding/review" className="ws-link">Edit setup</Link>
+     <Link to="/settings/scientific-profile" className="ws-link">Profile settings</Link>
     </nav>
    </header>
    <div className="ws-banner" role="note"><strong>Illustrative preview.</strong> Sample content, not your data. No live service is connected, nothing is saved to a server, and this view grants no access.{profile&&<> {profile.note}</>}</div>
-   <div className="ws-shell">
+   <div className={panels.length?"ws-shell":"ws-shell ws-shell-solo"}>
     {panels.length>0&&(
      <nav className="ws-nav" aria-label="Sections">
       <p className="ws-eyebrow">{persona?PERSONA_LABEL[persona]:""}{variant?` · ${variant}`:""}</p>

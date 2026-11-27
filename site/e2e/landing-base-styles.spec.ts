@@ -15,7 +15,7 @@ test("mobile menu button and pilot request form have touch-sized targets",async(
  await page.goto("/contact");
  const menu=await page.getByRole("button",{name:"Open menu"}).boundingBox();
  expect(menu!.width).toBeGreaterThanOrEqual(44);expect(menu!.height).toBeGreaterThanOrEqual(44);
- for(const el of [page.locator("#access-intent-question"),page.locator("#access-intent-email"),page.getByRole("button",{name:"Start a pilot request"})]){
+ for(const el of [page.locator("#access-intent-question"),page.locator("#access-intent-email"),page.getByRole("button",{name:"Save my question"})]){
   const box=await el.boundingBox();expect(box!.height).toBeGreaterThanOrEqual(44);
  }
 });

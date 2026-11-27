@@ -109,12 +109,46 @@ for(const p of PERSONAS){
   await page.goto(`/workspace/preview/${p}`);
   await page.getByRole("button",{name:"Show an illustrative output"}).click();
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.setViewportSize({width:320,height:700}); // hidden screen-reader text in tables must not widen the page
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
+  await page.setViewportSize({width:390,height:844});
   const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
   expect(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
  });
 }
 test("the chooser is accessible",async({page})=>{
  await page.goto("/workspace/preview");
+ const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+ expect(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
+});
+
+test("the reviewer preview is assigned not chosen, and an approval needs a rationale and acknowledged gaps",async({page})=>{
+ await page.goto("/workspace/preview");
+ await expect(page.getByText("Assigned, not chosen")).toBeVisible();
+ await page.getByRole("link",{name:"Scientific reviewer"}).click();
+ await expect(page.getByRole("heading",{level:1})).toHaveText("Evidence review workspace");
+ await expect(page.getByText("never grants this view")).toBeVisible();
+ const record=page.getByRole("button",{name:"Record decision locally"});
+ await expect(record).toBeDisabled();
+ await page.getByRole("radio",{name:"Approve"}).click();
+ await page.getByLabel(/Rationale/).fill("The conflict is real and needs both studies compared.");
+ await expect(page.locator("#rv-help")).toContainText("Acknowledge it to approve");
+ await expect(record).toBeDisabled();
+ await page.getByLabel(/Context is incomplete/).check();
+ await page.getByLabel(/assessments disagree/).check();
+ await expect(record).toBeEnabled();
+ await record.click();
+ await expect(page.getByRole("list",{name:"Decisions"})).toContainText("RC-1 · approve");
+ await expect(page.getByText("Append-only")).toBeVisible();
+ await expect(page.getByText("Not available: needs an approved backend and review policy.")).toBeVisible();
+});
+
+test("the reviewer preview is accessible at 390px without horizontal scroll",async({page})=>{
+ await page.setViewportSize({width:390,height:844});await page.emulateMedia({reducedMotion:"reduce"});
+ await page.goto("/workspace/preview/reviewer");
+ await expect(page.getByRole("heading",{level:1})).toBeVisible();
+ await page.getByRole("radio",{name:"Approve"}).click();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1)).toBe(true);
  const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
  expect(r.violations.map(v=>({id:v.id,nodes:v.nodes.map(n=>n.target)}))).toEqual([]);
 });

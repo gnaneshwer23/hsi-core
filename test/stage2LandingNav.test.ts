@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import {
   AUDIENCE_NAV_LINKS,
@@ -11,7 +11,7 @@ import {
 const root = (...p: string[]) => readFileSync(resolve(import.meta.dir, "..", ...p), "utf8");
 
 describe("Stage 2 landing design system + nav", () => {
-  it("ships Stage 2 token JSON and CSS aligned to craft-bar brief", () => {
+  it("ships the Stage 2 token JSON; the old cinematic stylesheet is gone", () => {
     const tokens = JSON.parse(root("docs/design/hsi-stage2-landing-tokens.v1.json")) as {
       schemaVersion: string;
       palette: Record<string, { hex: string }>;
@@ -19,11 +19,8 @@ describe("Stage 2 landing design system + nav", () => {
     };
     expect(tokens.schemaVersion).toBe("hsi-stage2-landing-tokens-1");
     expect(tokens.marketingHeadline).toContain("better question");
-    const css = root("site/src/styles/cinematic.css");
-    expect(css).toContain("#000310");
-    expect(css).toContain("#C52076");
-    expect(css).toContain("#2396AC");
-    expect(root("site/src/styles/legacy.ts")).toContain("cinematic.css");
+    // The old cinematic stylesheet is no longer shipped; the tokens document remains the design reference.
+    expect(existsSync(resolve(import.meta.dir, "..", "site/src/styles/cinematic.css"))).toBe(false);
   });
 
   it("exposes audience destinations without retired path strings in primaryNav", () => {

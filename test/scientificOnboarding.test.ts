@@ -8,6 +8,36 @@ import {
 const withRole=(role:Parameters<typeof reduce>[1] extends infer A?any:never)=>reduce(EMPTY_STATE,{type:"setPrimaryRole",role});
 
 describe("scientific onboarding contract",()=>{
+ it("holds organisation departments and intended data classes, bounded and validated",()=>{
+  let s=reduce(EMPTY_STATE,{type:"addDepartment",name:" Immunology "});
+  s=reduce(s,{type:"addDepartment",name:"immunology"});
+  expect(s.institutionInfo.departments).toEqual(["Immunology"]);
+  for(let i=0;i<30;i++)s=reduce(s,{type:"addDepartment",name:"d"+i});
+  expect(s.institutionInfo.departments).toHaveLength(20);
+  expect(reduce(s,{type:"removeDepartment",index:0}).institutionInfo.departments[0]).toBe("d0");
+  const back=parseState(JSON.stringify({v:1,institutionInfo:{name:"x",departments:["A","A"],intendedData:["public","everything"]}}));
+  expect(back.institutionInfo.departments).toEqual(["A"]);expect(back.institutionInfo.intendedData).toEqual(["public"]);
+ });
+ it("explains every recommendation by the answers that caused it",()=>{
+  let s=reduce(EMPTY_STATE,{type:"setPrimaryRole",role:"phd"});s=reduce(s,{type:"setPrimaryDomain",domain:"disease"});
+  s=reduce(s,{type:"toggleObjective",id:"review"});s=reduce(s,{type:"toggleObjective",id:"translation"});
+  const plan=deriveWorkspacePlan(s)!;
+  for(const t of plan.tools)expect(t.because.length).toBeGreaterThan(0);
+  const lit=plan.tools.find(t=>t.id==="literature")!;
+  expect(lit.because).toEqual(["Conduct literature reviews","Investigate translational opportunities"]);
+  expect(plan.tools.find(t=>t.id==="memory")!.because).toEqual(["You chose to keep scientific memory"]);
+ });
+ it("manages projects and objectives, and keeps them bounded and valid after reload",()=>{
+  let s=reduce(EMPTY_STATE,{type:"addProject",name:" Barrier study ",note:"n"});
+  s=reduce(s,{type:"addProject",name:"barrier STUDY",note:""});
+  expect(s.projects).toEqual([{name:"Barrier study",note:"n"}]);
+  for(let i=0;i<20;i++)s=reduce(s,{type:"addProject",name:"p"+i,note:""});
+  expect(s.projects).toHaveLength(10);
+  expect(parseState(serializeState(s)).projects).toHaveLength(10);
+  expect(reduce(s,{type:"removeProject",index:0}).projects[0]!.name).toBe("p0");
+  expect(reduce(EMPTY_STATE,{type:"setObjectives",ids:["learn","learn","nope" as any]}).objectives).toEqual(["learn"]);
+  expect(parseState(JSON.stringify({v:1,projects:[{name:"ok"},{name:""},{name:5}]})).projects).toEqual([{name:"ok",note:""}]);
+ });
  it("gives a postdoc a conflict comparison and a PhD researcher a gap investigation as the first action",()=>{
   const f=(r:any)=>deriveWorkspacePlan({...EMPTY_STATE,primaryRole:r,primaryDomain:"immunology",objectives:["gaps"]})!.firstInvestigation.title;
   expect(f("postdoc")).toBe("Compare conflicting scientific findings");

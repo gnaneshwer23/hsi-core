@@ -12,6 +12,7 @@ import {useOnboarding} from "../onboarding/store";
 import {FirstAction,Panel,WorkspaceFrame} from "./Frame";
 import {biotech as biotechB,clinical,computational,institution} from "./dashB";
 import {laboratory,professor,researcher,student,type Built} from "./dashA";
+import Reviewer from "./Reviewer";
 
 const BUILD:Record<PersonaId,(c:{state:ReturnType<typeof useOnboarding>[0];personalised:boolean})=>Built>={
  student,researcher,professor,laboratory,computational,clinical,biotech:biotechB,institution,
@@ -43,6 +44,8 @@ function Chooser(){
      </li>
     ))}
    </ul>
+   <h2 className="ws-h3">Assigned, not chosen</h2>
+   <ul className="ws-choose-extra"><li><h2><Link to="/workspace/preview/reviewer">Scientific reviewer</Link></h2><p>Evidence review queue, provenance, context completeness and an append-only decision log. Reviewers are assigned by an organisation; no setup answer grants this view.</p></li></ul>
    {!mine&&<p className="ws-note">Want your own view? <Link to="/onboarding" className="ws-link">Set up HSI</Link> and your role, domains and goals shape which panels lead.</p>}
   </WorkspaceFrame>
  );
@@ -82,5 +85,6 @@ export default function WorkspacePreview(){
  const last=pathname.split("/").filter(Boolean).pop()??"";
  const persona=isPersona(last)?last:null;
  useEffect(()=>{applySeo(pathname)},[pathname]);
+ if(last==="reviewer")return <Reviewer/>;
  return persona?<Preview persona={persona}/>:<Chooser/>;
 }

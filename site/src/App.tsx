@@ -1,6 +1,9 @@
 import {IdentityStudy} from "./pages/IdentityStudy";
 import {lazy,Suspense,type ComponentType} from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
+const ImmersiveWorkspace=lazy(()=>import("./landing-v2/immersive/ImmersiveWorkspace"));
+const GraphWorkspace=lazy(()=>import("./graph/GraphWorkspace"));
+const ScientificProfileSettings=lazy(()=>import("./landing-v2/settings/ScientificProfile"));
 const WorkspacePreview=lazy(()=>import("./landing-v2/workspace"));
 const Onboarding=lazy(()=>import("./landing-v2/onboarding"));
 const Layout=lazy(()=>import("./components/Layout").then(m=>({default:m.Layout})));
@@ -135,6 +138,10 @@ export default function App({home:Home=HomeV2,landing:Landing=LandingV2}:{home?:
       <Route path="workspace/preview/clinical" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
       <Route path="workspace/preview/biotech" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
       <Route path="workspace/preview/institution" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/preview/reviewer" element={<Suspense fallback={null}><WorkspacePreview/></Suspense>}/>
+      <Route path="workspace/immersive" element={<Suspense fallback={null}><ImmersiveWorkspace/></Suspense>}/>
+      <Route path="workspace/graph" element={<Suspense fallback={null}><GraphWorkspace/></Suspense>}/>
+      <Route path="settings/scientific-profile" element={<Suspense fallback={null}><ScientificProfileSettings/></Suspense>}/>
       <Route element={<Suspense fallback={null}><Layout /></Suspense>}>
         <Route path="research" element={<Navigate to="/how-it-works" replace />} />
         <Route path="evidence-safety" element={<Navigate to="/trust" replace />} />
