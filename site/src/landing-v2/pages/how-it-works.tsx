@@ -29,7 +29,7 @@ export default function Page() {
           <Link to="/platform/workbench" className="bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90">See an example investigation record</Link>
           <Link to="/trust#validation" className="border border-border px-5 py-3 text-sm font-medium hover:border-primary">Read how approval stays separate</Link>
         </div>
-        <PageStatus>A research preview. Example findings are labelled as examples. HSI gives no clinical advice and this site holds no patient data.</PageStatus>
+        <PageStatus>Research preview. Example findings are labelled as examples. HSI gives no clinical advice and this site holds no patient data.</PageStatus>
       </PageHero>
 
       <Section eyebrow="Journey" title="The investigation journey.">
