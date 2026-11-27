@@ -31,7 +31,7 @@ for(const path of ['/','/how-it-works','/knowledge-graph','/research/dashboard',
 test('the landing page loads its typefaces locally without third-party font requests',async({page})=>{
  const fonts:string[]=[];page.on('request',r=>{if(/fonts\.(googleapis|gstatic)\.com/.test(r.url()))fonts.push(r.url())});
  await page.goto('/');await page.evaluate(()=>document.fonts.ready);
- expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Space Grotesk Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
+ expect(await page.evaluate(()=>[...document.fonts].some(f=>f.family==='Newsreader Variable'&&f.status==='loaded'))).toBe(true);expect(fonts).toEqual([]);
 });
 
 test('mobile hero states what the product is and offers one clear action',async({page})=>{

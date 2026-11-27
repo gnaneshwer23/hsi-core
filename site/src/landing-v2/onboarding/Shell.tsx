@@ -43,7 +43,7 @@ export function OnboardingShell({step,eyebrow,title,lede,children,primary,hideSk
  const onSkip=()=>{dispatch({type:"skip",step});go(next)};
 
  return (
-  <div className="lv2 ob" data-step={step}>
+  <div className="lv2 lv2-ed ob" data-step={step}>
    <a href="#ob-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to the question</a>
    <div className="ob-bg" aria-hidden="true"><svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"><use href="#ob-helix"/></svg></div>
    <svg width="0" height="0" aria-hidden="true" focusable="false" style={{position:"absolute"}}>

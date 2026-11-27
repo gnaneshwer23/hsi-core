@@ -1,5 +1,5 @@
 import { Link } from "../router";
-import { Card, PageHero, Section, StatusTag, meta } from "../components/site/ui";
+import { Card, PageHero, Section, meta, PageStatus } from "../components/site/ui";
 import { LiveGraphHero } from "../../components/home/LiveGraphHero";
 import { GraphSnapshotProvider, useGraphSnapshot } from "../../components/home/useGraphSnapshot";
 import { WorkspaceFigure } from "../components/site/WorkspaceFigure";
@@ -42,8 +42,8 @@ export default function Page() {
         title="Every connection, with the study behind it."
         intro="The graph links biological concepts, such as genes, pathways, cells and diseases, to the studies that report the connection. Each link keeps the species, tissue and design of that study, so you can judge what it supports."
       >
+        <PageStatus>The published graph is live and every relationship in it is unreviewed. The graph workspace is a prototype.</PageStatus>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <StatusTag s="In development" />
           <Link to="/workspace/graph" className="bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90">Open the graph workspace</Link>
         </div>
       </PageHero>
@@ -58,7 +58,6 @@ export default function Page() {
       </Section>
 
       <Section id="workspace" eyebrow="The graph workspace" title="Work with the graph, not just look at it." intro="The workspace opens on the published graph, in 2D, 3D or as a table. It shows what each source states and, just as plainly, what it does not.">
-        <div className="mb-4 flex flex-wrap gap-2"><StatusTag s="Prototype" /></div>
         <WorkspaceFigure shot="overview" caption="Select a relationship to see its status, the source’s own wording and each context field, marked “Not stated” where the source or HSI does not record it." cta="Open the workspace" />
         <div className="mt-8 grid gap-4 md:grid-cols-3">
           {[

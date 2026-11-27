@@ -11,7 +11,7 @@ export function LandingV2Layout({ children }: { children: ReactNode }) {
     else window.scrollTo(0, 0);
   }, [pathname, hash]);
   return (
-    <div className="lv2">
+    <div className="lv2 lv2-ed">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-primary-foreground">
         Skip to content
       </a>

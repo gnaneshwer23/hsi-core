@@ -1,4 +1,4 @@
-import { PageHero, Section, StatusTag, meta } from "../../components/site/ui";
+import { PageHero, Section, meta, PageStatus } from "../../components/site/ui";
 
 export const pageMeta = meta("Scientific Companion — HSI", "A conversational interface to HSI that answers with cited evidence, stated uncertainty and links back to your lab's memory.");
 
@@ -25,10 +25,7 @@ export default function Page() {
         title="Ask in plain language. Get cited answers."
         intro="The Companion is a conversational layer over HSI's memory and agents. It is designed to answer with citations and confidence, and to say clearly when the evidence is not there."
       >
-        <div className="mt-6 flex gap-2">
-          <StatusTag s="Prototype" />
-          <StatusTag s="Illustrative" />
-        </div>
+        <PageStatus>A prototype. The conversation below is an illustrative example, not a live answer.</PageStatus>
       </PageHero>
       <Section eyebrow="Example conversation" title="Honest about what is known.">
         <div className="glass mx-auto max-w-3xl space-y-4 rounded-2xl p-5 md:p-8">

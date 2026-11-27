@@ -1,5 +1,5 @@
 import { Link } from "../../router";
-import { PageHero, Section, StatusTag, meta } from "../../components/site/ui";
+import { PageHero, Section, meta, PageStatus } from "../../components/site/ui";
 import { WorkspaceFigure } from "../../components/site/WorkspaceFigure";
 import { ContradictionLab } from "../../components/contradiction/ContradictionLab";
 
@@ -13,8 +13,8 @@ export default function Page() {
         title="Most contradictions are missing context."
         intro="Conflicting results often reflect differences in model system, dose, timing, cohort or method. HSI is designed to surface those variables, assess verification status and state the remaining uncertainty."
       >
+        <PageStatus>A prototype on the published graph. The interactive lab further down uses illustrative findings.</PageStatus>
         <div className="mt-6 flex flex-wrap items-center gap-3">
-          <StatusTag s="Prototype" />
           <Link to="/workspace/graph?mode=contradiction" className="bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90">Open contradiction mode</Link>
         </div>
       </PageHero>

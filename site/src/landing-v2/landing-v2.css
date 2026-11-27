@@ -193,3 +193,34 @@ body:has(.lv2){background:oklch(0.189 0.024 254);font-size:1.0625rem;font-weight
 .lv2 .xp-access-intent .xp-button:disabled{opacity:.6;cursor:not-allowed}
 .lv2 .xp-access-intent .xp-button-secondary{background:transparent;color:var(--primary-ink)}
 .lv2 .xp-access-intent .xp-actions a{display:inline-flex;align-items:center;min-height:44px;color:var(--primary-ink);font-size:.875rem;text-decoration:underline;text-underline-offset:3px}
+
+/* Editorial theme for the public site: paper and ink, a serif for headings, one sans for text, no decorative glows,
+   no monospace or all-caps labels. Applied by the marketing layout and onboarding (.lv2-ed); app previews keep the dark theme. */
+.lv2.lv2-ed{
+  --background:oklch(0.975 0.006 90);--foreground:oklch(0.22 0.022 250);
+  --card:oklch(0.995 0.002 90);--card-foreground:oklch(0.22 0.022 250);--popover:oklch(0.995 0.002 90);--popover-foreground:oklch(0.22 0.022 250);
+  --primary:oklch(0.43 0.075 190);--primary-foreground:oklch(0.99 0.003 90);--ring:oklch(0.43 0.075 190);--verify:oklch(0.43 0.075 190);
+  --secondary:oklch(0.935 0.008 90);--secondary-foreground:oklch(0.22 0.022 250);--accent:oklch(0.935 0.008 90);--accent-foreground:oklch(0.22 0.022 250);
+  --muted:oklch(0.945 0.007 90);--muted-foreground:oklch(0.45 0.018 250);
+  --border:oklch(0.87 0.01 90);--input:oklch(0.82 0.012 90);
+  --signal:oklch(0.5 0.1 65);--helix:oklch(0.46 0.06 235);--conflict:oklch(0.5 0.14 25);--destructive:oklch(0.5 0.14 25);
+  --primary-ink:oklch(0.43 0.075 190);--helix-ink:oklch(0.46 0.06 235);--conflict-ink:oklch(0.5 0.14 25);
+  --paper:oklch(0.945 0.008 90);--ink:oklch(0.22 0.022 250);--ink-muted:oklch(0.45 0.018 250);
+  --chart-1:oklch(0.43 0.075 190);--chart-2:oklch(0.55 0.1 65);--chart-3:oklch(0.5 0.14 25);--chart-4:oklch(0.46 0.06 235);--chart-5:oklch(0.5 0.02 250);
+  --font-display:"Newsreader Variable",ui-serif,Georgia,serif;
+  color-scheme:light;font-feature-settings:"kern","liga";
+}
+body:has(.lv2-ed){background:oklch(0.975 0.006 90)}
+.lv2-ed :is(h1,h2,h3){font-family:"Newsreader Variable",ui-serif,Georgia,serif;font-weight:450;letter-spacing:-.012em;text-wrap:balance}
+.lv2-ed h1{font-size:clamp(2.5rem,5vw,4.4rem);line-height:1.06}
+.lv2-ed h2{font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.1}
+.lv2-ed h3{line-height:1.25}
+.lv2-ed .font-display{font-family:"Newsreader Variable",ui-serif,Georgia,serif;letter-spacing:-.01em}
+.lv2-ed .font-mono{font-family:var(--font-sans);font-variant-numeric:tabular-nums;letter-spacing:0}
+.lv2-ed .uppercase{text-transform:none;letter-spacing:0}
+.lv2-ed .font-serif{font-family:var(--font-sans);font-size:1.1875rem;line-height:1.6;color:var(--muted-foreground)}
+.lv2-ed :is(.grid-bg,.glow-hero,.glow-ambient,.grid-fine){background:none}
+.lv2-ed .text-gradient{background:none;color:inherit}
+.lv2-ed .rounded-full.border{border-radius:4px}
+.lv2-ed p{text-wrap:pretty}
+.lv2-ed .ob-bg{display:none}

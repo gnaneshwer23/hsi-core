@@ -2,25 +2,18 @@ import type { ReactNode } from "react";
 import { cn } from "../../lib/utils";
 import type { Status } from "../../lib/site-data";
 
-const statusStyle: Record<Status, string> = {
-  Prototype: "text-primary border-primary/40 bg-primary/10",
-  "In development": "text-helix-ink border-helix/40 bg-helix/10",
-  Planned: "text-muted-foreground border-border bg-muted",
-  Illustrative: "text-signal border-signal/40 bg-signal/10",
-};
-
+/** A status inside a list or table: plain small text, not a badge. Pages state their overall status once, with PageStatus. */
 export function StatusTag({ s, className }: { s: Status; className?: string }) {
+  return <span className={cn("text-xs text-muted-foreground", s === "Prototype" && "text-primary", className)}>{s}</span>;
+}
+
+/** The one status line a page carries: what works today, and what is planned or illustrative. */
+export function PageStatus({ children }: { children: ReactNode }) {
   return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium",
-        statusStyle[s],
-        className,
-      )}
-    >
-      <span className="size-1.5 rounded-full bg-current" />
-      {s}
-    </span>
+    <p className="mt-8 max-w-2xl border-l-2 border-border pl-4 text-sm leading-relaxed text-muted-foreground">
+      <span className="font-medium text-foreground">Status. </span>
+      {children}
+    </p>
   );
 }
 
@@ -93,15 +86,12 @@ export function PageHero({
 }) {
   return (
     <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 grid-bg opacity-40 [mask-image:radial-gradient(ellipse_at_top,black,transparent_70%)]" />
-      <div className="pointer-events-none absolute inset-0 glow-hero" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-      <div className="relative mx-auto max-w-[1440px] px-5 pb-24 pt-24 md:px-10 md:pt-36">
+      <div className="relative mx-auto max-w-[1440px] border-b border-border px-5 pb-20 pt-24 md:px-10 md:pt-32">
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h1 className="mt-6 max-w-5xl font-display text-[clamp(2.6rem,6vw,5.75rem)] font-medium leading-[0.95] tracking-[-0.04em]">
+        <h1 className="mt-5 max-w-4xl font-display text-[clamp(2.6rem,6vw,5.75rem)] font-medium leading-[0.95] tracking-[-0.04em]">
           {title}
         </h1>
-        <p className="mt-8 max-w-2xl font-serif text-xl leading-snug text-foreground/75 md:text-2xl">
+        <p className="mt-6 max-w-2xl font-serif text-xl leading-snug text-foreground/75">
           {intro}
         </p>
         {children}
