@@ -7,3 +7,4 @@ export * from "./contradiction";
 export * from "./scale";
 export * from "./evidence";
 export * from "./investigation";
+export * from "./personalisation";
