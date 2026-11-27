@@ -92,6 +92,8 @@ export type GraphModel={
  gaps:DomainBundle["gaps"];questions:DomainBundle["questions"];
  sources:ReadonlyMap<string,DomainSource>;
  nodeDomains:ReadonlyMap<string,{domains:HsiDomain[];unmappedTags:string[]}>;
+ /** The verified bundle the model was built from, kept so the existing context-breakdown contracts can run over full records. */
+ bundle:DomainBundle;
 };
 
 /** Candidate relationships only. Recorded research gaps are kept apart so they cannot be mistaken for findings. */
@@ -102,5 +104,6 @@ export function buildGraphModel(b:DomainBundle):GraphModel{
   assertions:b.edges.filter(e=>e.kind==="source_candidate").map(e=>toAssertionView(e,nodes,sources,b.version)),
   gaps:b.gaps,questions:b.questions,
   nodeDomains:new Map(b.nodes.map(n=>[n.id,domainsOf(n.domains,n.kind)])),
+  bundle:b,
  };
 }

@@ -52,15 +52,16 @@ export const pmidUrl=(p:string)=>`https://pubmed.ncbi.nlm.nih.gov/${encodeURICom
 
 function Cell({v}:{v:Stated<string>}){return v.state==="stated"?<>{v.value}</>:<span className="gw-ns" title={READ[v.reason]}>Not stated</span>}
 
-export function AssertionTable({rows,selected,onSelect}:{rows:readonly GraphAssertionView[];selected:string|null;onSelect:(id:string)=>void}){
+export function AssertionTable({rows,selected,onSelect,compare}:{rows:readonly GraphAssertionView[];selected:string|null;onSelect:(id:string)=>void;compare?:{ids:readonly string[];toggle:(id:string)=>void;max:number}}){
  if(!rows.length)return <p className="gw-empty" role="status">No relationships match. That is a filter result, not evidence of absence.</p>;
  return (
   <div className="gw-scroll" tabIndex={0} role="region" aria-label="Relationships table, scrolls sideways">
    <table className="gw-table">
     <caption className="sr-only">Candidate relationships in view. None is reviewed or approved.</caption>
-    <thead><tr><th scope="col">Concept</th><th scope="col">As reported</th><th scope="col">Concept</th><th scope="col">Species</th><th scope="col">Model</th><th scope="col">Context stated</th><th scope="col">Source</th></tr></thead>
+    <thead><tr>{compare&&<th scope="col">Compare</th>}<th scope="col">Concept</th><th scope="col">As reported</th><th scope="col">Concept</th><th scope="col">Species</th><th scope="col">Model</th><th scope="col">Context stated</th><th scope="col">Source</th></tr></thead>
     <tbody>{rows.map(a=>(
      <tr key={a.id} data-selected={selected===a.id}>
+      {compare&&<td><input type="checkbox" aria-label={`Compare: ${a.subject.name} ${a.reportedAs} ${a.object.name}`} checked={compare.ids.includes(a.id)} disabled={!compare.ids.includes(a.id)&&compare.ids.length>=compare.max} onChange={()=>compare.toggle(a.id)}/></td>}
       <th scope="row"><button type="button" onClick={()=>onSelect(a.id)} aria-pressed={selected===a.id}>{a.subject.name}</button></th>
       <td>{a.negated&&<span className="gw-neg">Recorded as not holding: </span>}{a.reportedAs}</td>
       <td>{a.object.name}</td>

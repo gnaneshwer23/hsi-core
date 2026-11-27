@@ -5,12 +5,13 @@ import {applySeo} from "../lib/seo/applySeo";
 import {useSharedBundle} from "../lib/useSharedBundle";
 import {useOnboarding} from "../landing-v2/onboarding/store";
 import {
- EMPTY_FILTERS,HSI_DOMAINS,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparablePairs,crossDomainSlice,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
+ EMPTY_FILTERS,HSI_DOMAINS,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
  type Filters,type GraphAssertionView,type GraphModel,type HsiDomain,type ModeId,type TracedPath,
 } from "../../../src/graphWorkspace";
 import {layoutGraph} from "../../../src/graphWorkspace/layout";
 import {Graph2D,type GEdge,type GNode} from "./Graph2D";
 import {AssertionTable,FilterPanel,Inspector} from "./Panels";
+import {ComparePanel} from "./Compare";
 import "./graph.css";
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
@@ -55,6 +56,8 @@ function Loaded({model}:{model:GraphModel}){
  const [path,setPath]=useState<TracedPath|null>(null);
  const [from,setFrom]=useState("");const [to,setTo]=useState("");
  const [gapId,setGapId]=useState<string|null>(null);
+ const [compareIds,setCompareIds]=useState<string[]>([]);
+ const [activeUnit,setActiveUnit]=useState<string|null>(null);
 
  const m=modeById[mode];
  const scope=SCOPES.find(s=>s.id===scopeId)!;
@@ -63,14 +66,23 @@ function Loaded({model}:{model:GraphModel}){
  const slice=useMemo(()=>scope.pair?crossDomainSlice(model,scope.pair[0],scope.pair[1]):finishSlice(model,model.assertions),[model,scope]);
  const expanded=useMemo(()=>depth>0?expand(model,slice.nodeIds,depth,MAX_VIEW,slice.assertions):{assertions:slice.assertions,added:0,truncated:false},[model,slice,depth]);
  const scopeGaps=useMemo(()=>{const ids=new Set(expanded.assertions.flatMap(a=>[a.subject.id,a.object.id]));return model.gaps.filter(g=>ids.has(g.subjectId)||ids.has(g.objectId))},[model,expanded]);
+ const units=useMemo(()=>comparisonUnits(model,expanded.assertions),[model,expanded]);
+ const globalCount=useMemo(()=>disagreements(comparisonUnits(model,model.assertions)).length,[model]);
+ /* A pair's own reading is the most specific, so it wins; a concept-level reading colours only records no pair covers. */
+ const readingOf=useMemo(()=>{
+  const r=new Map<string,string>();
+  const ds=disagreements(units);
+  for(const u of ds.filter(x=>x.kind==="pair"))for(const id of u.assertionIds)if(!r.has(id))r.set(id,u.reading);
+  for(const u of ds.filter(x=>x.kind==="concept"))for(const id of u.assertionIds)if(!r.has(id))r.set(id,u.reading);
+  return r;
+ },[units]);
  const base=useMemo<readonly GraphAssertionView[]>(()=>{
-  if(m.select==="comparable_pairs"){const keep=new Set(comparablePairs(expanded.assertions).flatMap(p=>p.assertionIds));return expanded.assertions.filter(a=>keep.has(a.id))}
+  if(m.select==="comparable_pairs"){return expanded.assertions.filter(a=>readingOf.has(a.id))}
   if(m.select==="gap_records"){const ids=new Set(scopeGaps.flatMap(g=>[g.subjectId,g.objectId]));return expanded.assertions.filter(a=>ids.has(a.subject.id)||ids.has(a.object.id))}
   return expanded.assertions;
- },[m,expanded,scopeGaps]);
+ },[m,expanded,scopeGaps,readingOf]);
  const visible=useMemo(()=>applyFilters(base,filters),[base,filters]);
  const fac=useMemo(()=>facets(base),[base]);
- const pairKeys=useMemo(()=>new Set(comparablePairs(visible).flatMap(p=>p.assertionIds)),[visible]);
 
  const showGaps=m.select==="gap_records";
  const gapEdges=useMemo(()=>showGaps?scopeGaps:[],[showGaps,scopeGaps]);
@@ -99,9 +111,9 @@ function Loaded({model}:{model:GraphModel}){
  const degree=useMemo(()=>{const d=new Map<string,number>();for(const a of visible)for(const id of [a.subject.id,a.object.id])d.set(id,(d.get(id)??0)+1);return d},[visible]);
  const nodes:GNode[]=useMemo(()=>[...visIds].map(id=>({id,label:model.nodes.get(id)?.name??id,group:groupOf(id),degree:degree.get(id)??0})),[visIds,model,groupOf,degree]);
  const edges:GEdge[]=useMemo(()=>[
-  ...visible.map(a=>({id:a.id,s:a.subject.id,o:a.object.id,negated:a.negated,kind:"assertion" as const,pair:pairKeys.has(a.id)&&m.select==="comparable_pairs"})),
+  ...visible.map(a=>({id:a.id,s:a.subject.id,o:a.object.id,negated:a.negated,kind:"assertion" as const,pair:m.select==="comparable_pairs"&&readingOf.has(a.id),reading:m.select==="comparable_pairs"?readingOf.get(a.id):undefined})),
   ...gapEdges.filter(g=>visIds.has(g.subjectId)&&visIds.has(g.objectId)).map(g=>({id:`gap:${g.id}`,s:g.subjectId,o:g.objectId,negated:false,kind:"gap" as const})),
- ],[visible,gapEdges,visIds,pairKeys,m.select]);
+ ],[visible,gapEdges,visIds,readingOf,m.select]);
 
  const traced=useMemo(()=>({nodes:new Set(path?.nodeIds??[]),edges:new Set(path?.assertionIds??[])}),[path]);
  const assertion=assertionId?model.assertions.find(a=>a.id===assertionId)??null:null;
@@ -153,11 +165,11 @@ function Loaded({model}:{model:GraphModel}){
      </div>
 
      {unavailable?<p className="gw-empty" role="status">{m.label} has no view yet. {m.needs??""}</p>
-      :m.select==="comparable_pairs"&&!visible.length?<p className="gw-empty" role="status">In this view, no two relationships concern the same pair of concepts, so there is nothing to compare. That is a property of this slice, not a finding that nothing conflicts.</p>
-      :view==="table"?<AssertionTable rows={visible} selected={assertionId} onSelect={id=>{setAssertionId(id);setEntity(null)}}/>
+      :m.select==="comparable_pairs"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view records a disagreement. That describes this slice, not the science. The panel below says where disagreements are recorded.</p>
+      :view==="table"?<AssertionTable rows={visible} selected={assertionId} onSelect={id=>{setAssertionId(id);setEntity(null)}} compare={{ids:compareIds,max:6,toggle:id=>{setActiveUnit(null);setCompareIds(compareIds.includes(id)?compareIds.filter(x=>x!==id):[...compareIds,id])}}}/>
       :visible.length||gapEdges.length?<>
        <Graph2D nodes={nodes} edges={edges} positions={positions} colourOf={colourOf} selected={entity} selectedEdge={assertionId} onSelectNode={selectNode} onSelectEdge={selectEdge} focus={focus} traced={traced}/>
-       <ul className="gw-legend" aria-label="Colour key">{groups.map(g=><li key={g}><i style={{background:colourOf(g)}} aria-hidden="true"/>{g}</li>)}<li><i className="gw-dash" aria-hidden="true"/>Recorded as not holding</li>{showGaps&&<li><i className="gw-dot" aria-hidden="true"/>Recorded gap</li>}</ul>
+       <ul className="gw-legend" aria-label="Colour key">{groups.map(g=><li key={g}><i style={{background:colourOf(g)}} aria-hidden="true"/>{g}</li>)}<li><i className="gw-dash" aria-hidden="true"/>Recorded as not holding</li>{m.select==="comparable_pairs"&&<><li><i style={{background:"#E07A7A"}} aria-hidden="true"/>Potential contradiction</li><li><i style={{background:"#D8B477"}} aria-hidden="true"/>Possible context dependence</li><li><i style={{background:"#8A9BA8"}} aria-hidden="true"/>Insufficient context</li></>}{showGaps&&<li><i className="gw-dot" aria-hidden="true"/>Recorded gap</li>}</ul>
       </>:<p className="gw-empty" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</p>}
 
      <section className="gw-bottom" aria-label="Intelligence panels">
@@ -170,6 +182,7 @@ function Loaded({model}:{model:GraphModel}){
        {scopeGaps.length?<ul className="gw-list">{scopeGaps.slice(0,6).map(g=><li key={g.id} data-active={gapId===g.id}><button type="button" onClick={()=>{setGapId(g.id);selectNode(g.subjectId)}}>{g.question}</button><small>Missing: {g.missing}</small></li>)}</ul>:<p className="gw-hint">No recorded gaps touch this view.</p>}
        <p className="gw-hint">Gaps are recorded as gaps, not findings. A suggested next study is a candidate, not a validated protocol.</p>
       </section>
+      <ComparePanel model={model} units={units} showUnits={m.select==="comparable_pairs"} compareIds={compareIds} setCompareIds={setCompareIds} activeUnit={activeUnit} setActiveUnit={setActiveUnit} globalCount={globalCount} inWhole={scopeId==="all"} onWhole={()=>{setScopeId("all");setDepth(0)}}/>
       <section className="gw-card gw-wide" aria-labelledby="gw-path"><h2 id="gw-path">Pathway tracing</h2>
        <div className="gw-trace">
         <label className="gw-field"><span>From</span><select aria-label="From" value={from} onChange={e=>{setFrom(e.target.value);setPath(null)}}><option value="">Choose a concept…</option>{nodes.map(n=><option key={n.id} value={n.id}>{n.label}</option>)}</select></label>

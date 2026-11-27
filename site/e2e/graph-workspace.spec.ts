@@ -73,7 +73,7 @@ test("the contradiction mode never invents a conflict",async({page})=>{
  const empty=page.getByRole("status").filter({hasText:"nothing to compare"});
  const pairs=page.locator('line.gw-edge[data-pair]');
  await expect(empty.or(pairs.first())).toBeVisible();
- await expect(page.getByText(/confirmed contradiction|resolved/i)).toHaveCount(0);
+ await expect(page.getByText(/confirmed contradiction/i)).toHaveCount(0);
 });
 
 test("the coverage strip reports no coverage for genomics instead of drawing it",async({page})=>{
@@ -96,7 +96,7 @@ test("the whole published graph is larger than the slice, and neighbours can be 
 test("pathway tracing lists association chains and says they are not mechanisms",async({page})=>{
  await open(page);await table(page);
  const first=page.locator("table.gw-table tbody tr").first();
- const from=await first.locator("th button").innerText(),to=await first.locator("td").nth(1).innerText();
+ const from=await first.locator("th button").innerText(),to=await first.locator("td").nth(2).innerText();
  await page.getByLabel("From",{exact:true}).selectOption({label:from});
  await page.getByLabel("To",{exact:true}).selectOption({label:to});
  await expect(page.getByRole("list",{name:"Association chains"})).toBeVisible();
@@ -148,4 +148,79 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
    expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
   });
  }
+}
+
+const wholeContradictions=async(page:Page)=>{
+ await open(page);
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Contradiction Graph"});
+ await page.getByRole("button",{name:/Show the \d+ disagreements? recorded in the whole published graph/}).click();
+ await expect(page.locator("ul.gw-units li").first()).toBeVisible();
+};
+
+test("the default slice records no disagreement, and says where disagreements are recorded instead of inventing one",async({page})=>{
+ await open(page);
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Contradiction Graph"});
+ const empty=page.locator("#gw-compare-panel").getByRole("status");
+ await expect(empty).toContainText("nothing to compare");
+ await expect(empty).toContainText("does not show that nothing conflicts");
+ await expect(page.locator("ul.gw-units")).toHaveCount(0);
+});
+
+test("the recorded disagreements keep potential contradiction, context dependence and insufficient context apart",async({page})=>{
+ await wholeContradictions(page);
+ const units=page.locator("ul.gw-units li");
+ expect(await units.count()).toBe(5);
+ await expect(page.locator(".gw-reading",{hasText:"Potential contradiction"})).toHaveCount(1);
+ await expect(page.locator(".gw-reading",{hasText:"Possible context dependence"})).toHaveCount(2);
+ await expect(page.locator(".gw-reading",{hasText:"Insufficient context to tell"})).toHaveCount(2);
+ await expect(page.locator("#gw-compare-panel")).toContainText("never called resolved");
+ // red is reserved for the one potential contradiction
+ expect(await page.locator('line.gw-edge[data-reading="potential_contradiction"]').count()).toBeGreaterThan(0);
+ expect(await page.locator('line.gw-edge[data-reading="context_dependence"]').count()).toBeGreaterThan(0);
+});
+
+test("the side-by-side comparison marks which variables differ, and a missing value is 'cannot tell', not 'differs'",async({page})=>{
+ await wholeContradictions(page);
+ await page.locator("ul.gw-units li",{hasText:"Anti-CCP antibodies and Anti-TNF treatment response"}).getByRole("button",{name:"Compare these findings"}).click();
+ const t=page.locator("table.gw-compare");
+ await expect(t).toBeVisible();
+ await expect(t.locator("tr",{hasText:"Direction of the finding"})).toContainText("Differs");
+ await expect(t.locator("tr",{hasText:"Population"})).toContainText("Differs");
+ await expect(t.locator("tr",{hasText:"Tissue"})).toContainText("Cannot tell");
+ await expect(t.locator("tr",{hasText:"Tissue"})).toContainText("Not stated");
+ const verdict=page.locator(".gw-verdict");
+ await expect(verdict).toContainText("Possible context dependence");
+ await expect(verdict).toContainText("does not decide which finding is correct");
+ await expect(verdict).toContainText("Adjudication: not performed.");
+ await expect(page.locator("#gw-compare-panel")).toContainText("not validated protocols and do not favour either finding");
+ await expect(page.locator("#gw-compare-panel").getByRole("heading",{name:"Candidate checks"})).toBeVisible();
+});
+
+test("any two to six findings can be compared from the table, and no more",async({page})=>{
+ await open(page);await table(page);
+ const boxes=page.locator("table.gw-table tbody input[type=checkbox]");
+ await boxes.nth(0).check();
+ await expect(page.locator("table.gw-compare")).toHaveCount(0);
+ await boxes.nth(1).check();
+ await expect(page.locator("table.gw-compare")).toBeVisible();
+ for(let i=2;i<6;i++)await boxes.nth(i).check();
+ await expect(boxes.nth(6)).toBeDisabled();
+ await page.getByRole("button",{name:"Clear comparison"}).click();
+ await expect(page.locator("table.gw-compare")).toHaveCount(0);
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ test(`the open comparison is accessible with no horizontal scroll: ${name}`,async({page})=>{
+  await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+  await wholeContradictions(page);
+  await page.locator("ul.gw-units li").first().getByRole("button",{name:"Compare these findings"}).click();
+  await expect(page.locator("table.gw-compare")).toBeVisible();
+  for(const w of [vp.width,320]){
+   await page.setViewportSize({width:w,height:vp.height});
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+  }
+  await page.setViewportSize(vp);
+  const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+  expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+ });
 }
