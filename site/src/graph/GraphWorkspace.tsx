@@ -5,7 +5,7 @@ import {applySeo} from "../lib/seo/applySeo";
 import {useSharedBundle} from "../lib/useSharedBundle";
 import {useOnboarding} from "../landing-v2/onboarding/store";
 import {
- EMPTY_FILTERS,HSI_DOMAINS,SCALE_BANDS,bandLabel,bandOf,crossScaleLinks,placedShare,scaleCoverage,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
+ EMPTY_FILTERS,HSI_DOMAINS,NEXT_STUDY_NOTE,gapView,questionPathAssertions,questionView,questionsInView,SCALE_BANDS,bandLabel,bandOf,crossScaleLinks,placedShare,scaleCoverage,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
  type Filters,type GraphAssertionView,type ScaleBand,type GraphModel,type HsiDomain,type ModeId,type TracedPath,
 } from "../../../src/graphWorkspace";
 import {layoutGraph} from "../../../src/graphWorkspace/layout";
@@ -13,6 +13,7 @@ import {layout3D} from "../../../src/graphWorkspace/scale";
 import {Graph2D,type GEdge,type GNode} from "./Graph2D";
 import {AssertionTable,FilterPanel,Inspector} from "./Panels";
 import {ComparePanel} from "./Compare";
+import {QuestionsPanel} from "./Investigate";
 import "./graph.css";
 
 const Graph3D=lazy(()=>import("./Graph3D"));
@@ -29,7 +30,7 @@ function useWebGL(){
 }
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
-const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap"];
+const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap","hypothesis","experimental"];
 const PALETTE=["#83B8AD","#D8B477","#7FA6B8","#B7A8D0","#C9CED2","#5FA58F","#E0A96D","#8A9BA8"];
 
 type Scope={id:string;label:string;pair:[HsiDomain,HsiDomain]|null};
@@ -58,7 +59,7 @@ export default function GraphWorkspace(){
 
 function Loaded({model}:{model:GraphModel}){
  const [onb]=useOnboarding();
- const start:ModeId=onb.objectives.includes("conflicts")?"contradiction":onb.objectives.includes("gaps")||onb.objectives.includes("hypotheses")?"gap":"mechanism";
+ const start:ModeId=onb.objectives.includes("conflicts")?"contradiction":onb.objectives.includes("hypotheses")?"hypothesis":onb.objectives.includes("gaps")?"gap":"mechanism";
  const [mode,setMode]=useState<ModeId>(start);
  const [scopeId,setScopeId]=useState("imm-mic");
  const [view,setView]=useState<"graph"|"table"|"3d">("graph");
@@ -95,6 +96,7 @@ function Loaded({model}:{model:GraphModel}){
  },[units]);
  const base=useMemo<readonly GraphAssertionView[]>(()=>{
   if(m.select==="comparable_pairs"){return expanded.assertions.filter(a=>readingOf.has(a.id))}
+  if(m.select==="question_paths")return questionPathAssertions(model,expanded.assertions);
   if(m.select==="gap_records"){const ids=new Set(scopeGaps.flatMap(g=>[g.subjectId,g.objectId]));return expanded.assertions.filter(a=>ids.has(a.subject.id)||ids.has(a.object.id))}
   return expanded.assertions;
  },[m,expanded,scopeGaps,readingOf]);
@@ -102,6 +104,7 @@ function Loaded({model}:{model:GraphModel}){
  const fac=useMemo(()=>facets(base),[base]);
 
  const showGaps=m.select==="gap_records";
+ const questionViews=useMemo(()=>m.select==="question_paths"?questionsInView(model,expanded.assertions).map(q=>questionView(model,q,expanded.assertions)):[],[model,m.select,expanded]);
  const gapEdges=useMemo(()=>showGaps?scopeGaps:[],[showGaps,scopeGaps]);
 
  const layoutIds=useMemo(()=>{const s=new Set(base.flatMap(a=>[a.subject.id,a.object.id]));for(const g of gapEdges){s.add(g.subjectId);s.add(g.objectId)}return s},[base,gapEdges]);
@@ -198,6 +201,7 @@ function Loaded({model}:{model:GraphModel}){
      </div>
 
      {unavailable?<p className="gw-empty" role="status">{m.label} has no view yet. {m.needs??""}</p>
+      :m.select==="question_paths"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view touches a recorded question. The questions below still stand on their recorded gaps.</p>
       :m.select==="comparable_pairs"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view records a disagreement. That describes this slice, not the science. The panel below says where disagreements are recorded.</p>
       :view==="3d"&&webgl.gl?<>
        <div className="gw-canvas gw-3d" id="gw-3d">
@@ -226,6 +230,7 @@ function Loaded({model}:{model:GraphModel}){
       </>:<p className="gw-empty" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</p>}
 
      <section className="gw-bottom" aria-label="Intelligence panels">
+      {m.select==="question_paths"&&<QuestionsPanel model={model} questions={questionViews} experimental={mode==="experimental"} activePath={path} onTrace={p=>{setPath(p);if(p){setFrom(p.nodeIds[0]!);setTo(p.nodeIds.at(-1)!);if(view==="table")setView("graph")}}} onSelectConcept={selectNode} onSelectGap={(gid,sid)=>{setGapId(gid);selectNode(sid)}}/>}
       <section className="gw-card" aria-labelledby="gw-land"><h2 id="gw-land">Evidence landscape</h2>
        <p className="gw-hint">How many of the 8 recordable context fields each relationship states.</p>
        <ul className="gw-hist">{ctxHist.map((n,i)=><li key={i}><span>{i}</span><span className="gw-bar-track" aria-hidden="true"><i style={{width:`${(n/maxH)*100}%`}}/></span><b>{n}<span className="sr-only"> relationships state {i}</span></b></li>)}</ul>
@@ -237,8 +242,8 @@ function Loaded({model}:{model:GraphModel}){
        <p className="gw-hint">A relationship across scales is a reported association between levels, not a demonstrated mechanism that spans them.</p>
       </section>
       <section className="gw-card" aria-labelledby="gw-gaps"><h2 id="gw-gaps">Recorded research gaps ({scopeGaps.length})</h2>
-       {scopeGaps.length?<ul className="gw-list">{scopeGaps.slice(0,6).map(g=><li key={g.id} data-active={gapId===g.id}><button type="button" onClick={()=>{setGapId(g.id);selectNode(g.subjectId)}}>{g.question}</button><small>Missing: {g.missing}</small></li>)}</ul>:<p className="gw-hint">No recorded gaps touch this view.</p>}
-       <p className="gw-hint">Gaps are recorded as gaps, not findings. A suggested next study is a candidate, not a validated protocol.</p>
+       {scopeGaps.length?<ul className="gw-list">{scopeGaps.map(g=>{const v=gapView(model,g);return <li key={g.id} data-active={gapId===g.id}><button type="button" onClick={()=>{setGapId(g.id);selectNode(g.subjectId)}}>{g.question}</button><small>Missing: {g.missing}</small>{m.select==="gap_records"&&<small>Candidate next study: {v.nextStudy.text}{v.questionIds.length?` · Cited by ${v.questionIds.length} recorded question${v.questionIds.length>1?"s":""}`:""}</small>}</li>})}</ul>:<p className="gw-hint">No recorded gaps touch this view.</p>}
+       <p className="gw-hint">Gaps are recorded as gaps, not findings. {NEXT_STUDY_NOTE}</p>
       </section>
       <ComparePanel model={model} units={units} showUnits={m.select==="comparable_pairs"} compareIds={compareIds} setCompareIds={setCompareIds} activeUnit={activeUnit} setActiveUnit={setActiveUnit} globalCount={globalCount} inWhole={scopeId==="all"} onWhole={()=>{setScopeId("all");setDepth(0)}}/>
       <section className="gw-card gw-wide" aria-labelledby="gw-path"><h2 id="gw-path">Pathway tracing</h2>
