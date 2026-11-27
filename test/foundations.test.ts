@@ -1,7 +1,7 @@
 import { describe, expect, test } from "bun:test";
 import { readdirSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { HELD_MIGRATION_IDS, MIGRATION_LEDGER_ALIASES, migrationAlreadyRecorded } from "../src/db/migrate";
+import { APPROVED_MIGRATION_IDS, HELD_MIGRATION_IDS, MIGRATION_LEDGER_ALIASES, migrationAlreadyRecorded, migrationDisposition } from "../src/db/migrate";
 import { findPublicCopyIssues } from "../scripts/check-public-copy";
 import { capabilityLevel, renderStatusMarkdown, SUPERSEDED_BANNER } from "../scripts/generate-status";
 
@@ -41,6 +41,21 @@ describe("migration ledger", () => {
     expect(sql).toContain("FOR SELECT");
     expect(sql).not.toMatch(/FOR INSERT/);
     expect(sql).toContain("hsi_lhkg_reader");
+  });
+
+  test("every migration file is held or approved, and unlisted ids cannot be applied", () => {
+    const files = readdirSync(resolve("db/migrations")).filter((file) => file.endsWith(".sql")).map((file) => file.replace(/\.sql$/i, "")).sort();
+    const listed = [...APPROVED_MIGRATION_IDS, ...HELD_MIGRATION_IDS].sort();
+    expect(files).toEqual(listed);
+    expect(new Set(listed).size).toBe(listed.length);
+    expect(migrationDisposition("20261111_p1_4_evidence_review_staging")).toBe("held");
+    expect(HELD_MIGRATION_IDS).toContain("20261111_p1_4_evidence_review_staging");
+    expect(migrationDisposition("020_hsi_lhkg_rls_policies")).toBe("approved");
+    expect(migrationDisposition("999_not_a_migration")).toBe("unlisted");
+    for (const id of files) {
+      const disposition = migrationDisposition(id);
+      expect(disposition === "held" || disposition === "approved").toBe(true);
+    }
   });
 });
 

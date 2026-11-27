@@ -10,7 +10,7 @@ import {
   type NeonUrlCheck,
 } from "./neonGuard";
 import { resolveDatabaseUrl, type ResolveDatabaseUrlOptions } from "./resolveDatabaseUrl";
-import { HELD_MIGRATION_IDS } from "./migrationHolds";
+import { migrationDisposition } from "./migrationHolds";
 
 export type MigrateResult = {
   ok: true;
@@ -39,7 +39,7 @@ export const MIGRATION_LEDGER_ALIASES: Record<string, readonly string[]> = {
   "019_hsi_isi_research_review": ["012_isi_research_review"],
 };
 
-export { HELD_MIGRATION_IDS } from "./migrationHolds";
+export { APPROVED_MIGRATION_IDS, HELD_MIGRATION_IDS, migrationDisposition } from "./migrationHolds";
 
 export function migrationAlreadyRecorded(id: string, recorded: readonly string[]): boolean {
   if (recorded.includes(id)) return true;
@@ -82,9 +82,13 @@ export async function applyHsiMigrations(opts?: MigrateOptions): Promise<Migrate
 
     for (const file of files) {
       const id = file.replace(/\.sql$/i, "");
-      if ((HELD_MIGRATION_IDS as readonly string[]).includes(id)) {
+      const disposition = migrationDisposition(id);
+      if (disposition === "held") {
         skipped.push(id);
         continue;
+      }
+      if (disposition === "unlisted") {
+        throw new Error(`Refusing migrate: ${id} is not on the approved or held migration list`);
       }
       if (migrationAlreadyRecorded(id, recorded)) {
         skipped.push(id);

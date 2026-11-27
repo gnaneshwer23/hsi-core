@@ -12,7 +12,7 @@ describe("isolated migration rehearsal preparation",()=>{
  });
  it("splits the actual scope files without removing holds or including community writes",()=>{
   for(const name of [...PERSISTENCE_SCOPE_MIGRATIONS.contradiction_ledger,...PERSISTENCE_SCOPE_MIGRATIONS.graph_workspace])expect(splitPostgresStatements(readFileSync(`db/migrations/${name}.sql`,"utf8")).length).toBeGreaterThan(0);
-  expect(HELD_MIGRATION_IDS).toHaveLength(12);expect(Object.values(PERSISTENCE_SCOPE_MIGRATIONS).flat().some(n=>n.startsWith("023"))).toBe(false);
+  expect(HELD_MIGRATION_IDS).toHaveLength(13);expect(HELD_MIGRATION_IDS).toContain("20261111_p1_4_evidence_review_staging");expect(Object.values(PERSISTENCE_SCOPE_MIGRATIONS).flat().some(n=>n.startsWith("023"))).toBe(false);
  });
  it("requires an exact non-production expiring child pin before rehearsal",()=>{
   const now=Date.parse("2026-11-12T00:00:00Z"),pins={projectId:"fixture-hsi",productionBranchId:"fixture-production",disposableBranchId:"fixture-disposable"};
