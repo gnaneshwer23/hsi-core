@@ -9,7 +9,7 @@ export type NodeEncoding="domain"|"kind"|"evidence_model"|"context_completeness"
 export type EdgeEncoding="reported_predicate"|"negation"|"context_conflict"|"evidence_basis";
 export type EdgeSelection="all"|"negated"|"context_gaps"|"comparable_pairs"|"gap_records"|"question_paths";
 export type InspectorSection="overview"|"identifiers"|"claims"|"context"|"evidence"|"conflicts"|"review"|"memory"|"gaps";
-export type FilterKey="query"|"domains"|"kinds"|"predicates"|"species"|"models"|"minContext"|"negated";
+export type FilterKey="query"|"domains"|"kinds"|"predicates"|"species"|"models"|"minContext"|"negated"|"scales";
 
 export type GraphMode={
  id:ModeId;label:string;summary:string;
@@ -20,7 +20,7 @@ export type GraphMode={
  needs?:string;
 };
 
-const F:readonly FilterKey[]=["query","domains","kinds","predicates","species","models","minContext","negated"];
+const F:readonly FilterKey[]=["query","domains","kinds","predicates","species","models","minContext","negated","scales"];
 const INS_ALL:readonly InspectorSection[]=["overview","identifiers","claims","context","evidence","conflicts","review","memory","gaps"];
 
 export const MODES:readonly GraphMode[]=[

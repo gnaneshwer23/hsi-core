@@ -1,18 +1,32 @@
-import {useEffect,useMemo,useState} from "react";
+import {lazy,Suspense,useCallback,useEffect,useMemo,useState} from "react";
 import {Link} from "../landing-v2/router";
 import {Logo} from "../landing-v2/components/site/Header";
 import {applySeo} from "../lib/seo/applySeo";
 import {useSharedBundle} from "../lib/useSharedBundle";
 import {useOnboarding} from "../landing-v2/onboarding/store";
 import {
- EMPTY_FILTERS,HSI_DOMAINS,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
- type Filters,type GraphAssertionView,type GraphModel,type HsiDomain,type ModeId,type TracedPath,
+ EMPTY_FILTERS,HSI_DOMAINS,SCALE_BANDS,bandLabel,bandOf,crossScaleLinks,placedShare,scaleCoverage,MODES,READINESS_LABEL,applyFilters,buildGraphModel,comparisonUnits,crossDomainSlice,disagreements,domainCoverage,domainLabel,expand,facets,finishSlice,isFiltered,isOpenable,modeById,tracePaths,
+ type Filters,type GraphAssertionView,type ScaleBand,type GraphModel,type HsiDomain,type ModeId,type TracedPath,
 } from "../../../src/graphWorkspace";
 import {layoutGraph} from "../../../src/graphWorkspace/layout";
+import {layout3D} from "../../../src/graphWorkspace/scale";
 import {Graph2D,type GEdge,type GNode} from "./Graph2D";
 import {AssertionTable,FilterPanel,Inspector} from "./Panels";
 import {ComparePanel} from "./Compare";
 import "./graph.css";
+
+const Graph3D=lazy(()=>import("./Graph3D"));
+
+/** 3D needs WebGL. Without it the 3D option is disabled with the reason; the graph and table carry the same data. */
+function useWebGL(){
+ const [s,setS]=useState<{gl:boolean|null;reduce:boolean}>({gl:null,reduce:false});
+ useEffect(()=>{
+  let gl=false,reduce=false;
+  try{reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;const c=document.createElement("canvas");gl=!!(c.getContext("webgl2")||c.getContext("webgl"))}catch{gl=false}
+  setS({gl,reduce});
+ },[]);
+ return s;
+}
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
 const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap"];
@@ -47,7 +61,10 @@ function Loaded({model}:{model:GraphModel}){
  const start:ModeId=onb.objectives.includes("conflicts")?"contradiction":onb.objectives.includes("gaps")||onb.objectives.includes("hypotheses")?"gap":"mechanism";
  const [mode,setMode]=useState<ModeId>(start);
  const [scopeId,setScopeId]=useState("imm-mic");
- const [view,setView]=useState<"graph"|"table">("graph");
+ const [view,setView]=useState<"graph"|"table"|"3d">("graph");
+ const webgl=useWebGL();
+ const [hover3d,setHover3d]=useState<string|null>(null);
+ const [zoom3d,setZoom3d]=useState(1);
  const [filters,setFilters]=useState<Filters>(EMPTY_FILTERS);
  const [depth,setDepth]=useState(0);
  const [entity,setEntity]=useState<string|null>(null);
@@ -103,7 +120,15 @@ function Loaded({model}:{model:GraphModel}){
    const d=model.nodeDomains.get(id)?.domains[0];return d?domainLabel(d):"Unmapped";
   };
  },[model,m,base]);
+ const kindOf=useCallback((id:string)=>model.nodes.get(id)?.kind??"unknown",[model]);
+ const bandOfId=useCallback((id:string)=>bandOf(kindOf(id)),[kindOf]);
  const positions=useMemo(()=>layoutGraph([...layoutIds].map(id=>({id,group:groupOf(id)})),[...base.map(a=>({s:a.subject.id,o:a.object.id})),...gapEdges.map(g=>({s:g.subjectId,o:g.objectId}))]),[layoutIds,groupOf,base,gapEdges]);
+ const positions3d=useMemo(()=>view==="3d"?layout3D(positions,bandOfId):new Map<string,[number,number,number]>(),[view,positions,bandOfId]);
+ const scaleCounts=useMemo(()=>scaleCoverage(base),[base]);
+ const crossing=useMemo(()=>crossScaleLinks(visible),[visible]);
+ const placed=useMemo(()=>placedShare(visible),[visible]);
+ const navBand:ScaleBand|null=filters.scales.length===1?filters.scales[0]!:null;
+ const setBand=(b:ScaleBand|null)=>{setFilters({...filters,scales:b?[b]:[]});setPath(null)};
  const groups=useMemo(()=>[...new Set([...layoutIds].map(groupOf))].sort(),[layoutIds,groupOf]);
  const colourOf=(g:string)=>PALETTE[groups.indexOf(g)%PALETTE.length]??PALETTE[0]!;
 
@@ -148,7 +173,7 @@ function Loaded({model}:{model:GraphModel}){
      </select></label>
     <label className="gw-field"><span>Scope</span>
      <select aria-label="Scope" value={scopeId} onChange={e=>{setScopeId(e.target.value);setPath(null);setDepth(0)}}>{SCOPES.map(s=>{const c=s.pair?crossDomainSlice(model,s.pair[0],s.pair[1]).assertions.length:model.assertions.length;return <option key={s.id} value={s.id}>{s.label} ({c})</option>})}</select></label>
-    <div className="gw-seg" role="radiogroup" aria-label="View"><button type="button" role="radio" aria-checked={view==="graph"} onClick={()=>setView("graph")}>Graph</button><button type="button" role="radio" aria-checked={view==="table"} onClick={()=>setView("table")}>Table</button><button type="button" role="radio" aria-checked={false} disabled title="Arrives in the next phase">3D</button></div>
+    <div className="gw-seg" role="radiogroup" aria-label="View"><button type="button" role="radio" aria-checked={view==="graph"} onClick={()=>setView("graph")}>Graph</button><button type="button" role="radio" aria-checked={view==="table"} onClick={()=>setView("table")}>Table</button><button type="button" role="radio" aria-checked={view==="3d"} disabled={webgl.gl===false} title={webgl.gl===false?"3D needs WebGL, which this browser does not provide. The graph and table show the same data.":undefined} onClick={()=>setView("3d")}>3D</button></div>
     <label className="gw-toggle"><input type="checkbox" checked={focus} onChange={e=>setFocus(e.target.checked)}/> Focus on selection</label>
     <button type="button" className="gw-btn" onClick={exportView}>Export this view</button>
    </div>
@@ -162,10 +187,38 @@ function Loaded({model}:{model:GraphModel}){
       <h1>Living Intelligence Graph</h1>
       <p className="gw-hint">{m.summary} {m.readinessNote}</p>
       {onb.objectives.length>0&&<p className="gw-hint">Opened on this mode for your goals. Every other mode, including conflicts, stays one click away.</p>}
+      {webgl.gl===false&&<p className="gw-hint">3D is unavailable in this browser because WebGL is not provided. The graph and the table show the same concepts and relationships.</p>}
+      <div className="gw-scales">
+       <div className="gw-seg" role="radiogroup" aria-label="Biological scale">
+        <button type="button" role="radio" aria-checked={!filters.scales.length} onClick={()=>setBand(null)}>All scales</button>
+        {scaleCounts.filter(c=>c.relationships>0).map(c=><button key={c.band} type="button" role="radio" aria-checked={navBand===c.band} onClick={()=>setBand(c.band)}>{bandLabel(c.band)} <small>({c.concepts})</small></button>)}
+       </div>
+       <p className="gw-hint">Scale comes from each concept’s type through a stated map; the published graph records no scale of its own. A scale keeps the relationships that touch it, so links to the levels above and below stay in view.</p>
+      </div>
      </div>
 
      {unavailable?<p className="gw-empty" role="status">{m.label} has no view yet. {m.needs??""}</p>
       :m.select==="comparable_pairs"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view records a disagreement. That describes this slice, not the science. The panel below says where disagreements are recorded.</p>
+      :view==="3d"&&webgl.gl?<>
+       <div className="gw-canvas gw-3d" id="gw-3d">
+        <Suspense fallback={<p role="status" className="gw-empty">Loading the 3D view…</p>}>
+         <Graph3D nodes={nodes} edges={edges} positions={positions3d} colourOf={colourOf} bandOf={bandOfId} selected={entity} selectedEdge={assertionId} onSelectNode={selectNode} onSelectEdge={selectEdge} onHover={setHover3d} focus={focus} traced={traced} band={navBand} zoom={zoom3d} reduceMotion={webgl.reduce}/>
+        </Suspense>
+        <div className="gw-zoom" role="group" aria-label="Zoom">
+         <button type="button" onClick={()=>setZoom3d(z=>Math.min(2.5,z*1.2))} aria-label="Zoom in">+</button>
+         <button type="button" onClick={()=>setZoom3d(z=>Math.max(.6,z/1.2))} aria-label="Zoom out">−</button>
+         <button type="button" onClick={()=>setZoom3d(1)} aria-label="Reset view">⟲</button>
+        </div>
+        <p className="gw-caption" aria-hidden="true">{hover3d?`${model.nodes.get(hover3d)?.name??hover3d} · ${bandLabel(bandOfId(hover3d))}`:webgl.reduce?"Drag to turn the view. Height is biological scale.":"Drag to rotate. Height is biological scale; select a concept to inspect it."}</p>
+       </div>
+       <ul className="gw-legend" aria-label="Colour key">{groups.map(g=><li key={g}><i style={{background:colourOf(g)}} aria-hidden="true"/>{g}</li>)}<li><i className="gw-dash" aria-hidden="true"/>Recorded as not holding</li>{showGaps&&<li><i className="gw-dot" aria-hidden="true"/>Recorded gap</li>}</ul>
+       <nav className="gw-levels" aria-label="Concepts in the 3D view by scale">
+        {SCALE_BANDS.map(b=>{const ns=nodes.filter(n=>bandOfId(n.id)===b.key);if(!ns.length)return null;return (
+         <details key={b.key} open={navBand===b.key||undefined}><summary>{b.label} <small>({ns.length})</small></summary>
+          <ul>{ns.map(n=><li key={n.id}><button type="button" aria-pressed={entity===n.id} onClick={()=>selectNode(entity===n.id?null:n.id)}>{n.label}</button></li>)}</ul>
+         </details>)})}
+       </nav>
+      </>
       :view==="table"?<AssertionTable rows={visible} selected={assertionId} onSelect={id=>{setAssertionId(id);setEntity(null)}} compare={{ids:compareIds,max:6,toggle:id=>{setActiveUnit(null);setCompareIds(compareIds.includes(id)?compareIds.filter(x=>x!==id):[...compareIds,id])}}}/>
       :visible.length||gapEdges.length?<>
        <Graph2D nodes={nodes} edges={edges} positions={positions} colourOf={colourOf} selected={entity} selectedEdge={assertionId} onSelectNode={selectNode} onSelectEdge={selectEdge} focus={focus} traced={traced}/>
@@ -178,6 +231,11 @@ function Loaded({model}:{model:GraphModel}){
        <ul className="gw-hist">{ctxHist.map((n,i)=><li key={i}><span>{i}</span><span className="gw-bar-track" aria-hidden="true"><i style={{width:`${(n/maxH)*100}%`}}/></span><b>{n}<span className="sr-only"> relationships state {i}</span></b></li>)}</ul>
        <p className="gw-hint">{statusSummary}</p>
       </section>
+      <section className="gw-card" aria-labelledby="gw-scale"><h2 id="gw-scale">Across biological scales</h2>
+       <p className="gw-hint">Of {placed.total} relationship{placed.total===1?"":"s"} in view, {placed.bothPlaced} join two concepts with a recorded scale, {placed.onePlaced} have one, and {placed.nonePlaced} have none. A scale view can only place what is recorded.</p>
+       {crossing.length?<ul className="gw-list" aria-label="Relationships that cross scales">{crossing.map(r=><li key={`${r.from}-${r.to}`}>{bandLabel(r.from)} ↔ {bandLabel(r.to)}: <b>{r.relationships}</b></li>)}</ul>:<p className="gw-hint">No relationship in view joins two different recorded scales.</p>}
+       <p className="gw-hint">A relationship across scales is a reported association between levels, not a demonstrated mechanism that spans them.</p>
+      </section>
       <section className="gw-card" aria-labelledby="gw-gaps"><h2 id="gw-gaps">Recorded research gaps ({scopeGaps.length})</h2>
        {scopeGaps.length?<ul className="gw-list">{scopeGaps.slice(0,6).map(g=><li key={g.id} data-active={gapId===g.id}><button type="button" onClick={()=>{setGapId(g.id);selectNode(g.subjectId)}}>{g.question}</button><small>Missing: {g.missing}</small></li>)}</ul>:<p className="gw-hint">No recorded gaps touch this view.</p>}
        <p className="gw-hint">Gaps are recorded as gaps, not findings. A suggested next study is a candidate, not a validated protocol.</p>
@@ -188,7 +246,7 @@ function Loaded({model}:{model:GraphModel}){
         <label className="gw-field"><span>From</span><select aria-label="From" value={from} onChange={e=>{setFrom(e.target.value);setPath(null)}}><option value="">Choose a concept…</option>{nodes.map(n=><option key={n.id} value={n.id}>{n.label}</option>)}</select></label>
         <label className="gw-field"><span>To</span><select aria-label="To" value={to} onChange={e=>{setTo(e.target.value);setPath(null)}}><option value="">Choose a concept…</option>{nodes.map(n=><option key={n.id} value={n.id}>{n.label}</option>)}</select></label>
        </div>
-       {from&&to&&from!==to&&(traces.length?<ol className="gw-list" aria-label="Association chains">{traces.map((t,i)=><li key={i} data-active={path===t||undefined}><button type="button" onClick={()=>{setPath(path===t?null:t);setView("graph")}}>{t.nodeIds.map(chosenName).join(" → ")} <small>({t.hops} hop{t.hops>1?"s":""})</small></button></li>)}</ol>:<p className="gw-hint" role="status">No chain of up to 5 relationships connects these in this view.</p>)}
+       {from&&to&&from!==to&&(traces.length?<ol className="gw-list" aria-label="Association chains">{traces.map((t,i)=><li key={i} data-active={path===t||undefined}><button type="button" onClick={()=>{setPath(path===t?null:t);if(view==="table")setView("graph")}}>{t.nodeIds.map(chosenName).join(" → ")} <small>({t.hops} hop{t.hops>1?"s":""})</small></button></li>)}</ol>:<p className="gw-hint" role="status">No chain of up to 5 relationships connects these in this view.</p>)}
        <p className="gw-hint">A chain is a sequence of reported associations. It is not a mechanism and not a causal claim.</p>
       </section>
      </section>
