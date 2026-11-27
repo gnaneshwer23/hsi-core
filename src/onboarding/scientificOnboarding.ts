@@ -365,13 +365,13 @@ export type Capability={id:string;name:string;to:string;status:CapabilityStatus;
 const CAP={
  literature:{id:"literature",name:"Literature Synthesis",to:"/platform/agents",status:"Prototype" as CapabilityStatus},
  verification:{id:"verification",name:"Evidence Verification",to:"/platform/agents",status:"In development" as CapabilityStatus},
- contradiction:{id:"contradiction",name:"Contradiction analysis",to:"/platform/contradiction-analysis",status:"In development" as CapabilityStatus},
- hypothesis:{id:"hypothesis",name:"Hypothesis Generation",to:"/platform/agents",status:"Prototype" as CapabilityStatus},
+ contradiction:{id:"contradiction",name:"Contradiction analysis",to:"/workspace/graph",status:"Prototype" as CapabilityStatus},
+ hypothesis:{id:"hypothesis",name:"Candidate hypotheses",to:"/workspace/graph",status:"Prototype" as CapabilityStatus},
  design:{id:"design",name:"Experimental Design",to:"/platform/agents",status:"Planned" as CapabilityStatus},
  omics:{id:"omics",name:"Multi-omics Correlation",to:"/platform/agents",status:"Planned" as CapabilityStatus},
  discovery:{id:"discovery",name:"Evidence gaps and discovery",to:"/platform/discovery-engine",status:"In development" as CapabilityStatus},
  memory:{id:"memory",name:"Scientific memory",to:"/platform/memory",status:"In development" as CapabilityStatus},
- graph:{id:"graph",name:"Living knowledge graph",to:"/knowledge-graph",status:"Prototype" as CapabilityStatus},
+ graph:{id:"graph",name:"Living Intelligence Graph",to:"/workspace/graph",status:"Prototype" as CapabilityStatus},
  record:{id:"record",name:"Investigation record",to:"/platform/workbench",status:"In development" as CapabilityStatus},
 };
 const BY_OBJECTIVE:Record<ObjectiveId,(keyof typeof CAP)[]>={
@@ -381,9 +381,9 @@ const BY_OBJECTIVE:Record<ObjectiveId,(keyof typeof CAP)[]>={
 };
 const WHY:Record<string,string>={
  literature:"For reading and summarising papers with passage-level citations.",verification:"To check claims against the source.",
- contradiction:"To compare findings that disagree.",hypothesis:"To propose mechanisms you can test.",design:"To draft experiment options for your review.",
+ contradiction:"To compare findings that disagree, side by side, without resolving them.",hypothesis:"To work from recorded candidate questions, with what would count against them.",design:"To draft experiment options for your review.",
  omics:"To relate evidence across data layers.",discovery:"To find where evidence is thin or conflicting.",memory:"To keep your questions, sources and decisions.",
- graph:"To explore connected biology.",record:"To keep a reviewable trail of an investigation.",
+ graph:"To explore connected biology on the published graph, in 2D, 3D or a table.",record:"To keep a reviewable trail of an investigation.",
 };
 
 export type WorkspacePlan={
@@ -391,6 +391,8 @@ export type WorkspacePlan={
  domains:string[];interests:string[];objectives:string[];tools:Capability[];
  firstInvestigation:{title:string;detail:string;basis:"your question"|"your objectives"|"your role"};
  firstAction:{label:string;to:string};
+ /** The graph workspace on the real published graph; it opens where the answers point. */
+ graphAction:{label:string;to:string};
  notes:string[];
 };
 
@@ -433,7 +435,8 @@ export function deriveWorkspacePlan(s:OnboardingState):WorkspacePlan|null{
   persona,personaLabel:PERSONA_LABEL[persona],primaryRoleLabel:roleById[s.primaryRole].label,
   secondaryRoleLabels:s.secondaryRoles.map(r=>roleById[r].label),domains,
   interests:s.interests.map(i=>i.name),objectives,tools:tools.slice(0,6),firstInvestigation,
-  firstAction:{label:fa.label,to:`/workspace/preview/${persona}`},notes,
+  firstAction:{label:fa.label,to:`/workspace/preview/${persona}`},
+  graphAction:{label:"Open the Living Intelligence Graph",to:"/workspace/graph"},notes,
  };
 }
 

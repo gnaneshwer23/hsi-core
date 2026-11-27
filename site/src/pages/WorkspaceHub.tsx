@@ -46,6 +46,19 @@ export function WorkspaceHubPage() {
           ))}
         </div>
 
+        <section className="ent-panel" aria-labelledby="ws-graph-heading">
+          <h2 id="ws-graph-heading">Living Intelligence Graph</h2>
+          <p className="ent-lead">
+            Unlike the illustrative workspaces above, this runs on the published
+            candidate graph: real sources, every relationship unreviewed. It
+            offers 2D, 3D and table views, an evidence inspector, contradiction
+            and hypothesis modes, and deterministic NEXUS checks.
+          </p>
+          <div className="ent-actions">
+            <Link className="ent-btn" to="/workspace/graph">Open the graph workspace</Link>
+          </div>
+        </section>
+
         <section className="ent-panel" aria-labelledby="ws-connect-heading">
           <h2 id="ws-connect-heading">How the dashboards connect</h2>
           <p className="ent-lead">

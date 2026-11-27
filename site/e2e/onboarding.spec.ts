@@ -143,3 +143,19 @@ test("focus moves to the step heading and progress is exposed",async({page})=>{
  await expect(page.getByRole("navigation",{name:"Setup progress"}).locator("[aria-current=step]")).toContainText("Role");
  await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow","2");
 });
+
+test("finishing setup leads to the graph workspace, which opens where the answers point",async({page})=>{
+ await seed(page);
+ await page.getByRole("button",{name:"Skip for now"}).click();
+ await page.getByRole("button",{name:"Continue"}).click();
+ await page.getByRole("button",{name:"Continue"}).click();
+ await expect(page.getByRole("link",{name:"Contradiction analysis"})).toHaveAttribute("href","/workspace/graph");
+ await page.getByRole("button",{name:"Finish setup"}).click();
+ await expect(page.getByText("The Living Intelligence Graph runs on the published candidate graph")).toBeVisible();
+ await page.getByRole("link",{name:"Open the Living Intelligence Graph"}).click();
+ await expect(page).toHaveURL(/\/workspace\/graph$/);
+ await expect(page.getByRole("heading",{level:1,name:"Living Intelligence Graph"})).toBeVisible();
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("contradiction");
+ await page.getByText("Why the workspace opened here").click();
+ await expect(page.getByText("Opened in this mode because you chose to investigate conflicting evidence.")).toBeVisible();
+});
