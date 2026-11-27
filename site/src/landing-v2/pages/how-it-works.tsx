@@ -2,6 +2,7 @@ import { Link } from "../router";
 import { PageHero, Section, meta } from "../components/site/ui";
 import { Spine } from "../components/site/Spine";
 import { RelationshipLenses } from "../components/site/Lenses";
+import { WorkspaceFigure } from "../components/site/WorkspaceFigure";
 
 export const pageMeta = meta("How It Works — HSI", "From scientific questions to evidence-linked decisions: the investigation journey, the conditions behind findings and how scientific review stays separate.");
 
@@ -40,11 +41,9 @@ export default function Page() {
       </Section>
 
       <Section eyebrow="On screen" title="What the product looks like today.">
-        <div className="grid gap-6 md:grid-cols-2">
-          <figure>
-            <img src="/images/product/explorer-v2.webp" width={1440} height={900} alt="Graph explorer with a selected relationship and evidence context" loading="lazy" className="w-full rounded-xl border border-border" />
-            <figcaption className="mt-2 text-sm text-muted-foreground">Explore a relationship and inspect its evidence.</figcaption>
-          </figure>
+        <WorkspaceFigure shot="overview" caption="The graph workspace: explore a relationship and see what its source states and does not." cta="Open the graph workspace" />
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <WorkspaceFigure shot="threeD" caption="The same graph in 3D, stacked by biological scale." />
           <figure>
             <img src="/images/product/dashboard-v2.webp" width={1440} height={1120} alt="Research home with topic metrics and a graph panel" loading="lazy" className="w-full rounded-xl border border-border" />
             <figcaption className="mt-2 text-sm text-muted-foreground">Return to your topics and continue the investigation.</figcaption>
@@ -70,6 +69,7 @@ export default function Page() {
       <Section eyebrow="Next" title="Explore an investigation.">
         <div className="flex flex-wrap gap-3">
           <Link to="/platform/workbench" className="bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90">Explore an investigation record</Link>
+          <Link to="/workspace/graph" className="border border-border px-5 py-3 text-sm font-medium hover:border-primary">Open the graph workspace</Link>
           <Link to="/platform/contradiction-analysis" className="border border-border px-5 py-3 text-sm font-medium hover:border-primary">Try contradiction analysis</Link>
         </div>
       </Section>

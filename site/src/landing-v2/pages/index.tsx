@@ -16,6 +16,7 @@ const steps = [
 ] as const;
 
 const uses = [
+  ["Work in the graph", "Explore the published graph in 2D, 3D or a table, and see what each source states and does not.", "/workspace/graph", "Open the graph workspace"],
   ["Keep a record", "Questions, sources and decisions stay together, so work can be picked up later.", "/platform/memory", "How the record works"],
   ["Use specialised agents", "Agents search, extract and check evidence. Each hands its work on for review.", "/platform/agents", "Meet the agents"],
   ["Find disagreements", "Compare studies that seem to conflict and see which conditions differ.", "/platform/contradiction-analysis", "Try the comparison"],
@@ -57,12 +58,14 @@ export default function Home() {
       >
         <LiveGraphHero />
         <p className="mt-6 text-sm">
+          <Link to="/workspace/graph" className="text-primary underline underline-offset-4">Open the graph workspace</Link>
+          <span className="text-muted-foreground"> · </span>
           <Link to="/knowledge-graph" className="text-primary underline underline-offset-4">About the knowledge graph</Link>
         </p>
       </Section>
 
       <Section id="uses" title="What you can do with it.">
-        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {uses.map(([t, d, to, cta]) => (
             <li key={t}>
               <Card>

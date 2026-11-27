@@ -561,3 +561,13 @@ test("the workspace links back to the research home and the dashboard, and both 
  await page.goto("/workspaces");
  await expect(page.getByRole("link",{name:"Open the graph workspace"})).toHaveAttribute("href","/workspace/graph");
 });
+
+test("a link can name a mode that opens, and an unknown or unavailable mode is ignored",async({page})=>{
+ await page.goto("/workspace/graph?mode=hypothesis");
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("hypothesis");
+ await expect(page.getByText("Opened in Hypothesis Graph from a link.")).toBeVisible();
+ await page.goto("/workspace/graph?mode=collaboration");
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
+ await page.goto("/workspace/graph?mode=nonsense");
+ await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
+});

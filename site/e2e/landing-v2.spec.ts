@@ -182,7 +182,7 @@ test('how it works shows the journey and separates checks from approval',async({
  await expect(page.getByRole('heading',{level:1})).toContainText('evidence-linked decisions');
  await expect(page.getByRole('list',{name:'Investigation journey',exact:true}).getByRole('listitem')).toHaveCount(8);
  await expect(page.getByRole('list',{name:'Scientific review boundaries',exact:true}).getByRole('listitem')).toHaveCount(4);
- await expect(page.getByRole('main').locator('img')).toHaveCount(2);
+ await expect(page.getByRole('main').locator('img')).toHaveCount(3); // graph workspace overview and 3D, plus the research home
  await expect(page.getByRole('link',{name:'See an example investigation record'}).first()).toHaveAttribute('href','/platform/workbench');
  await page.getByRole('button',{name:'Context',exact:true}).click();
  await expect(page.getByText('Under which experimental conditions?')).toBeVisible();
