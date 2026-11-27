@@ -8,3 +8,4 @@ export * from "./scale";
 export * from "./evidence";
 export * from "./investigation";
 export * from "./personalisation";
+export * from "./nexus";

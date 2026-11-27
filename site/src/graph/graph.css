@@ -144,3 +144,20 @@
 .gw-why .gw-btn{margin-top:.25rem}
 .gw-guide{margin-top:.5rem;padding:.6rem .85rem;border-radius:10px;border:1px solid #ffffff1f;background:#ffffff08;font-size:.9375rem;display:grid;gap:.35rem}
 .gw-guide p{margin:0}
+/* LEA-04J: NEXUS dock */
+.gw-nexus{display:grid;gap:.55rem}
+.gw-nexus-add{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.gw-chips{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:.35rem}
+.gw-chips li{display:inline-flex;align-items:center;gap:.25rem;border:1px solid #ffffff2e;border-radius:999px;padding:.1rem .2rem .1rem .7rem;max-width:100%;font-size:.875rem}
+.gw-chips .gw-link{overflow-wrap:anywhere;text-align:left}
+.gw-x{min-width:32px;min-height:32px;border:0;border-radius:999px;background:transparent;color:var(--foreground);font-size:1.1rem;cursor:pointer}
+.gw-x:hover,.gw-x:focus-visible{background:#ffffff14}
+.gw-nexus-q textarea{width:100%;min-height:3.5rem;font:inherit;color:var(--foreground);background:#ffffff0a;border:1px solid #ffffff2e;border-radius:8px;padding:.5rem .6rem;resize:vertical}
+.gw-nexus-agents{list-style:none;margin:0;padding:0;display:grid;gap:.4rem}
+.gw-nexus-agents li{display:grid;gap:.2rem}
+.gw-nexus-agents small{color:var(--muted-foreground)}
+.gw-nexus-resp{border:1px solid #ffffff1f;border-radius:12px;padding:.7rem .9rem;display:grid;gap:.4rem}
+.gw-nexus-resp h3{margin:0;font-size:1rem}.gw-nexus-resp h3 small{font-weight:400;color:var(--muted-foreground)}
+.gw-nexus-resp h4{margin:.2rem 0 0;font-size:.8125rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted-foreground)}
+.gw-nexus-resp p{margin:0;overflow-wrap:anywhere}
+.gw-tag{font-size:.8125rem;color:var(--primary)}

@@ -466,3 +466,79 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
  });
 }
+
+const dock=(page:Page)=>page.getByRole("region",{name:"NEXUS"});
+
+test("the NEXUS dock runs nothing until there is a selection, and says model interpretation is off",async({page})=>{
+ await open(page);
+ const d=dock(page);
+ await expect(d.getByRole("button",{name:"Compare the selected findings"})).toBeDisabled();
+ await expect(d.getByRole("button",{name:"List candidate chains"})).toBeDisabled();
+ await expect(d.getByRole("button",{name:"Interpret with a language model"})).toBeDisabled();
+ await expect(d).toContainText("Interpretation by a language model is not enabled.");
+ await expect(d).toContainText("Add exactly two concepts.");
+});
+
+test("PARALLAX compares recorded disagreements as candidates and the record downloads with no approval",async({page})=>{
+ await wholeContradictions(page);
+ await page.locator("ul.gw-units li").first().getByRole("button",{name:"Compare these findings"}).click();
+ const d=dock(page);
+ await d.getByRole("button",{name:"Add compared findings"}).click();
+ await expect(d.getByRole("list",{name:"NEXUS selection"}).locator("li")).not.toHaveCount(0);
+ await d.getByRole("button",{name:"Compare the selected findings"}).click();
+ const ans=d.getByRole("article",{name:"PARALLAX answer"});
+ await expect(ans).toContainText("Candidate finding");await expect(ans).toContainText("No scientific approval");
+ await expect(ans).toContainText("No pair is confirmed as a contradiction.");
+ const [dl]=await Promise.all([page.waitForEvent("download"),d.getByRole("button",{name:"Download investigation record"}).click()]);
+ const rec=JSON.parse(await (await dl.createReadStream()).toArray().then(c=>Buffer.concat(c).toString("utf8")));
+ expect(rec.scientificApproval).toBe(false);
+ expect(rec.responses.every((r:{modelBacked:boolean;graphPromotable:boolean})=>r.modelBacked===false&&r.graphPromotable===false)).toBe(true);
+ const [p]=await Promise.all([page.waitForEvent("download"),ans.getByRole("button",{name:"Download as a proposal for review"}).first().click()]);
+ const prop=JSON.parse(await (await p.createReadStream()).toArray().then(c=>Buffer.concat(c).toString("utf8")));
+ expect(prop).toMatchObject({status:"proposed_unreviewed",requiresIndependentReview:true,approved:false});
+ await expect(d).toContainText("Nothing was changed in the graph.");
+});
+
+test("HELIX lists candidate chains between two concepts or abstains, and VANTAGE separates gaps from coverage",async({page})=>{
+ await open(page);
+ const d=dock(page);
+ const pick=async(i:number)=>{const n=page.locator("g.gw-node").nth(i);await n.focus();await n.press("Enter");await d.getByRole("button",{name:"Add selected concept"}).click()};
+ await pick(0);await pick(1);
+ await expect(d.getByLabel("Question")).toHaveValue(/What does the graph record between .+ and .+\?/);
+ await d.getByRole("button",{name:"List candidate chains"}).click();
+ const helix=d.getByRole("article",{name:"HELIX answer"});
+ await expect(helix).toContainText(/Completed|Abstained/);
+ await expect(helix).toContainText("Model-backed mechanism interpretation is not enabled");
+ await d.getByRole("button",{name:"Separate gaps from coverage limits"}).click();
+ await expect(d.getByRole("article",{name:"VANTAGE answer"})).toContainText("Neither shows what the wider literature contains.");
+ await d.getByRole("button",{name:/^Remove /}).first().click();
+ await expect(d.getByRole("button",{name:"List candidate chains"})).toBeDisabled();
+});
+
+test("a question that looks like a personal identifier is refused before any agent runs",async({page})=>{
+ await open(page);
+ const d=dock(page);
+ await page.locator("g.gw-node").nth(0).click();await d.getByRole("button",{name:"Add selected concept"}).click();
+ await d.getByLabel("Question").fill("Patient john.smith@example.com seen on 12/03/2024");
+ await expect(d.getByText("The question appears to contain personal or clinical identifiers and cannot be used")).toBeVisible();
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ test(`the NEXUS dock with answers is accessible with no horizontal scroll: ${name}`,async({page})=>{
+  await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+  await wholeContradictions(page);
+  await page.locator("ul.gw-units li").first().getByRole("button",{name:"Compare these findings"}).click();
+  const d=dock(page);
+  await d.getByRole("button",{name:"Add compared findings"}).click();
+  await d.getByRole("button",{name:"Compare the selected findings"}).click();
+  await d.getByRole("button",{name:"Separate gaps from coverage limits"}).click();
+  await expect(d.getByRole("article",{name:"VANTAGE answer"})).toBeVisible();
+  for(const w of [vp.width,320]){
+   await page.setViewportSize({width:w,height:vp.height});
+   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+  }
+  await page.setViewportSize(vp);
+  const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+  expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+ });
+}
