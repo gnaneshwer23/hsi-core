@@ -1,5 +1,5 @@
 /* LEA-02A onboarding. Scoped to .ob inside .lv2; uses the landing tokens (navy, mint, gold). */
-.lv2.ob{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr;position:relative;isolation:isolate;background:oklch(0.17 0.026 254);overflow-x:clip}
+.lv2.ob{min-height:100vh;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 1fr;position:relative;isolation:isolate;background:var(--background);overflow-x:clip}
 .ob-bg{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.5;background:radial-gradient(60rem 40rem at 85% -10%,color-mix(in oklab,var(--primary) 14%,transparent),transparent 70%),radial-gradient(50rem 36rem at -10% 110%,color-mix(in oklab,var(--signal) 9%,transparent),transparent 70%)}
 .ob-bg svg{position:absolute;inset:0;width:100%;height:100%}
 .ob-strand{stroke-width:1.2}.ob-strand-a{stroke:var(--primary);opacity:.35}.ob-strand-b{stroke:var(--signal);opacity:.28}
@@ -65,7 +65,7 @@
 .ob-btn-lg{min-height:52px;padding-inline:1.75rem;font-size:1rem}
 .ob :is(button,a,input,select,textarea,summary):focus-visible{outline:2px solid var(--signal);outline-offset:3px}
 
-.ob-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid color-mix(in oklab,var(--foreground) 12%,transparent);position:sticky;bottom:0;background:linear-gradient(transparent,oklch(0.17 0.026 254) 30%);padding-bottom:1rem}
+.ob-actions{display:flex;justify-content:space-between;align-items:center;gap:1rem;margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid color-mix(in oklab,var(--foreground) 12%,transparent);position:sticky;bottom:0;background:linear-gradient(transparent,var(--background) 30%);padding-bottom:1rem}
 .ob-actions-end{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:flex-end}
 
 /* chips and rows */
@@ -114,7 +114,7 @@
 
 .ob-note{margin:0;padding:.875rem 1rem;border-left:3px solid var(--primary);background:color-mix(in oklab,var(--primary) 8%,transparent);border-radius:0 6px 6px 0;font-size:.9375rem;line-height:1.55}
 .ob-note[data-tone=caution]{border-left-color:var(--signal);background:color-mix(in oklab,var(--signal) 10%,transparent)}
-.ob-badge{display:inline-block;padding:.05rem .5rem;border-radius:999px;font-family:var(--font-mono);font-size:.6875rem;letter-spacing:.04em;vertical-align:middle;border:1px solid currentColor;margin-left:.375rem}
+.ob-badge{display:inline;font-size:.75rem;font-weight:500;margin-left:.375rem;vertical-align:baseline}
 .ob-badge-proto{color:var(--primary)}.ob-badge-dev{color:var(--signal)}.ob-badge-plan{color:var(--muted-foreground)}.ob-badge-ill{color:var(--helix-ink)}
 .ob-pill{display:inline-block;padding:0 .5rem;border-radius:4px;background:color-mix(in oklab,var(--foreground) 12%,transparent);font-size:.75rem;font-family:var(--font-mono)}
 .ob-panel{margin-top:1.25rem;padding:1.25rem;border-radius:10px;border:1px solid color-mix(in oklab,var(--foreground) 14%,transparent);background:color-mix(in oklab,var(--card) 50%,transparent)}

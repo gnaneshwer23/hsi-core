@@ -1,5 +1,5 @@
 import { Link } from "../../router";
-import { PageHero, Section, StatusTag, meta } from "../../components/site/ui";
+import { PageHero, Section, meta } from "../../components/site/ui";
 import { WorkspaceFigure } from "../../components/site/WorkspaceFigure";
 import { AgentBoard } from "../../components/agents/AgentBoard";
 
@@ -17,7 +17,7 @@ export default function Page() {
         <AgentBoard />
       </Section>
       <Section eyebrow="Available today" title="NEXUS in the graph workspace." intro="Three deterministic checks run now, over a selection you build from the graph. They add no reasoning of their own, and every answer is a candidate finding that cannot change the graph.">
-        <div className="mb-4 flex flex-wrap items-center gap-3"><StatusTag s="Prototype" /><Link to="/workspace/graph" className="text-sm text-primary underline underline-offset-4">Open the workspace</Link></div>
+        <div className="mb-4 flex flex-wrap items-center gap-3"><Link to="/workspace/graph" className="text-sm text-primary underline underline-offset-4">Open the workspace</Link></div>
         <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-start">
           <ul className="grid gap-6">
             {[

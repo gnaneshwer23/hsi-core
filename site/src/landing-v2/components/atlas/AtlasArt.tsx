@@ -111,13 +111,13 @@ const art: Record<AtlasDomainKey, (accent: string) => ReactNode> = {
 };
 
 /** The territory background and its illustration. Pointer-inert; the entities are drawn above it. */
-export function AtlasTerritory({ d, index, dimmed }: { d: AtlasDomain; index: number; dimmed: boolean }) {
+export function AtlasTerritory({ d, dimmed }: { d: AtlasDomain; index?: number; dimmed: boolean }) {
   return (
     <g transform={`translate(${d.x} ${d.y})`} opacity={dimmed ? 0.35 : 1} style={{ transition: "opacity .25s" }}>
       <rect width={d.w} height={d.h} rx="14" fill="var(--card)" fillOpacity="0.45" stroke="var(--border)" strokeOpacity="0.8" />
       <g opacity="0.3">{art[d.key](d.accent)}</g>
-      <text x="16" y="28" className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-mono)" fontSize="11" letterSpacing="2.2">
-        {String(index + 1).padStart(2, "0")} · {d.name.toUpperCase()}
+      <text x="16" y="28" className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-sans)" fontSize="13" fontWeight="500">
+        {d.name}
       </text>
     </g>
   );

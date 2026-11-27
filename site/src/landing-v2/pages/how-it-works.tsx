@@ -1,5 +1,5 @@
 import { Link } from "../router";
-import { PageHero, Section, meta } from "../components/site/ui";
+import { PageHero, Section, meta, PageStatus } from "../components/site/ui";
 import { Spine } from "../components/site/Spine";
 import { RelationshipLenses } from "../components/site/Lenses";
 import { WorkspaceFigure } from "../components/site/WorkspaceFigure";
@@ -29,7 +29,7 @@ export default function Page() {
           <Link to="/platform/workbench" className="bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90">See an example investigation record</Link>
           <Link to="/trust#validation" className="border border-border px-5 py-3 text-sm font-medium hover:border-primary">Read how approval stays separate</Link>
         </div>
-        <p className="mt-6 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">Research preview · example findings are labelled · no clinical advice · no patient data on this site</p>
+        <PageStatus>A research preview. Example findings are labelled as examples. HSI gives no clinical advice and this site holds no patient data.</PageStatus>
       </PageHero>
 
       <Section eyebrow="Journey" title="The investigation journey.">

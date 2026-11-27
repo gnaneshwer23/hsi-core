@@ -66,8 +66,8 @@ export function Hero() {
   }, []);
   const sel = HERO_DOMAINS.find((d) => d.key === focus);
   return (
-    <section className="relative isolate min-h-[100svh] overflow-hidden bg-background">
-      <div className="absolute inset-0 -z-10">
+    <section className="relative isolate min-h-[88svh] overflow-hidden bg-background">
+      <div className="absolute inset-0 -z-10 max-lg:opacity-25 lg:left-[40%] lg:[mask-image:linear-gradient(to_right,transparent,black_30%)]">
         {webgl ? (
           <Suspense fallback={<StaticSystem focus={focus} />}>
             <HeroScene focus={focus} onFocus={setFocus} />
@@ -77,15 +77,14 @@ export function Hero() {
         )}
       </div>
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_30%,var(--background)_85%)]" />
-      <div className="pointer-events-none mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-between px-5 pb-10 pt-24 md:px-10">
-        <p className="text-sm text-muted-foreground">A research platform in development</p>
+      <div className="pointer-events-none mx-auto flex min-h-[88svh] max-w-[1440px] flex-col justify-end px-5 pb-12 pt-28 md:px-10">
         <div className="grid items-end gap-10 lg:grid-cols-[1fr_320px]">
           <div className="pointer-events-auto">
-            <h1 className="max-w-5xl font-display text-[clamp(2.6rem,6.2vw,6rem)] font-medium leading-[0.92] tracking-[-0.04em]">
+            <h1 className="max-w-3xl font-display text-[clamp(2.6rem,6.2vw,6rem)] font-medium leading-[0.92] tracking-[-0.04em]">
               See what the evidence supports,{" "}
               <span className="text-muted-foreground">and where it does not.</span>
             </h1>
-            <p className="mt-6 max-w-xl font-serif text-xl leading-snug text-foreground/80 md:text-2xl">
+            <p className="mt-6 max-w-xl font-serif text-xl leading-snug text-foreground/80">
               HSI links published studies to the biology they describe. For each claim, you can see where it came from, what it applied to and where studies disagree.
             </p>
             <div className="mt-10 flex flex-wrap items-center gap-6">
