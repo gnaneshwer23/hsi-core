@@ -245,3 +245,16 @@ await page.locator('#rh-setup > summary').click();
  await expect(page.locator('#rh-nav')).toHaveAttribute('data-open','true');
  await expect(page.getByRole('link',{name:'Knowledge Graph',exact:true})).toBeVisible();
 });
+
+test('a concept found on the research home opens in the graph workspace, searching the whole graph',async({page})=>{
+ await saved(page,401,{code:'BACKEND_PROVIDER_SESSION_REQUIRED'});
+ await page.goto('/research/home');
+ const skip=page.getByRole('button',{name:/Skip/}).first();
+ if(await skip.isVisible().catch(()=>false))await skip.click();
+ await page.locator('#rh-q').fill('Butyrate');
+ const link=page.getByRole('list',{name:'Matching concepts'}).getByRole('link',{name:'Open in the graph workspace'}).first();
+ await expect(link).toHaveAttribute('href',/^\/workspace\/graph\?q=/);
+ await link.click();
+ await expect(page.getByLabel('Scope',{exact:true})).toHaveValue('all');
+ await expect(page.getByPlaceholder('Search concepts…')).toHaveValue(/butyrate/i);
+});

@@ -45,7 +45,7 @@ export default function GraphWorkspace(){
  return (
   <div className="lv2 gw">
    <a href="#gw-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to the graph</a>
-   <header className="gw-top"><Logo/><nav className="gw-toplinks" aria-label="Workspace"><Link to="/workspace/immersive" className="gw-link">Immersive preview</Link><Link to="/knowledge-graph" className="gw-link">Knowledge graph</Link><Link to="/settings/scientific-profile" className="gw-link">Profile</Link></nav></header>
+   <header className="gw-top"><Logo/><nav className="gw-toplinks" aria-label="Workspace"><Link to="/research/home" className="gw-link">Research home</Link><Link to="/research/dashboard" className="gw-link">Dashboard</Link><Link to="/workspace/immersive" className="gw-link">Immersive preview</Link><Link to="/knowledge-graph" className="gw-link">Knowledge graph</Link><Link to="/settings/scientific-profile" className="gw-link">Profile</Link></nav></header>
    {failed&&<main id="gw-main" className="gw-state" tabIndex={-1}><h1>Graph unavailable</h1><p role="status">Snapshot unavailable. No substitute graph is shown.</p><p>The published graph could not be loaded and verified. Reload to try again.</p><button type="button" className="gw-btn" onClick={()=>window.location.reload()}>Reload</button></main>}
    {!failed&&!model&&<main id="gw-main" className="gw-state" tabIndex={-1}><h1>Living Intelligence Graph</h1><p role="status">Verifying the published snapshot…</p></main>}
    {model&&<Loaded model={model}/>}
@@ -58,12 +58,14 @@ function Loaded({model}:{model:GraphModel}){
  const opening=useMemo(()=>openingView({persona:personaOf(onb),objectives:onb.objectives,primaryDomain:onb.primaryDomain,secondaryDomains:onb.secondaryDomains,level:onb.methods.level}),[onb]);
  const start:ModeId=opening.mode;
  const [mode,setMode]=useState<ModeId>(start);
- const [scopeId,setScopeId]=useState(opening.scopeId);
+ /* A link may carry a search (?q=). It searches the whole published graph, so nothing is missed by the default scope. */
+ const linkQuery=useMemo(()=>{try{return (new URLSearchParams(window.location.search).get("q")??"").trim().slice(0,200)}catch{return ""}},[]);
+ const [scopeId,setScopeId]=useState(linkQuery?"all":opening.scopeId);
  const [view,setView]=useState<"graph"|"table"|"3d">("graph");
  const webgl=useWebGL();
  const [hover3d,setHover3d]=useState<string|null>(null);
  const [zoom3d,setZoom3d]=useState(1);
- const [filters,setFilters]=useState<Filters>(EMPTY_FILTERS);
+ const [filters,setFilters]=useState<Filters>(linkQuery?{...EMPTY_FILTERS,query:linkQuery}:EMPTY_FILTERS);
  const [depth,setDepth]=useState(0);
  const [entity,setEntity]=useState<string|null>(null);
  const [assertionId,setAssertionId]=useState<string|null>(null);
@@ -186,6 +188,7 @@ function Loaded({model}:{model:GraphModel}){
       <p className="gw-eyebrow">{m.label} · {scope.label}</p>
       <h1>Living Intelligence Graph</h1>
       <p className="gw-hint">{m.summary} {m.readinessNote}</p>
+      {linkQuery&&<p className="gw-hint" role="status">Opened from a link: searching the whole published graph for “{linkQuery}”. Clear the search to see everything.</p>}
       {opening.personalised&&<details className="gw-why"><summary>Why the workspace opened here</summary><ul className="gw-list">{opening.reasons.map(r=><li key={r}>{r}</li>)}</ul><p className="gw-hint">Every other mode, including conflicts, stays one click away.</p><button type="button" className="gw-btn" onClick={()=>{changeMode(DEFAULT_OPENING.mode);setScopeId(DEFAULT_OPENING.scopeId);setDepth(0)}}>Open the default view</button></details>}
       {opening.guidance&&<div className="gw-guide" role="note"><p><strong>Reading this graph.</strong> Each dot is a concept, such as a cell type, a molecule or a disease. Each line is a relationship that a published source reported between two concepts. A dashed line is a finding recorded as not holding.</p><p>Nothing here is established knowledge: every relationship is an unreviewed candidate. Select a dot or a line to see what the source stated, what it did not, and where it came from.</p></div>}
       {webgl.gl===false&&<p className="gw-hint">3D is unavailable in this browser because WebGL is not provided. The graph and the table show the same concepts and relationships.</p>}

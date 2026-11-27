@@ -542,3 +542,22 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
  });
 }
+
+test("a link with a search opens the whole published graph searching for it, and says so",async({page})=>{
+ await page.goto("/workspace/graph?q=Rheumatoid%20arthritis");
+ await expect(page.getByLabel("Scope",{exact:true})).toHaveValue("all");
+ await expect(page.getByPlaceholder("Search concepts…")).toHaveValue("Rheumatoid arthritis");
+ await expect(page.getByText("Opened from a link: searching the whole published graph for “Rheumatoid arthritis”.")).toBeVisible();
+ await expect(page.locator("g.gw-node").first()).toBeVisible();
+});
+
+test("the workspace links back to the research home and the dashboard, and both link to it",async({page})=>{
+ await open(page);
+ const nav=page.getByRole("navigation",{name:"Workspace"});
+ await expect(nav.getByRole("link",{name:"Research home"})).toHaveAttribute("href","/research/home");
+ await expect(nav.getByRole("link",{name:"Dashboard"})).toHaveAttribute("href","/research/dashboard");
+ await page.goto("/research/dashboard");
+ await expect(page.getByRole("navigation",{name:"Research tools"}).getByRole("link",{name:"Living Intelligence Graph workspace"})).toHaveAttribute("href","/workspace/graph");
+ await page.goto("/workspaces");
+ await expect(page.getByRole("link",{name:"Open the graph workspace"})).toHaveAttribute("href","/workspace/graph");
+});
