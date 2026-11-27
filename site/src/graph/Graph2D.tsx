@@ -1,7 +1,7 @@
 import {useMemo,useRef,useState} from "react";
 
 export type GNode={id:string;label:string;group:string;degree:number};
-export type GEdge={id:string;s:string;o:string;negated:boolean;kind:"assertion"|"gap";pair?:boolean};
+export type GEdge={id:string;s:string;o:string;negated:boolean;kind:"assertion"|"gap";pair?:boolean;reading?:string};
 export type Pos=ReadonlyMap<string,readonly [number,number]>;
 
 const W=1000,H=620;
@@ -48,7 +48,7 @@ export function Graph2D({nodes,edges,positions,colourOf,selected,selectedEdge,on
       const gap=e.kind==="gap";
       return (
        <g key={e.id}>
-        <line x1={x1} y1={y1} x2={x2} y2={y2} className="gw-edge" data-kind={e.kind} data-pair={e.pair||undefined} data-selected={sel||tr||undefined}
+        <line x1={x1} y1={y1} x2={x2} y2={y2} className="gw-edge" data-kind={e.kind} data-pair={e.pair||undefined} data-reading={e.reading} data-selected={sel||tr||undefined}
          strokeDasharray={gap?"3 6":e.negated?"7 5":undefined} opacity={dim?.1:1}/>
         <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="transparent" strokeWidth={14} onClick={ev=>{ev.stopPropagation();onSelectEdge(e.id)}} style={{cursor:"pointer"}}/>
        </g>

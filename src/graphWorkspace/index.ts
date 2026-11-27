@@ -3,3 +3,4 @@ export * from "./assertionView";
 export * from "./modes";
 export * from "./filters";
 export * from "./slice";
+export * from "./contradiction";
