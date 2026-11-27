@@ -26,6 +26,11 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-evidence-status.candidate.sql
 \ir memory-publication-assertions.candidate.sql
 \ir memory-adjudication.candidate.sql
+\ir memory-revalidation-jobs.candidate.sql
+\ir memory-revalidation-scheduling.candidate.sql
+\ir memory-revalidation-claim.candidate.sql
+\ir memory-revalidation-completion.candidate.sql
+\ir memory-revalidation-recovery.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -63,6 +68,18 @@ CREATE ROLE sme_fixture_evidence_ingestor NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_evidence_ingestor;
 GRANT EXECUTE ON FUNCTION hsi_memory.record_evidence_observation(uuid,text,text,text,timestamptz,text) TO sme_fixture_evidence_ingestor;
 CREATE POLICY fixture_owner_assertions ON hsi_memory.publication_assertion_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE POLICY fixture_owner_revalidation ON hsi_memory.revalidation_jobs TO sme_fixture_owner USING(true) WITH CHECK(true);
+CREATE ROLE sme_fixture_revalidation_worker NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_worker;
+GRANT EXECUTE ON FUNCTION hsi_memory.claim_revalidation() TO sme_fixture_revalidation_worker;
+GRANT EXECUTE ON FUNCTION hsi_memory.fail_revalidation(uuid,uuid) TO sme_fixture_revalidation_worker;
+CREATE ROLE sme_fixture_revalidation_recovery NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_recovery;
+GRANT EXECUTE ON FUNCTION hsi_memory.recover_revalidation(integer) TO sme_fixture_revalidation_recovery;
+GRANT EXECUTE ON FUNCTION hsi_memory.complete_revalidation(uuid,uuid,uuid) TO sme_fixture_revalidation_worker;
+CREATE ROLE sme_fixture_revalidation_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
+GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_scheduler;
+GRANT EXECUTE ON FUNCTION hsi_memory.schedule_revalidation(uuid,uuid,timestamptz) TO sme_fixture_revalidation_scheduler;
 CREATE POLICY fixture_owner_adjudication ON hsi_memory.adjudication_candidates TO sme_fixture_owner USING(true) WITH CHECK(true);
 CREATE ROLE sme_fixture_adjudication_writer NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_adjudication_writer;
@@ -117,6 +134,71 @@ DO $adjudication_deny$ BEGIN
  BEGIN PERFORM count(*) FROM hsi_memory.adjudication_candidates; RAISE EXCEPTION 'runtime read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $adjudication_deny$;
 RESET ROLE;
+-- Isolated scheduler role; deterministic IDs avoid needing registry read privileges.
+INSERT INTO hsi_memory.adjudication_candidates(decision_id,doi,source_version,decision,provenance)
+SELECT '00000000-0000-4000-8000-000000000201','10.1234/fixture-schedule','v1','quarantine',provenance FROM hsi_memory.adjudication_candidates LIMIT 1;
+INSERT INTO hsi_memory.adjudication_candidates(decision_id,doi,source_version,decision,provenance)
+SELECT '00000000-0000-4000-8000-000000000202','10.1234/fixture-schedule','v1','recheck_required',provenance FROM hsi_memory.adjudication_candidates LIMIT 1;
+SET ROLE sme_fixture_revalidation_scheduler;
+DO $schedule_test$ DECLARE j uuid:='00000000-0000-4000-8000-000000000203'; d uuid:='00000000-0000-4000-8000-000000000201'; t timestamptz:=now(); BEGIN
+ IF hsi_memory.schedule_revalidation(j,d,t)<>j OR hsi_memory.schedule_revalidation(j,d,t)<>j THEN RAISE EXCEPTION 'Schedule replay failed'; END IF;
+ BEGIN PERFORM hsi_memory.schedule_revalidation(j,d,t+interval '1 hour'); RAISE EXCEPTION 'Conflicting replay accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ BEGIN PERFORM hsi_memory.schedule_revalidation(gen_random_uuid(),'00000000-0000-4000-8000-000000000202',t); RAISE EXCEPTION 'Duplicate publication accepted'; EXCEPTION WHEN serialization_failure THEN NULL; END;
+ BEGIN PERFORM count(*) FROM hsi_memory.revalidation_jobs; RAISE EXCEPTION 'Direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $schedule_test$;
+RESET ROLE;
+DO $schedule_count$ BEGIN IF (SELECT count(*) FROM hsi_memory.revalidation_jobs WHERE priority=0 AND state='queued')<>1 THEN RAISE EXCEPTION 'Queue count mismatch'; END IF; END $schedule_count$;
+SET ROLE sme_fixture_runtime;
+DO $schedule_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.schedule_revalidation(gen_random_uuid(),'00000000-0000-4000-8000-000000000201',now()); RAISE EXCEPTION 'Runtime schedule accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $schedule_deny$;
+RESET ROLE;
+SET ROLE sme_fixture_revalidation_worker;
+DO $claim_test$ DECLARE c record; BEGIN
+ SELECT * INTO STRICT c FROM hsi_memory.claim_revalidation();
+ IF c.job_id<>'00000000-0000-4000-8000-000000000203'::uuid OR c.attempts<>1 OR c.lease_id IS NULL OR c.lease_until<=clock_timestamp() OR c.doi<>'10.1234/fixture-schedule' THEN RAISE EXCEPTION 'Invalid claim'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.claim_revalidation()) THEN RAISE EXCEPTION 'Duplicate claim'; END IF;
+ BEGIN PERFORM count(*) FROM hsi_memory.revalidation_jobs; RAISE EXCEPTION 'Direct read accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $claim_test$;
+RESET ROLE;
+SET ROLE sme_fixture_runtime;
+DO $claim_deny$ BEGIN
+ BEGIN PERFORM hsi_memory.claim_revalidation(); RAISE EXCEPTION 'Runtime claim accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+END $claim_deny$;
+RESET ROLE;
+INSERT INTO hsi_memory.adjudication_candidates(decision_id,doi,source_version,decision,provenance)
+SELECT '00000000-0000-4000-8000-000000000204',doi,source_version,'quarantine',provenance FROM hsi_memory.adjudication_candidates WHERE decision_id='00000000-0000-4000-8000-000000000201';
+DO $completion_test$ DECLARE j uuid:='00000000-0000-4000-8000-000000000203'; l uuid; r uuid:='00000000-0000-4000-8000-000000000204'; BEGIN
+ SELECT lease_id INTO STRICT l FROM hsi_memory.revalidation_jobs WHERE job_id=j;
+ SET LOCAL ROLE sme_fixture_revalidation_worker;
+ BEGIN PERFORM hsi_memory.complete_revalidation(j,gen_random_uuid(),r); RAISE EXCEPTION 'Wrong lease accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM hsi_memory.complete_revalidation(j,l,'00000000-0000-4000-8000-000000000202'); RAISE EXCEPTION 'Quarantine cleared'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ IF hsi_memory.complete_revalidation(j,l,r)<>r OR hsi_memory.complete_revalidation(j,l,r)<>r THEN RAISE EXCEPTION 'Completion replay failed'; END IF;
+ RESET ROLE;
+ IF NOT EXISTS(SELECT 1 FROM hsi_memory.revalidation_jobs WHERE job_id=j AND state='succeeded' AND result_decision_id=r AND lease_id IS NULL) THEN RAISE EXCEPTION 'Completion not persisted'; END IF;
+END $completion_test$;
+DO $recovery_test$ DECLARE j uuid:=gen_random_uuid(); d uuid:='00000000-0000-4000-8000-000000000204'; l uuid; t timestamptz:=now(); BEGIN
+ SET LOCAL ROLE sme_fixture_revalidation_scheduler;
+ PERFORM hsi_memory.schedule_revalidation(j,d,t);
+ RESET ROLE;
+ SET LOCAL ROLE sme_fixture_revalidation_worker;
+ SELECT lease_id INTO STRICT l FROM hsi_memory.claim_revalidation();
+ IF hsi_memory.fail_revalidation(j,l)<>'queued' THEN RAISE EXCEPTION 'Retry failed'; END IF;
+ BEGIN PERFORM hsi_memory.fail_revalidation(j,l); RAISE EXCEPTION 'Old lease accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ RESET ROLE;
+ SET LOCAL ROLE sme_fixture_revalidation_scheduler;
+ IF hsi_memory.schedule_revalidation(j,d,t)<>j THEN RAISE EXCEPTION 'Schedule replay failed after retry'; END IF;
+ RESET ROLE;
+ UPDATE hsi_memory.revalidation_jobs SET state='leased',attempts=5,lease_id=gen_random_uuid(),lease_until=clock_timestamp()-interval '1 second' WHERE job_id=j;
+ SET LOCAL ROLE sme_fixture_revalidation_recovery;
+ IF hsi_memory.recover_revalidation(10)<>1 THEN RAISE EXCEPTION 'Recovery count mismatch'; END IF;
+ RESET ROLE;
+ IF NOT EXISTS(SELECT 1 FROM hsi_memory.revalidation_jobs WHERE job_id=j AND state='failed' AND lease_id IS NULL) THEN RAISE EXCEPTION 'Exhausted job not failed'; END IF;
+END $recovery_test$;
+
+
+
+
 SET ROLE sme_fixture_assertion_ingestor;
 DO $assertions$ DECLARE i uuid:=gen_random_uuid(); BEGIN
  PERFORM hsi_memory.stage_publication_assertion(i,'10.1234/fixture-paper','v1','crossref','fixture:notice');
