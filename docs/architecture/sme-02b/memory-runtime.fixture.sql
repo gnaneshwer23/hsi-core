@@ -29,6 +29,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-revalidation-jobs.candidate.sql
 \ir memory-revalidation-scheduling.candidate.sql
 \ir memory-revalidation-claim.candidate.sql
+\ir memory-revalidation-completion.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -70,6 +71,7 @@ CREATE POLICY fixture_owner_revalidation ON hsi_memory.revalidation_jobs TO sme_
 CREATE ROLE sme_fixture_revalidation_worker NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_worker;
 GRANT EXECUTE ON FUNCTION hsi_memory.claim_revalidation() TO sme_fixture_revalidation_worker;
+GRANT EXECUTE ON FUNCTION hsi_memory.complete_revalidation(uuid,uuid,uuid) TO sme_fixture_revalidation_worker;
 CREATE ROLE sme_fixture_revalidation_scheduler NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_scheduler;
 GRANT EXECUTE ON FUNCTION hsi_memory.schedule_revalidation(uuid,uuid,timestamptz) TO sme_fixture_revalidation_scheduler;
@@ -159,6 +161,18 @@ DO $claim_deny$ BEGIN
  BEGIN PERFORM hsi_memory.claim_revalidation(); RAISE EXCEPTION 'Runtime claim accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $claim_deny$;
 RESET ROLE;
+INSERT INTO hsi_memory.adjudication_candidates(decision_id,doi,source_version,decision,provenance)
+SELECT '00000000-0000-4000-8000-000000000204',doi,source_version,'quarantine',provenance FROM hsi_memory.adjudication_candidates WHERE decision_id='00000000-0000-4000-8000-000000000201';
+DO $completion_test$ DECLARE j uuid:='00000000-0000-4000-8000-000000000203'; l uuid; r uuid:='00000000-0000-4000-8000-000000000204'; BEGIN
+ SELECT lease_id INTO STRICT l FROM hsi_memory.revalidation_jobs WHERE job_id=j;
+ SET LOCAL ROLE sme_fixture_revalidation_worker;
+ BEGIN PERFORM hsi_memory.complete_revalidation(j,gen_random_uuid(),r); RAISE EXCEPTION 'Wrong lease accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ BEGIN PERFORM hsi_memory.complete_revalidation(j,l,'00000000-0000-4000-8000-000000000202'); RAISE EXCEPTION 'Quarantine cleared'; EXCEPTION WHEN invalid_parameter_value THEN NULL; END;
+ IF hsi_memory.complete_revalidation(j,l,r)<>r OR hsi_memory.complete_revalidation(j,l,r)<>r THEN RAISE EXCEPTION 'Completion replay failed'; END IF;
+ RESET ROLE;
+ IF NOT EXISTS(SELECT 1 FROM hsi_memory.revalidation_jobs WHERE job_id=j AND state='succeeded' AND result_decision_id=r AND lease_id IS NULL) THEN RAISE EXCEPTION 'Completion not persisted'; END IF;
+END $completion_test$;
+
 
 
 SET ROLE sme_fixture_assertion_ingestor;
