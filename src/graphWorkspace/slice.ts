@@ -64,3 +64,39 @@ export function unmappedTags(m:GraphModel):{tag:string;concepts:number}[]{
  for(const v of m.nodeDomains.values())for(const t of v.unmappedTags)c.set(t,(c.get(t)??0)+1);
  return [...c].map(([tag,concepts])=>({tag,concepts})).sort((a,b)=>b.concepts-a.concepts);
 }
+
+/* ------------------------------------------------------------------ paths and pairs */
+
+export type TracedPath={assertionIds:readonly string[];nodeIds:readonly string[];hops:number;/** An association chain, never a mechanism. */kind:"association_chain"};
+/** Shortest chains between two concepts over the given relationships, ignoring direction. Deterministic and bounded. */
+export function tracePaths(xs:readonly GraphAssertionView[],from:string,to:string,maxHops=5,limit=5):TracedPath[]{
+ if(from===to)return [];
+ const adj=new Map<string,GraphAssertionView[]>();
+ for(const a of xs)for(const id of [a.subject.id,a.object.id]){const l=adj.get(id)??[];l.push(a);adj.set(id,l)}
+ for(const l of adj.values())l.sort((p,q)=>p.id<q.id?-1:1);
+ const found:TracedPath[]=[];
+ let frontier:{node:string;nodes:string[];edges:string[]}[]=[{node:from,nodes:[from],edges:[]}];
+ for(let hop=1;hop<=maxHops&&found.length<limit;hop++){
+  const next:typeof frontier=[];
+  for(const f of frontier){
+   for(const a of adj.get(f.node)??[]){
+    if(f.edges.includes(a.id))continue;
+    const other=a.subject.id===f.node?a.object.id:a.subject.id;
+    if(f.nodes.includes(other))continue;
+    const p={node:other,nodes:[...f.nodes,other],edges:[...f.edges,a.id]};
+    if(other===to){if(found.length<limit)found.push({assertionIds:p.edges,nodeIds:p.nodes,hops:hop,kind:"association_chain"})}
+    else if(next.length<2000)next.push(p);
+   }
+  }
+  frontier=next;
+ }
+ return found;
+}
+
+export type ComparablePair={subjectId:string;objectId:string;assertionIds:readonly string[]};
+/** Relationships that concern the same two concepts (either direction). Whether they actually conflict is a separate, context-dependent question. */
+export function comparablePairs(xs:readonly GraphAssertionView[]):ComparablePair[]{
+ const m=new Map<string,GraphAssertionView[]>();
+ for(const a of xs){const key=[a.subject.id,a.object.id].sort().join("|");const l=m.get(key)??[];l.push(a);m.set(key,l)}
+ return [...m].filter(([,l])=>l.length>1).map(([key,l])=>{const [s,o]=key.split("|");return {subjectId:s!,objectId:o!,assertionIds:l.map(a=>a.id)}});
+}

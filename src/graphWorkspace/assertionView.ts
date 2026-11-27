@@ -43,6 +43,8 @@ export type GraphAssertionView={
  subject:{id:string;name:string;kind:string};object:{id:string;name:string;kind:string};
  /** The source's own wording, shown as reported. It is not a statement that HSI has established the relationship. */
  predicate:string;reportedAs:string;negated:boolean;
+ /** The statement as recorded for this relationship, shown as recorded. */
+ statement:string;
  domains:HsiDomain[];
  context:AssertionContext;
  contextCompleteness:{stated:number;recordable:number};
@@ -74,7 +76,7 @@ export function toAssertionView(e:DomainEdge,nodes:ReadonlyMap<string,DomainNode
  return {
   id:e.id,
   subject:{id:e.subjectId,name:s?.name??e.subjectId,kind:s?.kind??"unknown"},object:{id:e.objectId,name:o?.name??e.objectId,kind:o?.kind??"unknown"},
-  predicate:e.predicate,reportedAs:pretty(e.predicate),negated:e.negated,
+  predicate:e.predicate,reportedAs:pretty(e.predicate),negated:e.negated,statement:e.assertion,
   domains:[...new Set([...sd,...od])],
   context,contextCompleteness:{stated:have,recordable:RECORDABLE.length},
   evidence:{sourceId:e.sourceId,doi:src?.doi??null,pmid:src?.pmid??null,identity:src?.identityStatus??null,rights:src?.rights??null,passage:passageState(src)},

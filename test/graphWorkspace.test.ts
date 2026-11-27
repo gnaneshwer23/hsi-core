@@ -16,6 +16,9 @@ describe("graph workspace model over the published graph",()=>{
   expect(new Set(model.assertions.map(a=>a.id)).size).toBe(model.assertions.length);
   for(const a of model.assertions)expect(bundle.edges.find(e=>e.id===a.id)!.kind).toBe("source_candidate");
  });
+ it("keeps the recorded statement for each relationship",()=>{
+  for(const e of candidates)expect(model.assertions.find(a=>a.id===e.id)!.statement).toBe(e.assertion);
+ });
  it("every assertion is a candidate: nothing is reviewed, calibrated, verified or approved",()=>{
   for(const a of model.assertions){
    expect(a.status).toEqual({level:"candidate",review:"unreviewed",confidence:"not_calibrated",verification:"source_not_verified",approved:false});
@@ -141,5 +144,54 @@ describe("bounded slices",()=>{
   expect(capped.assertions.length).toBeLessThanOrEqual(cap);
   expect(expand(model,s.nodeIds,0,10_000,s.assertions).added).toBe(0);
   expect(expand(model,s.nodeIds,99,10_000,s.assertions).assertions.length).toBeLessThanOrEqual(model.assertions.length);
+ });
+});
+
+import {layoutGraph} from "../src/graphWorkspace/layout";
+import {comparablePairs,tracePaths} from "../src/graphWorkspace";
+
+describe("layout, paths and comparable pairs",()=>{
+ const slice=crossDomainSlice(model,"immunology","microbiome");
+ const nodes=[...slice.nodeIds].map(id=>({id,group:model.nodeDomains.get(id)?.domains[0]??"unmapped"}));
+ const edges=slice.assertions.map(a=>({s:a.subject.id,o:a.object.id}));
+ it("lays out a slice deterministically, inside bounds, quickly, with linked concepts nearer than unlinked",()=>{
+  const t0=performance.now();
+  const a=layoutGraph(nodes,edges),b=layoutGraph(nodes,edges);
+  expect(performance.now()-t0).toBeLessThan(1500);
+  expect([...a]).toEqual([...b]);
+  for(const [,[x,y]] of a){expect(x).toBeGreaterThanOrEqual(0.06-1e-9);expect(x).toBeLessThanOrEqual(0.94+1e-9);expect(y).toBeGreaterThanOrEqual(0.06-1e-9);expect(y).toBeLessThanOrEqual(0.94+1e-9)}
+  const d=(p:string,q:string)=>Math.hypot(a.get(p)![0]-a.get(q)![0],a.get(p)![1]-a.get(q)![1]);
+  const linked=new Set(edges.map(e=>[e.s,e.o].sort().join("|")));
+  let li=0,ln=0,ui=0,un=0;
+  const ids=[...a.keys()];
+  for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const k=[ids[i]!,ids[j]!].sort().join("|");if(linked.has(k)){li+=d(ids[i]!,ids[j]!);ln++}else{ui+=d(ids[i]!,ids[j]!);un++}}
+  expect(li/ln).toBeLessThan(ui/un);
+ });
+ it("handles empty, single and disconnected input",()=>{
+  expect(layoutGraph([],[]).size).toBe(0);
+  expect(layoutGraph([{id:"a",group:"g"}],[]).get("a")).toEqual([0.5,0.5]);
+  expect(layoutGraph([{id:"a",group:"g"},{id:"b",group:"h"}],[]).size).toBe(2);
+  expect(layoutGraph([{id:"a",group:"g"},{id:"b",group:"g"}],[{s:"a",o:"missing"}]).size).toBe(2);
+ });
+ it("the layout of the whole published graph stays fast",()=>{
+  const all=[...model.nodes.keys()].map(id=>({id,group:model.nodeDomains.get(id)?.domains[0]??"unmapped"}));
+  const t0=performance.now();layoutGraph(all,model.assertions.map(a=>({s:a.subject.id,o:a.object.id})));
+  expect(performance.now()-t0).toBeLessThan(2500);
+ });
+ it("traces association chains, bounded and deterministic, and never labels them a mechanism",()=>{
+  const first=slice.assertions[0]!;
+  const direct=tracePaths(slice.assertions,first.subject.id,first.object.id,3,3);
+  expect(direct[0]!.hops).toBe(1);expect(direct[0]!.kind).toBe("association_chain");
+  expect(tracePaths(slice.assertions,first.subject.id,first.object.id,3,3)).toEqual(direct);
+  expect(tracePaths(slice.assertions,"x","x")).toEqual([]);
+  expect(tracePaths(slice.assertions,first.subject.id,"no-such-concept")).toEqual([]);
+  for(const p of direct)expect(p.assertionIds).toHaveLength(p.hops);
+  expect(tracePaths(slice.assertions,first.subject.id,first.object.id,5,2).length).toBeLessThanOrEqual(2);
+ });
+ it("finds pairs of concepts with more than one relationship, without calling them contradictions",()=>{
+  const pairs=comparablePairs(model.assertions);
+  for(const p of pairs){expect(p.assertionIds.length).toBeGreaterThan(1);expect(Object.keys(p)).not.toContain("contradiction")}
+  const manual=new Map<string,number>();for(const a of model.assertions){const k=[a.subject.id,a.object.id].sort().join("|");manual.set(k,(manual.get(k)??0)+1)}
+  expect(pairs.length).toBe([...manual.values()].filter(v=>v>1).length);
  });
 });
