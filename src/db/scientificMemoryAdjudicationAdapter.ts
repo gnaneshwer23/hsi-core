@@ -12,7 +12,7 @@ export function createScientificMemoryAdjudicationAdapter(sql:MemorySql){
  if(!Array.isArray(p)||p.length!==3||new Set(p.map(x=>x.authority)).size!==3||p.some(x=>!["crossref","pubmed","europe_pmc"].includes(x.authority)||! /^[a-f0-9]{64}$/.test(x.payloadSha256)||!Number.isInteger(x.byteLength)||x.byteLength<1||x.byteLength>2097152||!Number.isFinite(Date.parse(x.checkedAt))||x.authorityAuthenticated!==false||x.ingestionAllowed!==false||x.scientificClaimAllowed!==false))throw Error("Invalid provenance");
  const payload=JSON.stringify(p);
  if(new TextEncoder().encode(payload).length>32768)throw Error("Provenance too large");
- const rows=await sql.unsafe("SELECT hsi_memory.stage_adjudication($1::uuid,$2::text,$3::text,$4::text,$5::jsonb) AS decision_id",[id,doi,version,result.decision,payload]);
+ const rows=await sql.unsafe("SELECT hsi_memory.stage_adjudication($1::uuid,$2::text,$3::text,$4::text,$5::text::jsonb) AS decision_id",[id,doi,version,result.decision,payload]);
  const row=rows[0] as {decision_id?:unknown}|undefined;
  if(rows.length!==1||typeof row?.decision_id!=="string"||row.decision_id.toLowerCase()!==id.toLowerCase())throw Error("Unexpected persistence result");
  return {decisionId:row.decision_id,ingestionAllowed:false as const,scientificClaimAllowed:false as const};
