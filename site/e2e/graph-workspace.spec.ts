@@ -345,3 +345,63 @@ for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,
   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
  });
 }
+const modeTo=async(page:Page,label:string)=>{await page.getByLabel("Mode",{exact:true}).selectOption({label})};
+
+test("the hypothesis mode shows recorded questions as candidates, with what would count against them",async({page})=>{
+ await open(page);await modeTo(page,"Hypothesis Graph");
+ const card=page.getByRole("region",{name:/Candidate hypotheses \(\d+\)/});
+ await expect(card).toContainText("A candidate question recorded with the graph, not a validated hypothesis.");
+ const items=card.locator("ol.gw-qs > li");
+ expect(await items.count()).toBeGreaterThan(0);
+ await expect(items.first()).toContainText("What would count against it");
+ await expect(items.first()).toContainText("Not validated");
+ await expect(card).toContainText("It is not evidence for the prediction.");
+ await expect(card.getByText("No chain of up to 4 reported relationships connects these two concepts in this view.").first()).toBeVisible();
+});
+
+test("tracing a question's association chain highlights it in the graph",async({page})=>{
+ await open(page);await modeTo(page,"Hypothesis Graph");
+ const chain=page.getByRole("list",{name:/Association chains for/}).first().getByRole("button").first();
+ await chain.click();
+ await expect(chain).toHaveAttribute("aria-pressed","true");
+ expect(await page.locator('line.gw-edge[data-selected]').count()).toBeGreaterThan(0);
+});
+
+test("the experimental mode labels designs as candidates, never protocols, and the brief carries the caveats",async({page})=>{
+ await open(page);await modeTo(page,"Experimental Graph");
+ const card=page.getByRole("region",{name:/Candidate experiments \(\d+\)/});
+ await expect(card).toContainText("A candidate design, not a validated protocol. It has not been reviewed, powered, costed or approved by an ethics body.");
+ const first=card.locator("ol.gw-qs > li").first();
+ await expect(first).toContainText("Not a protocol");
+ await expect(first.getByRole("heading",{name:"Controls recorded with the question"})).toBeVisible();
+ const [dl]=await Promise.all([page.waitForEvent("download"),first.getByRole("button",{name:"Download candidate brief"}).click()]);
+ const text=await (await dl.createReadStream()).toArray().then(c=>Buffer.concat(c).toString("utf8"));
+ expect(text).toContain("Status: A candidate design, not a validated protocol.");
+ expect(text).toContain("What would count against it:");
+ expect(text).toContain("Every relationship in the graph is an unreviewed candidate.");
+});
+
+test("the research gap mode shows the candidate next study and the questions that cite a gap",async({page})=>{
+ await open(page);await modeTo(page,"Research Gap Graph");
+ const gaps=page.getByRole("region",{name:/Recorded research gaps/});
+ await expect(gaps).toContainText("Candidate next study:");
+ await expect(gaps).toContainText("A suggested next study is a candidate, not a protocol.");
+ await expect(gaps).toContainText(/Cited by \d+ recorded question/);
+});
+
+for(const [name,vp] of [["desktop",{width:1440,height:900}],["390px",{width:390,height:844}]] as const){
+ for(const label of ["Hypothesis Graph","Experimental Graph"]){
+  test(`${label} is accessible with no horizontal scroll: ${name}`,async({page})=>{
+   await page.setViewportSize(vp);await page.emulateMedia({reducedMotion:"reduce"});
+   await open(page);await modeTo(page,label);
+   await expect(page.locator("ol.gw-qs > li").first()).toBeVisible();
+   for(const w of [vp.width,320]){
+    await page.setViewportSize({width:w,height:vp.height});
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`width ${w}`).toBe(true);
+   }
+   await page.setViewportSize(vp);
+   const r=await new AxeBuilder({page}).withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+   expect(r.violations.map(x=>({id:x.id,nodes:x.nodes.map(n=>n.target)}))).toEqual([]);
+  });
+ }
+}
