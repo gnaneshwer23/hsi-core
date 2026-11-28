@@ -5,7 +5,10 @@ import {domainPaths,parseDomainBundle,type DomainBundle} from "../src/knowledgeG
 import {SELECTION_LIMITS,applyProposalToGraph,assertResponseInvariants,buildInvestigationRecord,buildSelectionContext,classifyComparability,contextDigest,investigateSelection,proposeFromFinding,verifyInvestigationRecord,type AgentResponse} from "../src/knowledgeGraph/graphAgents";
 
 const g=parseDomainBundle(JSON.parse(readFileSync(resolve("research/domain-graph/graph.v1.json"),"utf8")));
+/** The previous published version (044eb4d6) had no genomics or organ coverage; it stays the fixture for "nothing recorded" behaviour. */
+const g0=parseDomainBundle(JSON.parse(readFileSync(resolve("research/domain-graph/versions/044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1.json"),"utf8")));
 const Q="What does the graph record about this selection?";
+const sel0=(nodeIds:string[]=[],edgeIds:string[]=[],extra:Record<string,unknown>={})=>buildSelectionContext(g0,{investigationId:"inv-test-001",graphVersion:g0.version,question:Q,nodeIds,edgeIds,...extra} as never);
 const sel=(nodeIds:string[]=[],edgeIds:string[]=[],extra:Record<string,unknown>={})=>buildSelectionContext(g,{investigationId:"inv-test-001",graphVersion:g.version,question:Q,nodeIds,edgeIds,...extra} as never);
 const candidates=g.edges.filter(e=>e.kind==="source_candidate");
 const node=(name:string)=>g.nodes.find(n=>n.name===name)!;
@@ -82,7 +85,7 @@ describe("VANTAGE: a recorded question is not a coverage gap",()=>{
   expect(r.uncertainty.join(" ")).toContain("Literature coverage is not assessed");
  });
  test("a department with no graph coverage is reported as a coverage gap",()=>{
-  const r=investigateSelection(g,sel([g.nodes[0]!.id],[],{department:"genomics-multi-omics"}),"VANTAGE");
+  const r=investigateSelection(g0,sel0([g0.nodes[0]!.id],[],{department:"genomics-multi-omics"}),"VANTAGE");
   expect(r.findings.some(f=>f.kind==="graph_coverage_gap"&&f.title.includes("genomics-multi-omics"))).toBe(true);
  });
 });
@@ -101,7 +104,7 @@ describe("HELIX: scoped candidate chains; model-backed interpretation is not ena
   const b=node("Butyrate");
   const r=investigateSelection(g,sel([b.id],[],{department:"neuroscience"}),"HELIX");
   expect(r.status).toBe("completed");expect(r.findings.some(f=>f.class==="association_with_evidence_boundary")).toBe(true);
-  const none=investigateSelection(g,sel([b.id],[],{department:"human-physiology"}),"HELIX");expect(none.status).toBe("abstained");expect(none.abstentionReason).toContain("no concept in the graph");
+  const none=investigateSelection(g0,sel0([b.id],[],{department:"human-physiology"}),"HELIX");expect(none.status).toBe("abstained");expect(none.abstentionReason).toContain("no concept in the graph");
  });
  test("an unusable selection abstains and says why",()=>{
   const r=investigateSelection(g,sel([g.nodes[0]!.id]),"HELIX");expect(r.status).toBe("abstained");expect(r.abstentionReason).toContain("Select exactly two concepts");

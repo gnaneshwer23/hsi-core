@@ -6,11 +6,13 @@ import {DEPARTMENT_SLUGS,DEPARTMENT_TAGS,TRAVERSAL_LIMITS,crossDepartmentPaths,d
 import {departments} from "../site/src/lib/departments";
 
 const g=parseDomainBundle(JSON.parse(readFileSync(resolve("research/domain-graph/graph.v1.json"),"utf8")));
+/** The previous published version (044eb4d6) had no genomics or organ coverage; it stays the fixture for "nothing recorded" behaviour. */
+const g0=parseDomainBundle(JSON.parse(readFileSync(resolve("research/domain-graph/versions/044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1.json"),"utf8")));
 
 describe("departments are projections of one graph",()=>{
  test("coverage equals the real graph and the public department pages (one source of truth)",()=>{
   const c=departmentCoverage(g);
-  expect(c.departments.map(d=>[d.department,d.concepts])).toEqual([["immunology",130],["neuroscience",35],["microbiome",42],["metabolism",51],["genomics-multi-omics",0],["human-physiology",0]]);
+  expect(c.departments.map(d=>[d.department,d.concepts])).toEqual([["immunology",146],["neuroscience",35],["microbiome",42],["metabolism",51],["genomics-multi-omics",11],["human-physiology",18]]);
   for(const d of departments)expect(d.graphConcepts,d.slug).toBe(c.departments.find(x=>x.department===d.slug)!.concepts);
   expect(departments.every(d=>d.graphTags===DEPARTMENT_TAGS[d.slug as keyof typeof DEPARTMENT_TAGS])).toBe(true);
  });
@@ -26,7 +28,7 @@ describe("departments are projections of one graph",()=>{
   expect(c.unmappedTags).toEqual(expect.arrayContaining(["lifestyle","trials"]));
   expect(c.conceptsInNoDepartment).toBeGreaterThan(0);
   for(const d of ["genomics-multi-omics","human-physiology"]){
-   const p=projectDepartment(g,d);expect(p.status).toBe("no_graph_coverage");expect(p.nodes).toEqual([]);expect(p.edges).toEqual([]);expect(p.note).toContain("Nothing is shown rather than inferred");
+   const p=projectDepartment(g0,d);expect(p.status).toBe("no_graph_coverage");expect(p.nodes).toEqual([]);expect(p.edges).toEqual([]);expect(p.note).toContain("Nothing is shown rather than inferred");
   }
  });
  test("a department projection exposes candidate and gap edges separately and its cross-department edges",()=>{
@@ -72,7 +74,7 @@ describe("cross-department traversal keeps evidence and never implies causation"
   expect(()=>crossDepartmentPaths(g,a.n.id,"neuroscience",{maxHops:0})).toThrow("Invalid traversal bound");
  });
  test("missing coverage, unknown entities and absent paths are reported, not invented",()=>{
-  expect(crossDepartmentPaths(g,g.nodes[0]!.id,"genomics-multi-omics").status).toBe("target_has_no_graph_coverage");
+  expect(crossDepartmentPaths(g0,g0.nodes[0]!.id,"genomics-multi-omics").status).toBe("target_has_no_graph_coverage");
   expect(()=>crossDepartmentPaths(g,"concept:does-not-exist","immunology")).toThrow("Unknown entity");
   const none=crossDepartmentPaths(g,starts[0]!.id,"neuroscience",{maxHops:1,maxPaths:1});
   expect(["paths_found","no_path_within_bound"]).toContain(none.status);

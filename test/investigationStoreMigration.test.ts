@@ -18,6 +18,14 @@ test("034 creates exactly the ADR-012 and ADR-014 tables, each deny-by-default",
  for(const t of TABLES){expect(sql).toContain(`ALTER TABLE public.${t} ENABLE ROW LEVEL SECURITY`);expect(sql).toContain(`ALTER TABLE public.${t} FORCE ROW LEVEL SECURITY`)}
  expect(/GRANT\s+(SELECT|INSERT|UPDATE|DELETE|ALL)/i.test(sql)).toBe(false);
 });
+test("034 refuses to be applied by a superuser or BYPASSRLS role",()=>{
+ const guard=sql.indexOf("rolsuper OR rolbypassrls"),firstTable=sql.indexOf("CREATE TABLE");
+ expect(guard).toBeGreaterThan(0);expect(guard).toBeLessThan(firstTable);
+});
+test("sharing needs the owner to remain a member, and grantees must be eligible",()=>{
+ expect(sql).toContain("public.hsi_scope_member(i.owner_id,i.scope_id)");
+ expect(sql).toContain("it needs a verified sign-in and researcher access");
+});
 test("034 trusts no session or owner setting (ADR-013)",()=>{
  expect(/current_setting\(/i.test(sql)).toBe(false);expect(/set_config\(/i.test(sql)).toBe(false);
  expect(sql).toContain("neon_auth.session s JOIN neon_auth.\"user\"");
@@ -37,7 +45,7 @@ test("nothing in 034 can carry scientific approval",()=>{
 test("the disposable isolation suite exists and covers each guarantee",()=>{
  const s=readFileSync("scripts/verify-investigation-store-local.ts","utf8"),setup=readFileSync("db/verify/034_investigation_store_setup.sql","utf8");
  expect(setup).toContain("DISPOSABLE");expect(setup).toContain("Never run this against Neon");
- for(const k of ["forged token","expired session","impersonated session","unverified email","banned user","forged session setting","cannot read","self-grant","revoked membership loses access","inactive scope","append-only","immutable","scientific approval"])expect(s).toContain(k);
+ for(const k of ["owner leaves the scope","without research access","does not exist","forged token","expired session","impersonated session","unverified email","banned user","forged session setting","cannot read","self-grant","revoked membership loses access","inactive scope","append-only","immutable","scientific approval"])expect(s).toContain(k);
 });
 
 const fake=()=>{const calls:{q:string;p:unknown[]}[]=[];const sql:StoreSql={async unsafe(q,p){calls.push({q,p:p??[]});return [{r:q.includes("hsi_inv_list")?"[]":q.includes("hsi_inv_create")?"00000000-0000-4000-8000-000000000001":1}]}};return{sql,calls}};

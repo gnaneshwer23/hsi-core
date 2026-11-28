@@ -5,7 +5,7 @@ test('network canvas: filters narrow it, display controls and group legend work,
  await page.goto('/research/knowledge-graph?netScope=global');
  const network=page.getByRole('region',{name:'Research network explorer',exact:true});await expect(network).toBeVisible();
  await expect(network.locator('canvas')).toBeVisible();
- const header=network.locator('.rn-network>header');await expect(header).toContainText('of 157 concepts');
+ const header=network.locator('.rn-network>header');await expect(header).toContainText('of 179 concepts');
  await network.getByRole('button',{name:/^Filters/}).click();
  await network.getByRole('button',{name:/^disease \d+/}).click();
  await expect(page).toHaveURL(/netKind=disease/);

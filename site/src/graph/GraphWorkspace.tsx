@@ -18,6 +18,8 @@ import {QuestionsPanel} from "./Investigate";
 import {NexusDock} from "./NexusDock";
 import {MemoryPanel,CollaborationPanel} from "./Memory";
 import {openMemory,type MemoryClient} from "./memoryClient";
+import {loadDomainGraphVersionFile} from "../lib/claimGraphClient";
+import {diffVersions,type VersionDiff} from "../../../src/graphWorkspace";
 import type {MemoryInvestigation} from "../../../src/graphWorkspace";
 import {GraphTree} from "./GraphTree";
 import "./graph.css";
@@ -36,7 +38,8 @@ function useWebGL(){
 }
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
-const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","memory","gap","hypothesis","experimental","collaboration"];
+const OMICS_KINDS=new Set(["gene","protein","molecular signature"]),INTERVENTION_KINDS=new Set(["intervention","medication"]);
+const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","memory","gap","hypothesis","experimental","temporal","multiomics","translational","collaboration"];
 /* Deep tones that keep 3:1 contrast on the paper background. */
 const PALETTE=["#2F7F73","#A8701A","#3D6F8C","#6E5A9C","#5B6670","#2E8A63","#B0592A","#5D7385"];
 
@@ -90,6 +93,15 @@ function Loaded({model}:{model:GraphModel}){
  useEffect(()=>{let live=true;openMemory().then(c=>{if(live)setMemClient(c)});return()=>{live=false}},[]);
  useEffect(()=>{if(!memClient)return;let live=true;memClient.list().then(l=>{if(!live)return;setMemItems(l);setMemActive(a=>a?l.find(x=>x.id===a.id)??null:null)}).catch(()=>{if(live)setMemItems([])});return()=>{live=false}},[memClient,memTick]);
  const memChanged=useCallback(()=>setMemTick(t=>t+1),[]);
+ /* Temporal: compare with the parent version only when the mode is opened; both are verified by digest. */
+ const [diff,setDiff]=useState<VersionDiff|null|"failed"|"none">(null);
+ useEffect(()=>{
+  if(mode!=="temporal"||diff!==null)return;
+  const parent=model.bundle.parentVersion;if(!parent){setDiff("none");return}
+  const c=new AbortController();
+  loadDomainGraphVersionFile(parent,c.signal).then(p=>setDiff(diffVersions(p,model.bundle))).catch(()=>{if(!c.signal.aborted)setDiff("failed")});
+  return()=>c.abort();
+ },[mode,diff,model]);
 
  const m=modeById[mode];
  const scope=SCOPES.find(s=>s.id===scopeId)!;
@@ -112,10 +124,15 @@ function Loaded({model}:{model:GraphModel}){
   /* A saved investigation shows its own relationships and those touching its concepts, within the current scope. */
   if((mode==="memory"||mode==="collaboration")&&memActive){const ns=new Set(memActive.entities),es=new Set(memActive.edgeIds);const r=expanded.assertions.filter(a=>es.has(a.id)||ns.has(a.subject.id)||ns.has(a.object.id));return r.length?r:expanded.assertions}
   if(m.select==="comparable_pairs"){return expanded.assertions.filter(a=>readingOf.has(a.id))}
+  /* Multi-omics: relationships touching a concept in the genomics domain, or a gene or molecular signature. */
+  if(m.select==="version_changes"){if(typeof diff!=="object"||!diff)return [];const ids=new Set([...diff.added,...diff.changed]);return expanded.assertions.filter(a=>ids.has(a.id))}
+  if(m.select==="omics_layers")return expanded.assertions.filter(a=>a.domains.includes("genomics")||OMICS_KINDS.has(a.subject.kind)||OMICS_KINDS.has(a.object.kind));
+  /* Translational: relationships whose subject is an intervention or medication, or that state an intervention. */
+  if(m.select==="interventions")return expanded.assertions.filter(a=>INTERVENTION_KINDS.has(a.subject.kind)||a.context.intervention.state==="stated");
   if(m.select==="question_paths")return questionPathAssertions(model,expanded.assertions);
   if(m.select==="gap_records"){const ids=new Set(scopeGaps.flatMap(g=>[g.subjectId,g.objectId]));return expanded.assertions.filter(a=>ids.has(a.subject.id)||ids.has(a.object.id))}
   return expanded.assertions;
- },[m,mode,memActive,expanded,scopeGaps,readingOf]);
+ },[m,mode,memActive,diff,expanded,scopeGaps,readingOf]);
  const visible=useMemo(()=>applyFilters(base,filters),[base,filters]);
  const fac=useMemo(()=>facets(base),[base]);
 
@@ -253,6 +270,14 @@ function Loaded({model}:{model:GraphModel}){
       </>:<p className="gw-empty" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</p>}
 
      <section className="gw-bottom" aria-label="Intelligence panels">
+      {mode==="temporal"&&<section className="gw-card gw-wide gw-mem" aria-labelledby="gw-temporal"><h2 id="gw-temporal">Changes since the previous version</h2>
+       {diff===null?<p className="gw-hint" role="status">Verifying the previous version…</p>
+       :diff==="none"?<p className="gw-hint" role="status">This is the first published version, so there is nothing to compare.</p>
+       :diff==="failed"?<p className="gw-hint" role="status">The previous version could not be loaded or did not verify. No comparison is shown.</p>
+       :<><p className="gw-hint" role="status">From version {diff.from.slice(0,8)} to {diff.to.slice(0,8)}: {diff.added.length} relationship{diff.added.length===1?"":"s"} added, {diff.changed.length} changed, {diff.removed.length} removed; {diff.addedSources} source{diff.addedSources===1?"":"s"} added. Added and changed relationships are drawn; everything stays a candidate.</p>
+        {diff.removed.length>0&&<><h3>Removed</h3><ul className="gw-list">{diff.removed.map(r=><li key={r.id}><span>{r.id}: {r.assertion}</span></li>)}</ul></>}
+        <p className="gw-hint">A change in the record is not a change in the science. Relationships carry no validity interval yet.</p></>}
+      </section>}
       {mode==="memory"&&<MemoryPanel model={model} client={memClient} items={memItems} activeId={memActive?.id??null} onShow={i=>{setMemActive(i);if(i)setScopeId("all")}} onChanged={memChanged}/>}
       {mode==="collaboration"&&<CollaborationPanel client={memClient} items={memItems} onShow={i=>{setMemActive(i);setScopeId("all")}} onChanged={memChanged}/>}
       {m.select==="question_paths"&&<QuestionsPanel model={model} questions={questionViews} experimental={mode==="experimental"} activePath={path} onTrace={p=>{setPath(p);if(p){setFrom(p.nodeIds[0]!);setTo(p.nodeIds.at(-1)!);if(view==="table")setView("graph")}}} onSelectConcept={selectNode} onSelectGap={(gid,sid)=>{setGapId(gid);selectNode(sid)}}/>}

@@ -25,6 +25,15 @@
 --     public.hsi_membership_grant(text,text,text,text), public.hsi_membership_revoke(text,bigint),
 --     public.hsi_membership_bootstrap(text,text,text);
 
+-- 0. Refuse the wrong owner. Run as hsi_graph_function_owner (db/roles/hsi_graph_roles.sql). A superuser or BYPASSRLS
+-- owner would make every SECURITY DEFINER procedure bypass row-level security.
+DO $g$
+BEGIN
+ IF EXISTS(SELECT 1 FROM pg_roles WHERE rolname=current_user AND (rolsuper OR rolbypassrls)) THEN
+  RAISE EXCEPTION '034 must not be applied by a superuser or BYPASSRLS role (current: %). Use hsi_graph_function_owner.',current_user USING ERRCODE='42501';
+ END IF;
+END $g$;
+
 -- 1. Scope registry (ADR-014). A programme is a row, not a literal in SQL or TypeScript.
 CREATE TABLE IF NOT EXISTS public.hsi_scopes(
  id text PRIMARY KEY CHECK(id ~ '^[a-z][a-z0-9-]{1,47}$'),
@@ -57,7 +66,9 @@ CREATE TABLE IF NOT EXISTS public.hsi_investigations(
  owner_id text NOT NULL CHECK(length(trim(owner_id))>0),
  scope_id text REFERENCES public.hsi_scopes(id),
  question text NOT NULL CHECK(length(trim(question)) BETWEEN 5 AND 2000),
- entities jsonb NOT NULL DEFAULT '[]' CHECK(jsonb_typeof(entities)='array' AND jsonb_array_length(entities)<=200),
+ entities jsonb NOT NULL DEFAULT '[]' CHECK(jsonb_typeof(entities)='array' AND jsonb_array_length(entities)<=200
+  AND NOT jsonb_path_exists(entities,'lax $[*] ? (@.type() != "string")')
+  AND NOT jsonb_path_exists(entities,'lax $[*] ? (@ like_regex "^.{201}" flag "s")')),
  graph_version text NOT NULL CHECK(graph_version ~ '^[a-f0-9]{64}$'),
  status text NOT NULL DEFAULT 'active' CHECK(status IN ('active','archived')),
  shared boolean NOT NULL DEFAULT false,
@@ -185,11 +196,12 @@ LANGUAGE sql STABLE SECURITY DEFINER SET search_path = pg_catalog, public AS $$
    AND (p_role IS NULL OR m.role=p_role));
 $$;
 
--- Visible: the owner, or an active member of the scope an investigation is shared into.
+-- Visible: the owner, or an active member of the scope an investigation is shared into, while the owner is still a
+-- member there. Removing the owner from a scope stops their sharing at once.
 CREATE OR REPLACE FUNCTION public.hsi_inv_visible(p_principal text,p_id uuid) RETURNS text
 LANGUAGE sql STABLE SECURITY DEFINER SET search_path = pg_catalog, public AS $$
  SELECT CASE WHEN i.owner_id=p_principal THEN 'owner'
-  WHEN i.shared AND public.hsi_scope_member(p_principal,i.scope_id) THEN 'scope' END
+  WHEN i.shared AND public.hsi_scope_member(p_principal,i.scope_id) AND public.hsi_scope_member(i.owner_id,i.scope_id) THEN 'scope' END
  FROM public.hsi_investigations i WHERE i.id=p_id;
 $$;
 
@@ -284,7 +296,9 @@ BEGIN
  RETURN COALESCE((SELECT jsonb_agg(jsonb_build_object('id',i.id,'question',i.question,'scope',i.scope_id,'shared',i.shared,
    'status',i.status,'graphVersion',i.graph_version,'createdAt',i.created_at,'updatedAt',i.updated_at,
    'access',public.hsi_inv_visible(v_principal,i.id),'owner',i.owner_id=v_principal) ORDER BY i.updated_at DESC)
-  FROM public.hsi_investigations i WHERE public.hsi_inv_visible(v_principal,i.id) IS NOT NULL),'[]'::jsonb);
+  FROM public.hsi_investigations i
+  WHERE (i.owner_id=v_principal OR (i.shared AND i.scope_id IN (SELECT m.scope_id FROM public.hsi_memberships m WHERE m.principal_id=v_principal AND m.revoked_at IS NULL)))
+   AND public.hsi_inv_visible(v_principal,i.id) IS NOT NULL),'[]'::jsonb);
 END $$;
 
 CREATE OR REPLACE FUNCTION public.hsi_inv_get(p_token text,p_id uuid) RETURNS jsonb
@@ -320,7 +334,7 @@ CREATE OR REPLACE FUNCTION public.hsi_scope_create(p_token text,p_id text,p_name
 LANGUAGE plpgsql SECURITY DEFINER SET search_path = pg_catalog, public AS $$
 DECLARE v_principal text:=public.hsi_session_principal(p_token);
 BEGIN
- IF NOT EXISTS(SELECT 1 FROM public.hsi_research_access a WHERE a.principal_id=v_principal AND a.access_role='research_admin' AND a.revoked_at IS NULL) THEN
+ IF NOT EXISTS(SELECT 1 FROM public.hsi_research_access a WHERE a.principal_id=v_principal AND a.access_role='research_admin' AND a.revoked_at IS NULL AND a.granted_at<=now()) THEN
   RAISE EXCEPTION 'Research admin access required' USING ERRCODE='42501';
  END IF;
  INSERT INTO public.hsi_scopes(id,name,created_by) VALUES(p_id,p_name,v_principal);
@@ -332,6 +346,12 @@ DECLARE v_principal text:=public.hsi_session_principal(p_token); v_id bigint;
 BEGIN
  IF p_principal=v_principal THEN RAISE EXCEPTION 'Self-grant is not permitted' USING ERRCODE='42501'; END IF;
  IF NOT public.hsi_scope_member(v_principal,p_scope,'admin') THEN RAISE EXCEPTION 'Scope admin required' USING ERRCODE='42501'; END IF;
+ -- The grantee must be a real, verified, unbanned account with research access; a typo cannot create a membership.
+ IF NOT EXISTS(SELECT 1 FROM neon_auth."user" u JOIN public.hsi_research_access a ON a.principal_id=u.id::text
+   WHERE u.id::text=p_principal AND u."emailVerified"=true AND COALESCE(u.banned,false)=false AND a.revoked_at IS NULL
+    AND a.access_role IN ('researcher','research_admin') AND a.granted_at<=now()) THEN
+  RAISE EXCEPTION 'That account cannot be added: it needs a verified sign-in and researcher access' USING ERRCODE='42501';
+ END IF;
  INSERT INTO public.hsi_memberships(principal_id,scope_id,role,granted_by) VALUES(p_principal,p_scope,p_role,v_principal) RETURNING id INTO v_id;
  RETURN v_id;
 END $$;

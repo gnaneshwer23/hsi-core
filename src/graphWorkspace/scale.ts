@@ -5,7 +5,7 @@
  */
 import type {GraphAssertionView} from "./assertionView";
 
-export const SCALE_MAP_VERSION="1.0.0" as const;
+export const SCALE_MAP_VERSION="1.1.0" as const;
 
 /** Biological levels, from the whole organism down to molecules. */
 export type BioLevel="organism"|"tissue"|"cell"|"molecule";
@@ -29,7 +29,7 @@ export const KIND_TO_SCALE:Readonly<Record<string,ScaleBand>>={
  disease:"organism",phenotype:"organism",outcome:"organism",
  organ:"tissue",tissue:"tissue",
  "cell state":"cell","cell type":"cell","microbial community":"cell",
- metabolite:"molecule","metabolite class":"molecule","metabolite mixture":"molecule",cytokine:"molecule",pathway:"molecule",gene:"molecule",protein:"molecule",
+ metabolite:"molecule","metabolite class":"molecule","metabolite mixture":"molecule",cytokine:"molecule",pathway:"molecule",gene:"molecule",protein:"molecule","molecular signature":"molecule",
  intervention:"not_biological",medication:"not_biological","research process":"not_biological",
  /* The generic type says nothing about level. */
  "biological concept":"not_recorded",

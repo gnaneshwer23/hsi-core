@@ -15,10 +15,10 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await open(page);
   const rail=page.getByRole("group",{name:"Choose a department"});
   await expect(rail.getByRole("button")).toHaveCount(6);
-  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("130 candidate concepts");
-  await expect(rail.getByRole("button",{name:/Genomics/})).toContainText("No graph coverage");
+  await expect(rail.getByRole("button",{name:/Immunology/})).toContainText("146 candidate concepts");
+  await expect(rail.getByRole("button",{name:/Genomics/})).toContainText("11 candidate concepts");
+  await expect(rail.getByRole("button",{name:/Human Physiology/})).toContainText("18 candidate concepts");
   await rail.getByRole("button",{name:/Human Physiology/}).click();
-  await expect(page.getByText("Nothing is shown rather than inferred")).toBeVisible();
   await expect(page.getByRole("note")).toContainText("none is validated knowledge");
  });
 
@@ -37,10 +37,10 @@ test.describe("Departments tab on the knowledge graph",()=>{
   await expect(page.getByRole("article",{name:"Path 1"})).toContainText("Candidate evidence at every hop");
  });
 
- test("a target department with no coverage reports a gap, not an answer",async({page})=>{
+ test("a department the concept cannot reach within the bound says so, not that no connection exists",async({page})=>{
   await open(page);await pick(page,"Butyrate");
   await page.getByLabel("Into department").selectOption({label:"Genomics & Multi-omics"});
-  await expect(page.locator(".dl-result")).toContainText("coverage gap, not evidence of absence");
+  await expect(page.locator(".dl-result")).toContainText("not proof that no connection exists");
   await expect(page.locator(".dl-path")).toHaveCount(0);
  });
 

@@ -22,7 +22,7 @@ export function LiveGraphHero(){
  return (
   <section className="gt-shell" aria-label="Published knowledge graph">
    {head}
-   <p className="gt-sum">Live from the published snapshot (version {model.version.slice(0,7)}). Open a domain, then a group, then a concept to read its relationships and the study behind each.</p>
+   <p className="gt-sum">Live from the published snapshot (version {model.version.slice(0,7)}). Open a domain, a group, then a concept to read each relationship and its study.</p>
    <GraphTree model={model} level={3}/>
   </section>
  );

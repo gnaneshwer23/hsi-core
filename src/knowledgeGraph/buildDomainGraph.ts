@@ -19,6 +19,10 @@ export function repositoryModel(claimId:string,context:string):DomainModel{
  return human?'human_in_vivo':'unspecified';
 }
 /** No evidence extraction is performed. All statements are repository or explicitly annotated candidates. */
+/** Expansion batches merge in order: N1 owns the first batch of 12 sources; D-02 adds PubMed-matched candidates. */
+export function mergeExpansions(a:any,b:any){
+ return {...a,sources:[...a.sources,...b.sources],claims:[...a.claims,...b.claims],gaps:[...a.gaps,...b.gaps],questions:[...a.questions,...(b.questions??[])],entities:[...(a.entities??[]),...(b.entities??[])]};
+}
 export function buildDomainGraph(input:{pack:any;legacy:ClaimGraph;expansion:any;patients:any[];labs:any[];medications:any[];inputs:{path:string;sha256:string}[];parentVersion?:string|null}):DomainBundle{
  const {pack,legacy,expansion}=input;const nodes=new Map<string,DomainNode>(),sources=new Map<string,DomainSource>(),edges:DomainEdge[]=[];
  function node(name:string,domains:string[]){const label=canonical(name);let n=nodes.get(label);if(!n){n={id:'concept:'+label.toLowerCase().replace(/[^a-z0-9]+/g,'-').slice(0,80)+'-'+hash(label).slice(0,7),name:label,kind:kinds[label]??'biological concept',aliases:[],domains:[]};nodes.set(label,n)}n.domains=[...new Set([...n.domains,...domains])].sort();n.aliases=[...new Set([...n.aliases,...(name!==label?[name]:[]),...Object.keys(aliasNames).filter(a=>aliasNames[a]===label)])].sort();return n.id}
@@ -31,7 +35,7 @@ export function buildDomainGraph(input:{pack:any;legacy:ClaimGraph;expansion:any
  }
  for(const s of legacy.corpus.sources){const prior=sources.get(s.id);sources.set(s.id,{id:s.id,title:s.title,url:s.url,pmid:s.pmid,doi:s.doi,identityStatus:'repository_locator_not_reverified',rights:s.rights.status==='import_receipt_only'?'import_receipt_only':'unverified',retrievedAt:s.retrievedAt,passages:legacy.corpus.passages.filter(p=>p.sourceId===s.id).map(p=>({locator:p.locator,text:p.text}))});if(prior&&prior.doi!==s.doi)throw Error('Conflicting source identity')}
  for(const e of legacy.edges){const c=legacy.corpus.claims.find(c=>c.id===e.claimId)!,a=legacy.entities.find(n=>n.id===e.subjectId)!,b=legacy.entities.find(n=>n.id===e.objectId)!;edges.push({id:e.id,subjectId:node(a.name,a.domains),objectId:node(b.name,b.domains),predicate:e.predicate,kind:'source_candidate',sourceId:c.sourceId,assertion:c.assertion,domains:[...new Set([...a.domains,...b.domains])],conditions:[c.disease==='rheumatoid_arthritis'?'Rheumatoid arthritis':'Systemic sclerosis'],model:repositoryModel(c.id,c.context.model),design:c.context.model,tissue:c.context.tissue,population:c.context.population,assay:c.context.assay,timepoint:c.context.timepoint,intervention:c.context.intervention,outcome:c.context.outcome,limitations:c.context.limitations,contextStatus:'repository_annotation_not_reverified',negated:e.negated,scopeWarnings:e.relationshipType==='contextual'?['Study-context link, not a biological mechanism.']:[],reviewStatus:'unreviewed',confidence:'not_calibrated',scientificClaimAllowed:false})}
- for(const s of expansion.sources){sources.set(s.id,{id:s.id,title:s.title,url:s.url,pmid:null,doi:s.doi,identityStatus:s.identityStatus,rights:s.rights,retrievedAt:null,passages:[{locator:'Bibliographic candidate; exact passage not retrieved',text:null}]})}
+ for(const s of expansion.sources){sources.set(s.id,{id:s.id,title:s.title,url:s.url,pmid:s.pmid??null,doi:s.doi,identityStatus:s.identityStatus,rights:s.rights,retrievedAt:null,passages:[{locator:'Bibliographic candidate; exact passage not retrieved',text:null}]})}
  // Candidate nodes for the D-01 slice that need a first-class concept before edges are curated.
  // Entities alone add no mechanism claim; they stay unreviewed and not graph-promotable.
  for(const e of expansion.entities??[]){

@@ -31,7 +31,7 @@ describe("passages are shown only where rights allow",()=>{
    });
    expect(v.correction).toBe("not_checked");
   }
-  expect(shown).toBe(8);expect(total).toBe(25);
+  expect(shown).toBe(8);expect(total).toBe(39);
  });
 });
 
@@ -65,7 +65,7 @@ describe("candidate identifiers",()=>{
   for(const id of model.nodes.keys()){const s=conceptIdentifiers(mappings,id).state;states.set(s,(states.get(s)??0)+1)}
   expect(states.get("candidate")).toBe(26);
   expect(states.get("unmapped")).toBe(127);
-  expect(states.get("not_in_mapping_run")).toBe(4);
+  expect(states.get("not_in_mapping_run")).toBe(26); // 4 earlier, plus the 22 D-02 concepts the mapping run has not seen yet
  });
 });
 

@@ -13,7 +13,7 @@ test('selecting a concept shows entity intelligence with gaps from the gap index
 
  const network=page.getByRole('region',{name:'Research network explorer',exact:true});
  const gaps=network.getByRole('region',{name:'Research gaps'});
- await expect(gaps.getByRole('heading',{name:/Research gaps \(9\)/})).toBeVisible();
+ await expect(gaps.getByRole('heading',{name:/Research gaps \(12\)/})).toBeVisible();
  await gaps.getByRole('button',{name:/Does a reproducible change in human butyrate/}).click();
  await expect(gaps.getByRole('article')).toContainText('Why it ranks here');
  await expect(gaps.getByRole('article')).toContainText('judged on those');
@@ -28,7 +28,7 @@ test('multi-select: add concepts, route highlight, expand, brief export, keyboar
  await expect(tray.getByRole('heading',{name:'Selection (0)'})).toBeVisible();
  await tray.getByRole('button',{name:/^Add Butyrate/}).click();
  await expect(tray.getByRole('heading',{name:'Selection (1)'})).toBeVisible();
- await network.getByRole('button',{name:'Select Systemic sclerosis'}).dispatchEvent('click');
+ await network.getByRole('button',{name:'Select Systemic sclerosis',exact:true}).dispatchEvent('click');
  await tray.getByRole('button',{name:/^Add Systemic sclerosis/}).click();
  await expect(tray.getByRole('heading',{name:'Selection (2)'})).toBeVisible();
  await expect(tray.getByRole('status').filter({hasText:/Route of|No route/})).toBeVisible();

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-concept-typing-1",
-  "mappedAgainst": "044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1",
+  "mappedAgainst": "ba08b28469bac33345a58fd3e36ea40fa620fd51461ededca7035d22ac6cd31e",
   "rulesVersion": "rules-1",
   "proposals": [
     {
@@ -1381,5 +1381,5 @@
       "status": "proposed"
     }
   ],
-  "digest": "4e5cb9d07ef8f0c16d0fea973b19e0a460f0ba8e0eea2c086e46dbbcb73e68ce"
+  "digest": "d0b93f8defe95bad9f37a0e1756b10e1878acf5e88b9f6511948f6f35f314f42"
 }

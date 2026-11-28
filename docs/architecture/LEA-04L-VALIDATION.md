@@ -42,11 +42,11 @@ One gate is still open. The account store (migration 034) is designed and tested
 | Experimental | Partial | Yes | The designs are candidates, not reviewed protocols |
 | Scientific Memory | Partial | Yes | Investigations are kept in this browser until migration 034 is applied |
 | Collaboration | Partial | Yes, as a status panel | Sharing needs the account store and a signed-in member of a scope |
-| Temporal | Partial | No, listed as "next phase" | Relationships carry no version history or validity interval in the data |
-| Translational | Minimal data | No, listed as "next phase" | Only four trial or intervention concepts exist |
-| Multi-omics | No data yet | No | The published graph has no genomics or multi-omics coverage |
+| Temporal | Partial | Yes | Shows what changed since the previous verified version; relationships carry no validity interval |
+| Translational | Partial | Yes | Candidate SSc trial results (D-02), negative results included; no trial-registry linkage; not treatment advice |
+| Multi-omics | Partial | Yes | Genetic loci and tissue transcriptomic cell states only (D-02); no proteomic, epigenomic or integrated layers |
 
-The last three are limited by the data, not by the code. Building a view for any of them now would mean drawing something the data does not support.
+Update, 28 November 2026: the D-02 candidate batch (`docs/research/D-02-CANDIDATE-BATCH.md`) gave Multi-omics, Translational and Organ & Tissue their first data, so all twelve modes now open. Each still states what it lacks.
 
 ## Boundaries checked
 
@@ -82,4 +82,4 @@ HSI_LOCAL_PG_SOCKET_DIR=/tmp HSI_LOCAL_PG_DB=hsi_store_it bun scripts/verify-inv
 
 1. **Track B2 database review of migration 034.** Owner: an independent reviewer. After it, follow `ADR-012-BACKFILL-PLAN.md`.
 2. **Switch on `HSI_INVESTIGATION_STORE_ENABLED` on staging** after 034 is applied there. Owner: the project owner. Production follows a separate decision.
-3. **Temporal, Translational and Multi-omics** need data first. Owner: the curation programme.
+3. **D-02 candidates** need retrieval, rights and independent review like every other candidate. Owner: the curation programme.

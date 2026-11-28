@@ -1,13 +1,13 @@
 import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {createHash} from 'node:crypto';
-import {buildDomainGraph} from '../src/knowledgeGraph/buildDomainGraph';
+import {buildDomainGraph,mergeExpansions} from '../src/knowledgeGraph/buildDomainGraph';
 import {verifyDomainBundle} from '../src/knowledgeGraph/domainGraph';
 const root=resolve(import.meta.dir,'..'),check=process.argv.includes('--check'),digest=async(s:string)=>createHash('sha256').update(s).digest('hex');
-const paths=['site/public/discovery/hsi-pilot-evidence-pack.json','research/claim-graph/graph.v1.json','research/domain-graph/expansion.v1.json','research/validation/v0.1/input/hsi_synthetic_patients.json','research/validation/v0.1/input/hsi_synthetic_lab_results.json','research/validation/v0.1/input/hsi_synthetic_medications.json'];
+const paths=['site/public/discovery/hsi-pilot-evidence-pack.json','research/claim-graph/graph.v1.json','research/domain-graph/expansion.v1.json','research/validation/v0.1/input/hsi_synthetic_patients.json','research/validation/v0.1/input/hsi_synthetic_lab_results.json','research/validation/v0.1/input/hsi_synthetic_medications.json','research/domain-graph/expansion-d02.v1.json'];
 const raw=paths.map(p=>readFileSync(resolve(root,p),'utf8')),values=raw.map(x=>JSON.parse(x));
 const path=resolve(root,'research/domain-graph/graph.v1.json'),previous=existsSync(path)?await verifyDomainBundle(JSON.parse(readFileSync(path,'utf8')),digest):null;
-const args={pack:values[0],legacy:values[1],expansion:values[2],patients:values[3],labs:values[4],medications:values[5],inputs:paths.map((path,i)=>({path,sha256:createHash('sha256').update(raw[i]!).digest('hex')}))};
+const args={pack:values[0],legacy:values[1],expansion:mergeExpansions(values[2],values[6]),patients:values[3],labs:values[4],medications:values[5],inputs:paths.map((path,i)=>({path,sha256:createHash('sha256').update(raw[i]!).digest('hex')}))};
 let graph=buildDomainGraph({...args,parentVersion:previous?.parentVersion??null});if(previous&&previous.version!==graph.version)graph=buildDomainGraph({...args,parentVersion:previous.version});await verifyDomainBundle(graph,digest);
 for(const directory of ['research/domain-graph','site/public/research/domain-graph']){
  const dir=resolve(root,directory),content=JSON.stringify(graph,null,2)+'\n';if(!check)mkdirSync(resolve(dir,'versions'),{recursive:true});

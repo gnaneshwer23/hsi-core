@@ -14,7 +14,7 @@ export const departments:readonly Department[]=Object.freeze([
   explore:["Cell states","Signalling","Inflammation","Immune regulation","Immunopathology"],
   questions:["Which cytokine signals recur across autoimmune conditions, and in which tissues do they act differently?","When two studies disagree about a T-cell subset, do species, tissue or assay explain the difference?","What distinguishes a protective inflammatory response from a pathological one in a given tissue?"],
   connections:[{slug:"neuroscience",why:"Immune signals reach glia and shape neuroinflammation."},{slug:"microbiome",why:"Microbial metabolites tune immune cells at barrier surfaces."},{slug:"metabolism",why:"Metabolic state changes how immune cells behave."}],
-  graphTags:DEPARTMENT_TAGS["immunology"],graphConcepts:130},
+  graphTags:DEPARTMENT_TAGS["immunology"],graphConcepts:146},
  {slug:"neuroscience",name:"Neuroscience",tagline:"Neural systems and immune interactions.",
   summary:"Explore neurons, glial cells, neuroinflammation, neural circuits, neurodegeneration and the relationships between the nervous, immune and metabolic systems.",
   explore:["Neural circuits","Glia","Neuroimmune signalling","Brain–body interactions"],
@@ -38,13 +38,13 @@ export const departments:readonly Department[]=Object.freeze([
   explore:["Variants","Expression","Proteomics","Single-cell","Multi-omics integration"],
   questions:["Which variants, expression changes and proteomic findings converge on the same pathway, and in which cell types?","When transcript and protein measurements disagree, what do the methods and tissues suggest?","How should single-cell evidence be compared with bulk measurements for the same question?"],
   connections:[{slug:"immunology",why:"Single-cell data resolve immune cell states."},{slug:"metabolism",why:"Metabolomics and genetics test pathway-level claims."},{slug:"human-physiology",why:"Tissue context decides what a molecular signal means."}],
-  graphTags:DEPARTMENT_TAGS["genomics-multi-omics"],graphConcepts:0},
+  graphTags:DEPARTMENT_TAGS["genomics-multi-omics"],graphConcepts:11},
  {slug:"human-physiology",name:"Human Physiology",tagline:"Mechanisms across tissues and systems.",
   summary:"Understand how molecular and cellular events relate to organ function, tissue responses, homeostasis and the interactions between physiological systems.",
   explore:["Organs","Tissues","Homeostasis","System interactions"],
   questions:["How do cellular findings translate into organ-level function, and where is that link only hypothesised?","Which tissue-specific differences change how a mechanism should be interpreted?","How do the immune, endocrine and nervous systems interact in homeostasis and disease?"],
   connections:[{slug:"neuroscience",why:"Neural control coordinates organ function."},{slug:"genomics-multi-omics",why:"Molecular profiles are only interpretable in tissue context."},{slug:"immunology",why:"Immune activity is tissue-specific and shapes organ responses."}],
-  graphTags:DEPARTMENT_TAGS["human-physiology"],graphConcepts:0},
+  graphTags:DEPARTMENT_TAGS["human-physiology"],graphConcepts:18},
 ]);
 export const departmentBySlug=(slug:string)=>departments.find(d=>d.slug===slug);
 export const departmentPath=(slug:string)=>"/departments/"+slug;

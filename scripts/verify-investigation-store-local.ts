@@ -73,6 +73,10 @@ try{
  await rejects("B cannot grant B a membership",()=>b.grant(B_ID,"ssc","researcher"),"self-grant");
  await rejects("B, who is not an admin, cannot grant anyone",()=>b.grant("00000000-0000-4000-8000-00000000000f","ssc","researcher"),"scope admin required");
  await rejects("A, an admin, cannot grant A another role",()=>a.grant("00000000-0000-4000-8000-00000000000a","ssc","reviewer"),"self-grant");
+ await rejects("a membership cannot be granted to an account without research access",()=>a.grant("00000000-0000-4000-8000-00000000000c","ssc","researcher"),"cannot be added");
+ await rejects("a membership cannot be granted to an account that does not exist",()=>a.grant("00000000-0000-4000-8000-000000000999","ssc","researcher"),"cannot be added");
+ await rejects("a membership cannot be granted to an unverified account",()=>a.grant("00000000-0000-4000-8000-00000000000d","ssc","researcher"),"cannot be added");
+ await rejects("entities must be short strings",()=>runtime.unsafe("SELECT public.hsi_inv_create($1,NULL,'A fair question here','[1,2]'::jsonb,$2)",[T.A,GV]),"check constraint");
  await a.share(id,"ssc",true);
  ok("sharing into a scope is not visible to non-members",(await b.get(id))===null);
  const mid=await a.grant(B_ID,"ssc","researcher");
@@ -94,7 +98,14 @@ try{
  ok("an inactive scope grants nothing",(await b.get(id))===null);
  await owner.unsafe("UPDATE public.hsi_scopes SET active=true WHERE id='ssc'");
  ok("membership returns with the scope",(await b.get(id))?.access==="scope");
- await a.revoke(mid2);
+ // The owner leaves the scope: their sharing stops for everyone at once. F (an admin) is made admin by A first.
+ await a.grant("00000000-0000-4000-8000-00000000000f","ssc","admin");
+ const aAdmin=(await a.scopes()).memberships.find(x=>x.scope==="ssc"&&x.role==="admin")!.id;
+ await f.revoke(aAdmin);
+ ok("when the owner leaves the scope, the shared investigation is no longer visible there",(await b.get(id))===null&&(await b.list()).length===0);
+ ok("the owner still sees their own investigation",(await a.get(id))?.access==="owner");
+ await f.revoke(mid2);
+ await rejects("an owner who left the scope cannot share into it again",()=>a.share(id,"ssc",true),"not a member");
  await a.share(id,"ssc",false);
  ok("unsharing hides it from the scope and is logged",(await a.get(id))!.events.some(e=>e.kind==="unshared"));
  await a.setStatus(id,"archived");

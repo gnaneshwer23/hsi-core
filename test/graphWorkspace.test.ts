@@ -7,6 +7,8 @@ import {
 
 const bundle=parseDomainBundle(JSON.parse(readFileSync("research/domain-graph/graph.v1.json","utf8")));
 const model=buildGraphModel(bundle);
+/** The previous published version (044eb4d6) had no genomics or organ coverage; it stays the fixture for "nothing recorded" behaviour. */
+const model0=buildGraphModel(parseDomainBundle(JSON.parse(readFileSync("research/domain-graph/versions/044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1.json","utf8"))));
 const candidates=bundle.edges.filter(e=>e.kind==="source_candidate");
 
 describe("graph workspace model over the published graph",()=>{
@@ -73,7 +75,8 @@ describe("domain mapping and coverage",()=>{
  it("reports coverage from counts: genomics has none, and unmapped tags are listed",()=>{
   const cov=domainCoverage(model,HSI_DOMAINS.map(d=>d.key));
   expect(cov).toHaveLength(6);
-  expect(cov.find(c=>c.domain==="genomics")).toMatchObject({relationships:0,level:"none"});
+  expect(domainCoverage(model0,HSI_DOMAINS.map(d=>d.key)).find(c=>c.domain==="genomics")).toMatchObject({relationships:0,level:"none"});
+  expect(cov.find(c=>c.domain==="genomics")).toMatchObject({relationships:14,level:"partial"});
   expect(cov.find(c=>c.domain==="immunology")!.relationships).toBeGreaterThan(cov.find(c=>c.domain==="organ")!.relationships);
   const tags=unmappedTags(model).map(t=>t.tag);
   expect(tags).toContain("lifestyle");expect(tags).toContain("trials");
@@ -85,7 +88,7 @@ describe("modes",()=>{
  it("defines the twelve modes over one engine with honest readiness",()=>{
   expect(MODES).toHaveLength(12);
   expect(new Set(MODES.map(m=>m.id)).size).toBe(12);
-  expect(modeById.multiomics.readiness).toBe("none");expect(isOpenable(modeById.multiomics)).toBe(false);
+  expect(modeById.multiomics.readiness).toBe("partial");expect(modeById.multiomics.readinessNote).toContain("No proteomic");expect(modeById.translational.readinessNote).toContain("Not treatment advice");
   expect(modeById.collaboration.readiness).toBe("partial");expect(modeById.collaboration.needs).toContain("034");expect(modeById.memory.readinessNote).toContain("this browser");
   for(const m of MODES.filter(m=>!isOpenable(m)||m.readiness!=="ready"))expect(m.needs||m.readinessNote).toBeTruthy();
   expect(isOpenable(modeById.contradiction)).toBe(true);

@@ -15,8 +15,8 @@ export const DEPARTMENT_TAGS:Readonly<Record<DepartmentSlug,readonly string[]>>=
  neuroscience:["brain","neuro","neuroimmune","gut_brain"],
  microbiome:["gut","gut_brain"],
  metabolism:["metabolic","liver"],
- "genomics-multi-omics":[],
- "human-physiology":[],
+ "genomics-multi-omics":["genomic"],
+ "human-physiology":["skin","lung","kidney","joint"],
 });
 export const isDepartmentSlug=(v:unknown):v is DepartmentSlug=>typeof v==="string"&&(DEPARTMENT_SLUGS as readonly string[]).includes(v);
 const assertSlug=(slug:unknown):DepartmentSlug=>{if(!isDepartmentSlug(slug))throw Error("Unknown department");return slug};
