@@ -32,6 +32,7 @@ INSERT INTO neon_auth.session SELECT 'synthetic-token-'||id,id,now()+interval '1
 \ir memory-revalidation-completion.candidate.sql
 \ir memory-revalidation-recovery.candidate.sql
 \ir memory-revalidation-identity.candidate.sql
+\ir memory-revalidation-worker-access.candidate.sql
 CREATE ROLE sme_fixture_owner NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_runtime NOLOGIN NOSUPERUSER NOBYPASSRLS;
 CREATE ROLE sme_fixture_indexer NOLOGIN NOSUPERUSER NOBYPASSRLS;
@@ -77,6 +78,7 @@ CREATE POLICY fixture_owner_revalidation ON hsi_memory.revalidation_jobs TO sme_
 CREATE ROLE sme_fixture_revalidation_worker NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_worker;
 GRANT EXECUTE ON FUNCTION hsi_memory.claim_revalidation() TO sme_fixture_revalidation_worker;
+GRANT EXECUTE ON FUNCTION hsi_memory.read_revalidation_identity(uuid,uuid) TO sme_fixture_revalidation_worker;
 GRANT EXECUTE ON FUNCTION hsi_memory.fail_revalidation(uuid,uuid) TO sme_fixture_revalidation_worker;
 CREATE ROLE sme_fixture_revalidation_recovery NOLOGIN NOSUPERUSER NOBYPASSRLS;
 GRANT USAGE ON SCHEMA hsi_memory TO sme_fixture_revalidation_recovery;
@@ -214,6 +216,23 @@ DO $identity_deny$ BEGIN
  BEGIN PERFORM hsi_memory.stage_revalidation_identity('00000000-0000-4000-8000-000000000204','123',NULL); RAISE EXCEPTION 'Runtime write accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
 END $identity_deny$;
 RESET ROLE;
+DO $worker_identity_test$ DECLARE j uuid:=gen_random_uuid(); l uuid; r record; BEGIN
+ SET LOCAL ROLE sme_fixture_revalidation_scheduler;
+ PERFORM hsi_memory.schedule_revalidation(j,'00000000-0000-4000-8000-000000000204',now());
+ RESET ROLE;
+ SET LOCAL ROLE sme_fixture_revalidation_worker;
+ SELECT lease_id INTO STRICT l FROM hsi_memory.claim_revalidation();
+ SELECT * INTO STRICT r FROM hsi_memory.read_revalidation_identity(j,l);
+ IF r.pmid<>'123' OR r.pmcid<>'PMC456' OR NOT r.prior_quarantine THEN RAISE EXCEPTION 'Incorrect worker identity'; END IF;
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_revalidation_identity(j,gen_random_uuid())) THEN RAISE EXCEPTION 'Wrong lease read'; END IF;
+ PERFORM hsi_memory.fail_revalidation(j,l);
+ IF EXISTS(SELECT 1 FROM hsi_memory.read_revalidation_identity(j,l)) THEN RAISE EXCEPTION 'Stale lease read'; END IF;
+ RESET ROLE;
+ SET LOCAL ROLE sme_fixture_runtime;
+ BEGIN PERFORM hsi_memory.read_revalidation_identity(j,l); RAISE EXCEPTION 'Runtime access accepted'; EXCEPTION WHEN insufficient_privilege THEN NULL; END;
+ RESET ROLE;
+END $worker_identity_test$;
+
 
 
 
