@@ -65,13 +65,13 @@ test("filters narrow the view, count 'Not stated' as a value, and say an empty r
  await expect(page.getByRole("status").filter({hasText:"not evidence of absence"})).toBeVisible();
 });
 
-test("modes without data or blocked by a decision cannot be opened, and say why",async({page})=>{
+test("modes without data cannot be opened, and say why",async({page})=>{
  await open(page);
  const mode=page.getByLabel("Mode",{exact:true});
  await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toHaveJSProperty("disabled",true);
  await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toContainText("No data yet");
- await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toHaveJSProperty("disabled",true);
- await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toContainText("Blocked");
+ await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toHaveJSProperty("disabled",false);
+ await expect(mode.locator("option",{hasText:"Scientific Memory Graph"})).toHaveJSProperty("disabled",false);
  await expect(mode.locator("option",{hasText:"Biological Atlas"})).toHaveJSProperty("disabled",false);
 });
 
@@ -566,8 +566,59 @@ test("a link can name a mode that opens, and an unknown or unavailable mode is i
  await page.goto("/workspace/graph?mode=hypothesis");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("hypothesis");
  await expect(page.getByText("Opened in Hypothesis Graph from a link.")).toBeVisible();
- await page.goto("/workspace/graph?mode=collaboration");
+ await page.goto("/workspace/graph?mode=multiomics");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
  await page.goto("/workspace/graph?mode=nonsense");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
+});
+
+test("NEXUS saves an investigation to Scientific Memory in this browser, with a log and no approval",async({page})=>{
+ await wholeContradictions(page);
+ await page.locator("ul.gw-units li").first().getByRole("button",{name:"Compare these findings"}).click();
+ const d=dock(page);
+ await d.getByRole("button",{name:"Add compared findings"}).click();
+ await expect(d).toContainText("in this browser only");
+ await d.getByRole("button",{name:"Save to Scientific Memory"}).click();
+ await expect(d.getByRole("status").filter({hasText:"Saved to Scientific Memory in this browser only"})).toBeVisible();
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Scientific Memory Graph"});
+ const mem=page.getByRole("region",{name:"Scientific Memory"});
+ await expect(mem).toContainText("Kept in this browser only");
+ const saved=mem.getByRole("list",{name:"Saved investigations"}).getByRole("button");
+ await expect(saved).toHaveCount(1);
+ await expect(saved.first()).toHaveAttribute("aria-pressed","true");
+ const detail=mem.getByRole("article",{name:"Saved investigation"});
+ await expect(detail).toContainText("No scientific approval");await expect(detail).toContainText("Investigation record");
+ await detail.getByLabel("Add a note").fill("Check the human sources first.");
+ await detail.getByRole("button",{name:"Add note"}).click();
+ await expect(detail).toContainText("Check the human sources first.");
+ const stored=await page.evaluate(()=>localStorage.getItem("hsi.scientificMemory.v1"));
+ expect(stored).not.toContain('"scientificApproval":true');
+ expect(JSON.parse(stored!).investigations[0].events.map((e:{kind:string})=>e.kind)).toEqual(["created","selection","output","note"]);
+ await detail.getByRole("button",{name:"Archive"}).click();
+ await expect(saved).toHaveCount(0);
+ await page.reload();
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Scientific Memory Graph"});
+ await page.getByRole("region",{name:"Scientific Memory"}).getByLabel("Show archived").check();
+ await expect(page.getByRole("region",{name:"Scientific Memory"}).getByRole("list",{name:"Saved investigations"})).toContainText("archived");
+});
+
+test("Collaboration says sharing is not switched on here and claims no access",async({page})=>{
+ await page.emulateMedia({reducedMotion:"reduce"});
+ await open(page);
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Collaboration Graph"});
+ const c=page.getByRole("region",{name:"Collaboration"});
+ await expect(c).toContainText("Sharing is not switched on here.");
+ await expect(c).toContainText("never by yourself");
+ await expect(c.getByRole("button",{name:/Share in/})).toHaveCount(0);
+ const res=await new AxeBuilder({page}).include(".gw-mem").withTags(["wcag2a","wcag2aa","wcag21aa","wcag22aa"]).analyze();
+ expect(res.violations.flatMap(v=>v.nodes.map(n=>v.id+": "+n.html.slice(0,80)+" "+n.failureSummary?.slice(0,160)))).toEqual([]);
+});
+
+test("graph labels never overlap each other",async({page})=>{
+ await open(page);
+ await page.getByLabel("Scope").selectOption("all");
+ const boxes=await page.locator(".gw-canvas svg text.gw-label").evaluateAll(ts=>ts.map(t=>{const r=t.getBoundingClientRect();return {x0:r.left,x1:r.right,y0:r.top,y1:r.bottom}}));
+ expect(boxes.length).toBeGreaterThan(3);
+ const hit=boxes.some((a,i)=>boxes.some((b,j)=>j>i&&a.x0<b.x1-1&&b.x0<a.x1-1&&a.y0<b.y1-1&&b.y0<a.y1-1));
+ expect(hit).toBe(false);
 });

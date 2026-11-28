@@ -1,4 +1,5 @@
 import {useMemo,useRef,useState} from "react";
+import {LABEL_FONT_PX,placeLabels} from "../../../src/graphWorkspace/labels";
 
 export type GNode={id:string;label:string;group:string;degree:number};
 export type GEdge={id:string;s:string;o:string;negated:boolean;kind:"assertion"|"gap";pair?:boolean;reading?:string};
@@ -34,8 +35,11 @@ export function Graph2D({nodes,edges,positions,colourOf,selected,selectedEdge,on
  const move=(e:React.PointerEvent)=>{const d=drag.current;if(!d)return;const dx=e.clientX-d.x,dy=e.clientY-d.y;if(Math.abs(dx)+Math.abs(dy)>3)d.moved=true;setView(v=>({...v,x:d.vx+dx,y:d.vy+dy}))};
  const up=()=>{const d=drag.current;drag.current=null;if(d&&!d.moved)onSelectNode(null)};
 
- const labelled=(n:GNode)=>view.k>=1.5||n.degree>=4||n.id===selected||n.id===hover||(near?.has(n.id)??false)||traced.nodes.has(n.id);
  const r=(n:GNode)=>4+Math.min(9,Math.sqrt(n.degree)*2.2);
+ /* Labels never overlap: most important first, each at the first free spot around its dot. Zooming in makes room. */
+ const labels=useMemo(()=>placeLabels(nodes.map(n=>{const [x,y]=P(n.id);return {id:n.id,label:n.label,x,y,r:r(n),degree:n.degree,
+  priority:n.id===selected?4:n.id===hover?3:traced.nodes.has(n.id)?2:near?.has(n.id)?1:0}}),view.k,view.k>=1.5?1:3)
+ ,[nodes,positions,view.k,selected,hover,traced,near]);
 
  return (
   <div className="gw-canvas">
@@ -62,10 +66,10 @@ export function Graph2D({nodes,edges,positions,colourOf,selected,selectedEdge,on
         onKeyDown={ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();onSelectNode(sel?null:n.id)}}}
         onPointerEnter={()=>setHover(n.id)} onPointerLeave={()=>setHover(null)} onFocus={()=>setHover(n.id)} onBlur={()=>setHover(null)}>
         <circle cx={x} cy={y} r={sel?r(n)+4:r(n)} fill={c} fillOpacity={.88} stroke={sel?"#F4F6F5":traced.nodes.has(n.id)?"#D8B477":c} strokeWidth={sel||traced.nodes.has(n.id)?2.5:1}/>
-        {labelled(n)&&<text x={x} y={y+r(n)+13} textAnchor="middle" className="gw-label">{n.label.length>28?n.label.slice(0,27)+"…":n.label}</text>}
        </g>
       );
      })}
+     <g aria-hidden="true">{labels.map(l=><text key={l.id} x={l.x} y={l.y} textAnchor={l.anchor} className="gw-label" style={{fontSize:LABEL_FONT_PX/view.k,strokeWidth:3/view.k}} opacity={dimNode(l.id)?.25:1}>{l.text}</text>)}</g>
     </g>
    </svg>
    <div className="gw-zoom" role="group" aria-label="Zoom">

@@ -1,10 +1,10 @@
 -- OWNER STEP. NOT A MIGRATION: it is not run by db:migrate and creates cluster-level roles. DRAFT, NOT APPLIED.
--- Creates the least-privilege roles for the graph workspace (held migrations 031 to 033). Idempotent. It sets no
+-- Creates the least-privilege roles for the graph workspace (held migrations 031 to 034). Idempotent. It sets no
 -- passwords: login roles have none until an owner sets one out of band (Neon console or API, never in SQL or chat).
 -- Run it as the project owner, first, on a DISPOSABLE Neon child branch (see docs/GRAPH_WORKSPACE_REHEARSAL_RUNBOOK.md),
 -- and again on the real branch only after the rehearsal is accepted.
 --
---   hsi_graph_function_owner   LOGIN, no superuser, no BYPASSRLS. Runs 031 to 033 and owns the tables and procedures.
+--   hsi_graph_function_owner   LOGIN, no superuser, no BYPASSRLS. Runs 031 to 034 and owns the tables and procedures.
 --                              Do NOT run the migrations as neondb_owner or any superuser or BYPASSRLS role: that would
 --                              hide a missing policy. Needs read access to Neon Auth tables, granted below.
 --   hsi_graph_runtime          NOLOGIN group. EXECUTE on the six public procedures only (granted by 032). No table access.

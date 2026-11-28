@@ -86,7 +86,7 @@ describe("modes",()=>{
   expect(MODES).toHaveLength(12);
   expect(new Set(MODES.map(m=>m.id)).size).toBe(12);
   expect(modeById.multiomics.readiness).toBe("none");expect(isOpenable(modeById.multiomics)).toBe(false);
-  expect(modeById.collaboration.readiness).toBe("blocked");expect(isOpenable(modeById.collaboration)).toBe(false);
+  expect(modeById.collaboration.readiness).toBe("partial");expect(modeById.collaboration.needs).toContain("034");expect(modeById.memory.readinessNote).toContain("this browser");
   for(const m of MODES.filter(m=>!isOpenable(m)||m.readiness!=="ready"))expect(m.needs||m.readinessNote).toBeTruthy();
   expect(isOpenable(modeById.contradiction)).toBe(true);
  });
