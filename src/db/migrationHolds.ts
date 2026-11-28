@@ -16,4 +16,6 @@ export const HELD_MIGRATION_IDS = [
   "031_hsi_graph_workspace_storage",
   "032_hsi_graph_workspace_procedures",
   "033_hsi_ontology_import_role",
+  // ADR-012/013/014 accepted 28 Nov 2026; production apply waits for the Track B2 database review.
+  "034_hsi_investigation_store",
 ] as const;

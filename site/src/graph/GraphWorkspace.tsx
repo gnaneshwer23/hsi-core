@@ -16,6 +16,9 @@ import {AssertionTable,FilterPanel,Inspector} from "./Panels";
 import {ComparePanel} from "./Compare";
 import {QuestionsPanel} from "./Investigate";
 import {NexusDock} from "./NexusDock";
+import {MemoryPanel,CollaborationPanel} from "./Memory";
+import {openMemory,type MemoryClient} from "./memoryClient";
+import type {MemoryInvestigation} from "../../../src/graphWorkspace";
 import {GraphTree} from "./GraphTree";
 import "./graph.css";
 
@@ -33,7 +36,7 @@ function useWebGL(){
 }
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
-const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap","hypothesis","experimental"];
+const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","memory","gap","hypothesis","experimental","collaboration"];
 /* Deep tones that keep 3:1 contrast on the paper background. */
 const PALETTE=["#2F7F73","#A8701A","#3D6F8C","#6E5A9C","#5B6670","#2E8A63","#B0592A","#5D7385"];
 
@@ -79,6 +82,14 @@ function Loaded({model}:{model:GraphModel}){
  const [gapId,setGapId]=useState<string|null>(null);
  const [compareIds,setCompareIds]=useState<string[]>([]);
  const [activeUnit,setActiveUnit]=useState<string|null>(null);
+ /* LEA-04G/04K: the store opens once; the list reloads after each change. */
+ const [memClient,setMemClient]=useState<MemoryClient|null>(null);
+ const [memItems,setMemItems]=useState<MemoryInvestigation[]>([]);
+ const [memActive,setMemActive]=useState<MemoryInvestigation|null>(null);
+ const [memTick,setMemTick]=useState(0);
+ useEffect(()=>{let live=true;openMemory().then(c=>{if(live)setMemClient(c)});return()=>{live=false}},[]);
+ useEffect(()=>{if(!memClient)return;let live=true;memClient.list().then(l=>{if(!live)return;setMemItems(l);setMemActive(a=>a?l.find(x=>x.id===a.id)??null:null)}).catch(()=>{if(live)setMemItems([])});return()=>{live=false}},[memClient,memTick]);
+ const memChanged=useCallback(()=>setMemTick(t=>t+1),[]);
 
  const m=modeById[mode];
  const scope=SCOPES.find(s=>s.id===scopeId)!;
@@ -98,11 +109,13 @@ function Loaded({model}:{model:GraphModel}){
   return r;
  },[units]);
  const base=useMemo<readonly GraphAssertionView[]>(()=>{
+  /* A saved investigation shows its own relationships and those touching its concepts, within the current scope. */
+  if((mode==="memory"||mode==="collaboration")&&memActive){const ns=new Set(memActive.entities),es=new Set(memActive.edgeIds);const r=expanded.assertions.filter(a=>es.has(a.id)||ns.has(a.subject.id)||ns.has(a.object.id));return r.length?r:expanded.assertions}
   if(m.select==="comparable_pairs"){return expanded.assertions.filter(a=>readingOf.has(a.id))}
   if(m.select==="question_paths")return questionPathAssertions(model,expanded.assertions);
   if(m.select==="gap_records"){const ids=new Set(scopeGaps.flatMap(g=>[g.subjectId,g.objectId]));return expanded.assertions.filter(a=>ids.has(a.subject.id)||ids.has(a.object.id))}
   return expanded.assertions;
- },[m,expanded,scopeGaps,readingOf]);
+ },[m,mode,memActive,expanded,scopeGaps,readingOf]);
  const visible=useMemo(()=>applyFilters(base,filters),[base,filters]);
  const fac=useMemo(()=>facets(base),[base]);
 
@@ -240,6 +253,8 @@ function Loaded({model}:{model:GraphModel}){
       </>:<p className="gw-empty" role="status">No relationships match these filters. That is a filter result, not evidence of absence.</p>}
 
      <section className="gw-bottom" aria-label="Intelligence panels">
+      {mode==="memory"&&<MemoryPanel model={model} client={memClient} items={memItems} activeId={memActive?.id??null} onShow={i=>{setMemActive(i);if(i)setScopeId("all")}} onChanged={memChanged}/>}
+      {mode==="collaboration"&&<CollaborationPanel client={memClient} items={memItems} onShow={i=>{setMemActive(i);setScopeId("all")}} onChanged={memChanged}/>}
       {m.select==="question_paths"&&<QuestionsPanel model={model} questions={questionViews} experimental={mode==="experimental"} activePath={path} onTrace={p=>{setPath(p);if(p){setFrom(p.nodeIds[0]!);setTo(p.nodeIds.at(-1)!);if(view==="table")setView("graph")}}} onSelectConcept={selectNode} onSelectGap={(gid,sid)=>{setGapId(gid);selectNode(sid)}}/>}
       <section className="gw-card" aria-labelledby="gw-land"><h2 id="gw-land">Evidence landscape</h2>
        <p className="gw-hint">How many of the 8 recordable context fields each relationship states.</p>
@@ -256,7 +271,7 @@ function Loaded({model}:{model:GraphModel}){
        <p className="gw-hint">Gaps are recorded as gaps, not findings. {NEXT_STUDY_NOTE}</p>
       </section>
       <ComparePanel model={model} units={units} showUnits={m.select==="comparable_pairs"} compareIds={compareIds} setCompareIds={setCompareIds} activeUnit={activeUnit} setActiveUnit={setActiveUnit} globalCount={globalCount} inWhole={scopeId==="all"} onWhole={()=>{setScopeId("all");setDepth(0)}}/>
-      <NexusDock model={model} mode={mode} entity={entity} assertionId={assertionId} compareIds={compareIds} path={path} onSelectAssertion={id=>{setAssertionId(id);setEntity(null)}} onSelectConcept={selectNode}/>
+      <NexusDock memory={memClient} onSaved={i=>{memChanged();setMemActive(i)}} model={model} mode={mode} entity={entity} assertionId={assertionId} compareIds={compareIds} path={path} onSelectAssertion={id=>{setAssertionId(id);setEntity(null)}} onSelectConcept={selectNode}/>
       <section className="gw-card gw-wide" aria-labelledby="gw-path"><h2 id="gw-path">Pathway tracing</h2>
        <div className="gw-trace">
         <label className="gw-field"><span>From</span><select aria-label="From" value={from} onChange={e=>{setFrom(e.target.value);setPath(null)}}><option value="">Choose a concept…</option>{nodes.map(n=><option key={n.id} value={n.id}>{n.label}</option>)}</select></label>

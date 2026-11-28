@@ -6,6 +6,8 @@ import {
 import {
  buildInvestigationRecord,buildSelectionContext,investigateSelection,proposeFromFinding,verifyInvestigationRecord,type AgentName,type AgentResponse,type Finding,
 } from "../../../src/knowledgeGraph/graphAgents";
+import type {MemoryInvestigation} from "../../../src/graphWorkspace";
+import type {MemoryClient} from "./memoryClient";
 
 const CLASS_LABEL:Record<string,string>={not_comparable:"Not comparable",insufficient_context:"Insufficient context",potential_disagreement:"Potential disagreement, needs review",consistent_context:"Consistent context",research_gap:"Recorded research question",coverage:"Graph coverage gap",association_only:"Association only",association_with_evidence_boundary:"Association with an evidence boundary"};
 const STATUS:Record<AgentResponse["status"],string>={completed:"Completed",abstained:"Abstained",disabled:"Not enabled"};
@@ -15,13 +17,13 @@ function download(value:unknown,name:string){
  a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 
-type Props={model:GraphModel;mode:ModeId;entity:string|null;assertionId:string|null;compareIds:readonly string[];path:TracedPath|null;onSelectAssertion:(id:string)=>void;onSelectConcept:(id:string)=>void};
+type Props={memory?:MemoryClient|null;onSaved?:(i:MemoryInvestigation)=>void;model:GraphModel;mode:ModeId;entity:string|null;assertionId:string|null;compareIds:readonly string[];path:TracedPath|null;onSelectAssertion:(id:string)=>void;onSelectConcept:(id:string)=>void};
 
 /**
  * LEA-04J: the NEXUS dock. It runs the existing deterministic graph agents over a bounded selection from the workspace.
  * Every answer is a candidate finding; a proposal is a file for independent review and never changes the graph.
  */
-export function NexusDock({model,mode,entity,assertionId,compareIds,path,onSelectAssertion,onSelectConcept}:Props){
+export function NexusDock({memory,onSaved,model,mode,entity,assertionId,compareIds,path,onSelectAssertion,onSelectConcept}:Props){
  const [sel,setSel]=useState<DockSelection>(EMPTY_DOCK);
  const [question,setQuestion]=useState<string|null>(null);
  const [responses,setResponses]=useState<AgentResponse[]>([]);
@@ -53,6 +55,21 @@ export function NexusDock({model,mode,entity,assertionId,compareIds,path,onSelec
   const problems=verifyInvestigationRecord(model.bundle,rec);
   if(problems.length){setMsg(`Record not downloaded: ${problems.join("; ")}`);return}
   download(rec,`hsi-nexus-investigation-${model.version.slice(0,8)}.json`);setMsg("Investigation record downloaded. Re-running it reproduces the same answers.");
+ };
+
+ const [saving,setSaving]=useState(false);
+ const save=async()=>{
+  if(!ctx.ctx||!memory)return;
+  const rec=buildInvestigationRecord(model.bundle,ctx.ctx,responses.length?responses.map(r=>r.agent):undefined);
+  const problems=verifyInvestigationRecord(model.bundle,rec);
+  if(problems.length){setMsg(`Not saved: ${problems.join("; ")}`);return}
+  setSaving(true);
+  try{
+   const i=await memory.create({question:q,entities:sel.nodeIds,edgeIds:sel.edgeIds,graphVersion:model.version,record:rec as unknown as Record<string,unknown>,lineage:{graphVersion:model.version,agents:responses.map(r=>r.agent),nodeIds:sel.nodeIds,edgeIds:sel.edgeIds}});
+   setMsg(memory.status.where==="browser"?"Saved to Scientific Memory in this browser only. Open the Scientific Memory mode to see it.":"Saved to Scientific Memory in your account.");
+   onSaved?.(i);
+  }catch(e){setMsg(e instanceof Error?e.message:"Not saved.")}
+  finally{setSaving(false)}
  };
 
  return (
@@ -99,7 +116,11 @@ export function NexusDock({model,mode,entity,assertionId,compareIds,path,onSelec
      <h4>Uncertainty</h4><ul className="gw-list">{r.uncertainty.map(u=><li key={u}>{u}</li>)}</ul>
     </article>
    ))}
-   {responses.length>0&&<button type="button" className="gw-btn" onClick={record}>Download investigation record</button>}
+   <div className="gw-nexus-add" role="group" aria-label="Keep this investigation">
+    {responses.length>0&&<button type="button" className="gw-btn" onClick={record}>Download investigation record</button>}
+    <button type="button" className="gw-btn" disabled={!ctx.ctx||!memory||saving} onClick={save}>Save to Scientific Memory</button>
+   </div>
+   {memory&&<p className="gw-hint">{memory.status.where==="browser"?"Saving keeps the selection, question and any checks run in this browser only. No scientific approval is recorded.":"Saving keeps the selection, question and any checks run in your account. No scientific approval is recorded."}</p>}
   </section>
  );
 }

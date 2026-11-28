@@ -1,6 +1,6 @@
 # ADR-013: One identity binding (session verified in the database)
 
-**Status:** Proposed — needs owner sign-off before RLS/procedure rework.
+**Status:** Accepted — owner sign-off 28 November 2026. Implemented by held migration `034_hsi_investigation_store`; production apply waits for the independent database review (Track B2) and the two-account isolation suite on a disposable database (`scripts/verify-investigation-store-local.ts`, run in CI).
 **Date:** 17 November 2026
 **Source:** Engineering pack v1.1 § Database access model; build plan A3.1 (identity / isolation).
 **Related:** ADR-012 (investigation store), ADR-014 (scopes), migrations 027 vs 030, Neon Auth gateway.
