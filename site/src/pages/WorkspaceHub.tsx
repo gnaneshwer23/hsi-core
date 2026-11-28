@@ -9,18 +9,13 @@ export function WorkspaceHubPage() {
   return (
     <div className="ent-shell" style={{ gridTemplateColumns: "1fr" }}>
       <div className="ent-landing ws-hub">
-        <span className="ent-badge">
-          Multi-workspace hub · Stage 4 shell F · shared scientific engine
-        </span>
         <h1>HSI Research Intelligence</h1>
-        <p className="ws-hub-kicker">Connected scientific ecosystem</p>
+        <p className="ws-hub-kicker">Workspaces by role</p>
         <p className="ent-banner" role="status">
-          Switch between roles, explore modules and inspect how researchers,
-          organisations, evidence and scientific opportunities connect. All
-          numbers, profiles, investigations, alerts and opportunities are
-          illustrative — not a connected HSI deployment or evidence-validation
-          result. Soft-landed Stage 4 audience shells (A–E) stay linked below;
-          this hub does not fork the science engine.
+          Each workspace below shows how HSI could look for one kind of
+          researcher. Their numbers, profiles, investigations and alerts are
+          illustrative, not real data. The graph workspace further down runs on
+          the published graph.
         </p>
 
         <h2 className="ws-hub-select">Select workspace</h2>
@@ -30,15 +25,15 @@ export function WorkspaceHubPage() {
               <h2>{w.label}</h2>
               <p>{w.tagline}</p>
               <p className="ent-lead" style={{ margin: "0.5rem 0 0" }}>
-                {w.audience}. Build priority {w.buildPriority}.
+                {w.audience}.
               </p>
               <div className="ent-actions" style={{ marginTop: "0.85rem" }}>
                 <Link className="ent-btn" to={`/workspaces/${w.id}`}>
-                  Open {w.shortLabel} concept
+                  Open the {w.shortLabel} workspace
                 </Link>
                 {w.stage4ShellPath ? (
                   <Link className="ent-btn ent-btn-secondary" to={w.stage4ShellPath}>
-                    Stage 4 shell
+                    Earlier version
                   </Link>
                 ) : null}
               </div>
