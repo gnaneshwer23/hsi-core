@@ -17,7 +17,7 @@ describe("public department pages",()=>{
    const n=graph.nodes.filter(x=>(x.domains??[]).some(t=>d.graphTags.includes(t))).length;
    expect(d.graphConcepts,d.slug).toBe(n);
   }
-  expect(departments.filter(d=>d.graphConcepts===0).map(d=>d.slug)).toEqual(["genomics-multi-omics","human-physiology"]);
+  expect(departments.filter(d=>d.graphConcepts===0).map(d=>d.slug)).toEqual([]);
  });
  test("every department has a route and a prerender rewrite, plus the index",()=>{
   const rewrites=new Map(vercel.rewrites.map(r=>[r.source,r.destination]));

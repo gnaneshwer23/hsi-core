@@ -12,3 +12,4 @@ export * from "./nexus";
 export * from "./tree";
 export * from "./memory";
 export * from "./labels";
+export * from "./versionDiff";

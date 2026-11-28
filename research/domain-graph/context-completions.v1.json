@@ -1,6 +1,6 @@
 {
   "schemaVersion": "hsi-context-completion-sheet-1",
-  "mappedAgainst": "044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1",
+  "mappedAgainst": "ba08b28469bac33345a58fd3e36ea40fa620fd51461ededca7035d22ac6cd31e",
   "slice": "D-01",
   "note": "Curator sheet for tissue, population and design on D-01 source candidates. Fill proposed fields with a value or not_reported. null leaves the published value unchanged. Import never reviews or promotes edges.",
   "autoPromotion": false,
@@ -608,6 +608,84 @@
       "note": ""
     },
     {
+      "edgeId": "GEN-004",
+      "subject": "HLA-DRB1 amino acids 11, 71 and 74",
+      "object": "Rheumatoid arthritis",
+      "predicate": "associated_with",
+      "sourceId": "pmid:22286218",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": "5,018 seropositive cases and 14,974 controls",
+        "design": "MHC fine-mapping by imputation"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "GEN-005",
+      "subject": "PTPN22",
+      "object": "Rheumatoid arthritis",
+      "predicate": "associated_with",
+      "sourceId": "pmid:16175503",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": "White North American; 475 cases and 475 controls, then 661 cases and 1,322 controls",
+        "design": "sequencing and matched case-control genotyping with replication"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "GEN-006",
+      "subject": "PADI4",
+      "object": "Rheumatoid arthritis",
+      "predicate": "associated_with",
+      "sourceId": "pmid:12833157",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_in_vivo",
+      "current": {
+        "tissue": null,
+        "population": null,
+        "design": "case-control linkage-disequilibrium study"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
       "edgeId": "HSI-C-GUT-003",
       "subject": "Butyrate",
       "object": "Colonic / mucosal Foxp3+ Treg",
@@ -1074,7 +1152,59 @@
         "design": null
       },
       "note": ""
+    },
+    {
+      "edgeId": "OMICS-004",
+      "subject": "THY1+ HLA-DRA-high sublining fibroblasts",
+      "object": "Rheumatoid arthritis",
+      "predicate": "increased_in",
+      "sourceId": "pmid:31061532",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_ex_vivo",
+      "current": {
+        "tissue": "synovial tissue",
+        "population": "RA and osteoarthritis",
+        "design": "integrated single-cell and bulk profiling of synovial tissue"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
+    },
+    {
+      "edgeId": "OMICS-005",
+      "subject": "Peripheral helper T (Tph) cells",
+      "object": "Rheumatoid arthritis",
+      "predicate": "increased_in",
+      "sourceId": "pmid:31061532",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "model": "human_ex_vivo",
+      "current": {
+        "tissue": "synovial tissue",
+        "population": "RA and osteoarthritis",
+        "design": "integrated single-cell and bulk profiling of synovial tissue"
+      },
+      "proposed": {
+        "tissue": null,
+        "population": null,
+        "design": null
+      },
+      "note": ""
     }
   ],
-  "digest": "0d57f7b2512f9f46f99ab77a0bb0f9e625ab436bc60f3a4f3d8890f6f87913eb"
+  "digest": "2dd46455246b99300c35decba3500017e039ad1fb1512e57b691dc0b9809dfac"
 }

@@ -1,7 +1,7 @@
 import {test,expect} from 'bun:test';
 import {readFileSync} from 'node:fs';
 import {createHash} from 'node:crypto';
-import {buildDomainGraph,repositoryModel} from '../src/knowledgeGraph/buildDomainGraph';
+import {buildDomainGraph,mergeExpansions,repositoryModel} from '../src/knowledgeGraph/buildDomainGraph';
 import {parseDomainBundle,verifyDomainBundle,filterDomainGraph,domainPaths,exportDomainBrief,compareDomainEvidence,renderDomainBrief} from '../src/knowledgeGraph/domainGraph';
 import {selectValidationCohort,importPublicStudies,assessCohortStudyOverlap} from '../src/knowledgeGraph/cohortTrials';
 const load=(p:string)=>JSON.parse(readFileSync(p,'utf8'));
@@ -9,7 +9,7 @@ const graph=load('research/domain-graph/graph.v1.json');const digest=async(s:str
 const name=(name:string)=>graph.nodes.find((n:any)=>n.name===name)!.id;
 const study=(conditions=['Diabetes Mellitus, Type 1'])=>({protocolSection:{identificationModule:{nctId:'NCT01030861',briefTitle:'Test registry metadata; not a clinical trial identity verification'},conditionsModule:{conditions},statusModule:{overallStatus:'COMPLETED',lastUpdatePostDateStruct:{date:'2020-01-01'}},eligibilityModule:{minimumAge:'8 Years',maximumAge:'45 Years',eligibilityCriteria:'Test-only criteria: investigator assessment and independent source verification required.'}}});
 test('cross-domain snapshot verifies, stays non-promotable and binds all source/gap endpoints',async()=>{
- expect(await verifyDomainBundle(graph,digest,graph.version)).toEqual(graph);expect(graph.nodes.length).toBeGreaterThan(100);expect(graph.edges.length).toBeGreaterThan(100);expect(graph.sources.filter((s:any)=>s.identityStatus==='bibliographic_candidate_not_retrieved')).toHaveLength(12);
+ expect(await verifyDomainBundle(graph,digest,graph.version)).toEqual(graph);expect(graph.nodes.length).toBeGreaterThan(100);expect(graph.edges.length).toBeGreaterThan(100);expect(graph.sources.filter((s:any)=>s.identityStatus==='bibliographic_candidate_not_retrieved')).toHaveLength(26);expect(graph.sources.filter((s:any)=>s.identityStatus==='bibliographic_candidate_not_retrieved'&&s.pmid)).toHaveLength(14);
  expect(graph.scientificApproval).toBe(false);expect(graph.edges.every((e:any)=>e.reviewStatus==='unreviewed'&&e.confidence==='not_calibrated'&&!e.scientificClaimAllowed)).toBe(true);
  expect(graph.validationProfiles).toHaveLength(200);expect(new Set(graph.validationProfiles.map((p:any)=>p.condition)).size).toBe(20);
 });
@@ -61,7 +61,7 @@ test('study overlap never confirms eligibility and does not use generic diabetes
 });
 test('offline builder is deterministic and retains all cited source inputs',()=>{
  const paths=graph.inputs.map((i:any)=>i.path),raw=paths.map((p:string)=>readFileSync(p,'utf8')),values=raw.map((s:string)=>JSON.parse(s));
- const input={pack:values[0],legacy:values[1],expansion:values[2],patients:values[3],labs:values[4],medications:values[5],inputs:graph.inputs,parentVersion:graph.parentVersion};expect(buildDomainGraph(input)).toEqual(graph);
+ const input={pack:values[0],legacy:values[1],expansion:mergeExpansions(values[2],values[6]),patients:values[3],labs:values[4],medications:values[5],inputs:graph.inputs,parentVersion:graph.parentVersion};expect(buildDomainGraph(input)).toEqual(graph);
 });
 test('D-01 KG-01 example entities exist as candidate nodes without inventing mechanism edges',()=>{
  for(const [label,kind] of [['Adipose tissue','tissue'],['Liver','tissue'],['Acetate','metabolite'],['Propionate','metabolite'],['Butyrate','metabolite'],['Short-chain fatty acids','metabolite class'],['TNF-α','cytokine'],['Multiple sclerosis','disease'],['Type 2 diabetes','disease'],['Insulin resistance','phenotype']] as const){

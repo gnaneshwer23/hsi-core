@@ -1,0 +1,1057 @@
+{
+  "schemaVersion": "hsi-domain-expansion-seed-1",
+  "batch": "D-02",
+  "annotationNote": "D-02 candidate batch (28 November 2026). Each source's PMID, DOI and title were matched against its PubMed record; full text, passages and rights were not retrieved. Assertions are editorial paraphrases of the abstracts, unreviewed and not graph-promotable. Trial results are reported as candidates, never as treatment recommendations.",
+  "sources": [
+    {
+      "id": "pmid:20383147",
+      "pmid": "20383147",
+      "doi": "10.1038/ng.565",
+      "title": "Genome-wide association study of systemic sclerosis identifies CD247 as a new susceptibility locus",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20383147/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "radstake2010",
+      "model": "human_in_vivo",
+      "design": "genome-wide association study with independent replication",
+      "outcome": "Systemic sclerosis susceptibility",
+      "limitations": "European-ancestry samples only; a susceptibility locus does not identify the causal variant, cell type or mechanism."
+    },
+    {
+      "id": "pmid:22286218",
+      "pmid": "22286218",
+      "doi": "10.1038/ng.1076",
+      "title": "Five amino acids in three HLA proteins explain most of the association between MHC and seropositive rheumatoid arthritis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/22286218/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "raychaudhuri2012",
+      "model": "human_in_vivo",
+      "design": "MHC fine-mapping by imputation of classical alleles and amino acids",
+      "outcome": "Seropositive rheumatoid arthritis risk",
+      "limitations": "Imputed variants in seropositive disease; risk association does not establish antigen-presentation mechanism in a given person."
+    },
+    {
+      "id": "pmid:16175503",
+      "pmid": "16175503",
+      "doi": "10.1086/468189",
+      "title": "PTPN22 genetic variation: evidence for multiple variants associated with rheumatoid arthritis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/16175503/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "carlton2005",
+      "model": "human_in_vivo",
+      "design": "gene sequencing and matched case-control genotyping with replication",
+      "outcome": "Rheumatoid arthritis association",
+      "limitations": "White North American samples; R620W does not fully explain the PTPN22 association."
+    },
+    {
+      "id": "pmid:12833157",
+      "pmid": "12833157",
+      "doi": "10.1038/ng1206",
+      "title": "Functional haplotypes of PADI4, encoding citrullinating enzyme peptidylarginine deiminase 4, are associated with rheumatoid arthritis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/12833157/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "suzuki2003",
+      "model": "human_in_vivo",
+      "design": "case-control linkage-disequilibrium study with transcript and serology follow-up",
+      "outcome": "Rheumatoid arthritis susceptibility and anti-citrullinated peptide antibody levels",
+      "limitations": "Single-population association; replication across ancestries is not shown by this source."
+    },
+    {
+      "id": "pmid:18648520",
+      "pmid": "18648520",
+      "doi": "10.1371/journal.pone.0002696",
+      "title": "Molecular subsets in the gene expression signatures of scleroderma skin",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/18648520/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "milano2008",
+      "model": "human_ex_vivo",
+      "design": "DNA microarray gene-expression profiling of skin biopsies",
+      "outcome": "Intrinsic gene-expression subsets of scleroderma skin",
+      "limitations": "Small cohort (17 diffuse, 7 limited SSc, 3 morphea, 6 controls); subsets need independent validation."
+    },
+    {
+      "id": "pmid:34282151",
+      "pmid": "34282151",
+      "doi": "10.1038/s41467-021-24607-6",
+      "title": "Myofibroblast transcriptome indicates SFRP2^hi^ fibroblast progenitors in systemic sclerosis skin",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34282151/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "tabib2021",
+      "model": "human_ex_vivo",
+      "design": "single-cell RNA sequencing of SSc and healthy dermal fibroblasts",
+      "outcome": "Origin of dermal myofibroblasts",
+      "limitations": "Lineage is inferred from transcriptomes in biopsies, not traced over time in people."
+    },
+    {
+      "id": "pmid:31061532",
+      "pmid": "31061532",
+      "doi": "10.1038/s41590-019-0378-1",
+      "title": "Defining inflammatory cell states in rheumatoid arthritis joint synovial tissues by integrating single-cell transcriptomics and mass cytometry",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31061532/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "zhang2019",
+      "model": "human_ex_vivo",
+      "design": "integrated single-cell RNA-seq, mass cytometry, bulk RNA-seq and flow cytometry of synovial tissue",
+      "outcome": "Cell states expanded in rheumatoid arthritis synovium",
+      "limitations": "51 samples; comparison with osteoarthritis tissue; cell states are associations, not demonstrated drivers."
+    },
+    {
+      "id": "pmid:20551155",
+      "pmid": "20551155",
+      "doi": "10.1136/ard.2009.114264",
+      "title": "Causes and risk factors for death in systemic sclerosis: a study from the EULAR Scleroderma Trials and Research (EUSTAR) database",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/20551155/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "tyndall2010",
+      "model": "human_in_vivo",
+      "design": "prospective multicentre cohort (EUSTAR) with Cox regression",
+      "outcome": "Causes and predictors of death in systemic sclerosis",
+      "limitations": "Cause of death questionnaires returned for 234 of 284 deaths; referral-centre cohort."
+    },
+    {
+      "id": "pmid:9751093",
+      "pmid": "9751093",
+      "doi": "10.1002/1529-0131(199809)41:9<1613::AID-ART11>3.0.CO;2-O",
+      "title": "Case-control study of corticosteroids and other drugs that either precipitate or protect from the development of scleroderma renal crisis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/9751093/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "steen1998",
+      "model": "human_in_vivo",
+      "design": "retrospective matched case-control study",
+      "outcome": "Scleroderma renal crisis",
+      "limitations": "Retrospective and observational; confounding by indication is possible."
+    },
+    {
+      "id": "pmid:31112379",
+      "pmid": "31112379",
+      "doi": "10.1056/NEJMoa1903076",
+      "title": "Nintedanib for Systemic Sclerosis-Associated Interstitial Lung Disease",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31112379/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "distler2019",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled trial (SENSCIS)",
+      "outcome": "Annual rate of decline in forced vital capacity over 52 weeks",
+      "limitations": "Sensitivity analyses gave P values of 0.06 to 0.10; no benefit on skin score or respiratory quality of life."
+    },
+    {
+      "id": "pmid:32866440",
+      "pmid": "32866440",
+      "doi": "10.1016/S2213-2600(20)30318-0",
+      "title": "Tocilizumab in systemic sclerosis: a randomised, double-blind, placebo-controlled, phase 3 trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/32866440/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "khanna2020",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled phase 3 trial (focuSSced)",
+      "outcome": "Change in modified Rodnan skin score at 48 weeks",
+      "limitations": "Primary endpoint not met; lung-function findings are secondary and nominal."
+    },
+    {
+      "id": "pmid:36375479",
+      "pmid": "36375479",
+      "doi": "10.1016/S2213-2600(22)00359-9",
+      "title": "Rituximab versus intravenous cyclophosphamide in patients with connective tissue disease-associated interstitial lung disease in the UK (RECITAL): a double-blind, double-dummy, randomised, controlled, phase 2b trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/36375479/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "maher2023",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, double-dummy phase 2b trial (RECITAL)",
+      "outcome": "Rate of change in forced vital capacity at 24 weeks",
+      "limitations": "Mixed connective tissue disease population including scleroderma; superiority design."
+    },
+    {
+      "id": "pmid:27469583",
+      "pmid": "27469583",
+      "doi": "10.1016/S2213-2600(16)30152-7",
+      "title": "Mycophenolate mofetil versus oral cyclophosphamide in scleroderma-related interstitial lung disease (SLS II): a randomised controlled, double-blind, parallel group trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27469583/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "tashkin2016",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, double-dummy trial (SLS II)",
+      "outcome": "Change in FVC % predicted over 24 months",
+      "limitations": "Primary comparison negative; within-group improvements come from a post-hoc analysis."
+    },
+    {
+      "id": "pmid:34966900",
+      "pmid": "34966900",
+      "doi": "10.1016/S2665-9913(20)30237-X",
+      "title": "Safety and efficacy of abatacept in early diffuse cutaneous systemic sclerosis (ASSET): open-label extension of a phase 2, double-blind randomised trial",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/34966900/",
+      "identityStatus": "bibliographic_candidate_not_retrieved",
+      "rights": "unverified",
+      "retrievedAt": null,
+      "passage": null,
+      "key": "chung2020",
+      "model": "human_in_vivo",
+      "design": "open-label extension of a phase 2 randomised trial (ASSET)",
+      "outcome": "Modified Rodnan skin score at 18 months",
+      "limitations": "Open-label and uncontrolled after month 12; improvement was seen in both groups."
+    }
+  ],
+  "claims": [
+    {
+      "id": "GEN-001",
+      "sourceId": "pmid:20383147",
+      "subject": "CD247",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: a CD247 locus (rs2056626) was associated with systemic sclerosis susceptibility in a European-ancestry genome-wide study with replication.",
+      "model": "human_in_vivo",
+      "design": "genome-wide association study with independent replication",
+      "tissue": null,
+      "population": "European ancestry; 2,296 cases and 5,171 controls (discovery), 2,753 cases and 4,569 controls (replication)",
+      "assay": "SNP genotyping (279,621 autosomal SNPs)",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "SSc susceptibility",
+      "limitations": "Association locus only; the causal variant and the affected cell type are not established.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "GEN-002",
+      "sourceId": "pmid:20383147",
+      "subject": "IRF5",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: the same study confirmed the IRF5 gene region as a systemic sclerosis genetic risk factor.",
+      "model": "human_in_vivo",
+      "design": "genome-wide association study with independent replication",
+      "tissue": null,
+      "population": "European ancestry; 2,296 cases and 5,171 controls (discovery), 2,753 cases and 4,569 controls (replication)",
+      "assay": "SNP genotyping",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "SSc susceptibility",
+      "limitations": "Confirms a known region; it does not show how IRF5 variation acts in disease.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "GEN-003",
+      "sourceId": "pmid:20383147",
+      "subject": "STAT4",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: the same study confirmed the STAT4 gene region as a systemic sclerosis genetic risk factor.",
+      "model": "human_in_vivo",
+      "design": "genome-wide association study with independent replication",
+      "tissue": null,
+      "population": "European ancestry; 2,296 cases and 5,171 controls (discovery), 2,753 cases and 4,569 controls (replication)",
+      "assay": "SNP genotyping",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "SSc susceptibility",
+      "limitations": "Confirms a known region; mechanism and cell type are not tested.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "GEN-004",
+      "sourceId": "pmid:22286218",
+      "subject": "HLA-DRB1 amino acids 11, 71 and 74",
+      "predicate": "associated_with",
+      "object": "Rheumatoid arthritis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "assertion": "Candidate summary: three amino-acid positions in HLA-DRβ1, with single positions in HLA-B and HLA-DPβ1, almost completely explained the MHC association with seropositive rheumatoid arthritis.",
+      "model": "human_in_vivo",
+      "design": "MHC fine-mapping by imputation",
+      "tissue": null,
+      "population": "5,018 seropositive cases and 14,974 controls",
+      "assay": "SNP imputation of classical HLA alleles and amino acids",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Seropositive RA risk",
+      "limitations": "Seropositive disease only; imputed rather than directly typed alleles.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "GEN-005",
+      "sourceId": "pmid:16175503",
+      "subject": "PTPN22",
+      "predicate": "associated_with",
+      "object": "Rheumatoid arthritis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "assertion": "Candidate summary: the PTPN22 haplotype carrying the W620 allele (R620W, rs2476601) was associated with rheumatoid arthritis, and R620W did not fully explain the PTPN22 association.",
+      "model": "human_in_vivo",
+      "design": "sequencing and matched case-control genotyping with replication",
+      "tissue": null,
+      "population": "White North American; 475 cases and 475 controls, then 661 cases and 1,322 controls",
+      "assay": "sequencing and SNP genotyping",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "RA association",
+      "limitations": "White North American samples only.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "GEN-006",
+      "sourceId": "pmid:12833157",
+      "subject": "PADI4",
+      "predicate": "associated_with",
+      "object": "Rheumatoid arthritis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "assertion": "Candidate summary: PADI4 was identified as a rheumatoid arthritis susceptibility locus; a susceptibility haplotype affected transcript stability and was associated with anti-citrullinated peptide antibody levels.",
+      "model": "human_in_vivo",
+      "design": "case-control linkage-disequilibrium study",
+      "tissue": null,
+      "population": null,
+      "assay": "haplotype genotyping, transcript stability and serology",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "RA susceptibility",
+      "limitations": "Population not stated in this record; replication across ancestries is not shown here.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "OMICS-001",
+      "sourceId": "pmid:18648520",
+      "subject": "Intrinsic skin gene-expression subsets",
+      "predicate": "associated_with",
+      "object": "Systemic sclerosis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: genome-wide skin expression separated diffuse from limited SSc and defined intrinsic subsets marked by proliferation, immune-infiltrate and fibrotic programmes.",
+      "model": "human_ex_vivo",
+      "design": "DNA microarray profiling of skin biopsies",
+      "tissue": "skin (forearm and back biopsies)",
+      "population": "17 diffuse SSc, 7 limited SSc, 3 morphea, 6 healthy controls",
+      "assay": "DNA microarray",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Molecular subsets",
+      "limitations": "Small cohort; subsets need independent validation before any stratified use.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "OMICS-002",
+      "sourceId": "pmid:34282151",
+      "subject": "SFRP2-high DPP4+ dermal fibroblast progenitors",
+      "predicate": "progenitor_of",
+      "object": "Skin myofibroblasts",
+      "domains": [
+        "genomic",
+        "skin",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: single-cell transcriptomes indicate that SSc dermal myofibroblasts arise in two steps from an SFRP2-high, DPP4-expressing fibroblast progenitor population.",
+      "model": "human_ex_vivo",
+      "design": "single-cell RNA sequencing of dermal fibroblasts",
+      "tissue": "skin",
+      "population": null,
+      "assay": "single-cell RNA-seq",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Myofibroblast origin",
+      "limitations": "Inferred from transcriptomes at one time point; not lineage-traced in people.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "OMICS-003",
+      "sourceId": "pmid:34282151",
+      "subject": "Skin myofibroblasts",
+      "predicate": "contributes_to",
+      "object": "Skin fibrosis",
+      "domains": [
+        "skin",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: the source reports that myofibroblast numbers in SSc skin correlate with the modified Rodnan skin score.",
+      "model": "human_ex_vivo",
+      "design": "single-cell RNA sequencing with clinical correlation",
+      "tissue": "skin",
+      "population": null,
+      "assay": "single-cell RNA-seq",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Skin disease severity",
+      "limitations": "Correlation reported as background; not a causal test in this study.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "OMICS-004",
+      "sourceId": "pmid:31061532",
+      "subject": "THY1+ HLA-DRA-high sublining fibroblasts",
+      "predicate": "increased_in",
+      "object": "Rheumatoid arthritis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "assertion": "Candidate summary: THY1+ HLA-DRA-high sublining fibroblasts were expanded in rheumatoid arthritis synovium compared with osteoarthritis, and IL6 expression was attributed to them.",
+      "model": "human_ex_vivo",
+      "design": "integrated single-cell and bulk profiling of synovial tissue",
+      "tissue": "synovial tissue",
+      "population": "RA and osteoarthritis",
+      "assay": "scRNA-seq, mass cytometry, bulk RNA-seq, flow cytometry",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Expanded cell states",
+      "limitations": "51 samples; expansion is associative and compared with osteoarthritis, not healthy tissue.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "OMICS-005",
+      "sourceId": "pmid:31061532",
+      "subject": "Peripheral helper T (Tph) cells",
+      "predicate": "increased_in",
+      "object": "Rheumatoid arthritis",
+      "domains": [
+        "immune",
+        "autoimmune"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "assertion": "Candidate summary: PDCD1+ peripheral helper T cells and follicular helper T cells were among the cell states expanded in rheumatoid arthritis synovium.",
+      "model": "human_ex_vivo",
+      "design": "integrated single-cell and bulk profiling of synovial tissue",
+      "tissue": "synovial tissue",
+      "population": "RA and osteoarthritis",
+      "assay": "scRNA-seq and mass cytometry",
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Expanded cell states",
+      "limitations": "Associative; a driver role is proposed, not demonstrated.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "ORG-001",
+      "sourceId": "pmid:20551155",
+      "subject": "Pulmonary fibrosis",
+      "predicate": "contributes_to",
+      "object": "Systemic sclerosis mortality",
+      "domains": [
+        "lung",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: in the EUSTAR cohort, pulmonary fibrosis accounted for 35% of SSc-related deaths, ahead of pulmonary arterial hypertension and cardiac causes (26% each).",
+      "model": "human_in_vivo",
+      "design": "prospective multicentre cohort",
+      "tissue": "lung",
+      "population": "5,860 patients meeting ACR criteria",
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Cause of death",
+      "limitations": "Referral-centre cohort; causes come from questionnaires for 234 of 284 deaths.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "ORG-002",
+      "sourceId": "pmid:20551155",
+      "subject": "Proteinuria",
+      "predicate": "risk_factor_for",
+      "object": "Systemic sclerosis mortality",
+      "domains": [
+        "kidney",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: proteinuria was an independent predictor of mortality in SSc (hazard ratio 3.34), alongside PAH, restrictive lung function and dyspnoea.",
+      "model": "human_in_vivo",
+      "design": "prospective multicentre cohort with Cox regression",
+      "tissue": "kidney",
+      "population": "5,860 patients meeting ACR criteria",
+      "assay": null,
+      "timepoint": null,
+      "intervention": null,
+      "outcome": "Mortality",
+      "limitations": "Predictor in an observational cohort; not a causal or treatment-response finding.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "ORG-003",
+      "sourceId": "pmid:9751093",
+      "subject": "High-dose corticosteroids",
+      "predicate": "risk_factor_for",
+      "object": "Scleroderma renal crisis",
+      "domains": [
+        "kidney",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: prednisone of 15 mg/day or more in the prior 6 months was more frequent in patients who developed scleroderma renal crisis than in matched controls (36% vs 12%; odds ratio 4.37).",
+      "model": "human_in_vivo",
+      "design": "retrospective matched case-control study",
+      "tissue": "kidney",
+      "population": "110 SSc patients with renal crisis and matched controls (1981–1993)",
+      "assay": null,
+      "timepoint": "6 months before onset",
+      "intervention": "corticosteroids ≥15 mg/day prednisone or equivalent",
+      "outcome": "Scleroderma renal crisis",
+      "limitations": "Retrospective; confounding by indication cannot be excluded. Not a dosing recommendation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-001",
+      "sourceId": "pmid:31112379",
+      "subject": "Nintedanib",
+      "predicate": "investigated_effect_on",
+      "object": "Forced vital capacity decline",
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: in SSc-associated interstitial lung disease, the annual rate of FVC decline was lower with nintedanib than placebo (−52.4 vs −93.3 ml per year).",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled trial",
+      "tissue": "lung",
+      "population": "576 patients with SSc-ILD (fibrosis ≥10% on HRCT)",
+      "assay": null,
+      "timepoint": "52 weeks",
+      "intervention": "nintedanib 150 mg twice daily vs placebo",
+      "outcome": "Annual rate of FVC decline",
+      "limitations": "Primary result P=0.04, but sensitivity analyses gave P=0.06–0.10. Diarrhoea in 75.7%. Not a treatment recommendation.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-002",
+      "sourceId": "pmid:31112379",
+      "subject": "Nintedanib",
+      "predicate": "investigated_effect_on",
+      "object": "Skin fibrosis",
+      "domains": [
+        "trials",
+        "skin"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: in the same trial, change in modified Rodnan skin score at week 52 did not differ between nintedanib and placebo.",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled trial",
+      "tissue": "skin",
+      "population": "576 patients with SSc-ILD",
+      "assay": null,
+      "timepoint": "52 weeks",
+      "intervention": "nintedanib vs placebo",
+      "outcome": "Modified Rodnan skin score",
+      "limitations": "Key secondary endpoint; the trial was not designed for skin disease.",
+      "negated": true,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-003",
+      "sourceId": "pmid:32866440",
+      "subject": "Tocilizumab",
+      "predicate": "investigated_effect_on",
+      "object": "Skin fibrosis",
+      "domains": [
+        "trials",
+        "skin"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: the primary skin endpoint was not met; change in modified Rodnan skin score at week 48 did not differ significantly from placebo (difference −1.73; p=0.10).",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled phase 3 trial",
+      "tissue": "skin",
+      "population": "210 adults with diffuse cutaneous SSc ≤60 months",
+      "assay": null,
+      "timepoint": "48 weeks",
+      "intervention": "tocilizumab 162 mg weekly vs placebo",
+      "outcome": "Modified Rodnan skin score",
+      "limitations": "Early diffuse SSc only.",
+      "negated": true,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-004",
+      "sourceId": "pmid:32866440",
+      "subject": "Tocilizumab",
+      "predicate": "investigated_effect_on",
+      "object": "Forced vital capacity decline",
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: a secondary analysis favoured tocilizumab on FVC % predicted at week 48 (difference 4.2; nominal p=0.0002).",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, placebo-controlled phase 3 trial",
+      "tissue": "lung",
+      "population": "210 adults with diffuse cutaneous SSc",
+      "assay": null,
+      "timepoint": "48 weeks",
+      "intervention": "tocilizumab vs placebo",
+      "outcome": "FVC % predicted",
+      "limitations": "Secondary endpoint with nominal P values after a failed primary; hypothesis-generating only.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-005",
+      "sourceId": "pmid:36375479",
+      "subject": "Rituximab",
+      "predicate": "investigated_effect_on",
+      "object": "Forced vital capacity decline",
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: rituximab was not superior to intravenous cyclophosphamide for FVC change at 24 weeks in connective tissue disease-associated ILD; FVC improved in both groups.",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, double-dummy phase 2b trial",
+      "tissue": "lung",
+      "population": "101 patients with severe or progressive CTD-ILD (UK)",
+      "assay": null,
+      "timepoint": "24 weeks",
+      "intervention": "rituximab vs intravenous cyclophosphamide",
+      "outcome": "Change in FVC",
+      "limitations": "Mixed CTD population (scleroderma, myositis, mixed CTD); superiority not shown does not establish equivalence.",
+      "negated": true,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-006",
+      "sourceId": "pmid:27469583",
+      "subject": "Mycophenolate mofetil",
+      "predicate": "investigated_effect_on",
+      "object": "Forced vital capacity decline",
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: the course of FVC % predicted over 24 months did not differ between mycophenolate mofetil and oral cyclophosphamide; mycophenolate was better tolerated.",
+      "model": "human_in_vivo",
+      "design": "randomised, double-blind, double-dummy trial",
+      "tissue": "lung",
+      "population": "142 patients with scleroderma-related ILD (US)",
+      "assay": null,
+      "timepoint": "24 months",
+      "intervention": "mycophenolate mofetil 24 months vs oral cyclophosphamide 12 months",
+      "outcome": "FVC % predicted",
+      "limitations": "Primary comparison negative; improvement within each arm is from a post-hoc analysis.",
+      "negated": true,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    },
+    {
+      "id": "TRANS-007",
+      "sourceId": "pmid:34966900",
+      "subject": "Abatacept",
+      "predicate": "investigated_effect_on",
+      "object": "Skin fibrosis",
+      "domains": [
+        "trials",
+        "skin"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "assertion": "Candidate summary: in the ASSET open-label extension, skin scores improved further in both groups once all patients received abatacept, with no new safety signals.",
+      "model": "human_in_vivo",
+      "design": "open-label extension of a phase 2 randomised trial",
+      "tissue": "skin",
+      "population": "64 patients with early diffuse cutaneous SSc",
+      "assay": null,
+      "timepoint": "18 months",
+      "intervention": "abatacept 125 mg weekly (open label)",
+      "outcome": "Modified Rodnan skin score",
+      "limitations": "Uncontrolled after month 12; improvement in both groups limits attribution to abatacept.",
+      "negated": false,
+      "contextStatus": "editorial_annotation_pending_source_verification"
+    }
+  ],
+  "gaps": [
+    {
+      "id": "gap:ssc-loci-to-tfh",
+      "subject": "CD247",
+      "object": "T follicular helper (Tfh) cells",
+      "question": "Do SSc susceptibility loci (CD247, IRF5, STAT4) change Tfh or B-cell behaviour in people with SSc?",
+      "missing": "Genotype-stratified immune phenotyping in SSc cohorts; no source in this graph links these loci to the Tfh–IL-21 axis.",
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "nextStudy": "Compare circulating Tfh frequency and IL-21 output by risk genotype in a pre-registered SSc cohort, adjusted for disease duration and treatment."
+    },
+    {
+      "id": "gap:ssc-ild-trial-durability",
+      "subject": "Nintedanib",
+      "object": "Systemic sclerosis mortality",
+      "question": "Does slowing FVC decline over 52 weeks translate into fewer SSc-ILD deaths?",
+      "missing": "Long-term outcome data linking the trial FVC endpoint to survival; the trials here report 24 to 52 week lung function only.",
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "conditions": [
+        "Systemic sclerosis"
+      ],
+      "nextStudy": "Follow trial participants or a matched registry for mortality and transplant, with FVC trajectory as a pre-specified mediator."
+    },
+    {
+      "id": "gap:ra-synovial-genotype",
+      "subject": "HLA-DRB1 amino acids 11, 71 and 74",
+      "object": "THY1+ HLA-DRA-high sublining fibroblasts",
+      "question": "Do HLA-DRB1 risk amino acids relate to which synovial cell states expand in rheumatoid arthritis?",
+      "missing": "Synovial single-cell data stratified by HLA-DRB1 genotype; the sources here study genetics and tissue separately.",
+      "domains": [
+        "genomic",
+        "joint"
+      ],
+      "conditions": [
+        "Rheumatoid arthritis"
+      ],
+      "nextStudy": "Profile synovial biopsies by genotype with the same single-cell panel and test a pre-specified association."
+    }
+  ],
+  "entities": [
+    {
+      "name": "CD247",
+      "kind": "gene",
+      "aliases": [
+        "CD3 zeta"
+      ],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "IRF5",
+      "kind": "gene",
+      "aliases": [],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "STAT4",
+      "kind": "gene",
+      "aliases": [],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "HLA-DRB1 amino acids 11, 71 and 74",
+      "kind": "gene",
+      "aliases": [
+        "HLA-DRB1 shared epitope positions"
+      ],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "PTPN22",
+      "kind": "gene",
+      "aliases": [
+        "PTPN22 R620W",
+        "rs2476601"
+      ],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "PADI4",
+      "kind": "gene",
+      "aliases": [
+        "Peptidylarginine deiminase 4"
+      ],
+      "domains": [
+        "genomic",
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Intrinsic skin gene-expression subsets",
+      "kind": "molecular signature",
+      "aliases": [],
+      "domains": [
+        "genomic",
+        "skin"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "SFRP2-high DPP4+ dermal fibroblast progenitors",
+      "kind": "cell state",
+      "aliases": [],
+      "domains": [
+        "genomic",
+        "skin"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Skin myofibroblasts",
+      "kind": "cell state",
+      "aliases": [],
+      "domains": [
+        "skin"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "THY1+ HLA-DRA-high sublining fibroblasts",
+      "kind": "cell state",
+      "aliases": [],
+      "domains": [
+        "genomic",
+        "joint"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Peripheral helper T (Tph) cells",
+      "kind": "cell state",
+      "aliases": [
+        "Tph cells"
+      ],
+      "domains": [
+        "immune",
+        "joint"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Pulmonary fibrosis",
+      "kind": "phenotype",
+      "aliases": [],
+      "domains": [
+        "lung"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Systemic sclerosis mortality",
+      "kind": "outcome",
+      "aliases": [],
+      "domains": [
+        "immune"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Proteinuria",
+      "kind": "phenotype",
+      "aliases": [],
+      "domains": [
+        "kidney"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Scleroderma renal crisis",
+      "kind": "disease",
+      "aliases": [
+        "SRC"
+      ],
+      "domains": [
+        "kidney"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "High-dose corticosteroids",
+      "kind": "medication",
+      "aliases": [],
+      "domains": [
+        "kidney"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Nintedanib",
+      "kind": "intervention",
+      "aliases": [],
+      "domains": [
+        "trials",
+        "lung"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Tocilizumab",
+      "kind": "intervention",
+      "aliases": [],
+      "domains": [
+        "trials"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Rituximab",
+      "kind": "intervention",
+      "aliases": [],
+      "domains": [
+        "trials"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Mycophenolate mofetil",
+      "kind": "intervention",
+      "aliases": [
+        "MMF"
+      ],
+      "domains": [
+        "trials"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Abatacept",
+      "kind": "intervention",
+      "aliases": [],
+      "domains": [
+        "trials"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    },
+    {
+      "name": "Forced vital capacity decline",
+      "kind": "outcome",
+      "aliases": [
+        "FVC decline"
+      ],
+      "domains": [
+        "lung"
+      ],
+      "sliceRole": "D-02 candidate concept from a PubMed-matched source; no mechanism claim on its own"
+    }
+  ],
+  "questions": [],
+  "futureResearch": []
+}

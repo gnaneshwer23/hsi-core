@@ -4,7 +4,7 @@
 --   createdb hsi_store_it && psql -d hsi_store_it -v ON_ERROR_STOP=1 -f db/verify/034_investigation_store_setup.sql
 CREATE ROLE hsi_store_owner NOSUPERUSER NOBYPASSRLS LOGIN;
 DO $r$ BEGIN IF NOT EXISTS(SELECT 1 FROM pg_roles WHERE rolname='hsi_graph_runtime') THEN CREATE ROLE hsi_graph_runtime NOSUPERUSER NOBYPASSRLS LOGIN; END IF; END $r$;
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 CREATE SCHEMA neon_auth;
 CREATE TABLE neon_auth."user"(id uuid PRIMARY KEY,"emailVerified" boolean NOT NULL,banned boolean);
 CREATE TABLE neon_auth.session(token text PRIMARY KEY,"userId" uuid NOT NULL,"expiresAt" timestamptz NOT NULL,"impersonatedBy" text);

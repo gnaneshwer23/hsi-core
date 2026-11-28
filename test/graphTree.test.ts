@@ -5,6 +5,8 @@ import {EMPTY_TREE_FILTERS,HSI_DOMAINS,buildDomainTree,buildGraphModel,type Conc
 
 const read=(p:string)=>JSON.parse(readFileSync(p,"utf8"));
 const model=buildGraphModel(parseDomainBundle(read("research/domain-graph/graph.v1.json")));
+/** The previous published version (044eb4d6) had no genomics or organ coverage; it stays the fixture for "nothing recorded" behaviour. */
+const model0=buildGraphModel(parseDomainBundle(read("research/domain-graph/versions/044eb4d6309c4e395e038f687007e9277638779369ef3af105297676baeca6d1.json")));
 const typesFile=read("research/ontology/concept-types.v1.json") as ConceptTypeProposalsFile;
 const proposals=new Map(typesFile.proposals.map(p=>[p.conceptId,p.proposedType]));
 
@@ -12,10 +14,11 @@ describe("domain tree",()=>{
  const t=buildDomainTree(model);
  it("always lists all six domains, including those with nothing recorded yet",()=>{
   expect(t.domains.slice(0,6).map(d=>d.key)).toEqual(HSI_DOMAINS.map(d=>d.key));
-  expect(t.domains.find(d=>d.key==="genomics")!.concepts).toBe(0);
+  expect(t.domains.every(d=>d.concepts>0)).toBe(true);
+  const t0=buildDomainTree(model0);expect(t0.domains.slice(0,6).map(d=>d.key)).toEqual(HSI_DOMAINS.map(d=>d.key));expect(t0.domains.find(d=>d.key==="genomics")!.concepts).toBe(0);
  });
  it("covers every candidate relationship and every connected concept once in the totals",()=>{
-  expect(t.totals).toEqual({concepts:111,relationships:95});
+  expect(t.totals).toEqual({concepts:133,relationships:116});
   expect(t.filtered).toBe(false);
  });
  it("keeps every relationship a candidate, with its study identifiers as recorded",()=>{

@@ -162,7 +162,7 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  await expect(cross).toContainText('Causal conclusion allowed: false');
  await expect(cross).toContainText('Scientific approval: false');
  await expect(cross).toContainText('IL-21');
- await expect(cross.getByRole('list',{name:/Department coverage/i})).toContainText('No graph coverage yet');
+ await expect(cross.getByRole('list',{name:/Department coverage/i})).toContainText(/Genomics & Multi-omics\d+ candidate concept/);
  await expect(cross).toContainText(/No path of four hops|Target department has no concept|candidate path/i);
  await expect(cross).toContainText('Unvalidated AI hypotheses (demoted)');
  await expect(page.getByRole('navigation',{name:/USP C connected research journey/i})).toBeVisible();

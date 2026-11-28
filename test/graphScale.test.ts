@@ -13,7 +13,7 @@ const slice=crossDomainSlice(model,"immunology","microbiome");
 
 describe("scale map",()=>{
  it("is stated and versioned, and the generic type is never given a level",()=>{
-  expect(SCALE_MAP_VERSION).toBe("1.0.0");
+  expect(SCALE_MAP_VERSION).toBe("1.1.0");
   expect(KIND_TO_SCALE["biological concept"]).toBe("not_recorded");
   expect(scaleOfKind("biological concept").band).toBe("not_recorded");
  });
@@ -32,9 +32,9 @@ describe("scale map",()=>{
 describe("scale coverage over the published graph",()=>{
  it("reports how much of the graph has no recorded scale, instead of hiding it",()=>{
   const share=placedShare(model.assertions);
-  expect(share.total).toBe(95);
-  expect(share.nonePlaced).toBe(59); // 58 between two generic concepts, 1 between a generic concept and an intervention
-  expect(share.bothPlaced+share.onePlaced+share.nonePlaced).toBe(95);
+  expect(share.total).toBe(116);
+  expect(share.nonePlaced).toBe(62);
+  expect(share.bothPlaced+share.onePlaced+share.nonePlaced).toBe(116);
   const cov=scaleCoverage(model.assertions);
   expect(cov.map(c=>c.band)).toEqual(SCALE_BANDS.map(b=>b.key));
   expect(cov.find(c=>c.band==="not_recorded")!.concepts).toBeGreaterThan(cov.find(c=>c.band==="molecule")!.concepts);

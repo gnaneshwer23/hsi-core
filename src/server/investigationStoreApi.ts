@@ -43,6 +43,7 @@ function dbError(e:unknown):Response{
  if(m.includes("invalid authenticated session"))return gatewayJson({code:"SESSION_REQUIRED",error:"Sign in again"},401);
  if(m.includes("researcher access denied"))return gatewayJson({code:"RESEARCHER_ACCESS_REQUIRED",error:"Researcher access has not been granted"},403);
  if(m.includes("not found"))return gatewayJson({code:"NOT_FOUND",error:"Not found"},404);
+ if(m.includes("cannot be added"))return gatewayJson({code:"GRANTEE_NOT_ELIGIBLE",error:"That account needs a verified sign-in and researcher access first"},403);
  if(m.includes("self-grant"))return gatewayJson({code:"SELF_GRANT_REFUSED",error:"You cannot grant yourself a membership"},403);
  if(m.includes("not a member")||m.includes("scope admin")||m.includes("research admin"))return gatewayJson({code:"SCOPE_PERMISSION_REQUIRED",error:"That needs a membership you do not hold"},403);
  if(m.includes("check constraint")||m.includes("approval")||m.includes("needs 5 to 2000")||m.includes("pin the graph")||m.includes("unknown")||m.includes("not allowed"))return gatewayJson({code:"INVALID_INPUT",error:"The request was refused by a store rule"},422);

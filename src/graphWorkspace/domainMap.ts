@@ -3,7 +3,7 @@
  * The mapping is a stated, versioned table. A tag with no honest home stays unmapped and is reported,
  * and coverage is a count, never a claim that a domain has been studied.
  */
-export const DOMAIN_MAP_VERSION="1.0.0" as const;
+export const DOMAIN_MAP_VERSION="1.1.0" as const;
 
 export type HsiDomain="immunology"|"neuroscience"|"microbiome"|"genomics"|"organ"|"disease";
 export const HSI_DOMAINS:readonly {key:HsiDomain;label:string}[]=[
@@ -17,12 +17,13 @@ export const TAG_TO_DOMAIN:Readonly<Record<string,HsiDomain|null>>={
  immune:"immunology",autoimmune:"immunology",
  brain:"neuroscience",neuro:"neuroscience",neuroimmune:"neuroscience",gut_brain:"neuroscience",
  gut:"microbiome",metabolic:"microbiome",
- liver:"organ",
+ liver:"organ",skin:"organ",lung:"organ",kidney:"organ",joint:"organ",
+ genomic:"genomics",
  post_viral:"disease",
  lifestyle:null,trials:null,
 };
 /** Concept kinds that imply a domain even when no tag does. */
-export const KIND_TO_DOMAIN:Readonly<Record<string,HsiDomain>>={disease:"disease",tissue:"organ",organ:"organ",gene:"genomics",protein:"genomics"};
+export const KIND_TO_DOMAIN:Readonly<Record<string,HsiDomain>>={disease:"disease",tissue:"organ",organ:"organ",gene:"genomics",protein:"genomics","molecular signature":"genomics"};
 
 export function domainsOf(tags:readonly string[],kind?:string):{domains:HsiDomain[];unmappedTags:string[]}{
  const set=new Set<HsiDomain>(),unmapped:string[]=[];

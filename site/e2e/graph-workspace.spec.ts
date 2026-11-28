@@ -65,14 +65,32 @@ test("filters narrow the view, count 'Not stated' as a value, and say an empty r
  await expect(page.getByRole("status").filter({hasText:"not evidence of absence"})).toBeVisible();
 });
 
-test("modes without data cannot be opened, and say why",async({page})=>{
+test("every mode opens, and the partial ones say what they lack",async({page})=>{
  await open(page);
  const mode=page.getByLabel("Mode",{exact:true});
- await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toHaveJSProperty("disabled",true);
- await expect(mode.locator("option",{hasText:"Multi-omics Graph"})).toContainText("No data yet");
- await expect(mode.locator("option",{hasText:"Collaboration Graph"})).toHaveJSProperty("disabled",false);
- await expect(mode.locator("option",{hasText:"Scientific Memory Graph"})).toHaveJSProperty("disabled",false);
- await expect(mode.locator("option",{hasText:"Biological Atlas"})).toHaveJSProperty("disabled",false);
+ for(const label of ["Multi-omics Graph","Translational Graph","Temporal Graph","Biological Atlas"])await expect(mode.locator("option",{hasText:label})).toHaveJSProperty("disabled",false);
+ await mode.selectOption({label:"Multi-omics Graph"});
+ await expect(page.getByText("No proteomic, epigenomic or integrated multi-layer data.").first()).toBeVisible();
+});
+
+test("Temporal shows what changed since the previous verified version",async({page})=>{
+ await open(page);
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Temporal Graph"});
+ const t=page.getByRole("region",{name:"Changes since the previous version"});
+ await expect(t.getByRole("status")).toContainText(/From version [0-9a-f]{8} to [0-9a-f]{8}: \d+ relationships added, \d+ changed, \d+ removed/);
+ await expect(t).toContainText("A change in the record is not a change in the science.");
+});
+
+test("Multi-omics and Translational show their own relationships, negative trial results included",async({page})=>{
+ await open(page);
+ await page.getByRole("radio",{name:"Table"}).click();
+ await page.getByLabel("Scope",{exact:true}).selectOption("all");
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Multi-omics Graph"});
+ await expect(page.locator("table.gw-table tbody")).toContainText("CD247");
+ await page.getByLabel("Mode",{exact:true}).selectOption({label:"Translational Graph"});
+ const rows=page.locator("table.gw-table tbody");
+ await expect(rows).toContainText("Nintedanib");await expect(rows).toContainText("Tocilizumab");
+ await expect(page.getByText("Not treatment advice").first()).toBeVisible();
 });
 
 test("the contradiction mode never invents a conflict",async({page})=>{
@@ -84,10 +102,11 @@ test("the contradiction mode never invents a conflict",async({page})=>{
  await expect(page.getByText(/confirmed contradiction/i)).toHaveCount(0);
 });
 
-test("the coverage strip reports no coverage for genomics instead of drawing it",async({page})=>{
+test("the coverage strip reports each domain as a count, not a judgement",async({page})=>{
  await open(page);
  const cov=page.getByRole("region",{name:/Coverage in the published graph/}).or(page.locator("section[aria-labelledby=gw-cov]"));
- await expect(cov.locator("li",{hasText:"Genomics & Multi-omics"})).toContainText("No coverage");
+ await expect(cov.locator("li",{hasText:"Genomics & Multi-omics"})).toContainText(/Partial\s*14 relationships/);
+ await expect(cov.locator("li",{hasText:"Organ & Tissue Biology"})).toContainText("Partial");
  await expect(cov).toContainText("not a measure of how well a domain is understood");
 });
 
@@ -115,7 +134,7 @@ test("export carries the statuses and the not-stated markers",async({page})=>{
  await open(page);
  const dl=page.waitForEvent("download");
  await page.getByRole("button",{name:"Export this view"}).click();
- const d=await dl;expect(d.suggestedFilename()).toMatch(/^hsi-graph-044eb4d6-/);
+ const d=await dl;expect(d.suggestedFilename()).toMatch(/^hsi-graph-[0-9a-f]{8}-/);
  const text=await (await import("node:fs/promises")).readFile((await d.path())!,"utf8");
  expect(text).toContain('"approved": false');expect(text).toContain("unreviewed");expect(text).toContain("not_recorded_in_graph_schema");
 });
@@ -180,10 +199,10 @@ test("the default slice records no disagreement, and says where disagreements ar
 test("the recorded disagreements keep potential contradiction, context dependence and insufficient context apart",async({page})=>{
  await wholeContradictions(page);
  const units=page.locator("ul.gw-units li");
- expect(await units.count()).toBe(5);
+ expect(await units.count()).toBe(9);
  await expect(page.locator(".gw-reading",{hasText:"Potential contradiction"})).toHaveCount(1);
- await expect(page.locator(".gw-reading",{hasText:"Possible context dependence"})).toHaveCount(2);
- await expect(page.locator(".gw-reading",{hasText:"Insufficient context to tell"})).toHaveCount(2);
+ await expect(page.locator(".gw-reading",{hasText:"Possible context dependence"})).toHaveCount(5);
+ await expect(page.locator(".gw-reading",{hasText:"Insufficient context to tell"})).toHaveCount(3);
  await expect(page.locator("#gw-compare-panel")).toContainText("never called resolved");
  // red is reserved for the one potential contradiction
  expect(await page.locator('line.gw-edge[data-reading="potential_contradiction"]').count()).toBeGreaterThan(0);
@@ -279,7 +298,7 @@ test("a concept's inspector says when its scale is not recorded instead of guess
  await side.getByRole("button").first().click();
  await expect(side.getByRole("heading",{name:"Biological scale"})).toBeVisible();
  await expect(side).toContainText(/Scale not recorded|from the concept type|Not a biological level/);
- await expect(side).toContainText("Derived from the stated scale map, version 1.0.0");
+ await expect(side).toContainText("Derived from the stated scale map, version 1.1.0");
 });
 
 const wholeSearch=async(page:Page,q:string)=>{
@@ -566,8 +585,6 @@ test("a link can name a mode that opens, and an unknown or unavailable mode is i
  await page.goto("/workspace/graph?mode=hypothesis");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("hypothesis");
  await expect(page.getByText("Opened in Hypothesis Graph from a link.")).toBeVisible();
- await page.goto("/workspace/graph?mode=multiomics");
- await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
  await page.goto("/workspace/graph?mode=nonsense");
  await expect(page.getByLabel("Mode",{exact:true})).toHaveValue("mechanism");
 });

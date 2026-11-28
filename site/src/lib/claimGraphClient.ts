@@ -21,3 +21,12 @@ export async function loadDomainGraph(version:string|null,signal:AbortSignal){
  const joined=new Uint8Array(bytes);let offset=0;for(const c of chunks){joined.set(c,offset);offset+=c.length}
  const graph=await verifyDomainBundle(JSON.parse(new TextDecoder('utf-8',{fatal:true}).decode(joined)),deliveryDigest,expected);if(graph.method!=='explicit_repository_and_editorial_candidate_mapping_v2')throw Error('Retired model-mapping adapter');return graph;
 }
+
+/** Temporal mode: a parent version from the immutable versions directory, verified against its own digest. */
+export async function loadDomainGraphVersionFile(version:string,signal:AbortSignal){
+ if(!/^[a-f0-9]{64}$/.test(version))throw Error('Invalid graph version');
+ const response=await fetch('/research/domain-graph/versions/'+version+'.json',{signal,cache:'force-cache',redirect:'error',credentials:'omit',headers:{Accept:'application/json'}});
+ if(!response.ok||!(response.headers.get('content-type')??'').includes('json'))throw Error('Version unavailable');
+ const text=await response.text();if(text.length>3_000_000)throw Error('Version exceeds budget');
+ return verifyDomainBundle(JSON.parse(text),deliveryDigest,version);
+}
