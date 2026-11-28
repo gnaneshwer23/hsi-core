@@ -54,7 +54,7 @@ export default function Home() {
       <Section
         id="published-graph"
         title="The graph so far."
-        intro="This is the graph HSI has published, read live. Every line is a candidate from a recorded source. None is an approved finding."
+        intro="This is the graph HSI has published, read live and arranged by domain. Every relationship is a candidate from a recorded source. None is an approved finding."
       >
         <LiveGraphHero />
         <p className="mt-6 text-sm">
