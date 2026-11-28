@@ -1,4 +1,3 @@
-import "@fontsource-variable/space-grotesk";
 import "@fontsource-variable/newsreader";
 import "@fontsource-variable/newsreader/wght-italic.css";
 import "@fontsource/ibm-plex-sans/400.css";

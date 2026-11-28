@@ -49,7 +49,7 @@ export function FirstAction({label,question,output}:{label:string;question:strin
 
 export function WorkspaceFrame({persona,profile,panels,children,variant}:{persona:PersonaId|null;profile:ProfileView|null;panels:OrderedPanel[];children:ReactNode;variant?:string}){
  return (
-  <div className="lv2 ws" data-persona={persona??"chooser"}>
+  <div className="lv2 lv2-ed ws" data-persona={persona??"chooser"}>
    <a href="#ws-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to the workspace</a>
    <header className="ws-top">
     <Logo/>

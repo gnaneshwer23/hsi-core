@@ -140,11 +140,11 @@ test('local journey metrics fold keeps conversion claims off by default',async({
  })));
  await page.goto('/research/home');
  const fold=page.locator('#rh-metrics');
- await expect(fold.locator('> summary')).toContainText('Local journey metrics');
- await expect(fold.locator('> summary')).toContainText('Local milestones 0/4 done');
- await expect(fold.locator('> summary')).toContainText('alert preference unset');
- await expect(fold.locator('> summary')).toContainText('not conversion');
- await expect(fold.locator('> summary')).toContainText('not pilot claims');
+ await expect(fold.locator('> summary')).toContainText('Your progress');
+ await expect(fold.locator('> summary')).toContainText('0 of 4 first steps done');
+ await expect(fold.locator('> summary')).toContainText('alerts not chosen');
+ await expect(fold.locator('> summary')).toContainText('not usage analytics');
+ await expect(fold.locator('> summary')).toContainText('kept in this browser only');
  expect(await fold.getAttribute('open')).toBeNull();
  await openLocalMetrics(page);
  await expect(page.getByRole('region',{name:/Activation \(this device\)/i})).toBeVisible();
@@ -244,4 +244,17 @@ await page.locator('#rh-setup > summary').click();
  await menu.click();
  await expect(page.locator('#rh-nav')).toHaveAttribute('data-open','true');
  await expect(page.getByRole('link',{name:'Knowledge Graph',exact:true})).toBeVisible();
+});
+
+test('a concept found on the research home opens in the graph workspace, searching the whole graph',async({page})=>{
+ await saved(page,401,{code:'BACKEND_PROVIDER_SESSION_REQUIRED'});
+ await page.goto('/research/home');
+ const skip=page.getByRole('button',{name:/Skip/}).first();
+ if(await skip.isVisible().catch(()=>false))await skip.click();
+ await page.locator('#rh-q').fill('Butyrate');
+ const link=page.getByRole('list',{name:'Matching concepts'}).getByRole('link',{name:'Open in the graph workspace'}).first();
+ await expect(link).toHaveAttribute('href',/^\/workspace\/graph\?q=/);
+ await link.click();
+ await expect(page.getByLabel('Scope',{exact:true})).toHaveValue('all');
+ await expect(page.getByPlaceholder('Search concepts…')).toHaveValue(/butyrate/i);
 });

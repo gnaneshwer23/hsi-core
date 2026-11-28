@@ -163,6 +163,13 @@ describe("scientific onboarding contract",()=>{
   const noMemory=deriveWorkspacePlan(reduce(s,{type:"setPrivacy",patch:{memory:"off"}}))!;
   expect(noMemory.tools.some(t=>t.id==="memory")).toBe(s.objectives.includes("coordinate"));
  });
+ it("sends people to the graph workspace for the tools that now work there",()=>{
+  let s=withRole("postdoc");s=reduce(s,{type:"toggleObjective",id:"conflicts"});s=reduce(s,{type:"toggleObjective",id:"hypotheses"});
+  const plan=deriveWorkspacePlan(s)!;
+  expect(plan.graphAction).toEqual({label:"Open the Living Intelligence Graph",to:"/workspace/graph"});
+  for(const id of ["contradiction","hypothesis"])expect(plan.tools.find(t=>t.id===id)).toMatchObject({to:"/workspace/graph",status:"Prototype"});
+  expect(plan.tools.find(t=>t.id==="design")?.status??"Planned").toBe("Planned");
+ });
  it("every role yields a plan with a distinct first action by persona",()=>{
   const firsts=new Map<PersonaId,string>();
   for(const r of ROLES){

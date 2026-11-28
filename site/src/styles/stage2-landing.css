@@ -262,16 +262,16 @@
 }
 
 .hsi-nav .hsi-header-cta {
-  background: #BD1C1D !important;
-  border-color: #BD1C1D !important;
-  border-radius: 8px !important;
+  background: #1f6d68 !important;
+  border-color: #1f6d68 !important;
+  border-radius: 6px !important;
   color: #fff !important;
-  box-shadow: 0 6px 16px rgba(94, 8, 8, 0.22);
+  box-shadow: none;
 }
 
 .hsi-nav .hsi-header-cta:hover {
-  background: #5E0808 !important;
-  border-color: #5E0808 !important;
+  background: #175752 !important;
+  border-color: #175752 !important;
 }
 
 .hsi-nav a.active,

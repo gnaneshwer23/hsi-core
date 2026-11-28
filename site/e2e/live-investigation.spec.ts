@@ -183,9 +183,8 @@ test('a checked run shows findings, a relationship map that filters evidence, ve
  const metrics=page.locator('#rh-metrics');
  if((await metrics.getAttribute('open'))===null)await metrics.locator('> summary').click();
  await expect.poll(async()=>metrics.getAttribute('open')).not.toBeNull();
- await expect(metrics.locator('> summary')).toContainText(/Local milestones \d+\/4 done/);
- await expect(metrics.locator('> summary')).toContainText('not conversion');
- await expect(metrics.locator('> summary')).toContainText('not pilot claims');
+ await expect(metrics.locator('> summary')).toContainText(/\d+ of 4 first steps done/);
+ await expect(metrics.locator('> summary')).toContainText('kept in this browser only, not usage analytics');
  const activation=page.getByRole('region',{name:/Activation \(this device\)/i});
  await expect(activation).toContainText('invents activation funnel: false');
  await expect(activation).toContainText('First live investigation recorded on this device');

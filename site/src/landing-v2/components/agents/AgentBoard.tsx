@@ -107,7 +107,7 @@ export function AgentBoard({ className }: { className?: string }) {
           {[{ x: 4, y: 20, h: 92, l: "PRODUCE" }, { x: 150, y: 160, h: 106, l: "CHECK" }, { x: 4, y: 304, h: 106, l: "PRODUCE" }].map((b) => (
             <g key={b.y + b.l}>
               <rect x={b.x} y={b.y} width={BOARD.w - 4 - b.x} height={b.h} rx="12" fill="var(--card)" fillOpacity="0.35" stroke="var(--border)" strokeOpacity="0.6" />
-              <text x={b.x + 14} y={b.y + 18} className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-mono)" fontSize="10.5" letterSpacing="2.2">{b.l}</text>
+              <text x={b.x + 14} y={b.y + 18} className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-sans)" fontSize="10.5" >{b.l}</text>
             </g>
           ))}
 
@@ -143,8 +143,8 @@ export function AgentBoard({ className }: { className?: string }) {
                   {b.name}
                 </text>
                 {a && (
-                  <text x={b.x + b.w / 2} y={b.y + 49} textAnchor="middle" className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-mono)" fontSize="10.5" letterSpacing="1">
-                    {a.status.toUpperCase()}
+                  <text x={b.x + b.w / 2} y={b.y + 49} textAnchor="middle" className="max-md:hidden" fill="var(--muted-foreground)" fontFamily="var(--font-sans)" fontSize="10.5" >
+                    {a.status}
                   </text>
                 )}
                 {(human || q) && <circle cx={b.x + b.w - 12} cy={b.y + 12} r="3.5" fill={human ? "var(--verify)" : "var(--muted-foreground)"} />}
@@ -154,7 +154,7 @@ export function AgentBoard({ className }: { className?: string }) {
           {FLOWS.filter((f) => activeFlows.has(f.id)).map((f) => {
             const c = connector(f);
             return (
-              <text key={f.id} x={c.lx} y={c.ly} textAnchor="middle" className="max-md:hidden" fill="var(--foreground)" fontFamily="var(--font-mono)" fontSize="10.5" stroke="var(--background)" strokeWidth="4" paintOrder="stroke">
+              <text key={f.id} x={c.lx} y={c.ly} textAnchor="middle" className="max-md:hidden" fill="var(--foreground)" fontFamily="var(--font-sans)" fontSize="10.5" stroke="var(--background)" strokeWidth="4" paintOrder="stroke">
                 {f.label}
               </text>
             );

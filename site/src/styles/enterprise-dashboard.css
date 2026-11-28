@@ -1,22 +1,22 @@
 /* HSI Enterprise dashboard shells (PR1) — scoped tokens; demonstration UI only. */
 .ent-shell {
-  --ent-navy: #101d2a;
-  --ent-burgundy: #963e56;
-  --ent-crimson: #c45267;
-  --ent-teal: #427b79;
-  --ent-offwhite: #f7f7f8;
+  --ent-navy: #18212c;
+  --ent-burgundy: #1f6d68;
+  --ent-crimson: #175752;
+  --ent-teal: #1f6d68;
+  --ent-offwhite: #f6f4ee;
   /* Muted text. Darkened from #718096 (about 4.0:1 on white) to meet the 4.5:1 minimum (about 5.1:1 on the page background). */
   --ent-slate: #5f6b7c;
-  --ent-ink: #182433;
-  --ent-line: #d8dee6;
-  --ent-surface: #ffffff;
-  --ent-focus: #c45267;
+  --ent-ink: #18212c;
+  --ent-line: #ddd8cc;
+  --ent-surface: #fdfcf9;
+  --ent-focus: #1f6d68;
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100vh;
   background: var(--ent-offwhite);
   color: var(--ent-ink);
-  font-family: "Host Grotesk Variable", "Segoe UI", sans-serif;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
 }
 
 .ent-shell :is(a, button, summary, select):focus-visible {
@@ -43,7 +43,7 @@
 }
 
 .ent-brand strong {
-  font-family: "Red Hat Display Variable", "Host Grotesk Variable", sans-serif;
+  font-family: "Newsreader Variable", Georgia, serif;
   font-size: 1.05rem;
   letter-spacing: -0.02em;
 }
@@ -107,7 +107,7 @@
 
 .ent-topbar h1 {
   margin: 0;
-  font-family: "Red Hat Display Variable", "Host Grotesk Variable", sans-serif;
+  font-family: "Newsreader Variable", Georgia, serif;
   font-size: clamp(1.25rem, 2.2vw, 1.7rem);
   letter-spacing: -0.03em;
   font-weight: 560;
@@ -130,7 +130,7 @@
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
+  
 }
 
 .ent-body {
@@ -267,7 +267,7 @@
   color: var(--ent-slate);
   font-weight: 560;
   font-size: 0.75rem;
-  text-transform: uppercase;
+  
   letter-spacing: 0.03em;
 }
 
@@ -365,7 +365,7 @@
 
 .ent-landing h1 {
   margin: 0;
-  font-family: "Red Hat Display Variable", sans-serif;
+  font-family: "Newsreader Variable", Georgia, serif;
   font-size: clamp(1.8rem, 4vw, 2.6rem);
   letter-spacing: -0.035em;
 }
@@ -464,8 +464,8 @@
 .ws-hub-select {
   margin: 0;
   font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  
+  
   color: #9db0c2;
 }
 
@@ -550,7 +550,7 @@
 
 .ws-ai-kind {
   font-size: 0.72rem;
-  text-transform: uppercase;
+  
   letter-spacing: 0.04em;
   color: var(--ent-teal);
 }

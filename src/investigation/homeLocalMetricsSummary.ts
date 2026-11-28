@@ -117,18 +117,17 @@ export function buildHomeLocalMetricsSummary(input: {
   const alertPreferenceSet = storageAvailable && alertPanel.preferenceEngaged;
 
   const milestonesPart = storageAvailable
-    ? `Local milestones ${checklist.localDoneCount}/${checklist.localTotalCount} done`
-    : "Local milestones unknown";
+    ? `${checklist.localDoneCount} of ${checklist.localTotalCount} first steps done`
+    : "First steps unknown in this browser";
   const alertPart = storageAvailable
     ? alertPreferenceSet
-      ? "alert preference set"
-      : "alert preference unset"
+      ? "alerts chosen"
+      : "alerts not chosen"
     : null;
   const subtitle = [
     milestonesPart,
     alertPart,
-    "not conversion",
-    "not pilot claims",
+    "kept in this browser only, not usage analytics",
   ]
     .filter((x): x is string => Boolean(x))
     .join(" · ");

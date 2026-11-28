@@ -44,6 +44,8 @@ function Fold({id,ids,title,sub,force=false,initial=false,children}:{id:string;i
 type Saved={id:string;question:string;createdAt:string;state:string};
 type SavedState={kind:"loading"}|{kind:"ok";items:Saved[]}|{kind:"blocked";message:string}|{kind:"error"};
 const graphHref=(q:string)=>"/research/knowledge-graph?netQuery="+encodeURIComponent(q);
+/** The Living Intelligence Graph workspace, searching the whole published graph for this text. */
+const workspaceHref=(q:string)=>"/workspace/graph?q="+encodeURIComponent(q.slice(0,200));
 /** Auth/dashboard path for saving a question for review — not the primary live investigate path. */
 const saveQuestionHref=(q:string)=>"/research/dashboard?q="+encodeURIComponent(q.slice(0,500))+"#dashboard-workspace";
 const deptIcon=(slug:string)=>DEPT_ICON[slug]??"graph";
@@ -115,12 +117,13 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
      {intent!=="empty"&&<div className="rh-panel">
       {hits.length>0&&<ul className="rh-hits" aria-label="Matching concepts">{hits.map(h=>(
        <li key={h.id}><span className="rh-ico-tile" aria-hidden="true"><Icon name="graph" size={18}/></span><div><b>{h.name}</b><span>{h.kind}{h.matchedOn!==h.name?` · matched “${h.matchedOn}”`:""}</span><small>Graph concept {h.id.replace(/^concept:/,"").slice(0,40)}</small></div>
-        <div className="rh-row"><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={liveInvestigationHref({scenarioId:live})}>Investigate</Link></div></li>))}</ul>}
+        <div className="rh-row"><Link to={workspaceHref(h.name)}>Open in the graph workspace</Link><Link to={graphHref(h.name)}>Open in graph</Link><button type="button" className="rh-ghost" aria-pressed={followed.has(h.id)} onClick={()=>follow(h.id,h.name)}>{followed.has(h.id)?"Following":"Follow"}</button><Link to={liveInvestigationHref({scenarioId:live})}>Investigate</Link></div></li>))}</ul>}
       {hits.length===0&&bundle&&<p>No concept in the published graph matches “{q.trim()}”. {trial?"This looks like a clinical trial identifier; trial records are not searched from here yet. ":""}Try a broader term or an alternative name, or start an investigation from it.</p>}
       <div className="rh-intent">
        <p>{intent==="investigation"?"This reads as a research question. Choose how to work on it:":"You can also treat this as a question:"}</p>
        <div className="rh-row">
         <Link className="rh-ghost" to={graphHref(q.trim())}>Quick Explore in the graph</Link>
+        <Link className="rh-ghost" to={workspaceHref(q.trim())}>Explore in the graph workspace</Link>
         <Link className="rh-primary" to={liveInvestigationHref({scenarioId:live})}>{live?"Deep Investigate: run live":"Open live investigation"}</Link>
         <Link className="rh-ghost" to={saveQuestionHref(intent==="investigation"?q.trim():`What does the evidence say about ${q.trim()}?`)}>Save question for review</Link>
        </div>
@@ -220,7 +223,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
       <Fold
        id="rh-metrics"
        ids={["rh-pilot-h","rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
-       title="Local journey metrics"
+       title="Your progress"
        sub={metricsSummary.subtitle}
       >
        <PilotReadinessHonestyCard/>
@@ -294,7 +297,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
      <section className="rh-card rh-wide" id="rh-library" aria-labelledby="rh-lib-h">
       <header className="rh-card-top"><span className="rh-tile rh-t-blue"><Icon name="book" size={22}/></span><div><h2 id="rh-lib-h">Research library</h2><p className="rh-sub">Followed concepts are stored on this device.</p></div></header>
       {profile.followed.length===0?<p className="rh-empty">Concepts you follow appear here.</p>:<ul className="rh-follows">{profile.followed.map(f=><li key={f.id}><Link to={graphHref(f.name)}>{f.name}</Link><button type="button" className="rh-ghost" onClick={()=>follow(f.id,f.name)}>Unfollow</button></li>)}</ul>}
-      <p className="rh-note"><Link to="/research/dashboard?view=briefs">Research briefs</Link> · <Link to="/research/dashboard#dashboard-workspace">Saved investigations</Link></p>
+      <p className="rh-note"><Link to="/workspace/graph">Living Intelligence Graph</Link> · <Link to="/research/dashboard?view=briefs">Research briefs</Link> · <Link to="/research/dashboard#dashboard-workspace">Saved investigations</Link></p>
      </section>
      </Fold>
     </main>

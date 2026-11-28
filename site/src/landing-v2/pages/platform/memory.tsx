@@ -1,12 +1,12 @@
-import { Card, PageHero, Section, StatusTag, meta } from "../../components/site/ui";
+import { Card, PageHero, Section, meta, PageStatus } from "../../components/site/ui";
 
 export const pageMeta = meta("Scientific Memory Engine — HSI", "Persistent, permission-controlled scientific memory: lineage tracking, contextual recall and cross-project synthesis.");
 
 const timeline = [
-  ["v1.0", "Question defined", "Does intervention X lower marker Y?"],
-  ["v1.1", "Evidence retrieved", "Sources searched and filter rule saved; preprints flagged"],
-  ["v1.2", "Reviewer note", "A reviewer: set aside studies that do not report sex"],
-  ["v1.3", "Hypothesis saved", "H1 linked to its source passages; marked a proposal"],
+  ["Entry 1", "Question defined", "Does intervention X lower marker Y?"],
+  ["Entry 2", "Evidence retrieved", "Sources searched and filter rule saved; preprints flagged"],
+  ["Entry 3", "Reviewer note", "A reviewer: set aside studies that do not report sex"],
+  ["Entry 4", "Hypothesis saved", "H1 linked to its source passages; marked a proposal"],
 ];
 
 export default function Page() {
@@ -17,9 +17,7 @@ export default function Page() {
         title="Research that remembers — and knows where it came from."
         intro="Laboratories lose context when people move on, projects end or notes scatter. The Memory Engine preserves questions, evidence, decisions and reviewer judgement as version-controlled, permissioned scientific records."
       >
-        <div className="mt-6">
-          <StatusTag s="In development" />
-        </div>
+        <PageStatus>In development and not enabled for researchers. The record history below is an illustrative example.</PageStatus>
       </PageHero>
       <Section eyebrow="Capabilities" title="Four properties of scientific memory.">
         <div className="grid gap-4 md:grid-cols-2">
@@ -51,7 +49,7 @@ export default function Page() {
       <Section
         eyebrow="Lineage"
         title="An investigation, versioned."
-        intro="Illustrative record history. Memory is in development and not enabled for researchers."
+        intro="How one record changes over time, as an example."
       >
         <ol className="relative max-w-2xl border-l border-helix/40 pl-8">
           {timeline.map(([v, t, d]) => (

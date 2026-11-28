@@ -1,6 +1,6 @@
-import type {ReactNode} from "react";
+import {useEffect,useState,type ReactNode} from "react";
 import {
- CONTEXT_KEYS,CONTEXT_LABEL,HSI_DOMAINS,MAX_CONTEXT,domainLabel,type DomainCoverageRow,type Facets,type Filters,type GraphAssertionView,type GraphModel,type Stated,
+ CONTEXT_KEYS,CONTEXT_LABEL,conceptEvidence,conceptIdentifiers,sourceEvidence,typeProposal,type SourceEvidenceView,HSI_DOMAINS,MAX_CONTEXT,bandLabel,domainLabel,isLevel,scaleOfKind,type ScaleBand,type DomainCoverageRow,type Facets,type Filters,type GraphAssertionView,type GraphModel,type Stated,
 } from "../../../src/graphWorkspace";
 
 const READ:Record<string,string>={not_stated_in_source:"The source does not say.",not_recorded_in_graph_schema:"HSI does not record this field yet."};
@@ -28,6 +28,7 @@ export function FilterPanel({filters,set,facets,filtered,onReset,depth,setDepth,
    <Checks title="Scientific domain" facet={facets.domains} value={filters.domains} onChange={v=>set({...filters,domains:v as Filters["domains"]})} format={v=>domainLabel(v as never)}/>
    <Checks title="Concept type" facet={facets.kinds} value={filters.kinds} onChange={v=>set({...filters,kinds:v})}/>
    <Checks title="Reported relationship" facet={facets.predicates} value={filters.predicates} onChange={v=>set({...filters,predicates:v})} format={v=>v.replaceAll("_"," ")}/>
+   <Checks title="Biological scale" facet={facets.scales} value={filters.scales} onChange={v=>set({...filters,scales:v as ScaleBand[]})} format={v=>bandLabel(v as ScaleBand)}/>
    <Checks title="Species" facet={facets.species} value={filters.species} onChange={v=>set({...filters,species:v})}/>
    <Checks title="Model system" facet={facets.models} value={filters.models} onChange={v=>set({...filters,models:v})}/>
    <label className="gw-range"><span>Context stated: at least {filters.minContext} of {MAX_CONTEXT}</span>
@@ -52,15 +53,16 @@ export const pmidUrl=(p:string)=>`https://pubmed.ncbi.nlm.nih.gov/${encodeURICom
 
 function Cell({v}:{v:Stated<string>}){return v.state==="stated"?<>{v.value}</>:<span className="gw-ns" title={READ[v.reason]}>Not stated</span>}
 
-export function AssertionTable({rows,selected,onSelect}:{rows:readonly GraphAssertionView[];selected:string|null;onSelect:(id:string)=>void}){
+export function AssertionTable({rows,selected,onSelect,compare}:{rows:readonly GraphAssertionView[];selected:string|null;onSelect:(id:string)=>void;compare?:{ids:readonly string[];toggle:(id:string)=>void;max:number}}){
  if(!rows.length)return <p className="gw-empty" role="status">No relationships match. That is a filter result, not evidence of absence.</p>;
  return (
   <div className="gw-scroll" tabIndex={0} role="region" aria-label="Relationships table, scrolls sideways">
    <table className="gw-table">
     <caption className="sr-only">Candidate relationships in view. None is reviewed or approved.</caption>
-    <thead><tr><th scope="col">Concept</th><th scope="col">As reported</th><th scope="col">Concept</th><th scope="col">Species</th><th scope="col">Model</th><th scope="col">Context stated</th><th scope="col">Source</th></tr></thead>
+    <thead><tr>{compare&&<th scope="col">Compare</th>}<th scope="col">Concept</th><th scope="col">As reported</th><th scope="col">Concept</th><th scope="col">Species</th><th scope="col">Model</th><th scope="col">Context stated</th><th scope="col">Source</th></tr></thead>
     <tbody>{rows.map(a=>(
      <tr key={a.id} data-selected={selected===a.id}>
+      {compare&&<td><input type="checkbox" aria-label={`Compare: ${a.subject.name} ${a.reportedAs} ${a.object.name}`} checked={compare.ids.includes(a.id)} disabled={!compare.ids.includes(a.id)&&compare.ids.length>=compare.max} onChange={()=>compare.toggle(a.id)}/></td>}
       <th scope="row"><button type="button" onClick={()=>onSelect(a.id)} aria-pressed={selected===a.id}>{a.subject.name}</button></th>
       <td>{a.negated&&<span className="gw-neg">Recorded as not holding: </span>}{a.reportedAs}</td>
       <td>{a.object.name}</td>
@@ -72,6 +74,82 @@ export function AssertionTable({rows,selected,onSelect}:{rows:readonly GraphAsse
    </table>
   </div>
  );
+}
+
+const IDENTITY:Record<string,string>={repository_locator_not_reverified:"Source located in the repository, not re-verified",bibliographic_candidate_not_retrieved:"Bibliographic candidate, not retrieved"};
+const RIGHTS:Record<string,string>={import_receipt_only:"Licence reported in an import receipt; human clearance of permitted use is pending",unverified:"Usage rights unverified"};
+
+/** One source: identifiers, standing, passages (text only where rights allow) and the correction check, stated as not done. */
+export function SourceDetail({v,compact}:{v:SourceEvidenceView;compact?:boolean}){
+ return (
+  <div className="gw-src">
+   {!compact&&<p className="gw-src-title">{v.title}</p>}
+   <p>{v.doi?<a href={doiUrl(v.doi)} target="_blank" rel="noopener noreferrer">DOI {v.doi}</a>:"No DOI recorded"}{v.pmid?<> · <a href={pmidUrl(v.pmid)} target="_blank" rel="noopener noreferrer">PubMed {v.pmid}</a></>:<> · No PMID recorded</>}</p>
+   <ul className="gw-status">
+    <li>{IDENTITY[v.identity]}</li>
+    <li>{RIGHTS[v.rights]}</li>
+    <li>Correction and retraction status not checked</li>
+   </ul>
+   {!compact&&(v.passages.length?<ul className="gw-passages" aria-label="Recorded passages">{v.passages.map((p,i)=><li key={i}>
+     {p.display==="shown"?<details><summary>Passage {i+1}: show recorded text</summary><blockquote>{p.text}</blockquote><small>{p.locator}</small></details>
+     :p.display==="withheld_rights"?<p>Passage {i+1}: text recorded but not shown, because usage rights are not established. <small>{p.locator}</small></p>
+     :<p>Passage {i+1}: locator only, no text. <small>{p.locator}</small></p>}
+    </li>)}</ul>:<p>No passage is recorded for this source.</p>)}
+   {!compact&&<p className="gw-hint">HSI shows a passage only where one is recorded and rights allow. None is invented. No absence of retraction or correction is inferred.</p>}
+  </div>
+ );
+}
+
+function ConceptEvidenceSection({model,conceptId}:{model:GraphModel;conceptId:string}){
+ const e=conceptEvidence(model,conceptId);
+ const top=(xs:readonly {value:string;count:number}[])=>xs.slice(0,4).map(x=>`${x.value} ${x.count}`).join(", ");
+ return (
+  <Section title="Evidence">
+   {e.relationships?<>
+    <p>{e.relationships} candidate relationship{e.relationships===1?"":"s"}{e.negated?`, ${e.negated} recorded as not holding`:""}, from {e.sources.length} source{e.sources.length===1?"":"s"}{e.withoutSource?` (${e.withoutSource} without a source)`:""}.</p>
+    <dl className="gw-ctx">
+     <div><dt>Identifiers</dt><dd>{e.identifiers.doi} with DOI, {e.identifiers.pmid} with PMID{e.identifiers.neither?`, ${e.identifiers.neither} with neither`:""}</dd></div>
+     <div><dt>Species</dt><dd>{top(e.species)}</dd></div>
+     <div><dt>Model system</dt><dd>{top(e.models)}</dd></div>
+     <div><dt>Context stated</dt><dd>{e.meanContextStated} of {e.recordable} fields on average</dd></div>
+     <div><dt>Passages</dt><dd>{e.passages.shown} shown, {e.passages.withheld} withheld for rights, {e.passages.locatorOnly} locator only</dd></div>
+     <div><dt>Gaps and questions</dt><dd>{e.gaps} recorded gap{e.gaps===1?"":"s"}, {e.questions} question{e.questions===1?"":"s"}</dd></div>
+    </dl>
+    <details className="gw-srcs"><summary>Sources ({e.sources.length})</summary><ul className="gw-list">{e.sources.map(s=><li key={s.id}><p className="gw-src-title">{s.title}</p><SourceDetail v={s} compact/></li>)}</ul></details>
+   </>:<p>No candidate relationship involves this concept.</p>}
+   <p className="gw-hint">Counted over the whole published graph, not only this view. Every relationship is an unreviewed candidate; counts are not a measure of strength.</p>
+  </Section>
+ );
+}
+
+function useOntology(){
+ const [d,setD]=useState<typeof import("./ontologyData")|null>(null);
+ const [failed,setFailed]=useState(false);
+ useEffect(()=>{let live=true;import("./ontologyData").then(m=>{if(live)setD(m)},()=>{if(live)setFailed(true)});return()=>{live=false}},[]);
+ return {d,failed};
+}
+
+function OntologySections({model,conceptId}:{model:GraphModel;conceptId:string}){
+ const {d,failed}=useOntology();
+ if(failed)return <Section title="Identifiers"><p>The candidate mappings could not be loaded. No identifier is shown.</p></Section>;
+ if(!d)return <Section title="Identifiers"><p role="status">Loading candidate mappings…</p></Section>;
+ const ids=conceptIdentifiers(d.MAPPINGS,conceptId),tp=typeProposal(d.TYPES,conceptId,model.version);
+ return (<>
+  <Section title="Identifiers">
+   {ids.state==="candidate"||ids.state==="ambiguous"?<>
+    <ul className="gw-list">{ids.candidates.map(c=><li key={c.id}><code>{c.id}</code> {c.label} <small>({c.ontology}{c.release?` ${c.release}`:""}, matched on {c.matchedOn.replaceAll("_"," ")})</small></li>)}</ul>
+    <p className="gw-hint">{ids.state==="ambiguous"?"Ambiguous: several candidates match and none is chosen. ":""}Candidate label match, unreviewed. Not a canonical identifier; no mapping in HSI is approved.</p>
+   </>:ids.state==="unmapped"?<p>No candidate identifier: the label-match run found none{ids.obsoleteOnly?" except obsolete terms":""}. No canonical identifier is shown.</p>
+   :<p>This concept was not covered by the mapping run. No canonical identifier is shown.</p>}
+  </Section>
+  {tp.state==="proposed"&&<Section title="Proposed concept type"><p>{tp.proposedType} <small>({tp.reason})</small>{tp.alternatives.length?<> · alternatives: {tp.alternatives.join(", ")}</>:null}</p><p className="gw-hint">A rule-based proposal (rules {tp.rulesVersion}), unreviewed, confidence uncalibrated. It does not change the concept’s type or its scale.</p></Section>}
+  {tp.state==="stale"&&<Section title="Proposed concept type"><p className="gw-hint">Type proposals were made against another graph version and are not shown.</p></Section>}
+ </>);
+}
+
+function ScaleSection({kind}:{kind:string}){
+ const p=scaleOfKind(kind);
+ return <Section title="Biological scale"><p>{isLevel(p.band)?<>{bandLabel(p.band)}, from the concept type “{kind}”.</>:p.band==="not_biological"?<>Not a biological level: “{kind}” is not a biological entity.</>:<>Scale not recorded: the concept type “{kind}” carries no level, and none is guessed from the name.</>}</p><p className="gw-hint">Derived from the stated scale map, version {p.mapVersion}. The published graph records no scale of its own.</p></Section>;
 }
 
 function Section({title,children}:{title:string;children:ReactNode}){return <section className="gw-sec"><h3>{title}</h3>{children}</section>}
@@ -87,7 +165,9 @@ export function Inspector({model,assertion,entityId,onSelectEntity,onSelectAsser
     <h2>{node.name}</h2>
     <p className="gw-hint">{node.kind} · {(model.nodeDomains.get(node.id)?.domains.map(d=>domainLabel(d)).join(", "))||"No HSI domain mapped"}</p>
     {node.aliases.length>0&&<p className="gw-hint">Also called: {node.aliases.slice(0,4).join(", ")}</p>}
-    <Section title="Identifiers"><p>No canonical identifier is shown in this phase. Candidate ontology mappings exist for some concepts and none is reviewed.</p></Section>
+    <ConceptEvidenceSection model={model} conceptId={node.id}/>
+    <ScaleSection kind={node.kind}/>
+    <OntologySections model={model} conceptId={node.id}/>
     <Section title={`Relationships (${related.length})`}>
      <ul className="gw-list">{related.slice(0,30).map(a=><li key={a.id}><button type="button" onClick={()=>onSelectAssertion(a.id)}>{a.subject.id===node.id?"→":"←"} {a.reportedAs} {a.subject.id===node.id?a.object.name:a.subject.name}</button></li>)}</ul>
     </Section>
@@ -105,13 +185,7 @@ export function Inspector({model,assertion,entityId,onSelectEntity,onSelectAsser
      <dl className="gw-ctx">{CONTEXT_KEYS.map(k=>{const v=assertion.context[k];return <div key={k} data-state={v.state}><dt>{CONTEXT_LABEL[k]}</dt><dd>{v.state==="stated"?v.value:<><span className="gw-ns">Not stated</span> <small>{READ[v.reason]}</small></>}</dd></div>})}</dl>
     </Section>
     <Section title="Source evidence">
-     <p>{assertion.evidence.doi?<a href={doiUrl(assertion.evidence.doi)} target="_blank" rel="noopener noreferrer">DOI {assertion.evidence.doi}</a>:"No DOI recorded."}{assertion.evidence.pmid&&<> · <a href={pmidUrl(assertion.evidence.pmid)} target="_blank" rel="noopener noreferrer">PubMed {assertion.evidence.pmid}</a></>}</p>
-     <ul className="gw-status">
-      <li>{{repository_locator_not_reverified:"Source located in the repository, not re-verified",bibliographic_candidate_not_retrieved:"Bibliographic candidate, not retrieved"}[assertion.evidence.identity??"bibliographic_candidate_not_retrieved"]}</li>
-      <li>Usage rights {assertion.evidence.rights==="import_receipt_only"?"limited to an import receipt":"unverified"}</li>
-      <li>{{not_available:"No passage recorded",locator_only:"Passage locator only, no text",text_recorded:"Passage text recorded"}[assertion.evidence.passage]}</li>
-     </ul>
-     <p className="gw-hint">HSI shows a passage only where one is recorded and rights allow. None is invented.</p>
+     {assertion.evidence.sourceId&&model.sources.get(assertion.evidence.sourceId)?<SourceDetail v={sourceEvidence(model.sources.get(assertion.evidence.sourceId)!)}/>:<p>No source is attached to this relationship.</p>}
     </Section>
     {assertion.limitations&&<Section title="Limitations"><p>{assertion.limitations}</p></Section>}
     {assertion.scopeWarnings.length>0&&<Section title="Scope warnings"><ul className="gw-list">{assertion.scopeWarnings.map(w=><li key={w}>{w}</li>)}</ul></Section>}

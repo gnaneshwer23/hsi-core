@@ -9,7 +9,7 @@ export type NodeEncoding="domain"|"kind"|"evidence_model"|"context_completeness"
 export type EdgeEncoding="reported_predicate"|"negation"|"context_conflict"|"evidence_basis";
 export type EdgeSelection="all"|"negated"|"context_gaps"|"comparable_pairs"|"gap_records"|"question_paths";
 export type InspectorSection="overview"|"identifiers"|"claims"|"context"|"evidence"|"conflicts"|"review"|"memory"|"gaps";
-export type FilterKey="query"|"domains"|"kinds"|"predicates"|"species"|"models"|"minContext"|"negated";
+export type FilterKey="query"|"domains"|"kinds"|"predicates"|"species"|"models"|"minContext"|"negated"|"scales";
 
 export type GraphMode={
  id:ModeId;label:string;summary:string;
@@ -20,14 +20,14 @@ export type GraphMode={
  needs?:string;
 };
 
-const F:readonly FilterKey[]=["query","domains","kinds","predicates","species","models","minContext","negated"];
+const F:readonly FilterKey[]=["query","domains","kinds","predicates","species","models","minContext","negated","scales"];
 const INS_ALL:readonly InspectorSection[]=["overview","identifiers","claims","context","evidence","conflicts","review","memory","gaps"];
 
 export const MODES:readonly GraphMode[]=[
  {id:"atlas",label:"Biological Atlas",summary:"Concepts by domain and kind.",readiness:"ready",readinessNote:"157 concepts in the published graph.",select:"all",nodeEncoding:"domain",edgeEncoding:"reported_predicate",filters:F,inspector:INS_ALL,actions:["focus","expand","trace"]},
  {id:"mechanism",label:"Mechanism Graph",summary:"Reported relationships and the paths between concepts. Association, not established mechanism.",readiness:"ready",readinessNote:"Paths are association chains.",select:"all",nodeEncoding:"kind",edgeEncoding:"reported_predicate",filters:F,inspector:INS_ALL,actions:["focus","expand","trace","compare"]},
  {id:"evidence",label:"Evidence Graph",summary:"Relationships by evidence model and how much context is stated.",readiness:"ready",readinessNote:"No relationship is reviewed or calibrated.",select:"all",nodeEncoding:"evidence_model",edgeEncoding:"evidence_basis",filters:F,inspector:INS_ALL,actions:["focus","expand","compare"]},
- {id:"contradiction",label:"Contradiction Graph",summary:"Where findings on the same concepts may disagree, and whether their contexts differ.",readiness:"ready",readinessNote:"Uses the existing context-conflict classes. A pair is comparable only if context is stated.",select:"comparable_pairs",nodeEncoding:"kind",edgeEncoding:"context_conflict",filters:F,inspector:INS_ALL,actions:["focus","compare"]},
+ {id:"contradiction",label:"Contradiction Graph",summary:"Where findings on the same concepts may disagree, and whether their contexts differ.",readiness:"ready",readinessNote:"Disagreements come from the existing context classifier (same context, across contexts, context not stated). None is resolved or adjudicated.",select:"comparable_pairs",nodeEncoding:"kind",edgeEncoding:"context_conflict",filters:F,inspector:INS_ALL,actions:["focus","compare"]},
  {id:"temporal",label:"Temporal Graph",summary:"The graph across published versions.",readiness:"partial",readinessNote:"Versions are pinned by digest with a parent pointer; individual assertions carry no validity interval.",select:"all",nodeEncoding:"domain",edgeEncoding:"reported_predicate",filters:F,inspector:INS_ALL,actions:["focus"],needs:"Per-assertion version history and validity intervals."},
  {id:"memory",label:"Scientific Memory Graph",summary:"Your investigations and decisions around the graph.",readiness:"partial",readinessNote:"A read-only retrieval channel exists; there is no consolidated store.",select:"all",nodeEncoding:"domain",edgeEncoding:"reported_predicate",filters:F,inspector:INS_ALL,actions:["focus"],needs:"The one-investigation-store decision (ADR-012) and an authenticated principal."},
  {id:"gap",label:"Research Gap Graph",summary:"Recorded gaps: what the sources do not yet answer.",readiness:"ready",readinessNote:"Gaps are recorded as gaps, never as findings.",select:"gap_records",nodeEncoding:"domain",edgeEncoding:"reported_predicate",filters:F,inspector:INS_ALL,actions:["focus","expand"]},
