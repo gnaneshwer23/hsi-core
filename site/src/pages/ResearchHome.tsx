@@ -223,7 +223,7 @@ function SearchHero({bundle,profile,follow,inputRef,ready}:{bundle:DomainBundle|
       <Fold
        id="rh-metrics"
        ids={["rh-pilot-h","rh-alert-h","rh-act-h","rh-fu-h","rh-ru-h","rh-wtp-h"]}
-       title="Local journey metrics"
+       title="Your progress"
        sub={metricsSummary.subtitle}
       >
        <PilotReadinessHonestyCard/>

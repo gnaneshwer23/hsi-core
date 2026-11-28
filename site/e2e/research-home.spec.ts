@@ -140,11 +140,11 @@ test('local journey metrics fold keeps conversion claims off by default',async({
  })));
  await page.goto('/research/home');
  const fold=page.locator('#rh-metrics');
- await expect(fold.locator('> summary')).toContainText('Local journey metrics');
- await expect(fold.locator('> summary')).toContainText('Local milestones 0/4 done');
- await expect(fold.locator('> summary')).toContainText('alert preference unset');
- await expect(fold.locator('> summary')).toContainText('not conversion');
- await expect(fold.locator('> summary')).toContainText('not pilot claims');
+ await expect(fold.locator('> summary')).toContainText('Your progress');
+ await expect(fold.locator('> summary')).toContainText('0 of 4 first steps done');
+ await expect(fold.locator('> summary')).toContainText('alerts not chosen');
+ await expect(fold.locator('> summary')).toContainText('not usage analytics');
+ await expect(fold.locator('> summary')).toContainText('kept in this browser only');
  expect(await fold.getAttribute('open')).toBeNull();
  await openLocalMetrics(page);
  await expect(page.getByRole('region',{name:/Activation \(this device\)/i})).toBeVisible();

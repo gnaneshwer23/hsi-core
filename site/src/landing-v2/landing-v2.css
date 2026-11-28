@@ -60,7 +60,7 @@
 
 @theme inline {
   --font-serif: "Newsreader Variable", ui-serif, Georgia, serif;
-  --font-display: "Space Grotesk Variable", ui-sans-serif, sans-serif;
+  --font-display: "Newsreader Variable", ui-serif, Georgia, serif;
   --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 }

@@ -5,8 +5,19 @@ import {BAND_HEIGHT,SCALE_BANDS,type ScaleBand} from "../../../src/graphWorkspac
 import type {GEdge,GNode} from "./Graph2D";
 
 /* WebGL cannot read CSS variables, so these mirror the workspace tokens in graph.css. */
-const EDGE="#7E8A90",EDGE_SEL="#F4F6F5",TRACE="#D8B477",GAP="#C9CED2";
-const READING:Record<string,string>={potential_contradiction:"#E07A7A",context_dependence:"#D8B477",insufficient_context:"#8A9BA8"};
+let EDGE="#7E8A90",EDGE_SEL="#F4F6F5",TRACE="#D8B477",GAP="#C9CED2";
+let READING:Record<string,string>={potential_contradiction:"#E07A7A",context_dependence:"#D8B477",insufficient_context:"#8A9BA8"};
+
+/** Reads the workspace's graph colour tokens as hex, so the 3D view matches the theme. WebGL cannot parse oklch. */
+function readTokens(){
+ try{
+  const root=document.querySelector(".gw");if(!root)return;
+  const cs=getComputedStyle(root),c=document.createElement("canvas");c.width=c.height=1;const x=c.getContext("2d",{willReadFrequently:true});if(!x)return;
+  const hex=(name:string,fb:string)=>{const v=cs.getPropertyValue(name).trim();if(!v)return fb;x.clearRect(0,0,1,1);x.fillStyle=fb;x.fillStyle=v;x.fillRect(0,0,1,1);const [r,g,b]=x.getImageData(0,0,1,1).data;return "#"+[r,g,b].map(n=>n!.toString(16).padStart(2,"0")).join("")};
+  EDGE=hex("--gw-edge",EDGE);EDGE_SEL=hex("--gw-sel",EDGE_SEL);TRACE=hex("--gw-gap",TRACE);GAP=hex("--gw-insufficient",GAP);
+  READING={potential_contradiction:hex("--gw-conflict",READING.potential_contradiction!),context_dependence:TRACE,insufficient_context:GAP};
+ }catch{/* keep the defaults */}
+}
 
 export type Pos3=ReadonlyMap<string,readonly [number,number,number]>;
 export type Graph3DProps={
@@ -114,6 +125,7 @@ function Scene(p:Graph3DProps){
  * because the list beside it, the 2D graph and the table carry the same content.
  */
 export default function Graph3D(props:Graph3DProps){
+ useMemo(readTokens,[]);
  return (
   <Canvas camera={{position:[0,0,11],fov:42}} dpr={[1,1.75]} gl={{antialias:true,alpha:true}} style={{touchAction:"none"}} aria-hidden="true">
    <ambientLight intensity={0.75}/>

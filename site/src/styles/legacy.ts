@@ -3,7 +3,6 @@ import "@fontsource-variable/red-hat-display/wght.css";
 import "@fontsource-variable/inter/wght.css";
 import "@fontsource-variable/host-grotesk/wght.css";
 import "@fontsource-variable/jetbrains-mono/wght.css";
-import "@fontsource-variable/montserrat/wght.css";
 import "./global.css";
 import "./marketing-v2.css";
 import "./experience.css";

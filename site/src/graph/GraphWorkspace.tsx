@@ -33,7 +33,8 @@ function useWebGL(){
 
 /** Modes with a working view in this phase. The rest are listed with why they cannot open yet. */
 const BUILT:readonly ModeId[]=["atlas","mechanism","evidence","contradiction","gap","hypothesis","experimental"];
-const PALETTE=["#83B8AD","#D8B477","#7FA6B8","#B7A8D0","#C9CED2","#5FA58F","#E0A96D","#8A9BA8"];
+/* Deep tones that keep 3:1 contrast on the paper background. */
+const PALETTE=["#2F7F73","#A8701A","#3D6F8C","#6E5A9C","#5B6670","#2E8A63","#B0592A","#5D7385"];
 
 const SCOPES=WORKSPACE_SCOPES;
 const MAX_VIEW=400;
@@ -43,7 +44,7 @@ export default function GraphWorkspace(){
  useEffect(()=>{applySeo("/workspace/graph")},[]);
  const model=useMemo(()=>bundle?buildGraphModel(bundle):null,[bundle]);
  return (
-  <div className="lv2 gw">
+  <div className="lv2 lv2-ed gw">
    <a href="#gw-main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-md focus:bg-primary focus:px-3 focus:py-2 focus:text-primary-foreground">Skip to the graph</a>
    <header className="gw-top"><Logo/><nav className="gw-toplinks" aria-label="Workspace"><Link to="/research/home" className="gw-link">Research home</Link><Link to="/research/dashboard" className="gw-link">Dashboard</Link><Link to="/workspace/immersive" className="gw-link">Immersive preview</Link><Link to="/knowledge-graph" className="gw-link">Knowledge graph</Link><Link to="/settings/scientific-profile" className="gw-link">Profile</Link></nav></header>
    {failed&&<main id="gw-main" className="gw-state" tabIndex={-1}><h1>Graph unavailable</h1><p role="status">Snapshot unavailable. No substitute graph is shown.</p><p>The published graph could not be loaded and verified. Reload to try again.</p><button type="button" className="gw-btn" onClick={()=>window.location.reload()}>Reload</button></main>}

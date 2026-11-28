@@ -6,7 +6,7 @@ export const WORKSPACE_SHOTS = {
   threeD: { src: "/images/product/workspace-3d.webp", w: 760, h: 595, alt: "3D view of the same concepts, stacked by biological scale, with concepts whose scale is not recorded on a separate lower plane" },
   contradiction: { src: "/images/product/workspace-contradiction.webp", w: 760, h: 1300, alt: "Recorded disagreements sorted into potential contradiction, possible context dependence and insufficient context, with a side-by-side table of the variables each finding states" },
   nexus: { src: "/images/product/workspace-nexus.webp", w: 760, h: 1150, alt: "NEXUS panel with six selected findings, three deterministic checks, language-model interpretation shown as not enabled, and a comparability answer labelled as a candidate finding" },
-  experiment: { src: "/images/product/workspace-experiment.webp", w: 722, h: 890, alt: "A recorded question shown as a candidate experiment design with its prediction, what would count against it, recorded controls, gaps and association chains" },
+  experiment: { src: "/images/product/workspace-experiment.webp", w: 722, h: 897, alt: "A recorded question shown as a candidate experiment design with its prediction, what would count against it, recorded controls, gaps and association chains" },
 } as const;
 
 export function WorkspaceFigure({ shot, caption, cta, to = "/workspace/graph" }: { shot: keyof typeof WORKSPACE_SHOTS; caption: string; cta?: string; to?: string }) {
