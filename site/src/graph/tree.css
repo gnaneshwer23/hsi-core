@@ -1,0 +1,27 @@
+.gt{display:grid;gap:.75rem;min-width:0}
+.gt-bar{display:grid;gap:.6rem}
+.gt-label{font-size:.875rem;font-weight:600}
+.gt-bar input[type=search]{min-height:44px;padding:.5rem .75rem;border:1px solid var(--border);border-radius:6px;background:var(--card);color:var(--foreground);font:inherit;width:100%;max-width:32rem}
+.gt-chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.gt-chips button{min-height:40px;padding:.3rem .8rem;border:1px solid var(--border);border-radius:6px;background:transparent;color:var(--foreground);font:inherit;font-size:.875rem;cursor:pointer}
+.gt-chips button span,.gt-n{color:var(--muted-foreground);font-size:.8125rem;font-variant-numeric:tabular-nums}
+.gt-chips button[aria-pressed=true]{background:var(--primary);border-color:var(--primary);color:var(--primary-foreground)}
+.gt-chips button[aria-pressed=true] span{color:inherit}
+.gt-opts{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;align-items:center;font-size:.9375rem}
+.gt-opts label{display:inline-flex;gap:.45rem;align-items:center;min-height:44px}
+.gt-reset,.gt-link{background:none;border:0;padding:0;color:var(--primary);font:inherit;text-decoration:underline;cursor:pointer;min-height:24px}
+.gt-sum,.gt-note,.gt-empty{margin:0;font-size:.875rem;color:var(--muted-foreground)}
+.gt-tree,.gt-tree ul{list-style:none;margin:0;padding:0}
+.gt-tree ul{padding-left:1rem;border-left:1px solid var(--border);margin-left:.4rem}
+.gt-tree summary{display:flex;flex-wrap:wrap;align-items:baseline;gap:.25rem .6rem;min-height:44px;padding:.35rem .25rem;cursor:pointer}
+.gt-tree>li{border-top:1px solid var(--border)}
+.gt-d{margin:0;font-size:1.25rem;line-height:1.3}
+.gt-t{font-weight:600}.gt-c{overflow-wrap:anywhere}
+.gt-p{font-size:.75rem;padding:0 .4rem;border:1px solid var(--border);border-radius:4px;color:var(--muted-foreground)}
+.gt-body{padding:0 .25rem .75rem 1rem}.gt-body p{margin:.2rem 0 .5rem}
+.gt-rels{display:grid;gap:.45rem}.gt-rels li{display:grid;font-size:.9375rem}.gt-rels small{color:var(--muted-foreground);font-size:.8125rem}
+.gt-shell{display:grid;gap:.75rem;padding:1.25rem;border:1px solid var(--border);border-radius:12px;background:var(--card);min-width:0}
+.gt-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem;margin:0;font-size:.875rem}
+.gt-head-t{font-weight:600}.gt-head-b{color:var(--muted-foreground)}
+@media (max-width:560px){.gt-chips{display:grid;grid-template-columns:1fr 1fr}.gt-chips button{min-height:44px;font-size:.8125rem;text-align:left;line-height:1.25}}
+

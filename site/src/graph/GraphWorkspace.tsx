@@ -16,6 +16,7 @@ import {AssertionTable,FilterPanel,Inspector} from "./Panels";
 import {ComparePanel} from "./Compare";
 import {QuestionsPanel} from "./Investigate";
 import {NexusDock} from "./NexusDock";
+import {GraphTree} from "./GraphTree";
 import "./graph.css";
 
 const Graph3D=lazy(()=>import("./Graph3D"));
@@ -64,7 +65,7 @@ function Loaded({model}:{model:GraphModel}){
  /* A link may carry a search (?q=). It searches the whole published graph, so nothing is missed by the default scope. */
  const linkQuery=useMemo(()=>{try{return (new URLSearchParams(window.location.search).get("q")??"").trim().slice(0,200)}catch{return ""}},[]);
  const [scopeId,setScopeId]=useState(linkQuery?"all":opening.scopeId);
- const [view,setView]=useState<"graph"|"table"|"3d">("graph");
+ const [view,setView]=useState<"graph"|"table"|"3d"|"tree">("graph");
  const webgl=useWebGL();
  const [hover3d,setHover3d]=useState<string|null>(null);
  const [zoom3d,setZoom3d]=useState(1);
@@ -178,7 +179,7 @@ function Loaded({model}:{model:GraphModel}){
      </select></label>
     <label className="gw-field"><span>Scope</span>
      <select aria-label="Scope" value={scopeId} onChange={e=>{setScopeId(e.target.value);setPath(null);setDepth(0)}}>{SCOPES.map(s=>{const c=s.pair?crossDomainSlice(model,s.pair[0],s.pair[1]).assertions.length:model.assertions.length;return <option key={s.id} value={s.id}>{s.label} ({c})</option>})}</select></label>
-    <div className="gw-seg" role="radiogroup" aria-label="View"><button type="button" role="radio" aria-checked={view==="graph"} onClick={()=>setView("graph")}>Graph</button><button type="button" role="radio" aria-checked={view==="table"} onClick={()=>setView("table")}>Table</button><button type="button" role="radio" aria-checked={view==="3d"} disabled={webgl.gl===false} title={webgl.gl===false?"3D needs WebGL, which this browser does not provide. The graph and table show the same data.":undefined} onClick={()=>setView("3d")}>3D</button></div>
+    <div className="gw-seg" role="radiogroup" aria-label="View"><button type="button" role="radio" aria-checked={view==="graph"} onClick={()=>setView("graph")}>Graph</button><button type="button" role="radio" aria-checked={view==="table"} onClick={()=>setView("table")}>Table</button><button type="button" role="radio" aria-checked={view==="3d"} disabled={webgl.gl===false} title={webgl.gl===false?"3D needs WebGL, which this browser does not provide. The graph and table show the same data.":undefined} onClick={()=>setView("3d")}>3D</button><button type="button" role="radio" aria-checked={view==="tree"} onClick={()=>setView("tree")}>Tree</button></div>
     <label className="gw-toggle"><input type="checkbox" checked={focus} onChange={e=>setFocus(e.target.checked)}/> Focus on selection</label>
     <button type="button" className="gw-btn" onClick={exportView}>Export this view</button>
    </div>
@@ -208,6 +209,10 @@ function Loaded({model}:{model:GraphModel}){
      {unavailable?<p className="gw-empty" role="status">{m.label} has no view yet. {m.needs??""}</p>
       :m.select==="question_paths"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view touches a recorded question. The questions below still stand on their recorded gaps.</p>
       :m.select==="comparable_pairs"&&!visible.length?<p className="gw-empty" role="status">No relationship in this view records a disagreement. That describes this slice, not the science. The panel below says where disagreements are recorded.</p>
+      :view==="tree"?<>
+       <p className="gw-hint">The tree covers the whole published graph, by domain. Select a concept or a relationship to inspect it.</p>
+       <GraphTree model={model} onSelectConcept={selectNode} onSelectRelationship={selectEdge}/>
+      </>
       :view==="3d"&&webgl.gl?<>
        <div className="gw-canvas gw-3d" id="gw-3d">
         <Suspense fallback={<p role="status" className="gw-empty">Loading the 3D view…</p>}>

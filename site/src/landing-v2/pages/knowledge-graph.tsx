@@ -48,7 +48,7 @@ export default function Page() {
         </div>
       </PageHero>
 
-      <Section id="graph" eyebrow="The published graph" title="Explore the graph as published." intro="Search for a concept, filter by area, and select a line to read the study behind it. This is read live from the published snapshot. Every line is a candidate; none is an approved finding.">
+      <Section id="graph" eyebrow="The published graph" title="Explore the graph as published." intro="Search, filter by domain, and open a concept to read the study behind each relationship. This is read live from the published snapshot. Every line is a candidate; none is an approved finding.">
         <LiveGraphHero />
         <p className="mt-6 text-sm">
           <Link to="/workspace/graph" className="text-primary hover:underline">Open the graph workspace →</Link>

@@ -4,32 +4,11 @@
 .fg-hook h1{font-size:clamp(40px,4.4vw,60px);line-height:1.06;letter-spacing:-.04em;margin:0;text-wrap:balance}
 .fg-lead{font-size:19px;line-height:1.6;color:var(--fg-body);max-width:44ch;margin:0}
 .fg-hook .sp-actions{margin:22px 0 14px}
-.fg-status{font-size:14px!important;line-height:1.5!important;color:var(--fg-muted)!important;margin:0}
 .fg{width:min(1280px,calc(100% - 112px));margin:0 auto 72px;border:1px solid var(--fg-line);border-radius:6px;background:#fff;overflow:hidden}
-.fg-plate .hd-discovery{border:0;border-radius:0;box-shadow:none}
-.fg-plate .hd-canvas,.fg-plate .hd-inspector{position:relative}
-.fg-plate .hd-canvas::before{content:"A" / "";position:absolute;left:14px;bottom:14px;z-index:2}
-.fg-plate .hd-inspector::before{content:"B" / "";position:absolute;right:16px;top:14px}
-.fg-plate .hd-canvas::before,.fg-plate .hd-inspector::before,.fg-letter{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;padding:0 6px;border-radius:3px;background:var(--fg-violet);color:#fff;font:600 14px/1 'Inter Variable',system-ui,sans-serif}
-.fg-panels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid var(--fg-line)}
-.fg-panels section{position:relative;padding:28px 28px 24px;border-left:1px solid var(--fg-line);min-height:260px}
-.fg-panels section:first-child{border-left:0}
-.fg-panels .fg-letter{position:absolute;right:20px;top:20px}
-.fg-panels h3{font-size:18px;line-height:1.3;margin:0 0 12px;max-width:20ch}
-.fg-panels p,.fg-panels li{font-size:15px;line-height:1.6;color:var(--fg-body)}
-.fg-panels p{margin:0 0 10px}
-.fg-big{font-size:17px!important;color:var(--fg-ink)!important}
-.fg-big b{font-size:30px;letter-spacing:-.03em;font-weight:480;font-variant-numeric:tabular-nums;margin-right:2px}
-.fg-panels ul{margin:0 0 12px;padding-left:18px}
-.fg-panels li{margin:0 0 6px}
-.fg-wait{color:var(--fg-muted)!important}
-.fg-panels a{display:inline-flex;align-items:center;min-height:44px;font-size:15px;font-weight:550}
 .fg-cap{padding:18px 28px 22px;border-top:1px solid var(--fg-line);font-size:15px;line-height:1.65;color:var(--fg-muted);max-width:none;font-variant-numeric:tabular-nums}
 .fg-cap b{color:var(--fg-ink)}
 /* The one authored moment: panel letters draw their rule once on load. Visible by default. */
 @keyframes fg-rule{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-.fg-panels section::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--fg-violet);transform-origin:left;animation:fg-rule .9s var(--fg-ease) backwards;animation-delay:calc(.15s + var(--i,0)*.14s)}
-.fg-panels section:nth-child(2){--i:1}.fg-panels section:nth-child(3){--i:2}
 /* Agents */
 .ag{background:var(--fg-plate);color:#c9cee0}
 .ag-inner{width:min(1280px,calc(100% - 112px));margin:0 auto;padding:80px 0}
@@ -67,7 +46,6 @@
 @media(max-width:640px){.fg-hook,.fg,.ag-inner{width:calc(100% - 40px)}.ag-inner{padding:56px 0}.fg-lead{font-size:17px}.ag-table th:nth-child(2),.ag-table td:nth-child(2){display:none}}
 @media(prefers-reduced-motion:reduce){.fg-panels section::before,.ag-flow li,.ag-flow li::before{animation:none}.ag-flow li::before{display:none}}
 
-.fg-plate .hd-heading{padding-top:14px;padding-bottom:12px}.fg-plate .hd-heading h2{font-size:22px;line-height:1.25}
 /* Shared by Research, Evidence and How it works: a heading-left, content-right block with a hairline rule, and plain tables. */
 .fg-block{width:min(1280px,calc(100% - 112px));margin:0 auto;padding:56px 0;border-top:1px solid var(--fg-line);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:16px 56px;align-items:start}
 .fg-block>h2{font-size:clamp(26px,2.6vw,34px);line-height:1.15;letter-spacing:-.03em;margin:0;max-width:18ch;text-wrap:balance}
