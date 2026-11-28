@@ -10,3 +10,5 @@ export * from "./investigation";
 export * from "./personalisation";
 export * from "./nexus";
 export * from "./tree";
+export * from "./memory";
+export * from "./labels";
